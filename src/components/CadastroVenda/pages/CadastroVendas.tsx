@@ -241,11 +241,6 @@ function CadastroVendas() {
               {errors.seller_code && <p style={{ color: 'red' }}>{errors.seller_code}</p>}
             </div>
   
-
-  
-
-            </div>
-  
             <div className='botaoEnvia'>
               <button type='submit'>Cadastrar</button>
             </div>
