@@ -6,7 +6,7 @@ import enviarDadosParaBackend from '../functions/enviaDados'
 
 function CadastroUser() {
 
-  const regex = /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~])(?=.*[0-9])(?=.*[a-zA-Z]).*$/
+  const regex = /^(?=.*[!@#$%^&*()_+{}\]:;<>,.?~])(?=.*[0-9])(?=.*[a-zA-Z]).*$/
 
   const [userName, setUserName] = useState('')
     const [email, setEmail] = useState('')
@@ -36,6 +36,11 @@ function CadastroUser() {
             isValid = false;
         }
 
+        if (!funcao){
+          errors.funcao = 'Selecione sua função.'
+          isValid = false
+        }
+
         if (!senha){
           errors.senha = 'É obrigatório definir uma senha.'
           isValid = false
@@ -50,7 +55,7 @@ function CadastroUser() {
         if (!senhaConfirm){
             errors.senhaConfirm = 'É obrigatório ter e confirmar uma senha.'
             isValid = false
-        }else if (senha!=senhaConfirm){
+        }else if (senha!==senhaConfirm){
           errors.senhaConfirm = 'As duas senhas devem ser iguais'
           isValid = false
         }
@@ -77,22 +82,22 @@ function CadastroUser() {
 
   return (
     <div className='container'>
-      <h1 className='titulo'>Cadastro de Usuário</h1>
 
       <div className="box">
-        <form onSubmit={handleSubmit}>
+        <h1 className='titulo'>Cadastro de Usuário</h1>
 
+        <form className="formulario" onSubmit={handleSubmit}>
           <div className='insertText'>
-            <label>Nome do usuário:</label>
+            <label>Nome:</label>
 
-            <input type="text" placeholder='UserName' onChange={(e)=> setUserName(e.target.value)} required/>
+            <input type="text" placeholder='Nome completo' onChange={(e)=> setUserName(e.target.value)} required/>
             {errors.userName && <p style={{ color: 'red' }}>{errors.userName}</p>}
           </div>
 
           <div className='insertText'>
             <label>CPF do usuário:</label>
 
-            <input type="text" placeholder='Cpf' onChange={(e)=> setCpf(e.target.value)} required />
+            <input type="text" placeholder='000.000.000-00' onChange={(e)=> setCpf(e.target.value)} required />
             {errors.cpf && <p style={{ color: 'red' }}>{errors.cpf}</p>}
           </div>
 
@@ -110,28 +115,31 @@ function CadastroUser() {
               <option value="user">Vendedor</option>
               <option value="admin">Gestor</option>
             </select>
+            {errors.funcao && <p style={{color: 'red'}}>{errors.funcao}</p>}
           </div>
 
           <div className='senhas'>
-            <h3>A senha deve conter:</h3>
+            <h4>A senha deve conter:</h4>
             <ol>
               <li>8 ou mais caractéres.</li>
               <li>Ao menos 1 número.</li>
               <li>Ao menos 1 digito especial.</li>
             </ol>
-
-            <label >Digite uma senha:</label>
-            <input type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)}/>
-            {errors.senha && <p style={{color: 'red'}}>{errors.senha}</p>}
-
-            <label >Confirme sua senha:</label>
-            <input type="password" placeholder='Confirme sua senha' required onChange={(e)=> setSenhaConfirm(e.target.value)}/>
-            {errors.senhaConfirm && <p style={{ color: 'red' }}>{errors.senhaConfirm}</p>}
+            <div className='inputSenha'>
+              <label >Digite uma senha:</label>
+              <input type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)}/>
+              {errors.senha && <p style={{color: 'red'}}>{errors.senha}</p>}
+            </div>
+            
+            <div className='inputSenha'>
+              <label >Confirme sua senha:</label>
+              <input type="password" placeholder='Confirme sua senha' required onChange={(e)=> setSenhaConfirm(e.target.value)}/>
+              {errors.senhaConfirm && <p style={{ color: 'red' }}>{errors.senhaConfirm}</p>}
+            </div>
+            
           </div>
 
-          <div className='botaoEnvia'>
-            <button type='submit'>Cadastrar</button>
-          </div>
+            <button className='botaoEnvia' type='submit'>Cadastrar</button>
         </form>
       </div>
     </div>
