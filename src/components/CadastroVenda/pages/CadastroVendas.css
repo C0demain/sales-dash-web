@@ -10,15 +10,6 @@ body{
     margin: 0px;
 }
 
-.senhas{
-    height: auto;
-    width: 75%;
-    margin: 5% 10%;
-    text-align:start;
-    display: flex;
-    flex-direction: column;
-}
-
 .box{
     background-color:gray;
     height: auto;
