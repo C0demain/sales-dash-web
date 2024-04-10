@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import qs from "qs";
 
 function Login(props: any) {
   const [error, setError] = useState("");
@@ -19,7 +20,8 @@ function Login(props: any) {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/auth/login",
-        values
+        qs.stringify(values),
+        
       );
 
       signIn({
@@ -33,7 +35,7 @@ function Login(props: any) {
       navigate("/")
     } catch (err) {
       if (err && err instanceof AxiosError)
-        setError(err.response?.data.message);
+        setError(err.response?.data?.message);
       else if (err && err instanceof Error) setError(err.message);
 
       console.log("Error: ", err);

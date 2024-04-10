@@ -4,6 +4,8 @@ import { Login } from "./components/login";
 import  Home  from "./components/home";
 import { RequireAuth } from "react-auth-kit";
 import CadastroUser from "./components/CadastroUser/pages/CadastroUser";
+import SystemComission from "./components/SystemComission/page/SystemComission";
+
 
 const AppContainer = styled.div`
   width: 100%;
@@ -24,6 +26,7 @@ function App() {
         ></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path='/cadastro' element={<CadastroUser/>}></Route>
+        <Route path='/comission' element={<SystemComission/>}></Route>
       </Routes>
     </AppContainer>
   );

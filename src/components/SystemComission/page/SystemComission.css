@@ -1,0 +1,72 @@
+.container{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+body{
+    margin: 0px;
+    font-size: 2.5vh;
+}
+
+option, select, input, button{
+    font-size: 2.5vh;
+}
+
+#tituloRequisito{
+    margin: 2%;
+}
+
+.senhas{
+    height: auto;
+    width: 75%;
+    text-align:start;
+    display: flex;
+    flex-direction: column;
+}
+
+.box{
+    background-color:rgb(75, 75, 75);
+    margin: 2%;
+    height: auto;
+    width: 80vh;
+    padding: 0.5%;
+    border-radius: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.formulario{
+    height: auto;
+    width: 100%;
+    padding: 0.5%;
+    border-radius: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.insertText{
+    height: auto;
+    width: 75%;
+    padding-top: 1%;
+    text-align:start;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputSenha{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.botaoEnvia{
+    margin: 2%;
+    border-radius: 5%;
+}
+h4{
+    height: min-content;
+    margin: 1%;
+}
