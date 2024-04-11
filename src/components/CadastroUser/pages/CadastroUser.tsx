@@ -85,7 +85,7 @@ function CadastroUser() {
   return (
     <div className='container'>
 
-      <div className="box">
+      <div className="caixa">
         <h1 className='titulo'>Cadastro de Usuário</h1>
 
         <form className="formulario" onSubmit={handleSubmit}>
@@ -111,7 +111,6 @@ function CadastroUser() {
           </div>
 
           <div className='insertText'>
-            <label>Função</label>
             <select title='Escolha sua função' value={funcao} onChange={(e)=> setFuncao(e.target.value)}>
               <option value="">Escolha sua função</option>
               <option value="user">Vendedor</option>
@@ -141,8 +140,7 @@ function CadastroUser() {
             
           </div>
               {sucess && <p style={{color: 'green'}}>{sucess}</p>}
-
-              <button className='botaoEnvia' type='submit'>Cadastrar</button>
+              <button type='submit'>Cadastrar</button>
         </form>
       </div>
     </div>

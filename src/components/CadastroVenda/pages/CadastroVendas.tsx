@@ -29,7 +29,7 @@ function CadastroVendas() {
             errors.cpf = 'É obrigatório confirmar um CPF.'
             isValid = false
         }  else if(isValidCPF(cpf)){
-            errors.cpf = 'Esse CPF é inválido'
+            errors.cpf = 'Esse CPF é inválido, e não precisa dos pontos.'
             isValid = false
         } 
 
@@ -38,7 +38,7 @@ function CadastroVendas() {
               errors.registration_date = 'O Data do cadastro do cliente é obrigatório.';
               isValid = false
           } else if (registration_date.length !== 8 ) {
-              errors.registration_date = 'A data tem que possuir o dia, mês e ano.';
+              errors.registration_date = 'A data tem que possuir o dia, mês e ano, e não precisa dos pontos.';
               isValid = false
           }
   
@@ -54,7 +54,7 @@ function CadastroVendas() {
             errors.cell_phone = 'O telefone é obrigatório.';
             isValid = false
         } else if (cell_phone.length !== 11 ) {
-            errors.cell_phone = 'O telefone tem que possuir 11 caracteres';
+            errors.cell_phone = 'O telefone tem que possuir 11 caracteres, e não precisa dos pontos';
             isValid = false
         }
 
@@ -62,7 +62,7 @@ function CadastroVendas() {
             errors.cep = 'O CEP é obrigatório.';
             isValid = false
         } else if (cep.length !== 8 ) {
-            errors.cep = 'O CEP tem que possuir 8 caracteres';
+            errors.cep = 'O CEP tem que possuir 8 caracteres, e não precisa dos pontos';
             isValid = false
         }
   
@@ -143,107 +143,108 @@ function CadastroVendas() {
       }
   
     return (
-    <div className='container'>
+    <div className='container1'>
   
         <div className="box">
+           
           <form onSubmit={handleSubmit}>
-          <h1 className='titulo'>Cadastro de Vendas</h1>
-            
+          <h1 className='titulo' color=''>Cadastro de Vendas</h1>
+            <div className='alignment'>
             <div className='insertText'>
               <label>CPF:</label>
   
-              <input type="text" placeholder='Cpf' onChange={(e)=> setCpf(e.target.value)} required />
+              <input type="text" placeholder='' onChange={(e)=> setCpf(e.target.value)} required />
               {errors.cpf && <p style={{ color: 'red' }}>{errors.cpf}</p>}
             </div>
             
-            
-            <div className='insertText'>
+            <div className='insertText' >
               <label>Data do cadastro do cliente:</label>
   
-              <input type="text" placeholder='registration_date' onChange={(e)=> setRegistration_date(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setRegistration_date(e.target.value)} required/>
               {errors.registration_date && <p style={{ color: 'red' }}>{errors.registration_date}</p>}
             </div>
 
             <div className='insertText'>
               <label>Nome do cliente:</label>
   
-              <input type="text" placeholder='client_name' onChange={(e)=> setClient_name(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setClient_name(e.target.value)} required/>
               {errors.client_name && <p style={{ color: 'red' }}>{errors.client_name}</p>}
             </div>
           
             <div className='insertText'>
               <label>Telefone/Celular:</label>
   
-              <input type="text" placeholder='cell_phone' onChange={(e)=> setCell_phone(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setCell_phone(e.target.value)} required/>
               {errors.cell_phone && <p style={{ color: 'red' }}>{errors.cell_phone}</p>}
             </div>
            
             <div className='insertText'>
               <label>CEP:</label>
   
-              <input type="text" placeholder='cep' onChange={(e)=> setCEP(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setCEP(e.target.value)} required/>
               {errors.cep && <p style={{ color: 'red' }}>{errors.cep}</p>}
             </div>
            
             <div className='insertText'>
               <label>Bairro:</label>
   
-              <input type="text" placeholder='neighborhood' onChange={(e)=> setNeighborhood(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setNeighborhood(e.target.value)} required/>
               {errors.neighborhood && <p style={{ color: 'red' }}>{errors.neighborhood}</p>}
             </div>
             
             <div className='insertText'>
               <label>Cidade:</label>
   
-              <input type="text" placeholder='city' onChange={(e)=> setCity(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setCity(e.target.value)} required/>
               {errors.city && <p style={{ color: 'red' }}>{errors.city}</p>}
             </div>
             
             <div className='insertText'>
               <label>Estado:</label>
   
-              <input type="text" placeholder='state' onChange={(e)=> setState(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setState(e.target.value)} required/>
               {errors.state && <p style={{ color: 'red' }}>{errors.state}</p>}
             </div>
             
             <div className='insertText'>
               <label>Rua:</label>
   
-              <input type="text" placeholder='street' onChange={(e)=> setStreet(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setStreet(e.target.value)} required/>
               {errors.street && <p style={{ color: 'red' }}>{errors.street}</p>}
             </div>
            
             <div className='insertText'>
               <label>Número:</label>
   
-              <input type="text" placeholder='number' onChange={(e)=> setNumber(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setNumber(e.target.value)} required/>
               {errors.number && <p style={{ color: 'red' }}>{errors.number}</p>}
             </div>
             
             <div className='insertText'>
               <label>Código do produto:</label>
   
-              <input type="text" placeholder='product_code' onChange={(e)=> setProduct_code(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setProduct_code(e.target.value)} required/>
               {errors.product_code && <p style={{ color: 'red' }}>{errors.product_code}</p>}
             </div>
             
             <div className='insertText'>
               <label>Data da venda:</label>
   
-              <input type="text" placeholder='date_sale' onChange={(e)=> setDate_sale(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setDate_sale(e.target.value)} required/>
               {errors.date_sale && <p style={{ color: 'red' }}>{errors.date_sale}</p>}
             </div>
             
             <div className='insertText'>
               <label>Código do vendedor:</label>
   
-              <input type="text" placeholder='seller_code' onChange={(e)=> setSeller_code(e.target.value)} required/>
+              <input type="text" placeholder='' onChange={(e)=> setSeller_code(e.target.value)} required/>
               {errors.seller_code && <p style={{ color: 'red' }}>{errors.seller_code}</p>}
             </div>
-  
+            </div>
             <div className='botaoEnvia'>
               <button type='submit'>Cadastrar Venda</button>
             </div>
+          
           </form>
         </div>
       </div>
