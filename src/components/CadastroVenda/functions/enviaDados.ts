@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default function enviarDadosParaBackend(cpf: string, registration_Date:string, clientName:string, cell_Phone:string, cep:string, neighborhood:string, city:string, state:string, street:string, number:string, product_Code:string, date_Sale:string, seller_Code:string) {
   // Substitua 'url_do_seu_backend' pela URL do seu servidor backend
-  const url = 'http://localhost:3000/api/v1/auth/CadastroVenda';
+  const url = 'http://localhost:3000/api/v1/auth/register';
 
   // Crie o objeto com os dados que você deseja enviar
   const userData = {
