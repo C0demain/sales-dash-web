@@ -8,6 +8,7 @@ function SystemComission () {
     const [percentage, setPercentage] = useState('')
 
     const [errors, setErrors] = useState({Title: '', percentage: ''})
+    const [sucess, setSucess] = useState('')
 
     const validate = () => {
         let isValid = true;
@@ -28,6 +29,7 @@ function SystemComission () {
         } 
         }
 
+        setSucess('Cadastro realizado!')
         setErrors(errors)
         return isValid
     }
@@ -60,6 +62,7 @@ function SystemComission () {
                 <input type="text" placeholder='X%' onChange={(e)=> setPercentage(e.target.value)} required />
                 {errors.percentage && <p style={{ color: 'red' }}>{errors.percentage}</p>}
               </div>
+                {sucess && <p style={{color: 'green'}}>{sucess}</p>}
                 <button className='botaoEnvia' type='submit'>Cadastrar</button>
             </form>
           </div>
