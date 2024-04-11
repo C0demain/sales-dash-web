@@ -23,110 +23,110 @@ function CadastroVendas() {
   
       const validate = () => {
           let isValid = true;
-          const errors = { cpf: '', registration_date: '', client_name: '', cell_phone: '', cep:'', neighborhood:'', city:'', state:'', street:'', number:'', product_code: '', date_sale: '', seller_code: ''} };
+          const errors = { cpf: '', registration_date: '', client_name: '', cell_phone: '', cep:'', neighborhood:'', city:'', state:'', street:'', number:'', product_code: '', date_sale: '', seller_code: ''};
   
           if(!cpf){
             errors.cpf = 'É obrigatório confirmar um CPF.'
-            const isValid = false
+            isValid = false
         }  else if(isValidCPF(cpf)){
             errors.cpf = 'Esse CPF é inválido'
-            const isValid = false
+            isValid = false
         } 
 
 
           if (!registration_date) {
               errors.registration_date = 'O Data do cadastro do cliente é obrigatório.';
-              const isValid = false;
-          } else if (registration_date.length != 8 ) {
+              isValid = false
+          } else if (registration_date.length !== 8 ) {
               errors.registration_date = 'A data tem que possuir o dia, mês e ano.';
-              const isValid = false;
+              isValid = false
           }
   
           if (!client_name) {
             errors.client_name = 'O nome do cliente é obrigatório.';
-            const isValid = false;
+            isValid = false
         } else if (client_name.length < 3) {
             errors.client_name = 'O nome deve ter mais de 3 caracteres.';
-            const isValid = false;
+            isValid = false
         }
 
         if (!cell_phone) {
             errors.cell_phone = 'O telefone é obrigatório.';
-            const isValid = false;
-        } else if (cell_phone.length != 11 ) {
+            isValid = false
+        } else if (cell_phone.length !== 11 ) {
             errors.cell_phone = 'O telefone tem que possuir 11 caracteres';
-            const isValid = false;
+            isValid = false
         }
 
         if (!cep) {
             errors.cep = 'O CEP é obrigatório.';
-            const isValid = false;
-        } else if (cep.length != 8 ) {
+            isValid = false
+        } else if (cep.length !== 8 ) {
             errors.cep = 'O CEP tem que possuir 8 caracteres';
-            const isValid = false;
+            isValid = false
         }
   
         if (!neighborhood) {
             errors.neighborhood = 'O bairro é obrigatório.';
-            const isValid = false;
+            isValid = false
         } else if (neighborhood.length < 3 ) {
             errors.neighborhood = 'O bairro deve ter mais que 3 caracteres';
-            const isValid = false;
+            isValid = false
         }
 
         if (!city) {
             errors.city = 'A cidade é obrigatório.';
-            const isValid = false;
+            isValid = false
         } else if (city.length < 3 ) {
             errors.city = 'A cidade deve ter mais que 3 caracteres';
-            const isValid = false;
+            isValid = false
         }
 
         if (!state) {
             errors.state = 'O estado é obrigatório.';
-            const isValid = false;
+            isValid = false
         } else if (state.length < 3 ) {
             errors.state = 'o estado deve ter mais que 3 caracteres';
-            const isValid = false;
+            isValid = false
         }
 
         if (!street) {
             errors.street = 'A rua é obrigatório.';
-            const isValid = false;
+            isValid = false
         } else if (street.length < 3 ) {
             errors.street = 'A rua deve ter mais que 3 caracteres';
-            const isValid = false;
+            isValid = false
         }
 
         if (!number) {
             errors.number = 'O numero é obrigatório.';
-            const isValid = false;
-        } else if (number.length == 0 ) {
+            isValid = false
+        } else if (number.length === 0 ) {
             errors.number = 'O numero não pode ter nenhuma valor.';
-            const isValid = false;
+            isValid = false
         }
         
         if (!product_code) {
             errors.product_code = 'O código do produto é obrigatório.';
-            const isValid = false;
-        } else if (product_code.length == 0 ) {
+            isValid = false
+        } else if (product_code.length === 0 ) {
             errors.product_code = 'O código do produto não pode ter nenhuma valor.';
-            const isValid = false;
+            isValid = false
         }
         if (!date_sale) {
             errors.date_sale = 'A data de venda é obrigatório.';
-            const isValid = false;
-        } else if (date_sale.length != 8 ) {
+            isValid = false
+        } else if (date_sale.length !== 8 ) {
             errors.date_sale = 'A data de venda não pode ter nenhuma valor.';
-            const isValid = false;
+            isValid = false
         }
 
         if (!seller_code) {
             errors.seller_code = 'O código do vendedor é obrigatório.';
-            const isValid = false;
-        } else if (seller_code.length == 0 ) {
-            errors.seller_code = '';
-            const isValid = false;
+            isValid = false
+        } else if (seller_code.length === 0 ) {
+            errors.seller_code = 'O código do vendedir não pode ser nulo.';
+            isValid = false
         }
 
   
@@ -138,7 +138,7 @@ function CadastroVendas() {
           if (validate()) {
               // Lógica de submissão do formulário
               
-              enviarDadosParaBackend(cpf, dataCadastroCliente, clientName, Telefone, cep, bairro, cidade, estado, rua, numero, codigoProduto, dataVenda, codigoVendendor)
+              enviarDadosParaBackend(cpf, registration_date, client_name, cell_phone, cep, neighborhood, city, state, street, number, product_code, date_sale, seller_code)
           }
       }
   
@@ -242,11 +242,11 @@ function CadastroVendas() {
             </div>
   
             <div className='botaoEnvia'>
-              <button type='submit'>Cadastrar</button>
+              <button type='submit'>Cadastrar Venda</button>
             </div>
           </form>
         </div>
       </div>
     )
-}
+} 
   export default CadastroVendas
