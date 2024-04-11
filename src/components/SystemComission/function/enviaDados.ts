@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default function enviarDadosParaBackend(title: String, percentage: String) {
   // Substitua 'url_do_seu_backend' pela URL do seu servidor backend
-  const url = 'http://localhost:8000/api/v1/auth/register';
+  const url = 'http://localhost:8000/api/v1/commissions/register';
 
   // Crie o objeto com os dados que você deseja enviar
   const userData = {

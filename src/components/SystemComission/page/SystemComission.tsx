@@ -13,12 +13,17 @@ function SystemComission () {
         let isValid = true;
         const errors = { Title: '', percentage: ''};
 
+        if (typeof title != "string") {
+          errors.Title = 'O título deve ser do tipo texto.';
+          isValid = false;
+
         if (!title) {
             errors.Title = 'O título é obrigatório.';
             isValid = false;
+        }    
 
         if (!percentage) {
-            errors.percentage = 'O email é obrigatório.';
+            errors.percentage = 'A porcentagem é obrigatória.';
             isValid = false;
         } 
         }
@@ -30,7 +35,6 @@ function SystemComission () {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         if (validate()) {
-            // Lógica de submissão do formulário
             
             enviarDadosParaBackend(title, percentage)
         }
@@ -51,7 +55,7 @@ function SystemComission () {
               </div>
     
               <div className='insertText'>
-                <label>percentage do usuário:</label>
+                <label>Porcentagem do usuário:</label>
     
                 <input type="text" placeholder='X%' onChange={(e)=> setPercentage(e.target.value)} required />
                 {errors.percentage && <p style={{ color: 'red' }}>{errors.percentage}</p>}
