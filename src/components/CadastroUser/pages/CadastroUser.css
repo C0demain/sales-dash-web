@@ -3,9 +3,11 @@
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 60%;
 }
-
+label, h1, h4, ol, select{
+    color: white;
+}
 body{
     margin: 0px;
     font-size: 2.5vh;
@@ -13,6 +15,13 @@ body{
 
 option, select, input, button{
     font-size: 2.5vh;
+}
+
+input, select{
+    height: 5vh;
+    border-radius: 1vh;
+    background-color: rgb(41, 41, 41);
+    border-color: black;
 }
 
 #tituloRequisito{
@@ -26,9 +35,9 @@ option, select, input, button{
     display: flex;
     flex-direction: column;
 }
-
-.box{
-    background-color:aquamarine;
+.caixa{
+    box-shadow: black;
+    background-color:#1c1c1c;
     margin: 2%;
     height: auto;
     width: 80vh;
@@ -40,7 +49,7 @@ option, select, input, button{
 }
 .formulario{
     height: auto;
-    width: 100%;
+    width: 90%;
     padding: 0.5%;
     border-radius: 3%;
     display: flex;
@@ -50,10 +59,12 @@ option, select, input, button{
 .insertText{
     height: auto;
     width: 75%;
-    padding-top: 1%;
+    padding-top: 0.5%;
     text-align:start;
     display: flex;
     flex-direction: column;
+    margin-top: 0%;
+    margin-bottom: 0%;
 }
 
 .inputSenha{
@@ -61,11 +72,14 @@ option, select, input, button{
     display: flex;
     flex-direction: column;
 }
-
-.botaoEnvia{
+button{
     margin: 2%;
-    border-radius: 5%;
+    border-radius: 1vh;
+    border: none;
+    height: 5vh;
+    width: max-content;
 }
+
 h4{
     height: min-content;
     margin: 1%;
