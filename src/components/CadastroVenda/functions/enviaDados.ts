@@ -1,24 +1,24 @@
 import axios from 'axios';
 
-export default function enviarDadosParaBackend(cpf: string, dataCadastroCliente:string, clientName:string, Telefone:string, cep:string, bairro:string, cidade:string, estado:string, rua:string, numero:string, codigoProduto:string, dataVenda:string, codigoVendendor:string) {
+export default function enviarDadosParaBackend(cpf: string, registration_Date:string, clientName:string, cell_Phone:string, cep:string, neighborhood:string, city:string, state:string, street:string, number:string, product_Code:string, date_Sale:string, seller_Code:string) {
   // Substitua 'url_do_seu_backend' pela URL do seu servidor backend
-  const url = 'http://localhost:8000/api/v1/auth/CadastroVenda';
+  const url = 'http://localhost:3000/api/v1/auth/CadastroVenda';
 
   // Crie o objeto com os dados que você deseja enviar
   const userData = {
     "cpf": cpf, 
-    "registration_date": dataCadastroCliente, 
+    "registration_date": registration_Date, 
     "client_name": clientName, 
-    "cell_phone": Telefone, 
+    "cell_phone": cell_Phone, 
     "cep": cep, 
-    "neighborhood": bairro, 
-    "city": cidade, 
-    "state": estado, 
-    "street": rua, 
-    "number": numero, 
-    "product_code": codigoProduto, 
-    "date_sale": dataVenda, 
-    "seller_code": codigoVendendor
+    "neighborhood": neighborhood, 
+    "city": city, 
+    "state": state, 
+    "street": street, 
+    "number": number, 
+    "product_code": product_Code, 
+    "date_sale": date_Sale, 
+    "seller_code": seller_Code
   };
 
   // Faça a requisição POST
