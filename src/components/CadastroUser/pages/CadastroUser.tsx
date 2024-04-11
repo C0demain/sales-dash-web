@@ -15,6 +15,7 @@ function CadastroUser() {
     const [cpf, setCpf] = useState('')
     const [funcao, setFuncao] = useState('')
     const [errors, setErrors] = useState({userName: '', email: '', senhaConfirm: '', cpf: '', funcao: '', senha:''})
+    const [sucess, setSucess] = useState('')
 
     const validate = () => {
         let isValid = true;
@@ -68,6 +69,7 @@ function CadastroUser() {
             isValid = false
         } 
 
+        setSucess('Cadastro realizado!')
         setErrors(errors)
         return isValid
     }
@@ -138,8 +140,9 @@ function CadastroUser() {
             </div>
             
           </div>
+              {sucess && <p style={{color: 'green'}}>{sucess}</p>}
 
-            <button className='botaoEnvia' type='submit'>Cadastrar</button>
+              <button className='botaoEnvia' type='submit'>Cadastrar</button>
         </form>
       </div>
     </div>

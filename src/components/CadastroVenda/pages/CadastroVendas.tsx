@@ -144,10 +144,10 @@ function CadastroVendas() {
   
     return (
     <div className='container'>
-        <h1 className='titulo'>Cadastro de Vendas</h1>
   
         <div className="box">
           <form onSubmit={handleSubmit}>
+          <h1 className='titulo'>Cadastro de Vendas</h1>
             
             <div className='insertText'>
               <label>CPF:</label>
