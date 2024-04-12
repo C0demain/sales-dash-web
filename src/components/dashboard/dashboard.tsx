@@ -6,7 +6,7 @@ import './dashboard.css'
 function Dashboard() {
     return(
         <div className="container">
-            <h1>Dashboard Geral</h1>
+            <h1 className="tituloDashboard">Dashboard Geral</h1>
             <div className="box">
                 <ListSells/>
             </div>
