@@ -49,21 +49,25 @@ function SystemComission () {
             <h1 className='titulo'>Cadastro Comissão</h1>
     
             <form className="formulario" onSubmit={handleSubmit}>
+            <div className='insertText'>
+              <select title='Escolha sua função' value={title} onChange={(e)=> setTitle(e.target.value)}>
+                <option value="">Escolha o tipo de comissão</option>
+                <option value="Produto novo cliente novo">Produto novo cliente novo</option>
+                <option value="Produto novo cliente velho">Produto novo cliente velho</option>
+                <option value="Produto velho cliente novo">Produto velho cliente novo</option>
+                <option value="Produto velho cliente velho">Produto velho cliente velho</option>
+              </select>
+              {errors.Title && <p style={{color: 'red'}}>{errors.Title}</p>}
+            </div>
+    
               <div className='insertText'>
-                <label>Título:</label>
+                <label>Valor da venda:</label>
     
-                <input type="text" placeholder='Comissão' onChange={(e)=> setTitle(e.target.value)} required/>
-                {errors.Title && <p style={{ color: 'red' }}>{errors.Title}</p>}
-              </div>
-    
-              <div className='insertText'>
-                <label>Porcentagem do usuário:</label>
-    
-                <input type="text" placeholder='X%' onChange={(e)=> setPercentage(e.target.value)} required />
+                <input type="text" placeholder='Digite o valor da venda' onChange={(e)=> setPercentage(e.target.value)} required />
                 {errors.percentage && <p style={{ color: 'red' }}>{errors.percentage}</p>}
               </div>
                 {sucess && <p style={{color: 'green'}}>{sucess}</p>}
-                <button className='botaoEnvia' type='submit'>Cadastrar</button>
+                <button className='botaoEnvia' type='submit'>Cadastrar Comissão</button>
             </form>
           </div>
         </div>
