@@ -42,7 +42,7 @@ function RankingSellers() {
 
     return(
         <div className="ranking">
-            <h1>Maiores valores vendidos</h1>
+            <h2>Maiores valores vendidos</h2>
             {sellers.length>0 ?
             <Table columns={columns} dataSource={sellers} />
             : <Empty description={"Nenhuma venda encontrada"} />}

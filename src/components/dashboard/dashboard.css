@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+h1{
+    align-self: flex-start;
+    margin-left: 3vh;
+}
+
+.box{
+    margin: 3vh;
+}
+
+.divider{
+    height: 0.2vh;
+    background-color: black;
+    margin: 3vh 3vh;
+}

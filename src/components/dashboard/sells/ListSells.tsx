@@ -47,7 +47,7 @@ const ListSells = ()=>{
 
     return (
         <div className="listSells">
-            <h1>Últimas vendas</h1>
+            <h2>Últimas vendas</h2>
             {sells.length > 0 ?
             <Table columns={columns} dataSource={sells} />
             : <Empty description={"Nenhuma venda encontrada"} />}

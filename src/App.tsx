@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "./components/login";
-import  Home  from "./components/home";
 import { RequireAuth } from "react-auth-kit";
-import ListSells from "./components/dashboard/sells/ListSells";
-import RankingSellers from "./components/dashboard/rankingSellers/rankingSellers";
+import { Dashboard } from "./components/dashboard/dashboard";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -19,18 +17,11 @@ function App() {
           path="/"
           element={
             <RequireAuth loginPath="/login">
-              <Home />
+              <Dashboard/> 
             </RequireAuth>
           }
         ></Route>
-        <Route
-          path="/sells"
-          element={
-              <ListSells />
-          }
-        ></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/ranking" element={<RankingSellers/>}></Route>
       </Routes>
     </AppContainer>
   );
