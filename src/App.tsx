@@ -4,6 +4,7 @@ import { Login } from "./components/login";
 import  Home  from "./components/home";
 import { RequireAuth } from "react-auth-kit";
 import ListSells from "./components/dashboard/sells/ListSells";
+import RankingSellers from "./components/dashboard/rankingSellers/rankingSellers";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -29,6 +30,7 @@ function App() {
           }
         ></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/ranking" element={<RankingSellers/>}></Route>
       </Routes>
     </AppContainer>
   );
