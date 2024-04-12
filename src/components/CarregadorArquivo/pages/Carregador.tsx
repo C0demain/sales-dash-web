@@ -21,7 +21,7 @@ const UploadExcelPage: React.FC = () => {
 
       const jsonData: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-      const headers = ["date", "seller", "seller_cpf", "product", "product_id", "client", "cpf_client", "client_department", "value", "payment_method"];
+      const headers = ["date", "seller", "seller_cpf", "product", "product_Id", "client", "cpf_client", "client_department", "value", "payment_method"];
 
       jsonData.sort((a, b) => {
         const dateA = excelSerialToDate(a[0]);
