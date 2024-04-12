@@ -1,34 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
-li{
-    list-style-type: none;
-    margin:0%;
-    padding: 0;
-    
-}
+
 ul{
     margin:0;
     padding: 0;
 }
+li{
+    width: 100%;
+}
 .navbar{
     background-color: #F7F9F9;
-    width:100%;
-    height: max-content;
+    width:30%;
     padding: 0;
-    
 }
 .Botao_barra{
-    background-color: #F7F9F9;
-    border:none;
+    background-color: #f7f9f9a4;
     height: 8vh;
-    width:100%;
     margin: 0;
     color: #2F4858;
     font-family: 'Karla', sans-serif;
     font-style: light;
     font-size: medium;
-    margin:0;
     text-align: left;
-    padding-left: 7%;
+    width:100%;
 }
 .Botao_barra:hover{
     background-color: #00a0a02f;

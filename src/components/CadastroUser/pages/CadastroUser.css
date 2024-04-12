@@ -1,14 +1,15 @@
 .Página{
     display: flex;
-    grid-auto-flow: column;
+    flex-direction: row;
     width:100%;
     height: max-content;
     padding: 0%;
 }
-.navbar{
-    width:100%;
-    height:max-content;
-    padding:0;
+.erro{
+    color: red;
+}
+.funciona{
+    color: green;
 }
 .container{
     display: flex;
