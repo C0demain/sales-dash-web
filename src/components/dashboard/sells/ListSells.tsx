@@ -9,6 +9,8 @@ const ListSells = ()=>{
     const [userSelect, setUserSelect] = useState<any>()
     const [productOpt, setProductOpt] = useState<any[]>([])
     const [productSelect, setProductSelect] = useState<any>()
+    const [clientOpt, setClientOpt] = useState<any[]>([])
+    const [clientSelect, setClientSelect] = useState<any>()
     
     const columns = [
         {
@@ -42,8 +44,9 @@ const ListSells = ()=>{
         let url = "http://localhost:8000/api/v1/sells/getall/filter"
         const userFilter = userSelect !== undefined ? 'userId=' + userSelect : ""
         const productFilter =  productSelect !== undefined ? 'productId=' + productSelect : ""
+        const clientFilter =  clientSelect !== undefined ? 'clientId=' + clientSelect : ""
         
-        const query = [userFilter, productFilter].join('&')
+        const query = [userFilter, productFilter, clientFilter].join('&')
         url += query !== "&" ? "?" + query : ""
 
 
@@ -54,22 +57,22 @@ const ListSells = ()=>{
       };
     
     const getUsers = async () => {
-    const response = await axios.get("http://localhost:8000/api/v1/auth/users", {
-        withCredentials: false,
-    });
+        const response = await axios.get("http://localhost:8000/api/v1/auth/users", {
+            withCredentials: false,
+        });
 
-    const options = []
-    for(let u of response.data.users){
-        options.push({
-            value: u.id,
-            label: u.name
-        })
-    }
+        const options = []
+        for(let u of response.data.users){
+            options.push({
+                value: u.id,
+                label: u.name
+            })
+        }
 
-    setUserOpt(options)
+        setUserOpt(options)
 
-    };
-    const getProduct = async () => {
+        };
+    const getProducts = async () => {
     const response = await axios.get("http://localhost:8000/api/v1/products/getAll", {
         withCredentials: false,
     });
@@ -85,10 +88,27 @@ const ListSells = ()=>{
     setProductOpt(options)
 
     };
+    const getClients = async () => {
+        const response = await axios.get("http://localhost:8000/api/v1/clients/getclients", {
+            withCredentials: false,
+        });
+
+        const options = []
+        for(let c of response.data.client){
+            options.push({
+                value: c.id,
+                label: c.name
+            })
+        }
+
+        setClientOpt(options)
+
+    };
 
     useEffect(() => { 
         getUsers()
-        getProduct()
+        getProducts()
+        getClients()
         getSells()
         }, [])
 
@@ -98,11 +118,19 @@ const ListSells = ()=>{
             <Cascader 
             options={userOpt}
             onChange={e => {setUserSelect(e)} }
+            placeholder="Escolha um vendedor"
             multiple={false}
             />
             <Cascader 
             options={productOpt}
             onChange={e => {setProductSelect(e)} }
+            placeholder="Escolha um produto"
+            multiple={false}
+            />
+            <Cascader 
+            options={clientOpt}
+            onChange={e => {setClientSelect(e)} }
+            placeholder="Escolha um cliente"
             multiple={false}
             />
             <button onClick={e => {getSells()} } >Filtrar</button>
