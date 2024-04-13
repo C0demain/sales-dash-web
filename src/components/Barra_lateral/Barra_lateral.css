@@ -9,7 +9,7 @@ li{
 }
 .navbar{
     background-color: #F7F9F9;
-    width:30%;
+    width:20%;
     padding: 0;
 }
 .Botao_barra{
@@ -22,6 +22,7 @@ li{
     font-size: medium;
     text-align: left;
     width:100%;
+    padding-left: 7%;
 }
 .Botao_barra:hover{
     background-color: #00a0a02f;
