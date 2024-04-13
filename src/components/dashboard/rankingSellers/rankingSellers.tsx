@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import './rankingSellers.css'
-import { Empty, Table } from "antd";
+import { Empty, Table, Button } from "antd";
 
 function RankingSellers() {
     const [sellers, setSellers] = useState <any[]>([])
@@ -29,7 +29,7 @@ function RankingSellers() {
         },
 
     ]
-    /* TROCAR URL */
+
     const getSellers = async () => {
         const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
           withCredentials: false,
@@ -48,6 +48,7 @@ function RankingSellers() {
     return(
         <div className="ranking">
             <h2>Ranking de vendedores por valor</h2>
+            <Button onClick={e => {getSellers()} }>Recarregar ranking</Button>
             {sellers.length>0 ?
             <Table columns={columns} dataSource={sellers} />
             : <Empty description={"Nenhuma venda encontrada"} />}

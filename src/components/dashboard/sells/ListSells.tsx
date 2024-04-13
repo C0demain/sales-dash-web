@@ -64,6 +64,7 @@ const ListSells = ()=>{
     return (
         <div className="listSells">
             <h2>Últimas vendas</h2>
+            <Button onClick={e => {getSells()} }>Recarregar vendas</Button>
             <div className="filter">
                 <label>Vendedor: </label>
                 <SelectSeller
