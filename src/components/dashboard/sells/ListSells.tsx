@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import './ListSells.css'
-import { Empty, Table, Cascader } from "antd";
+import { Button, Empty, Table } from "antd";
+import SelectSeller from '../widgets/SelectSeller'
+import SelectProduct from "../widgets/SelectProduct";
+import SelectClient from "../widgets/SelectClient";
 
 const ListSells = ()=>{
     const [sells, setSells] = useState<any[]>([])
@@ -56,38 +59,6 @@ const ListSells = ()=>{
         setSells(response.data.sells)
       };
     
-    const getUsers = async () => {
-        const response = await axios.get("http://localhost:8000/api/v1/auth/users", {
-            withCredentials: false,
-        });
-
-        const options = []
-        for(let u of response.data.users){
-            options.push({
-                value: u.id,
-                label: u.name
-            })
-        }
-
-        setUserOpt(options)
-
-        };
-    const getProducts = async () => {
-    const response = await axios.get("http://localhost:8000/api/v1/products/getAll", {
-        withCredentials: false,
-    });
-
-    const options = []
-    for(let p of response.data.products){
-        options.push({
-            value: p.id,
-            label: p.name
-        })
-    }
-
-    setProductOpt(options)
-
-    };
     const getClients = async () => {
         const response = await axios.get("http://localhost:8000/api/v1/clients/getclients", {
             withCredentials: false,
@@ -106,8 +77,6 @@ const ListSells = ()=>{
     };
 
     useEffect(() => { 
-        getUsers()
-        getProducts()
         getClients()
         getSells()
         }, [])
@@ -115,25 +84,26 @@ const ListSells = ()=>{
     return (
         <div className="listSells">
             <h2>Últimas vendas</h2>
-            <Cascader 
-            options={userOpt}
-            onChange={e => {setUserSelect(e)} }
-            placeholder="Escolha um vendedor"
-            multiple={false}
-            />
-            <Cascader 
-            options={productOpt}
-            onChange={e => {setProductSelect(e)} }
-            placeholder="Escolha um produto"
-            multiple={false}
-            />
-            <Cascader 
-            options={clientOpt}
-            onChange={e => {setClientSelect(e)} }
-            placeholder="Escolha um cliente"
-            multiple={false}
-            />
-            <button onClick={e => {getSells()} } >Filtrar</button>
+            <div className="filter">
+                <label>Vendedor: </label>
+                <SelectSeller
+                    controlState={[userSelect, setUserSelect]}
+                    className="select"
+                />
+
+                <label>Produto: </label>
+                <SelectProduct
+                    controlState={[productSelect, setProductSelect]}
+                    className="select"
+                />
+
+                <label>Cliente: </label>
+                <SelectClient
+                    controlState={[clientSelect, setClientSelect]}
+                    className="select"
+                />
+                <Button onClick={e => {getSells()} } >Filtrar</Button>
+            </div>
             {sells.length > 0 ?
             <Table columns={columns} dataSource={sells} />
             : <Empty description={"Nenhuma venda encontrada"} />}

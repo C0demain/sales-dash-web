@@ -22,3 +22,13 @@
 .listSellsGroup > tr:first{
     padding: 10px;
 }
+
+.filter{
+    display: flex;
+    margin: 10px auto;
+    align-items: center;
+}
+
+.filter > .select{
+    margin: 0 10px;
+}
