@@ -43,7 +43,7 @@ function SystemComission () {
     }
 
     return (
-        <div className='container'>
+        <div className='container systemCommission'>
     
           <div className="box">
             <h1 className='titulo'>Cadastro Comissão</h1>

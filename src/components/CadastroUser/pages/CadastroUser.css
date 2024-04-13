@@ -19,7 +19,7 @@
     width: max-content;
 }
 
-label, h1, h4, ol, select{
+.Página label, .Página h1, .Página h4, .Página ol, .Página select{
     color: white;
 }
 body{
@@ -27,11 +27,11 @@ body{
     font-size: 2.5vh;
 }
 
-option, select, input, button{
+.Página option, .Página select, .Página input, .Página button{
     font-size: 2.5vh;
 }
 
-input, select{
+.Página input, .Página select{
     height: 5vh;
     border-radius: 1vh;
     background-color: rgb(41, 41, 41);
@@ -86,7 +86,7 @@ input, select{
     display: flex;
     flex-direction: column;
 }
-button{
+.Página .container button{
     margin: 2%;
     border-radius: 1vh;
     border: none;
@@ -94,7 +94,7 @@ button{
     width: max-content;
 }
 
-h4{
+.Página h4{
     height: min-content;
     margin: 1%;
 }

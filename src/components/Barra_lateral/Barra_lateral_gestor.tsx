@@ -1,9 +1,14 @@
 import './Barra_lateral.css'
 import React from 'react'
 import { Container } from '../commons';
-const Navbargest = () => {
+
+type propsType = {
+  className?: string
+}
+
+const Navbargest = (props: propsType) => {
     return (
-      <div className="navbar">
+      <div className={"navbar " + props.className}>
         <h1>Olá Gestor</h1><br></br>
         <ul>
           <li><button className='Botao_barra'>Dashboard</button></li>
