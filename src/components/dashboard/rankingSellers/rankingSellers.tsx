@@ -8,7 +8,7 @@ function RankingSellers() {
 
     const columns = [
         {
-            title: 'ID',
+            title: 'Posição',
             dataIndex: 'id',
             key: 'id'
         },
@@ -18,15 +18,16 @@ function RankingSellers() {
             key: 'name'
         },
         {
+            title: 'Valor total de vendas',
+            dataIndex: 'value',
+            key: 'value'
+        },
+        {
             title: 'Quantidade de vendas',
             dataIndex: 'productsSold',
             key: 'productsSold'
         },
-        {
-            title: 'Valor total de vendas',
-            dataIndex: 'value',
-            key: 'value'
-        }
+
     ]
     /* TROCAR URL */
     const getSellers = async () => {

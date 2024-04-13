@@ -8,11 +8,8 @@ import SelectClient from "../widgets/SelectClient";
 
 const ListSells = ()=>{
     const [sells, setSells] = useState<any[]>([])
-    const [userOpt, setUserOpt] = useState<any[]>([])
     const [userSelect, setUserSelect] = useState<any>()
-    const [productOpt, setProductOpt] = useState<any[]>([])
     const [productSelect, setProductSelect] = useState<any>()
-    const [clientOpt, setClientOpt] = useState<any[]>([])
     const [clientSelect, setClientSelect] = useState<any>()
     
     const columns = [
@@ -58,26 +55,9 @@ const ListSells = ()=>{
         });
         setSells(response.data.sells)
       };
-    
-    const getClients = async () => {
-        const response = await axios.get("http://localhost:8000/api/v1/clients/getclients", {
-            withCredentials: false,
-        });
 
-        const options = []
-        for(let c of response.data.client){
-            options.push({
-                value: c.id,
-                label: c.name
-            })
-        }
-
-        setClientOpt(options)
-
-    };
 
     useEffect(() => { 
-        getClients()
         getSells()
         }, [])
 
