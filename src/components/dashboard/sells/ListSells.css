@@ -1,0 +1,34 @@
+.listSells{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.listSells > h1{
+    font-size: 26px;
+    margin-bottom: 5%;
+}
+
+.listSellsGroup{
+    margin: 0 auto;
+    width: 90%;
+}
+
+.listSellsGroup th{
+    font-size: 22px;
+}
+
+.listSellsGroup > tr:first{
+    padding: 10px;
+}
+
+.filter{
+    display: flex;
+    margin: 10px auto;
+    align-items: center;
+}
+
+.filter > .select{
+    margin: 0 10px;
+}

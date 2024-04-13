@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "./components/login";
-import  Home  from "./components/home";
 import { RequireAuth } from "react-auth-kit";
 import CadastroUser from "./components/CadastroUser/pages/CadastroUser";
 import SystemComission from "./components/SystemComission/page/SystemComission";
 // import CadastroVendas from "./components/CadastroVenda/pages/CadastroVendas";
 import UploadExcelPage from "./components/CarregadorArquivo/pages/Carregador";
 
+import { Dashboard } from "./components/dashboard/dashboard";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -21,9 +21,7 @@ function App() {
         <Route
           path="/"
           element={
-            <RequireAuth loginPath="/login">
-              <Home />
-            </RequireAuth>
+            <Dashboard/>
           }
         ></Route>
         <Route path="/login" element={<Login />}></Route>
