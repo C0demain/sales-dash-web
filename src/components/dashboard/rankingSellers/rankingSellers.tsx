@@ -19,21 +19,21 @@ function RankingSellers() {
         },
         {
             title: 'Quantidade de vendas',
-            dataIndex: 'allSales',
-            key: 'allSales'
+            dataIndex: 'productsSold',
+            key: 'productsSold'
         },
         {
             title: 'Valor total de vendas',
-            dataIndex: 'totalValue',
-            key: 'totalValue'
+            dataIndex: 'value',
+            key: 'value'
         }
     ]
     /* TROCAR URL */
     const getSellers = async () => {
-        const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking}`, {
+        const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
           withCredentials: false,
         });
-        setSellers(response.data.sells)
+        setSellers(response.data.ranking)
       };
 
     useEffect(() => { 
@@ -42,7 +42,7 @@ function RankingSellers() {
 
     return(
         <div className="ranking">
-            <h2>Maiores valores vendidos</h2>
+            <h2>Ranking de vendedores por valor</h2>
             {sellers.length>0 ?
             <Table columns={columns} dataSource={sellers} />
             : <Empty description={"Nenhuma venda encontrada"} />}
