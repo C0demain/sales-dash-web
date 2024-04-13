@@ -9,8 +9,8 @@ function RankingSellers() {
     const columns = [
         {
             title: 'Posição',
-            dataIndex: 'id',
-            key: 'id'
+            dataIndex: 'rankPosition',
+            key: 'rankPosition'
         },
         {
             title: 'Vendedor',
@@ -34,7 +34,11 @@ function RankingSellers() {
         const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
           withCredentials: false,
         });
-        setSellers(response.data.ranking)
+
+        const ranking = response.data.ranking.map((e: any, k: number) => ({...e, rankPosition: k+1}))
+        
+
+        setSellers(ranking)
       };
 
     useEffect(() => { 
