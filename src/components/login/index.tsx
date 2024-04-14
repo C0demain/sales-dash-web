@@ -32,7 +32,7 @@ function Login(props: any) {
       });
 
       //altera para tela principal
-      navigate("/")
+      navigate("/dashboard")
     } catch (err) {
       if (err && err instanceof AxiosError)
         setError(err.response?.data?.message);

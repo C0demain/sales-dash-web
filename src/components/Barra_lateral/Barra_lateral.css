@@ -27,6 +27,7 @@
     margin: 2%;
     border: none;
     border-radius: 1vh;
+    cursor: pointer;
 }
 .Botao_barra:hover{
     background-color: #00a0a02f;
