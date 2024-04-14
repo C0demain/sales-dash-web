@@ -69,18 +69,21 @@ const ListSells = ()=>{
                 <label>Vendedor: </label>
                 <SelectSeller
                     controlState={[userSelect, setUserSelect]}
+                    dataKey="id"
                     className="select"
                 />
 
                 <label>Produto: </label>
                 <SelectProduct
                     controlState={[productSelect, setProductSelect]}
+                    dataKey="id"
                     className="select"
                 />
 
                 <label>Cliente: </label>
                 <SelectClient
                     controlState={[clientSelect, setClientSelect]}
+                    dataKey="id"
                     className="select"
                 />
                 <Button onClick={e => {getSells()} } >Filtrar</Button>
