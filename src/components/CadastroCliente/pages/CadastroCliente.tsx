@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import './CadastroCliente.css'
-import isValidCPF from '../functions/validarCPF'
-import enviarDadosParaBackend from '../functions/enviaDados'
 import Navbargest from '../../Barra_lateral/Barra_lateral_gestor'
 import NavbarWrapper from '../../Barra_lateral/NavbarWrapper/NavbarWrapper'
+import enviarDadosParaBackend from '../functions/enviaDados'
+import isValidCPF from '../functions/validarCPF'
+import './CadastroCliente.css'
 
 function CadastroCliente() {
-
-  const regex = /^(?=.*[!@#$%^&*()_+{}\]:;<>,.?~])(?=.*[0-9])(?=.*[a-zA-Z]).*$/
-
+  
   const [clientName, setClientName] = useState('')
   const [segment, setSegment] = useState('')
   const [cpf, setCpf] = useState('')

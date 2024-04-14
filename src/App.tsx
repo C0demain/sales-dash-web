@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "./components/login";
-import { RequireAuth } from "react-auth-kit";
 import CadastroUser from "./components/CadastroUser/pages/CadastroUser";
 import CadastroProduto from "./components/CadastroProduto/pages/CadastroProduto";
 import CadastroCliente from "./components/CadastroCliente/pages/CadastroCliente";

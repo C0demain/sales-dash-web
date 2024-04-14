@@ -1,14 +1,10 @@
 import { useState } from 'react'
-import React from 'react'
-import './CadastroProduto.css'
-import enviarDadosParaBackend from '../functions/enviaDados'
 import Navbargest from '../../Barra_lateral/Barra_lateral_gestor'
 import NavbarWrapper from '../../Barra_lateral/NavbarWrapper/NavbarWrapper'
-import Value from 'baseui/select/value'
+import enviarDadosParaBackend from '../functions/enviaDados'
+import './CadastroProduto.css'
 
 function CadastroProduto() {
-
-  const regex = /^(?=.*[!@#$%^&*()_+{}\]:;<>,.?~])(?=.*[0-9])(?=.*[a-zA-Z]).*$/
 
   const [productName, setProductName] = useState('')
   const [description, setDescription] = useState('')
