@@ -25,6 +25,7 @@ function App() {
             <Dashboard/>
           }
         ></Route>
+        <Route path="/" element={<Login />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path='/sellers/register' element={<CadastroUser/>}></Route>
         <Route path='/commissions/register' element={<SystemComission/>}></Route>

@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 
 type propsType = {
     controlState: any[],
+    dataKey: string,
     className?: string
 }
 
 const SelectSeller = (props: propsType) =>{
     const [userOpt, setUserOpt] = useState<any[]>([])
     const [controlState, setControlState] = props.controlState
-    const { className } = props
+    const { dataKey, className } = props
 
     const getSellers = async () => {
         const response = await axios.get("http://localhost:8000/api/v1/auth/users", {
@@ -20,7 +21,7 @@ const SelectSeller = (props: propsType) =>{
         const options = []
         for(let u of response.data.users){
             options.push({
-                value: u.id,
+                value: u[dataKey],
                 label: u.name
             })
         }

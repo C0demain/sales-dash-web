@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 
 type propsType = {
     controlState: any[],
+    dataKey: string,
     className?: string
 }
 
 const SelectProduct = (props: propsType) =>{
     const [productOpt, setProductOpt] = useState<any[]>([])
     const [controlState, setControlState] = props.controlState
-    const { className } = props
+    const { dataKey, className } = props
 
     const getProducts = async () => {
         const response = await axios.get("http://localhost:8000/api/v1/products/getAll", {
@@ -20,7 +21,7 @@ const SelectProduct = (props: propsType) =>{
         const options = []
         for(let p of response.data.products){
             options.push({
-                value: p.id,
+                value: p[dataKey],
                 label: p.name
             })
         }
