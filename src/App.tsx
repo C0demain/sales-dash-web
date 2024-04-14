@@ -8,6 +8,7 @@ import SystemComission from "./components/SystemComission/page/SystemComission";
 import UploadExcelPage from "./components/CarregadorArquivo/pages/Carregador";
 
 import { Dashboard } from "./components/dashboard/dashboard";
+import { CadastroVenda } from "./components/cadastroVendas/pages/cadastroVenda";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -27,8 +28,8 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path='/sellers/register' element={<CadastroUser/>}></Route>
         <Route path='/commissions/register' element={<SystemComission/>}></Route>
-        {/* <Route path='/cadastroVendas' element={<CadastroVendas/>}></Route> */}
         <Route path ='/sells/table' element= {<UploadExcelPage/>}></Route>
+        <Route path="/sells/register" element={<CadastroVenda/>}></Route>
       </Routes>
     </AppContainer>
   );
