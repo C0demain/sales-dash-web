@@ -3,13 +3,12 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    width: 90%;
     margin: 0 auto;
 }
 
 .tituloDashboard{
     align-self: flex-start;
-    margin-left: 3vh;
+    margin-left: 10%;
 }
 
 .box{

@@ -1,21 +1,15 @@
 import './Barra_lateral.css'
-import React from 'react'
-import { Container } from '../commons';
+import { Link, useNavigate } from 'react-router-dom';
 
-type propsType = {
-  className?: string
-}
-
-const Navbargest = (props: propsType) => {
+const Navbargest = () => {
+    const navigate = useNavigate()
     return (
-      <div className={"navbar " + props.className}>
+      <div className="navbar">
         <h1>Olá Gestor</h1><br></br>
         <ul>
-          <li><button className='Botao_barra'>Dashboard</button></li>
-          <li><button className='Botao_barra'>Cadastro de Vendas</button></li>
-          <li><button className='Botao_barra'>Cadastro de Vendedor</button></li>
-          <li><button className='Botao_barra'>Cadastro de Produtos</button></li>
-          <li><button className='Botao_barra'>Ranking</button></li>
+          <li><button onClick={e => navigate('/dashboard')} className='Botao_barra'>Dashboard</button></li>
+          <li><button onClick={e => navigate('/sells/table')}className='Botao_barra'>Cadastro de Vendas por Planilha</button></li>
+          <li><button onClick={e => navigate('/sellers/register')}className='Botao_barra'>Cadastro de Vendedor</button></li>
         </ul>
       </div>
     );

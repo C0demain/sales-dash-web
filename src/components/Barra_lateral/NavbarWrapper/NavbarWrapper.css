@@ -1,0 +1,14 @@
+.navbarWrapper{
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.navbarWrapper > div:nth-child(1){
+    flex-grow: 0;
+}
+
+.navbarWrapper > div:nth-child(2){
+    width: auto;
+    flex-grow: 100;
+}

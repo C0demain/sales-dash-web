@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
 
+.navbar{
+    background-color: #F7F9F9;
+    width: 20%;
+    padding: 0;
+}
 .navbar ul{
     margin:0;
     padding: 0;
@@ -7,11 +12,7 @@
 .navbar li{
     width: 100%;
 }
-.navbar{
-    background-color: #F7F9F9;
-    width: 20%;
-    padding: 0;
-}
+
 .Botao_barra{
     background-color: #f7f9f9a4;
     height: 8vh;

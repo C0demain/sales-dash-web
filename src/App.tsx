@@ -19,16 +19,16 @@ function App() {
     <AppContainer>
       <Routes>
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <Dashboard/>
           }
         ></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path='/cadastro' element={<CadastroUser/>}></Route>
-        <Route path='/comission' element={<SystemComission/>}></Route>
+        <Route path='/sellers/register' element={<CadastroUser/>}></Route>
+        <Route path='/commissions/register' element={<SystemComission/>}></Route>
         {/* <Route path='/cadastroVendas' element={<CadastroVendas/>}></Route> */}
-        <Route path ='/table' element= {<UploadExcelPage/>}></Route>
+        <Route path ='/sells/table' element= {<UploadExcelPage/>}></Route>
       </Routes>
     </AppContainer>
   );

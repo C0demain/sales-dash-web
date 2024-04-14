@@ -4,6 +4,7 @@ import './CadastroUser.css'
 import isValidCPF from '../functions/validarCPF'
 import enviarDadosParaBackend from '../functions/enviaDados'
 import Navbargest from '../../Barra_lateral/Barra_lateral_gestor'
+import NavbarWrapper from '../../Barra_lateral/NavbarWrapper/NavbarWrapper'
 
 function CadastroUser() {
 
@@ -84,71 +85,73 @@ function CadastroUser() {
     }
 
   return (
-  <div className='Página'>
-        <Navbargest/>
+      <NavbarWrapper>
+      <Navbargest/>
+        <div className='Página'>
 
-      <div className='container'>
+        <div className='container'>
 
-        <div className="caixa">
-          <h1 className='titulo'>Cadastro de Usuário</h1>
+          <div className="caixa">
+            <h1 className='titulo'>Cadastro de Usuário</h1>
 
-          <form className="formulario" onSubmit={handleSubmit}>
-            <div className='insertText'>
-              <label>Nome:</label>
+            <form className="formulario" onSubmit={handleSubmit}>
+              <div className='insertText'>
+                <label>Nome:</label>
 
-              <input type="text" placeholder='Nome completo' onChange={(e)=> setUserName(e.target.value)} required/>
-              {errors.userName && <p className='erro'>{errors.userName}</p>}
-            </div>
-
-            <div className='insertText'>
-              <label>CPF do usuário:</label>
-
-              <input type="text" placeholder='000.000.000-00' onChange={(e)=> setCpf(e.target.value)} required />
-              {errors.cpf && <p className='erro'>{errors.cpf}</p>}
-            </div>
-
-            <div className='insertText'>
-              <label>Email do usuário:</label>
-
-              <input type="email" placeholder='Email' onChange={(e)=> setEmail(e.target.value)} required />
-              {errors.email && <p className='erro'>{errors.email}</p>}
-            </div>
-
-            <div className='insertText'>
-              <select title='Escolha sua função' value={funcao} onChange={(e)=> setFuncao(e.target.value)}>
-                <option value="">Escolha sua função</option>
-                <option value="user">Vendedor</option>
-                <option value="admin">Gestor</option>
-              </select>
-              {errors.funcao && <p className='erro'>{errors.funcao}</p>}
-            </div>
-
-            <div className='senhas'>
-              <h4>A senha deve conter:</h4>
-              <ol>
-                <li>8 ou mais caractéres.</li>
-                <li>Ao menos 1 número.</li>
-                <li>Ao menos 1 digito especial.</li>
-              </ol>
-              <div className='inputSenha'>
-                <label >Digite uma senha:</label>
-                <input type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)}/>
-                {errors.senha && <p className='erro'>{errors.senha}</p>}
+                <input type="text" placeholder='Nome completo' onChange={(e)=> setUserName(e.target.value)} required/>
+                {errors.userName && <p className='erro'>{errors.userName}</p>}
               </div>
-              
-              <div className='inputSenha'>
-                <label >Confirme sua senha:</label>
-                <input type="password" placeholder='Confirme sua senha' required onChange={(e)=> setSenhaConfirm(e.target.value)}/>
-                {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
+
+              <div className='insertText'>
+                <label>CPF do usuário:</label>
+
+                <input type="text" placeholder='000.000.000-00' onChange={(e)=> setCpf(e.target.value)} required />
+                {errors.cpf && <p className='erro'>{errors.cpf}</p>}
               </div>
-              
-            </div>
-                {sucess && <p className='funciona'>{sucess}</p>}
-                <button type='submit'>Cadastrar</button>
-          </form>
+
+              <div className='insertText'>
+                <label>Email do usuário:</label>
+
+                <input type="email" placeholder='Email' onChange={(e)=> setEmail(e.target.value)} required />
+                {errors.email && <p className='erro'>{errors.email}</p>}
+              </div>
+
+              <div className='insertText'>
+                <select title='Escolha sua função' value={funcao} onChange={(e)=> setFuncao(e.target.value)}>
+                  <option value="">Escolha sua função</option>
+                  <option value="user">Vendedor</option>
+                  <option value="admin">Gestor</option>
+                </select>
+                {errors.funcao && <p className='erro'>{errors.funcao}</p>}
+              </div>
+
+              <div className='senhas'>
+                <h4>A senha deve conter:</h4>
+                <ol>
+                  <li>8 ou mais caractéres.</li>
+                  <li>Ao menos 1 número.</li>
+                  <li>Ao menos 1 digito especial.</li>
+                </ol>
+                <div className='inputSenha'>
+                  <label >Digite uma senha:</label>
+                  <input type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)}/>
+                  {errors.senha && <p className='erro'>{errors.senha}</p>}
+                </div>
+                
+                <div className='inputSenha'>
+                  <label >Confirme sua senha:</label>
+                  <input type="password" placeholder='Confirme sua senha' required onChange={(e)=> setSenhaConfirm(e.target.value)}/>
+                  {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
+                </div>
+                
+              </div>
+                  {sucess && <p className='funciona'>{sucess}</p>}
+                  <button type='submit'>Cadastrar</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </NavbarWrapper>
   )
 }
 
