@@ -15,6 +15,7 @@ export function CadastroVenda(){
   const [client, setClient] = useState<any>()
   const [product, setProduct] = useState<any>()
   const [errors, setErrors] = useState({seller:'', client:'', product:''})   
+  const [sucess, setSucess] = useState('')
   
     /* VALIDANDO INFORMAÇÕES UTILIZADAS */
 
@@ -44,6 +45,7 @@ export function CadastroVenda(){
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (validate()) {
+          setSucess('Cadastro realizado!')
           enviarDadosParaBackend(seller[0], client[0], product[0])   
           console.log(seller[0], client[0], product[0])        
         }
@@ -82,7 +84,7 @@ export function CadastroVenda(){
 
             {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
           </div>
-            
+            {sucess && <p className='funciona'>{sucess}</p>}
             <button className='botaoEnvia' type='submit'>Cadastrar</button>
         </form>
       </div>

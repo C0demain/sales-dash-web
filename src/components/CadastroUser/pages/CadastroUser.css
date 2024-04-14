@@ -19,7 +19,7 @@
     width: max-content;
 }
 
-.Página label, .Página h1, .Página h4, .Página ol, .Página select{
+.Página label, .Página h1, .Página h4, .Página ol, .Página select, .Página input{
     color: white;
 }
 body{
