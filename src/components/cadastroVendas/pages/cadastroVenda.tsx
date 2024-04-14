@@ -61,7 +61,7 @@ export function CadastroVenda(){
         event.preventDefault();
         if (validate()) {
           setSucess('Cadastro realizado!')
-          enviarDadosParaBackend(date, seller, client, product, value)
+          enviarDadosParaBackend(date, seller[0], client[0], product[0], value)
         }
     }
 

@@ -4,12 +4,13 @@ import { Login } from "./components/login";
 import CadastroUser from "./components/CadastroUser/pages/CadastroUser";
 import CadastroProduto from "./components/CadastroProduto/pages/CadastroProduto";
 import CadastroCliente from "./components/CadastroCliente/pages/CadastroCliente";
-import SystemComission from "./components/SystemComission/page/SystemComission";
+import CommissionRegister from "./components/SystemComission/page/CommissionRegister";
 // import CadastroVendas from "./components/CadastroVenda/pages/CadastroVendas";
 import UploadExcelPage from "./components/CarregadorArquivo/pages/Carregador";
 
 import { Dashboard } from "./components/dashboard/dashboard";
 import { CadastroVenda } from "./components/cadastroVendas/pages/cadastroVenda";
+import CommissionList from "./components/SystemComission/page/CommissionList";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -29,7 +30,9 @@ function App() {
         <Route path="/" element={<Login />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path='/sellers/register' element={<CadastroUser/>}></Route>
-        <Route path='/commissions/register' element={<SystemComission/>}></Route>
+        <Route path='/commissions/register' element={<CommissionRegister/>}></Route>
+        <Route path='/commissions' element={<CommissionList/>}></Route>
+        <Route path='/commissions/register' element={<CommissionRegister/>}></Route>
         <Route path ='/sells/table' element= {<UploadExcelPage/>}></Route>
         <Route path="/sells/register" element={<CadastroVenda/>}></Route>
         <Route path='/product/register' element={<CadastroProduto/>}></Route>

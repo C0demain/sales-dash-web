@@ -3,10 +3,3 @@ export interface IComission {
     title: string;
     percentage: string;
 }
-
-export const dummyComissionList: IComission[] = [{
-    id: new Date().toJSON().toString(),
-    title: "erick",
-    percentage: "0.3"
-},
-];

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default function enviarDadosParaBackend(title: String, percentage: String) {
+export default function enviarDadosParaBackend(title: string, percentage: number|undefined) {
   // Substitua 'url_do_seu_backend' pela URL do seu servidor backend
   const url = 'http://localhost:8000/api/v1/commissions/register';
 

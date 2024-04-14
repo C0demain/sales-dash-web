@@ -38,7 +38,7 @@ const SelectSeller = (props: propsType) =>{
         <>
             <Cascader
             options={userOpt}
-            onChange={e => {setControlState(e.toString())} }
+            onChange={e => {setControlState(e)} }
             placeholder="Escolha um vendedor"
             className={className}
             showSearch
