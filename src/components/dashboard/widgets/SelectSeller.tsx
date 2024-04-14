@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 type propsType = {
-    controlState: any[],
+    controlState: any,
     dataKey: string,
     className?: string
 }
@@ -38,9 +38,8 @@ const SelectSeller = (props: propsType) =>{
         <>
             <Cascader
             options={userOpt}
-            onChange={e => {setControlState(e)} }
+            onChange={e => {setControlState(e.toString())} }
             placeholder="Escolha um vendedor"
-            multiple={false}
             className={className}
             showSearch
             />

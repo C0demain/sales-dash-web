@@ -49,7 +49,7 @@ body{
     display: flex;
     flex-direction: column;
 }
-.box{
+.cadastroVenda .box{
     box-shadow: black;
     background-color:#5d5d5d;
     margin: 2%;

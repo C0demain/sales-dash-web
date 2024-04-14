@@ -39,9 +39,8 @@ const SelectClient = (props: propsType) =>{
         <>
             <Cascader
             options={clientOpt}
-            onChange={e => {setControlState(e)} }
+            onChange={e => {setControlState(e.toString())} }
             placeholder="Escolha um cliente"
-            multiple={false}
             className={className}
             showSearch
             />

@@ -9,19 +9,29 @@ import type {DefaultOptionType} from 'antd/es/select'
 import enviarDadosParaBackend from '../functions/enviaDadosVenda'
 import Navbargest from "../../Barra_lateral/Barra_lateral_gestor";
 import NavbarWrapper from "../../Barra_lateral/NavbarWrapper/NavbarWrapper";
+import { DatePicker, InputNumber } from 'antd'
+import dayjs from 'dayjs'
 
 export function CadastroVenda(){
   const [seller, setSeller] = useState<any>()
   const [client, setClient] = useState<any>()
   const [product, setProduct] = useState<any>()
-  const [errors, setErrors] = useState({seller:'', client:'', product:''})   
+  const [date, setDate] = useState<any>()
+  const [value, setValue] = useState<any>()
+  const [errors, setErrors] = useState({date: '', seller:'', client:'', product:'', value: ''})   
   const [sucess, setSucess] = useState('')
   
     /* VALIDANDO INFORMAÇÕES UTILIZADAS */
 
     const validate = () =>{
         let isValid = true
-        const errors = {seller: '', client: '', product: ''}
+        const errors = {date: '', seller: '', client: '', product: '', value: ''}
+
+        if(!date){
+          errors.date = 'Você deve preencher a data da venda.'
+          isValid = false
+        }
+
 
         if(!seller){
           errors.seller = 'Você deve preencher o e-mail de vendedor.'
@@ -38,6 +48,11 @@ export function CadastroVenda(){
           isValid = false
         }
 
+        if(!value){
+          errors.value = 'Você deve preencher o valor.'
+          isValid = false
+        }
+
         setErrors(errors)
         return isValid
     }
@@ -46,23 +61,37 @@ export function CadastroVenda(){
         event.preventDefault();
         if (validate()) {
           setSucess('Cadastro realizado!')
-          enviarDadosParaBackend(seller[0], client[0], product[0])   
-          console.log(seller[0], client[0], product[0])        
+          enviarDadosParaBackend(date, seller, client, product, value)
         }
+    }
+
+    const formatDate = (date: dayjs.Dayjs) =>{
+      return date.format('DD/MM/YYYY')
+    }
+
+    const parseValue = (value: any) =>{
+      return parseFloat(value?.replace(',', '.'))
     }
 
     return(
       <NavbarWrapper>
       <Navbargest/>
 
-      <div className='container'>
+      <div className='container cadastroVenda'>
 
       <div className="box">
         <h1 className='titulo'>Registro de nova venda!</h1>
 
         <form className="formulario" onSubmit={handleSubmit}>
           <div className='insertText'>
-            <label>Email do vendedor (selecione vendedores da lista):</label>
+            <label>Data da venda:</label>
+
+            <DatePicker onChange={e => {setDate(formatDate(e))} } format={'DD/MM/YYYY'} />
+
+            {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
+          </div>
+          <div className='insertText'>
+            <label>Vendedor</label>
 
             <SelectSeller controlState={[seller, setSeller]} dataKey="cpf" className='selectVendas'/>
 
@@ -70,7 +99,7 @@ export function CadastroVenda(){
           </div>
 
           <div className='insertText'>
-            <label>CPF do comprador (selecione clientes da lista):</label>
+            <label>Cliente</label>
 
             <SelectClient controlState={[client, setClient]} dataKey='cpf' className='selectVendas'/>
 
@@ -78,11 +107,19 @@ export function CadastroVenda(){
           </div>
 
           <div className='insertText'>
-            <label>Produto vendido (escolha um produto da lista):</label>
+            <label>Produto</label>
 
             <SelectProduct controlState={[product, setProduct]} dataKey='id' className='selectProduct'/>
 
             {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
+          </div>
+
+          <div className='insertText'>
+            <label>Valor da venda</label>
+
+            <InputNumber addonBefore="R$" onChange={e => {setValue(parseValue(e))} } stringMode/>
+
+            {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
           </div>
             {sucess && <p className='funciona'>{sucess}</p>}
             <button className='botaoEnvia' type='submit'>Cadastrar</button>

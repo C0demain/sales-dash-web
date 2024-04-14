@@ -38,9 +38,8 @@ const SelectProduct = (props: propsType) =>{
         <>
             <Cascader
             options={productOpt}
-            onChange={e => {setControlState(e)} }
+            onChange={e => {setControlState(e.toString())} }
             placeholder="Escolha um produto"
-            multiple={false}
             className={className}
             showSearch
             />

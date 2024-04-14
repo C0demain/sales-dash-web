@@ -3,6 +3,7 @@
 .navbar{
     background-color: #F7F9F9;
     width: 20%;
+    min-height: 100vh;
     padding: 0;
 }
 .navbar ul{

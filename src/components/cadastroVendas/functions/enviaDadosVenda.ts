@@ -1,14 +1,16 @@
 import axios from 'axios';
 
-export default function enviarDadosParaBackend(seller: string, client: string, product: number) {
+export default function enviarDadosParaBackend(date: string, seller: string, client: string, product: number, value: number) {
   // Substitua 'url_do_seu_backend' pela URL do seu servidor backend
   const url = 'http://localhost:8000/api/v1/sells/register';
 
   // Crie o objeto com os dados que você deseja enviar
   const userData = {
+    'date': date,
     'seller_cpf': seller,
     'cpf_client': client,
     'product_id': product,
+    'value' : value
   };
 
   // Faça a requisição POST
