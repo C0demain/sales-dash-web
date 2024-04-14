@@ -19,7 +19,9 @@ const Navbargest = () => {
           <li><button onClick={e => navigate('/dashboard')} className='Botao_barra'>Dashboard</button></li>
           <li><button onClick={e => navigate('/sells/table')}className='Botao_barra'>Cadastro de Vendas por Planilha</button></li>
           <li><button onClick={e => navigate('/sells/register')} className='Botao_barra'>Cadastro de venda manual</button></li>
-          <li><button onClick={e => navigate('/sellers/register')}className='Botao_barra'>Cadastro de Vendedor</button></li>
+          <li><button onClick={e => navigate('/sellers/register')}className='Botao_barra'>Cadastro de Vendedores</button></li>
+          <li><button onClick={e => navigate('/product/register')}className='Botao_barra'>Cadastro de Produtos</button></li>
+          <li><button onClick={e => navigate('/client/register')}className='Botao_barra'>Cadastro de Clientes</button></li>
           <li><button onClick={e => logout()} className='Botao_barra'>Sair da conta</button></li>
         </ul>
       </div>

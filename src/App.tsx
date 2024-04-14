@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "./components/login";
 import { RequireAuth } from "react-auth-kit";
 import CadastroUser from "./components/CadastroUser/pages/CadastroUser";
+import CadastroProduto from "./components/CadastroProduto/pages/CadastroProduto";
+import CadastroCliente from "./components/CadastroCliente/pages/CadastroCliente";
 import SystemComission from "./components/SystemComission/page/SystemComission";
 // import CadastroVendas from "./components/CadastroVenda/pages/CadastroVendas";
 import UploadExcelPage from "./components/CarregadorArquivo/pages/Carregador";
@@ -31,6 +33,8 @@ function App() {
         <Route path='/commissions/register' element={<SystemComission/>}></Route>
         <Route path ='/sells/table' element= {<UploadExcelPage/>}></Route>
         <Route path="/sells/register" element={<CadastroVenda/>}></Route>
+        <Route path='/product/register' element={<CadastroProduto/>}></Route>
+        <Route path='/client/register' element={<CadastroCliente/>}></Route>
       </Routes>
     </AppContainer>
   );
