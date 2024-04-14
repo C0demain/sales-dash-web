@@ -71,7 +71,6 @@ function CadastroUser() {
             isValid = false
         } 
 
-        setSucess('Cadastro realizado!')
         setErrors(errors)
         return isValid
     }
@@ -79,7 +78,7 @@ function CadastroUser() {
         event.preventDefault();
         if (validate()) {
             // Lógica de submissão do formulário
-            
+            setSucess('Cadastro realizado!')
             enviarDadosParaBackend(userName, email, cpf, funcao, senhaConfirm)
         }
     }

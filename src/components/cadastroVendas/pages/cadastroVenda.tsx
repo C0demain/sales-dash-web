@@ -7,20 +7,20 @@ import SelectProduct from '../../dashboard/widgets/SelectProduct'
 import SelectSeller from '../../dashboard/widgets/SelectSeller'
 import type {DefaultOptionType} from 'antd/es/select'
 import enviarDadosParaBackend from '../functions/enviaDadosVenda'
+import Navbargest from "../../Barra_lateral/Barra_lateral_gestor";
+import NavbarWrapper from "../../Barra_lateral/NavbarWrapper/NavbarWrapper";
 
 export function CadastroVenda(){
   const [seller, setSeller] = useState<any>()
   const [client, setClient] = useState<any>()
   const [product, setProduct] = useState<any>()
-  const [valor, setValor] = useState<number>(0)
-  const [formaPagamento, setFormaPagamento] = useState('')
-  const [errors, setErrors] = useState({seller:'', client:'', product:'', valor: '',formaPagamento:''})   
+  const [errors, setErrors] = useState({seller:'', client:'', product:''})   
   
     /* VALIDANDO INFORMAÇÕES UTILIZADAS */
 
     const validate = () =>{
         let isValid = true
-        const errors = {seller: '', client: '', product: '', valor: '', formaPagamento: ''}
+        const errors = {seller: '', client: '', product: ''}
 
         if(!seller){
           errors.seller = 'Você deve preencher o e-mail de vendedor.'
@@ -37,16 +37,6 @@ export function CadastroVenda(){
           isValid = false
         }
 
-        if(!valor){
-          errors.valor = 'Você deve cadastrar um valor para a venda.'
-          isValid = false
-        }
-
-        if(!formaPagamento){
-          errors.formaPagamento = 'Você deve escolher uma forma de pagamento.'
-          isValid = false
-        }
-
         setErrors(errors)
         return isValid
     }
@@ -60,7 +50,10 @@ export function CadastroVenda(){
     }
 
     return(
-        <div className='container'>
+      <NavbarWrapper>
+      <Navbargest/>
+
+      <div className='container'>
 
       <div className="box">
         <h1 className='titulo'>Registro de nova venda!</h1>
@@ -69,7 +62,7 @@ export function CadastroVenda(){
           <div className='insertText'>
             <label>Email do vendedor (selecione vendedores da lista):</label>
 
-            <SelectSeller controlState={[seller, setSeller]} className='selectVendas'/>
+            <SelectSeller controlState={[seller, setSeller]} dataKey="cpf" className='selectVendas'/>
 
             {errors.seller && <p style={{ color: 'red' }}>{errors.seller}</p>}
           </div>
@@ -77,7 +70,7 @@ export function CadastroVenda(){
           <div className='insertText'>
             <label>CPF do comprador (selecione clientes da lista):</label>
 
-            <SelectClient controlState={[client, setClient]} className='selectVendas'/>
+            <SelectClient controlState={[client, setClient]} dataKey='cpf' className='selectVendas'/>
 
             {errors.client && <p style={{ color: 'red' }}>{errors.client}</p>}
           </div>
@@ -85,7 +78,7 @@ export function CadastroVenda(){
           <div className='insertText'>
             <label>Produto vendido (escolha um produto da lista):</label>
 
-            <SelectProduct controlState={[product, setProduct]} className='selectProduct'/>
+            <SelectProduct controlState={[product, setProduct]} dataKey='id' className='selectProduct'/>
 
             {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
           </div>
@@ -94,5 +87,6 @@ export function CadastroVenda(){
         </form>
       </div>
     </div>
+    </NavbarWrapper>
   )
 }
