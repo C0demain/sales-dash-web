@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
-import { Login } from "./components/login";
+import { Login } from "./components/Login";
 import CadastroUser from "./components/CadastroUser/pages/CadastroUser";
 import CadastroProduto from "./components/CadastroProduto/pages/CadastroProduto";
 import CadastroCliente from "./components/CadastroCliente/pages/CadastroCliente";
@@ -11,6 +11,7 @@ import UploadExcelPage from "./components/CarregadorArquivo/pages/Carregador";
 import { Dashboard } from "./components/dashboard/dashboard";
 import { CadastroVenda } from "./components/cadastroVendas/pages/cadastroVenda";
 import CommissionList from "./components/SystemComission/page/CommissionList";
+import ListaCliente from "./components/ExibeCliente/pages/ListaCliente";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -37,6 +38,7 @@ function App() {
         <Route path="/sells/register" element={<CadastroVenda/>}></Route>
         <Route path='/product/register' element={<CadastroProduto/>}></Route>
         <Route path='/client/register' element={<CadastroCliente/>}></Route>
+        <Route path='/client/list' element={<ListaCliente/>}></Route>
       </Routes>
     </AppContainer>
   );
