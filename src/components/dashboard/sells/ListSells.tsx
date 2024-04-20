@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import './ListSells.css'
 import { Button, Empty, Table } from "antd";
-import SelectSeller from '../widgets/SelectSeller'
-import SelectProduct from "../widgets/SelectProduct";
-import SelectClient from "../widgets/SelectClient";
+import SelectSeller from '../../SelectSeller/SelectSeller'
+import SelectProduct from "../../SelectProduct/SelectProduct";
+import SelectClient from "../../SelectClient/SelectClient";
 
 const ListSells = ()=>{
     const [sells, setSells] = useState<any[]>([])

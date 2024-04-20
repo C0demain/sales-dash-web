@@ -1,0 +1,16 @@
+
+
+.commissionList > .commissions{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    column-gap: 2%;
+}
+
+.commissions > div{
+    margin-bottom: 5%;
+    padding: 10px;
+    outline: 1px solid black;
+    min-width: 300px;
+}

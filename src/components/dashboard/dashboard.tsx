@@ -1,9 +1,9 @@
 import React from "react";
 import RankingSellers from "./rankingSellers/rankingSellers";
 import ListSells from "./sells/ListSells";
-import './dashboard.css'
-import Navbargest from "../Barra_lateral/Barra_lateral_gestor";
-import NavbarWrapper from "../Barra_lateral/NavbarWrapper/NavbarWrapper";
+import './index.css'
+import Navbargest from "../AdminNavbar/AdminNavbar";
+import NavbarWrapper from "../NavbarWrapper/NavbarWrapper";
 
 function Dashboard() {
     return(
@@ -23,4 +23,4 @@ function Dashboard() {
     )
 }
 
-export { Dashboard };
+export default Dashboard;
