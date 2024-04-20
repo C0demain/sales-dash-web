@@ -28,7 +28,6 @@ function Login(props: any) {
         token: response.data.token,
         expiresIn: 3600,
         tokenType: "Bearer",
-        authState: { email: values.email },
       });
 
       //altera para tela principal
