@@ -34,7 +34,7 @@ body{
 .Página input, .Página select{
     height: 5vh;
     border-radius: 1vh;
-    background-color: rgb(41, 41, 41);
+    background-color: white;
     border-color: black;
 }
 

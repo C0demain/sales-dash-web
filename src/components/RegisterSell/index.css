@@ -1,17 +1,11 @@
-.Página{
-    display: flex;
-    flex-direction: row;
-    width:100%;
-    height: max-content;
-    padding: 0%;
-}
+
 .erro{
     color: red;
 }
 .funciona{
     color: green;
 }
-.container{
+.containerVenda{
     display: flex;
     flex-direction:column;
     justify-content: center;
@@ -19,7 +13,7 @@
     width: max-content;
 }
 
-.Página label, .Página h1, .Página h4, .Página ol, .Página select, .Página input{
+.containerVenda label, .containerVenda h1, .containerVenda h4, .containerVenda ol, .containerVenda select, .containerVenda input{
     color: white;
 }
 body{
@@ -27,29 +21,20 @@ body{
     font-size: 2.5vh;
 }
 
-.Página option, .Página select, .Página input, .Página button{
+.containerVenda option, .containerVenda select, .containerVenda input, .containerVenda button{
     font-size: 2.5vh;
 }
 
-.Página input, .Página select{
+.containerVenda input, .containerVenda select{
     height: 5vh;
     border-radius: 1vh;
-    background-color: rgb(41, 41, 41);
-    border-color: black;
 }
 
 #tituloRequisito{
     margin: 2%;
 }
 
-.senhas{
-    height: auto;
-    width: 75%;
-    text-align:start;
-    display: flex;
-    flex-direction: column;
-}
-.caixa{
+.caixaVenda{
     box-shadow: black;
     background-color:#1c1c1c;
     margin: 2%;
@@ -61,7 +46,7 @@ body{
     flex-direction: column;
     align-items: center;
 }
-.formulario{
+.formularioVenda{
     height: auto;
     width: 90%;
     padding: 0.5%;
@@ -70,7 +55,7 @@ body{
     flex-direction: column;
     align-items: center;
 }
-.insertText{
+.insertTextVenda{
     height: auto;
     width: 75%;
     padding-top: 0.5%;
@@ -81,12 +66,7 @@ body{
     margin-bottom: 0%;
 }
 
-.inputSenha{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.Página .container button{
+.containerVenda button{
     margin: 2%;
     border-radius: 1vh;
     border: none;
@@ -94,7 +74,7 @@ body{
     width: max-content;
 }
 
-.Página h4{
+.containerVenda h4{
     height: min-content;
     margin: 1%;
 }

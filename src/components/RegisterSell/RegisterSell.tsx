@@ -53,7 +53,7 @@ export default function RegisterSell(){
 
         setErrors(errors)
         return isValid
-    }
+      } 
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -61,7 +61,7 @@ export default function RegisterSell(){
           setSucess('Cadastro realizado!')
           sendData(date, seller[0], client[0], product[0], value)
         }
-    }
+      }
 
     const formatDate = (date: dayjs.Dayjs) =>{
       return date.format('DD/MM/YYYY')
@@ -75,12 +75,12 @@ export default function RegisterSell(){
       <NavbarWrapper>
       <Navbargest/>
 
-      <div className='container cadastroVenda'>
+      <div className='containerVenda'>
 
-      <div className="box">
+      <div className="caixaVenda">
         <h1 className='titulo'>Registro de nova venda!</h1>
 
-        <form className="formulario" onSubmit={handleSubmit}>
+        <form className="formularioVenda" onSubmit={handleSubmit}>
           <div className='insertText'>
             <label>Data da venda:</label>
 
@@ -88,7 +88,7 @@ export default function RegisterSell(){
 
             {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
           </div>
-          <div className='insertText'>
+          <div className='insertTextVenda'>
             <label>Vendedor</label>
 
             <SelectSeller controlState={[seller, setSeller]} dataKey="cpf" className='selectVendas'/>
@@ -96,7 +96,7 @@ export default function RegisterSell(){
             {errors.seller && <p style={{ color: 'red' }}>{errors.seller}</p>}
           </div>
 
-          <div className='insertText'>
+          <div className='insertTextVenda'>
             <label>Cliente</label>
 
             <SelectClient controlState={[client, setClient]} dataKey='cpf' className='selectVendas'/>
@@ -104,7 +104,7 @@ export default function RegisterSell(){
             {errors.client && <p style={{ color: 'red' }}>{errors.client}</p>}
           </div>
 
-          <div className='insertText'>
+          <div className='insertTextVenda'>
             <label>Produto</label>
 
             <SelectProduct controlState={[product, setProduct]} dataKey='id' className='selectProduct'/>
@@ -112,7 +112,7 @@ export default function RegisterSell(){
             {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
           </div>
 
-          <div className='insertText'>
+          <div className='insertTextVenda'>
             <label>Valor da venda</label>
 
             <InputNumber addonBefore="R$" onChange={e => {setValue(parseValue(e))} } stringMode/>
