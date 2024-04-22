@@ -10,6 +10,7 @@
     "@types/node": "^16.11.58",
     "@types/react": "^18.0.19",
     "@types/react-dom": "^18.0.6",
+    "@ant-design/pro-components": "2.6.50",
     "antd": "^5.16.1",
     "axios": "^0.27.2",
     "baseui": "^12.1.2",
@@ -52,6 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "typescript": "^4"
   }
 }

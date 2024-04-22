@@ -1,63 +1,66 @@
+/* https://codesandbox.io/p/sandbox/lingering-architecture-383p9l?file=%2Findex.tsx */
+
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react"
 import { Empty, Table, Button } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 
 function ShowClient() {
-    const [sellers, setSellers] = useState <any[]>([])
+    const [clients, setClients] = useState([]);
 
     const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'rankPosition',
-            key: 'rankPosition'
-        },
+
         {
             title: 'Nome',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'Total de Compras',
-            dataIndex: 'value',
-            key: 'value'
+            title: 'Segmento',
+            dataIndex: 'segment',
+            key: 'segment'
         },
         {
-            title: 'Ações',
-            dataIndex: 'value',
-            key: 'value'
-        },
+            title: 'CPF / CNPJ',
+            dataIndex: 'cpf_cnpj',
+            key: 'cpf_cnpj'
+        }
 
-    ]
+    ];
 
-    const getSellers = async () => {
-        const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
-          withCredentials: false,
-        });
+    const getClients = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8000/api/v1/clients/getclients`);
+            if (response.data && response.data.clients) {
+                setClients(response.data.clients);
+            } else {
+                setClients([]);
+            }
+        } catch (error) {
+            console.error("Erro ao buscar clientes:", error);
+            setClients([]);
+        }
+    };
 
-        const ranking = response.data.ranking.map((e: any, k: number) => ({...e, rankPosition: k+1}))
-        
+    useEffect(() => {
+        getClients();
+    }, []);
 
-        setSellers(ranking)
-      };
-
-    useEffect(() => { 
-        getSellers()
-        }, [])
-
-    return(
+    return (
         <NavbarWrapper>
-        <Navbargest/>
-        <div className="ranking">
-            <h2>Lista de Clientes</h2>
-            <Button onClick={e => {getSellers()} }>Recarregar clientes</Button>
-            {sellers.length>0 ?
-            <Table columns={columns} dataSource={sellers} />
-            : <Empty description={"Nenhuma venda encontrada"} />}
-        </div>
+            <Navbargest/>
+            <div className="ranking">
+                <h2>Lista de Clientes</h2>
+                <Button onClick={getClients}>Recarregar clientes</Button>
+                {clients.length > 0 ? (
+                    <Table columns={columns} dataSource={clients} />
+                ) : (
+                    <Empty description={"Nenhum cliente encontrado"} />
+                )}
+            </div>
         </NavbarWrapper>
-    )
+    );
 }
 
-export default ShowClient
+export default ShowClient;
