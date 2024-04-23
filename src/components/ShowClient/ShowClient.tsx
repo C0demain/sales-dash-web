@@ -3,6 +3,7 @@ import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar";
+import './showclient.css'
 
 interface Client {
   id: string;
@@ -65,19 +66,25 @@ function ShowClient() {
     form.setFieldsValue({
       name: record.name,
       segment: record.segment,
-      cpf: record.cpf
+      cpf: formatCPF(record.cpf) // Aplica a máscara no CPF ao editar
     });
   };
 
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
+      
+      if (!currentClient) {
+        throw new Error('Nenhum cliente selecionado para atualização.');
+      }
+      
       const updatedClient = { ...currentClient, ...values };
-      const response = await axios.put(`http://localhost:8000/api/v1/clients/register`, updatedClient);
+      const response = await axios.put(`http://localhost:8000/api/v1/clients/update/${currentClient.id}`, updatedClient);
       
       if (response.status === 200) {
         setVisible(false);
         message.success('Cliente atualizado com sucesso!');
+        getClients(); // Atualiza a tabela após a atualização do cliente
       } else {
         message.error('Falha ao atualizar o cliente. Por favor, tente novamente.');
       }
@@ -91,10 +98,15 @@ function ShowClient() {
     setVisible(false);
   };
 
+  // Função para formatar o CPF com a máscara
+  const formatCPF = (value: string) => {
+    return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  };
+
   return (
     <NavbarWrapper>
       <Navbargest/>
-      <div className="ranking">
+      <div className="containerCl">
         <h2>Lista de Clientes</h2>
         <Button onClick={getClients}>Recarregar clientes</Button>
         {clients.length > 0 ? (
@@ -128,7 +140,7 @@ function ShowClient() {
               label="CPF / CNPJ"
               rules={[{ required: true, message: 'Por favor, insira o CPF / CNPJ do cliente!' }]}
             >
-              <Input />
+              <Input onChange={(e) => form.setFieldsValue({ cpf: formatCPF(e.target.value) })} />
             </Form.Item>
           </Form>
         </Modal>
@@ -137,4 +149,4 @@ function ShowClient() {
   );
 }
 
-export default ShowClient;
+export default ShowClient; 
