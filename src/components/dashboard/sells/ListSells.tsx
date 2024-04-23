@@ -37,8 +37,13 @@ const ListSells = ()=>{
             title: 'Valor',
             dataIndex: 'value',
             key: 'value',
+            render: (value: number) => formatCurrency(value)
         },
     ]
+
+    const formatCurrency = (value: number): string => {
+        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    };
 
     const getSells = async () => {
         let url = "http://localhost:8000/api/v1/sells/getall/filter"
