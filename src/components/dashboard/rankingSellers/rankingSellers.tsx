@@ -20,7 +20,8 @@ function RankingSellers() {
         {
             title: 'Valor total de vendas',
             dataIndex: 'value',
-            key: 'value'
+            key: 'value',
+            render: (value: number) => formatCurrency(value)
         },
         {
             title: 'Quantidade de vendas',
@@ -29,6 +30,10 @@ function RankingSellers() {
         },
 
     ]
+
+    const formatCurrency = (value: number): string => {
+        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    };
 
     const getSellers = async () => {
         const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
