@@ -39,6 +39,12 @@ const ListSells = ()=>{
             key: 'value',
             render: (value: number) => formatCurrency(value)
         },
+        {
+            title: "Comissão",
+            dataIndex: "commissionValue",
+            key: "commissionValue",
+            render: (value: number) => formatCurrency(value)
+        }
     ]
 
     const formatCurrency = (value: number): string => {
