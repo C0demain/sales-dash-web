@@ -28,6 +28,12 @@ function RankingSellers() {
             dataIndex: 'productsSold',
             key: 'productsSold'
         },
+        {
+            title: 'Total de comissões',
+            dataIndex: 'totalCommissions',
+            key: 'totalCommissions',
+            render: (value: number) => formatCurrency(value)
+        },
 
     ]
 
