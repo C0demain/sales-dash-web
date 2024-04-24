@@ -61,21 +61,21 @@ function CadastroProduto() {
               <div className='insertText'>
                 <label>Nome do produto:</label>
 
-                <input type="text" onChange={(e) => setProductName(e.target.value)} required />
+                <input placeholder="Nome" type="text" onChange={(e) => setProductName(e.target.value)} required />
                 {errors.productName && <p className='erro'>{errors.productName}</p>}
               </div>
 
               <div className='insertText'>
                 <label>Descrição</label>
 
-                <input type="text" onChange={(e) => setDescription(e.target.value)} required />
+                <input placeholder="Descreva o produto" type="text" onChange={(e) => setDescription(e.target.value)} required />
                 {errors.description && <p className='erro'>{errors.description}</p>}
               </div>
 
               <div className='insertText'>
                 <label>Preço:</label>
 
-                <input type="number" min="0" onChange={(e) => setValue(e.target.value)} required />
+                <input placeholder="Preço R$" type="number" min="0" onChange={(e) => setValue(e.target.value)} required />
                 {errors.value && <p className='erro'>{errors.value}</p>}
               </div>
 

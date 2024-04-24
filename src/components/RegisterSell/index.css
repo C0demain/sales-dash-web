@@ -13,9 +13,18 @@
     width: max-content;
 }
 
-.containerVenda label, .containerVenda h1, .containerVenda h4, .containerVenda ol, .containerVenda select, .containerVenda input{
-    color: white;
+.containerVenda label, .containerVenda h1, .containerVenda h4, .containerVenda ol{
+    color: rgb(255, 255, 255);
 }
+
+.containerVenda select{
+    color: rgb(216, 4, 4);
+}
+
+.containerVenda input{
+    color: black;
+}
+
 body{
     margin: 0px;
     font-size: 2.5vh;
@@ -28,6 +37,8 @@ body{
 .containerVenda input, .containerVenda select{
     height: 5vh;
     border-radius: 1vh;
+    background-color: white;
+    border-color: black;
 }
 
 #tituloRequisito{
@@ -55,6 +66,7 @@ body{
     flex-direction: column;
     align-items: center;
 }
+
 .insertTextVenda{
     height: auto;
     width: 75%;

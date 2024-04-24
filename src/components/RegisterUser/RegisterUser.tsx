@@ -116,8 +116,9 @@ function RegisterUser() {
               </div>
 
               <div className='insertText'>
-                <select title='Escolha sua função' value={funcao} onChange={(e)=> setFuncao(e.target.value)}>
-                  <option value="">Escolha sua função</option>
+                <label>Função do usuário:</label>
+                <select title='Escolha sua função'value={funcao} onChange={(e)=> setFuncao(e.target.value)}>
+                  <option value="" disabled selected hidden>Selecione uma função</option>
                   <option value="user">Vendedor</option>
                   <option value="admin">Gestor</option>
                 </select>

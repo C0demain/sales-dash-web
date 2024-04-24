@@ -78,13 +78,13 @@ export default function RegisterSell(){
       <div className='containerVenda'>
 
       <div className="caixaVenda">
-        <h1 className='titulo'>Registro de nova venda!</h1>
+        <h1 className='titulo'>Cadastro de Venda</h1>
 
         <form className="formularioVenda" onSubmit={handleSubmit}>
           <div className='insertText'>
-            <label>Data da venda:</label>
+            <label placeholder='Escolha uma data'>Data da venda:</label>
 
-            <DatePicker onChange={e => {setDate(formatDate(e))} } format={'DD/MM/YYYY'} />
+            <DatePicker style={{ height: '5vh', borderRadius: '1vh', backgroundColor: 'white', borderColor: 'black' }}onChange={e => {setDate(formatDate(e))} } format={'DD/MM/YYYY'} />
 
             {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
           </div>

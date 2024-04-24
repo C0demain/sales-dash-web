@@ -41,7 +41,13 @@ const SelectClient = (props: propsType) =>{
             options={clientOpt}
             onChange={e => {setControlState(e)} }
             placeholder="Escolha um cliente"
-            className={className}
+            style={{
+                width: '100%',
+                height: '5vh',
+                borderRadius: '1vh',
+                backgroundColor: 'white',
+                borderColor: 'black'
+            }}
             showSearch
             />
         </>

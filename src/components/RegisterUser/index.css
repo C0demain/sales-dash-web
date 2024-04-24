@@ -19,8 +19,16 @@
     width: max-content;
 }
 
-.Página label, .Página h1, .Página h4, .Página ol, .Página select, .Página input{
-    color: white;
+.Página label, .Página h1, .Página h4, .Página ol{
+    color: rgb(255, 255, 255);
+}
+
+.Página select{
+    color: #757575;
+}
+
+.Página input{
+    color: #757575;
 }
 body{
     margin: 0px;

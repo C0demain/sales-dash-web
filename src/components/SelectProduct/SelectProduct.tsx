@@ -40,7 +40,13 @@ const SelectProduct = (props: propsType) =>{
             options={productOpt}
             onChange={e => {setControlState(e)} }
             placeholder="Escolha um produto"
-            className={className}
+            style={{
+                width: '100%',
+                height: '5vh',
+                borderRadius: '1vh',
+                backgroundColor: 'white',
+                borderColor: 'black'
+            }}
             showSearch
             />
         </>
