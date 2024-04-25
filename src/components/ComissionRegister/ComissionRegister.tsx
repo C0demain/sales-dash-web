@@ -43,8 +43,9 @@ export default function CommissionRegister () {
     return (
         <NavbarWrapper>
           <Navbargest/>
-          <div className='container systemCommission'>
-            <div className="box">
+          <div className='Página'>
+          <div className='container'>
+            <div className="caixa">
               <h1 className='titulo'>Cadastro Comissão</h1>
               <form className="formulario" onSubmit={handleSubmit}>
               <div className='insertText'>
@@ -58,9 +59,10 @@ export default function CommissionRegister () {
                   {errors.percentage && <p style={{ color: 'red' }}>{errors.percentage}</p>}
                 </div>
                   {sucess && <p style={{color: 'green'}}>{sucess}</p>}
-                  <button className='botaoEnvia' type='submit'>Cadastrar Comissão</button>
+                  <button className='botaoEnvia' type='submit'>Cadastrar</button>
               </form>
             </div>
+          </div>
           </div>
         </NavbarWrapper>
       )
