@@ -25,10 +25,11 @@
 
 .filter{
     display: flex;
-    margin: 10px auto;
+    justify-content: space-between;
+    margin: 15px;
     align-items: center;
 }
 
 .filter > .select{
-    margin: 0 10px;
+    margin: 0 10px;   
 }

@@ -6,6 +6,8 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     column-gap: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .commissions > div{
@@ -13,4 +15,6 @@
     padding: 10px;
     outline: 1px solid black;
     min-width: 300px;
+    margin-left: 2%;
+    align-items: center;
 }

@@ -1,9 +1,26 @@
-.container.systemCommission{
+.Página{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    height: max-content;
+    padding: 0%;
+}
+.erro{
+    color: red;
+}
+.funciona{
+    color: green;
+}
+.container{
     display: flex;
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: max-content;
+}
+
+.Página label, .Página h1, .Página h4, .Página ol, .Página input{
+    color: white;
 }
 
 body{
@@ -11,8 +28,15 @@ body{
     font-size: 2.5vh;
 }
 
-option, select, input, button{
+.Página option, .Página select, .Página input, .Página button{
     font-size: 2.5vh;
+}
+
+.Página input, .Página select{
+    height: 5vh;
+    border-radius: 1vh;
+    background-color: white;
+    border-color: black;
 }
 
 #tituloRequisito{
@@ -27,8 +51,9 @@ option, select, input, button{
     flex-direction: column;
 }
 
-.systemCommission .box{
-    background-color:rgb(75, 75, 75);
+.caixa{
+    box-shadow: black;
+    background-color:#1c1c1c;
     margin: 2%;
     height: auto;
     width: 80vh;
@@ -38,22 +63,26 @@ option, select, input, button{
     flex-direction: column;
     align-items: center;
 }
+
 .formulario{
     height: auto;
-    width: 100%;
+    width: 90%;
     padding: 0.5%;
     border-radius: 3%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .insertText{
     height: auto;
     width: 75%;
-    padding-top: 1%;
+    padding-top: 0.5%;
     text-align:start;
     display: flex;
     flex-direction: column;
+    margin-top: 0%;
+    margin-bottom: 0%;
 }
 
 .inputSenha{
@@ -62,11 +91,15 @@ option, select, input, button{
     flex-direction: column;
 }
 
-.botaoEnvia{
+.Página .container button{
     margin: 2%;
-    border-radius: 5%;
+    border-radius: 1vh;
+    border: none;
+    height: 5vh;
+    width: max-content;
 }
-.systemCommission h4{
+
+.Página h4{
     height: min-content;
     margin: 1%;
 }

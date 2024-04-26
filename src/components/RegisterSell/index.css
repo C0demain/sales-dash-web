@@ -5,6 +5,7 @@
 .funciona{
     color: green;
 }
+
 .containerVenda{
     display: flex;
     flex-direction:column;
