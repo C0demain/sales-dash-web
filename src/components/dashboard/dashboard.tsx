@@ -1,9 +1,9 @@
 import React from "react";
-import RankingSellers from "./rankingSellers/rankingSellers";
-import ListSells from "./sells/ListSells";
+import RankingSellers from "components/rankingSellers/rankingSellers";
+import ListSells from "components/ListSell/ListSells";
 import './index.css'
-import Navbargest from "../AdminNavbar/AdminNavbar";
-import NavbarWrapper from "../NavbarWrapper/NavbarWrapper";
+import Navbargest from "components/AdminNavbar/AdminNavbar";
+import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 
 function Dashboard() {
     return(

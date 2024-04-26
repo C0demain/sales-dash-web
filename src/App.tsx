@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import Login from "components/Login/Login";
 import UploadExcelPage from "components/UploadPage/UploadPage";
-import Dashboard from "components/dashboard/dashboard";
+import Dashboard from "components/dashboard/Dashboard";
 import CommissionList from "components/ComissionList/ComissionList";
 import ShowClient from "components/ShowClient/ShowClient";
 import CommissionRegister from "components/ComissionRegister/ComissionRegister";

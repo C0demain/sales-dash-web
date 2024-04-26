@@ -64,7 +64,7 @@ export default function RegisterSell(){
       }
 
     const formatDate = (date: dayjs.Dayjs) =>{
-      return date.format('DD/MM/YYYY')
+      return date.format('YYYY-MM-DD')
     }
 
     const parseValue = (value: any) =>{
@@ -84,7 +84,7 @@ export default function RegisterSell(){
           <div className='insertText'>
             <label placeholder='Escolha uma data'>Data da venda:</label>
 
-            <DatePicker style={{ height: '5vh', borderRadius: '1vh', backgroundColor: 'white', borderColor: 'black' }}onChange={e => {setDate(formatDate(e))} } format={'DD/MM/YYYY'} />
+            <DatePicker style={{ height: '5vh', borderRadius: '1vh', backgroundColor: 'white', borderColor: 'black' }}onChange={e => {setDate(formatDate(e))} } />
 
             {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
           </div>
