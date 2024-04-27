@@ -1,120 +1,87 @@
-import styled from "styled-components";
-import { Route, Routes } from "react-router-dom";
-import Login from "components/Login/Login";
-import UploadExcelPage from "components/UploadPage/UploadPage";
-import Dashboard from "components/dashboard/Dashboard";
+
 import CommissionList from "components/ComissionList/ComissionList";
-import ShowClient from "components/ShowClient/ShowClient";
 import CommissionRegister from "components/ComissionRegister/ComissionRegister";
-import RegisterProduct from "components/RegisterProduct/RegisterProduct"
-import RegisterSell from "components/RegisterSell/RegisterSell";
+import { Login } from "components/Login";
+import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";
+import RegisterProduct from "components/RegisterProduct/RegisterProduct";
+import RegisterSell from "components/RegisterSell/RegisterSell";
 import RegisterUser from "components/RegisterUser/RegisterUser";
-import { RequireAuth } from "react-auth-kit";
+import ShowClient from "components/ShowClient/ShowClient";
+import UploadExcelPage from "components/UploadPage/UploadPage";
+import Dashboard from "components/dashboard/dashboard";
+import { AuthProvider } from "context/AuthProvider";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import styled from "styled-components";
 
-const AppContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
 
-function App() {
+export function App() {
   return (
-    <AppContainer>
-      <Routes>
-        {/* Rota de Login sem autenticação*/}
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          
+          {/* Rotas Públicas */}
+          <Route path='/' element={ <Login/> }></Route>
+          <Route path='/login' element={ <Login/> }></Route>
 
-        {/* Rota de Dashboard */}
-        <Route
-          path="/dashboard"
-          element={
-            <RequireAuth loginPath="/login">
+          {/* Rotas Privadas */}
+          <Route path='/dashboard' element={
+            <ProtectedLayout>
               <Dashboard />
-            </RequireAuth>
-          }
-        ></Route>
+            </ProtectedLayout>} >
+          </Route>
 
-        {/* Rota de Cadastro de Vendedores */}
-        <Route
-          path="/sellers/register"
-          element={
-            <RequireAuth loginPath="/login">
+          <Route path='/sellers/register' element={
+            <ProtectedLayout>
               <RegisterUser />
-            </RequireAuth>
-          }
-        />
+            </ProtectedLayout>} >
+          </Route>
 
-        {/* Rota de Cadastro de Comissões */}
-        <Route
-          path="/commissions/register"
-          element={
-            <RequireAuth loginPath="/login">
-              <CommissionRegister />
-            </RequireAuth>
-          }
-        />
+          <Route path='/commissions/register' element={
+            <ProtectedLayout>
+              <CommissionRegister/>
+            </ProtectedLayout>} >
+          </Route>
 
-        <Route
-          path="/commissions"
-          element={
-            <RequireAuth loginPath="/login">
-              <CommissionList />
-            </RequireAuth>
-          }
-        />
+          <Route path='/commissions' element={
+            <ProtectedLayout>
+              <CommissionList/>
+            </ProtectedLayout>} >
+          </Route>
 
-        {/* Rota de Tabela de Vendas */}
-        <Route
-          path="/sells/table"
-          element={
-            <RequireAuth loginPath="/login">
-              <UploadExcelPage />
-            </RequireAuth>
-          }
-        />
+          <Route path='/sells/table' element={
+            <ProtectedLayout>
+              <UploadExcelPage/>
+            </ProtectedLayout>} >
+          </Route>
 
-        {/* Rota de Cadastro de Vendas */}
-        <Route
-          path="/sells/register"
-          element={
-            <RequireAuth loginPath="/login">
-              <RegisterSell />
-            </RequireAuth>
-          }
-        />
+          <Route path='/sells/register' element={
+            <ProtectedLayout>
+              <RegisterSell/>
+            </ProtectedLayout>} >
+          </Route>
 
-        {/* Rota de Cadastro de Produtos */}
-        <Route
-          path="/product/register"
-          element={
-            <RequireAuth loginPath="/login">
-              <RegisterProduct />
-            </RequireAuth>
-          }
-        />
+          <Route path='/product/register' element={
+            <ProtectedLayout>
+              <RegisterProduct/>
+            </ProtectedLayout>} >
+          </Route>
 
-        {/* Rota de Cadastro de Clientes */}
-        <Route
-          path="/client/register"
-          element={
-            <RequireAuth loginPath="/login">
-              <RegisterClient />
-            </RequireAuth>
-          }
-        />
+          <Route path='/client/register' element={
+            <ProtectedLayout>
+              <RegisterClient/>
+            </ProtectedLayout>} >
+          </Route>
 
-        <Route
-          path="/client/list"
-          element={
-            <RequireAuth loginPath="/login">
-              <ShowClient />
-            </RequireAuth>
-          }
-        />
-      </Routes>
-    </AppContainer>
-  );
+          <Route path='/client/list' element={
+            <ProtectedLayout>
+              <ShowClient/>
+            </ProtectedLayout>} >
+          </Route>
+
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  )
 }
-
-export default App;

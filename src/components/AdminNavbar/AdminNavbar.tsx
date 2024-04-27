@@ -1,16 +1,13 @@
-import { useSignOut } from 'react-auth-kit';
-import './index.css'
 import { useNavigate } from 'react-router-dom';
+import './index.css'
 
 const Navbargest = () => {
     const navigate = useNavigate()
-    const singOut = useSignOut();
-
-    const logout = () => {
-      singOut();
+  
+    const handleLogout = () => {
+      localStorage.removeItem('user');
       navigate("/login");
     };
-
 
     return (
       <div className="navbar">
@@ -24,7 +21,7 @@ const Navbargest = () => {
           <li><button onClick={e => navigate('/client/register')}className='Botao_barra'>Cadastro de Clientes</button></li>
           <li><button onClick={e => navigate('/client/list')}className='Botao_barra'>Exibe Clientes</button></li>
           <li><button onClick={e => navigate('/commissions')}className='Botao_barra'>Comissões</button></li>
-          <li><button onClick={e => logout()} className='Botao_barra'>Sair da conta</button></li>
+          <li><button onClick={e => handleLogout()} className='Botao_barra'>Sair da conta</button></li>
         </ul>
       </div>
     );

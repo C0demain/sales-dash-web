@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import React from 'react'
 import './index.css'
 import {enviarDadosParaBackend} from '.'
-import { Button, Input, InputNumber } from 'antd'
+import { Input, InputNumber } from 'antd'
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper'
 import Navbargest from 'components/AdminNavbar/AdminNavbar'
 
