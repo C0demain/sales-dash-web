@@ -54,5 +54,4 @@ const SelectClient = (props: propsType) =>{
     )
 }
 
-
 export default SelectClient

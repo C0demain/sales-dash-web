@@ -1,5 +1,5 @@
 import {Api} from "services/api";
-import { IUser } from "./types";
+import { IUser } from "./AuthProvider/types";
 
 export function setUserLocalStorage(user: IUser | null) {
     localStorage.setItem('user', JSON.stringify(user))

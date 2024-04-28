@@ -1,7 +1,6 @@
 import './index.css'
-import React from 'react'
-import { Container } from '../commons';
-const Navbar = () => {
+
+const SellerNavbar = () => {
     return (
       <div className="navbar">
         <h1>Olá Usuário</h1><br></br>
@@ -14,4 +13,4 @@ const Navbar = () => {
     );
   }
   
-  export default Navbar;
+  export default SellerNavbar;

@@ -28,7 +28,7 @@ export const ProtectedLayout = ({ children }: { children: JSX.Element }) => {
         return <Spin indicator={antIcon} />;
     }
 
-    //caso o usuario nao esteja autenticado pelo email ele volta para a tela de login
+    //usuario nao autenticado pelo email volta para a tela de login
     if (!auth.email) {
         navigate('/login')
     }

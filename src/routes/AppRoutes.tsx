@@ -1,6 +1,5 @@
-
-import CommissionList from "components/ComissionList/ComissionList";
-import CommissionRegister from "components/ComissionRegister/ComissionRegister";
+import CommissionList from "components/CommissionList/CommissionList";
+import CommissionRegister from "components/CommissionRegister/CommissionRegister";
 import { Login } from "components/Login";
 import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";
@@ -12,18 +11,16 @@ import UploadExcelPage from "components/UploadPage/UploadPage";
 import Dashboard from "components/dashboard/dashboard";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
 
-
-export function App() {
+export function AppRoutes() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          
+
           {/* Rotas Públicas */}
-          <Route path='/' element={ <Login/> }></Route>
-          <Route path='/login' element={ <Login/> }></Route>
+          <Route path='/' element={<Login />}></Route>
+          <Route path='/login' element={<Login />}></Route>
 
           {/* Rotas Privadas */}
           <Route path='/dashboard' element={
@@ -40,43 +37,43 @@ export function App() {
 
           <Route path='/commissions/register' element={
             <ProtectedLayout>
-              <CommissionRegister/>
+              <CommissionRegister />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/commissions' element={
             <ProtectedLayout>
-              <CommissionList/>
+              <CommissionList />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/sells/table' element={
             <ProtectedLayout>
-              <UploadExcelPage/>
+              <UploadExcelPage />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/sells/register' element={
             <ProtectedLayout>
-              <RegisterSell/>
+              <RegisterSell />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/product/register' element={
             <ProtectedLayout>
-              <RegisterProduct/>
+              <RegisterProduct />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/client/register' element={
             <ProtectedLayout>
-              <RegisterClient/>
+              <RegisterClient />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/client/list' element={
             <ProtectedLayout>
-              <ShowClient/>
+              <ShowClient />
             </ProtectedLayout>} >
           </Route>
 
