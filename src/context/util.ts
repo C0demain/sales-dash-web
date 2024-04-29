@@ -1,4 +1,4 @@
-import {Api} from "services/api";
+import {apiLogin} from "services/api";
 import { IUser } from "./AuthProvider/types";
 
 export function setUserLocalStorage(user: IUser | null) {
@@ -19,7 +19,7 @@ export function getUserLocalStorage() {
 
 export async function LoginRequest(email: string, password: string) {
     try {
-        const request = await Api.post('/login', { email, password })
+        const request = await apiLogin.post('/login', { email, password })
 
         return request.data
     } catch (error) {
