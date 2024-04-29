@@ -50,9 +50,8 @@ function RegisterProduct() {
   return (
     <NavbarWrapper>
       <Navbargest />
-      <div className='Página'>
 
-        <div className='container'>
+        <div className='containerVenda'>
 
           <div className="caixa">
             <h1 className='titulo'>Cadastro de Produto</h1>
@@ -84,7 +83,6 @@ function RegisterProduct() {
             </form>
           </div>
         </div>
-      </div>
     </NavbarWrapper>
   )
 }

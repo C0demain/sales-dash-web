@@ -49,9 +49,8 @@ function RegisterClient() {
   return (
     <NavbarWrapper>
       <Navbargest />
-      <div className='Página'>
 
-        <div className='container'>
+        <div className='containerVenda'>
 
           <div className="caixa">
             <h1 className='titulo'>Cadastro de Cliente</h1>
@@ -83,7 +82,6 @@ function RegisterClient() {
             </form>
           </div>
         </div>
-      </div>
     </NavbarWrapper>
   )
 }
