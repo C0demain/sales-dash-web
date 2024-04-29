@@ -1,65 +1,14 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import styled from "styled-components";
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-
-
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-`;
-
-const UploadForm = styled.form`
-  width: 400px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const UploadInput = styled.input`
-  display: none;
-  
-`;
-
-const UploadLabel = styled.label`
-  background-color: #444;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-const FileName = styled.span`
-  margin-left: 10px;
-  padding : 5px;
-  font-weight: bold;
-`;
-
-const Title = styled.h1`
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
-const Description = styled.p`
-  margin-bottom: 20px;
-`;
-
+import { Container, Description, FileName, Title, UploadForm, UploadInput, UploadLabel } from "components/commons";
 
 const UploadExcelPage: React.FC = () => {
 
   const [fileName, setFileName] = useState<string>("");
 
-  
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (!file) {
@@ -83,8 +32,8 @@ const UploadExcelPage: React.FC = () => {
 
       jsonData.sort((a, b) => {
         const dateA = excelSerialToDate(a[0]);
-        const dateB = excelSerialToDate(b[0]); 
-      
+        const dateB = excelSerialToDate(b[0]);
+
         return dateA.getTime() - dateB.getTime();
       });
 
@@ -101,7 +50,7 @@ const UploadExcelPage: React.FC = () => {
         console.log(item);
         sendDataToBackend(item);
         await sleep(100);
-        
+
       }
     };
 
@@ -148,25 +97,25 @@ const UploadExcelPage: React.FC = () => {
   }
 
   return (
-      <NavbarWrapper>
-        <Navbargest/>
-        <Container>
-          <UploadForm>
-              <Title>Upload de Arquivo Excel</Title>
-                <Description>
-                  Selecione um arquivo Excel (.xlsx ou .xls) para fazer upload.
-                </Description>
-                  <UploadInput
-                  type="file"
-                  id="inputExcel"
-                  accept=".xlsx, .xls"
-                  onChange={handleFileChange}
-                  />
-                <UploadLabel htmlFor="inputExcel">Escolher Arquivo</UploadLabel>
-              {fileName && <FileName>{fileName}</FileName>}
-          </UploadForm>
-        </Container>
-      </NavbarWrapper>
+    <NavbarWrapper>
+      <Navbargest />
+      <Container>
+        <UploadForm>
+          <Title>Upload de Arquivo Excel</Title>
+          <Description>
+            Selecione um arquivo Excel (.xlsx ou .xls) para fazer upload.
+          </Description>
+          <UploadInput
+            type="file"
+            id="inputExcel"
+            accept=".xlsx, .xls"
+            onChange={handleFileChange}
+          />
+          <UploadLabel htmlFor="inputExcel">Escolher Arquivo</UploadLabel>
+          {fileName && <FileName>{fileName}</FileName>}
+        </UploadForm>
+      </Container>
+    </NavbarWrapper>
   );
 };
 

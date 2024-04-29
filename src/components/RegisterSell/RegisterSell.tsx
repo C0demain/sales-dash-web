@@ -30,7 +30,6 @@ export default function RegisterSell(){
           isValid = false
         }
 
-
         if(!seller){
           errors.seller = 'Você deve preencher o e-mail de vendedor.'
           isValid = false

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import './ListSells.css'
 import { Button, Empty, Table, DatePicker } from "antd";
 import SelectSeller from 'components/SelectSeller/SelectSeller'
@@ -52,7 +52,7 @@ const ListSells = ()=>{
         return newDate
     }
 
-    const getSells = async () => {
+    const getSells = useCallback(async () => {
         let url = "http://localhost:8000/api/v1/sells/getall/"
         const userFilter = userSelect !== undefined ? 'userId=' + userSelect : ""
         const productFilter =  productSelect !== undefined ? 'productId=' + productSelect : ""
@@ -63,18 +63,16 @@ const ListSells = ()=>{
         let queryParams = [userFilter, productFilter, clientFilter, startDateFilter, endDateFilter]
         const query = queryParams.filter(e => e !== '').join('&')
         url += query !== "&" ? "?" + query : ""
-
-
+    
         const response = await axios.get(url, {
           withCredentials: false,
         });
-        setSells(response.data.sells)
-      };
-
+        setSells(response.data.sells);
+    }, [userSelect, productSelect, clientSelect, startDate, endDate]);
 
     useEffect(() => { 
         getSells()
-        }, [])
+        }, [getSells])
 
     return (
         <div className="listSells">

@@ -1,5 +1,4 @@
-import React from "react";
-import RankingSellers from "components/rankingSellers/rankingSellers";
+import RankingSellers from "components/RankingSellers/rankingSellers";
 import ListSells from "components/ListSell/ListSells";
 import './index.css'
 import Navbargest from "components/AdminNavbar/AdminNavbar";

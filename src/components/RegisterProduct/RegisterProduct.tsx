@@ -4,7 +4,7 @@ import Navbargest from 'components/AdminNavbar/AdminNavbar'
 import { sendData } from '.'
 import './index.css'
 
-function CadastroProduto() {
+function RegisterProduct() {
 
   const [productName, setProductName] = useState('')
   const [description, setDescription] = useState('')
@@ -89,4 +89,4 @@ function CadastroProduto() {
   )
 }
 
-export default CadastroProduto
+export default RegisterProduct

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
-import './rankingSellers.css'
+import { useEffect, useState } from "react";
 import { Empty, Table, Button } from "antd";
+import './rankingSellers.css'
 
 function RankingSellers() {
     const [sellers, setSellers] = useState <any[]>([])

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import React from 'react'
 import './index.css'
 import {isValidCPF} from '.'
 import {sendData} from '.'

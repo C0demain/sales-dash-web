@@ -4,13 +4,17 @@
     width:100%;
     height: max-content;
     padding: 0%;
+    font-family:Arial, Helvetica, sans-serif;
 }
+
 .erro{
     color: red;
 }
+
 .funciona{
     color: green;
 }
+
 .container{
     display: flex;
     flex-direction:column;
@@ -97,6 +101,12 @@ body{
     border: none;
     height: 5vh;
     width: max-content;
+}
+.buttonWrapper {
+    display: flex;
+    justify-content:center;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .Página h4{
