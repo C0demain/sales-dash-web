@@ -2,7 +2,9 @@ import {apiLogin} from "services/api";
 import { IUser } from "./AuthProvider/types";
 
 export function setUserLocalStorage(user: IUser | null) {
-    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('userID', JSON.stringify(user?.userID))
+    localStorage.setItem('userEmail', JSON.stringify(user?.email))
+    localStorage.setItem('userToken', JSON.stringify(user?.token))
 }
 
 export function getUserLocalStorage() {
