@@ -57,8 +57,8 @@ const ListSells = ()=>{
         const userFilter = userSelect !== undefined ? 'userId=' + userSelect : ""
         const productFilter =  productSelect !== undefined ? 'productId=' + productSelect : ""
         const clientFilter =  clientSelect !== undefined ? 'clientId=' + clientSelect : ""
-        const startDateFilter = startDate !== null ? 'startDate=' + startDate: ""
-        const endDateFilter = endDate !== undefined ? 'endDate=' + endDate: ""
+        const startDateFilter = startDate ? 'startDate=' + startDate: ""
+        const endDateFilter = endDate ? 'endDate=' + endDate: ""
         
         let queryParams = [userFilter, productFilter, clientFilter, startDateFilter, endDateFilter]
         const query = queryParams.filter(e => e !== '').join('&')
@@ -111,8 +111,6 @@ const ListSells = ()=>{
                     onChange={e => {setEndDate(handleDatePicker(e))}}
                     className="select"
                 />
-
-                <Button onClick={e => {getSells()} } >Filtrar</Button>
             </div>
             {sells.length > 0 ?
             <Table columns={columns} dataSource={sells} />
