@@ -50,7 +50,7 @@ export default function CommissionRegister () {
               <form className="formulario" onSubmit={handleSubmit}>
               <div className='insertText'>
                 <label>Título</label>
-                <Input onChange={(e)=> setTitle(e.target.value)}/>
+                <Input  placeholder='Digite o título'  onChange={(e)=> setTitle(e.target.value)}/>
                 {errors.title && <p style={{color: 'red'}}>{errors.title}</p>}
               </div>
                 <div className='insertText'>

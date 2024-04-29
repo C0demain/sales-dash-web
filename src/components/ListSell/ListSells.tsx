@@ -81,34 +81,34 @@ const ListSells = ()=>{
             <h2>Últimas vendas</h2>
             <Button onClick={e => {getSells()} }>Recarregar vendas</Button>
             <div className="filter">
-                <label>Vendedor: </label>
+                <label className="font">Vendedor: </label>
                 <SelectSeller
                     controlState={[userSelect, setUserSelect]}
                     dataKey="id"
                     className="select"
                 />
 
-                <label>Produto: </label>
+                <label className="font">Produto: </label>
                 <SelectProduct
                     controlState={[productSelect, setProductSelect]}
                     dataKey="id"
                     className="select"
                 />
 
-                <label>Cliente: </label>
+                <label className="font">Cliente: </label>
                 <SelectClient
                     controlState={[clientSelect, setClientSelect]}
                     dataKey="id"
                     className="select"
                 />
 
-                <label>Data de início: </label>
+                <label className="font"> Data de início: </label>
                 <DatePicker 
                     onChange={e => { setStartDate(handleDatePicker(e)) }}
                     className="select"
                 />
 
-                <label>Data de fim: </label>
+                <label className="font">Data de fim: </label>
                 <DatePicker 
                     onChange={e => {setEndDate(handleDatePicker(e))}}
                     className="select"
