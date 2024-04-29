@@ -37,7 +37,10 @@ function ShowClient() {
     {
       title: 'Ações',
       render: (text: any, record: Client) => (
-        <Button onClick={() => handleEdit(record)}>Editar</Button>
+        <div>
+          <Button onClick={() => handleEdit(record)}>Editar</Button>
+          <Button onClick={() => handleDelete(record)} style={{ marginLeft: '8px' }}>Excluir</Button>
+        </div>
       )
     }
   ];
@@ -96,6 +99,22 @@ function ShowClient() {
 
   const handleCancel = () => {
     setVisible(false);
+  };
+
+ const handleDelete = async (record: Client) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/v1/clients/checksales/${record.id}`);
+      if (response.data.hasSales) {
+        message.error('Este cliente possui vendas vinculadas e não pode ser excluído.');
+      } else {
+        await axios.delete(`http://localhost:8000/api/v1/clients/delete/${record.id}`);
+        message.success('Cliente excluído com sucesso!');
+        getClients();
+      }
+    } catch (error) {
+      console.error('Erro ao excluir cliente:', error);
+      message.error('Ocorreu um erro ao excluir o cliente. Por favor, tente novamente.');
+    }
   };
 
   // Função para formatar o CPF com a máscara
