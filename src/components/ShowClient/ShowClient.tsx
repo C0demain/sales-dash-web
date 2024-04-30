@@ -103,17 +103,19 @@ function ShowClient() {
 
  const handleDelete = async (record: Client) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/v1/clients/checksales/${record.id}`);
-      if (response.data.hasSales) {
-        message.error('Este cliente possui vendas vinculadas e não pode ser excluído.');
-      } else {
-        await axios.delete(`http://localhost:8000/api/v1/clients/delete/${record.id}`);
-        message.success('Cliente excluído com sucesso!');
-        getClients();
+      const response = await axios.delete(`http://localhost:8000/api/v1/clients/delete/${record.id}`);
+      if(response.status === 204) message.success('Cliente excluído com sucesso!');
+      
+      getClients()
+
+    } catch (error: any) {
+      let status = error.response.status
+      if(status === 403) message.error('Este cliente possui vendas vinculadas e não pode ser excluído.');
+      else if(status === 404) message.error('Não foi possível encontrar o cliente especificado')
+      else{
+        message.error('Ocorreu um erro ao excluir o cliente. Por favor, tente novamente.');
+        console.error('Erro ao excluir cliente:', error);
       }
-    } catch (error) {
-      console.error('Erro ao excluir cliente:', error);
-      message.error('Ocorreu um erro ao excluir o cliente. Por favor, tente novamente.');
     }
   };
 
