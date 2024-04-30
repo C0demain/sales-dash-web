@@ -6,10 +6,10 @@ import Navbargest from "components/AdminNavbar/AdminNavbar";
 
 
 interface Product {
+  id: number;
   name: string;
   description: string;
-  value: string;
- 
+  value: number;
 }
 
 function ShowProduct() {
@@ -44,7 +44,7 @@ function ShowProduct() {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get<{ product: Product[] }>('http://localhost:8000/api/v1/products/getproducts');
+      const response = await axios.get<{ product: Product[] }>("http://localhost:8000/api/v1/products/getAll");
       if (response.data && response.data.product) {
         setProducts(response.data.product);
       } else {
@@ -79,7 +79,7 @@ function ShowProduct() {
       }
       
       const updatedProduct = { ...currentProduct, ...values };
-      const response = await axios.put(`http://localhost:8000/api/v1/products/update/${currentProduct.name}`, updatedProduct);
+      const response = await axios.put(`http://localhost:8000/api/v1/products/update/${currentProduct.id}`, updatedProduct);
       
       if (response.status === 200) {
         setVisible(false);
@@ -131,10 +131,11 @@ function ShowProduct() {
               <Input />
             </Form.Item>
             <Form.Item
-              name="value"
-              label="Valor"
-              rules={[{ required: true, message: 'Por favor, insira o valor do produto!' }]}
-            >
+                name="value"
+                label="Valor"
+                rules={[{ required: true, message: 'Por favor, insira o valor do produto!' }]}
+              >
+              <Input />
             </Form.Item>
           </Form>
         </Modal>

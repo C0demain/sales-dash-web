@@ -11,6 +11,7 @@ import UploadExcelPage from "components/UploadPage/UploadPage";
 import Dashboard from "components/dashboard/dashboard";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ShowProduct from "components/ShowProduct/ShowProduct";
 
 export function AppRoutes() {
   return (
@@ -65,6 +66,12 @@ export function AppRoutes() {
             </ProtectedLayout>} >
           </Route>
 
+          <Route path='/product/list' element={
+            <ProtectedLayout>
+              <ShowProduct />
+            </ProtectedLayout>} >
+          </Route>
+
           <Route path='/client/register' element={
             <ProtectedLayout>
               <RegisterClient />
@@ -76,6 +83,8 @@ export function AppRoutes() {
               <ShowClient />
             </ProtectedLayout>} >
           </Route>
+
+          
 
         </Routes>
       </BrowserRouter>
