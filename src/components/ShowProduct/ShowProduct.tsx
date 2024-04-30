@@ -44,9 +44,9 @@ function ShowProduct() {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get<{ product: Product[] }>("http://localhost:8000/api/v1/products/getAll");
-      if (response.data && response.data.product) {
-        setProducts(response.data.product);
+      const response = await axios.get<{ products: Product[] }>("http://localhost:8000/api/v1/products/getAll");
+      if (response.data && response.data.products) {
+        setProducts(response.data.products);
       } else {
         setProducts([]);
       }
@@ -79,7 +79,7 @@ function ShowProduct() {
       }
       
       const updatedProduct = { ...currentProduct, ...values };
-      const response = await axios.put(`http://localhost:8000/api/v1/products/update/${currentProduct.id}`, updatedProduct);
+      const response = await axios.put(`http://localhost:8000/api/v1/products/${currentProduct.id}`, updatedProduct);
       
       if (response.status === 200) {
         setVisible(false);
