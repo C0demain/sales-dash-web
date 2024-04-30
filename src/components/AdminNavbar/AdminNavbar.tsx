@@ -5,9 +5,7 @@ const Navbargest = () => {
     const navigate = useNavigate()
   
     const handleLogout = () => {
-      localStorage.removeItem('userID');
-      localStorage.removeItem('userEmail');
-      localStorage.removeItem('userToken');
+      localStorage.removeItem('user');
       navigate("/login");
     };
 

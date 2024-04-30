@@ -1,9 +1,8 @@
-
 import ListSells from "components/ListSell/ListSells";
 import './index.css'
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import RankingSellers from "components/rankingSellers/rankingSellers";
+import RankingSellers from "components/RankingSellers/rankingSellers";
 
 function Dashboard() {
     return(

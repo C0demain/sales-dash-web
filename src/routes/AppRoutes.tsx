@@ -8,7 +8,7 @@ import RegisterSell from "components/RegisterSell/RegisterSell";
 import RegisterUser from "components/RegisterUser/RegisterUser";
 import ShowClient from "components/ShowClient/ShowClient";
 import UploadExcelPage from "components/UploadPage/UploadPage";
-import Dashboard from "components/dashboard/dashboard";
+import Dashboard from "components/Dashboard/dashboard";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
