@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function sendData(productName: string, description: string, value:number) {
+export async function sendData(productName: string, description: string, value:number) {
   
   const url = 'http://localhost:8000/api/v1/products/register';
 
@@ -10,11 +10,6 @@ export function sendData(productName: string, description: string, value:number)
     'value': value
   };
 
-  axios.post(url, userData)
-    .then(response => {
-      console.log('Dados enviados com sucesso:', response.data);
-    })
-    .catch(error => {
-      console.error('Erro ao enviar dados:', error);
-    });
+  const response = await axios.post(url, userData)
+  if(response.status === 201) console.log("Dados enviados com sucesso")
 }

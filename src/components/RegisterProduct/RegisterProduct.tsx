@@ -9,12 +9,12 @@ function RegisterProduct() {
   const [productName, setProductName] = useState('')
   const [description, setDescription] = useState('')
   const [value, setValue] = useState('')
-  const [errors, setErrors] = useState({ productName: '', description: '', value: ''})
+  const [errors, setErrors] = useState({ productName: '', description: '', value: '', response: ''})
   const [sucess, setSucess] = useState('')
 
   const validate = () => {
     let isValid = true;
-    const errors = { productName: '', description: '', value: ''};
+    const errors = { productName: '', description: '', value: '', response: ''};
 
     if (!productName) {
       errors.productName = 'O nome é obrigatório.';
@@ -38,12 +38,18 @@ function RegisterProduct() {
     return isValid
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (validate()) {
       // Lógica de submissão do formulário
-      setSucess('Cadastro realizado!')
-      sendData(productName, description, parseFloat(value))
+      try{
+        await sendData(productName, description, parseFloat(value))
+        setSucess('Cadastro realizado!')
+      }catch(error: any){
+        errors.response = 'Ocorreu um erro ao registrar o produto. Tente novamente'
+        setErrors(errors)
+        console.log(error)
+      }
     }
   }
 
@@ -79,6 +85,7 @@ function RegisterProduct() {
               </div>
 
               {sucess && <p className='funciona'>{sucess}</p>}
+              {errors.response && <p className='erro'>{errors.response}</p>}
               <button type='submit'>Cadastrar</button>
             </form>
           </div>

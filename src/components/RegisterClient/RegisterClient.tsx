@@ -11,12 +11,12 @@ function RegisterClient() {
   const [clientName, setClientName] = useState('')
   const [segment, setSegment] = useState('')
   const [cpf, setCpf] = useState('')
-  const [errors, setErrors] = useState({ clientName: '', segment: '', cpf: '' })
+  const [errors, setErrors] = useState({ clientName: '', segment: '', cpf: '', response: ''})
   const [sucess, setSucess] = useState('')
 
   const validate = () => {
     let isValid = true;
-    const errors = { clientName: '', segment: '', cpf: '' };
+    const errors = { clientName: '', segment: '', cpf: '', response: '' };
 
     if (!clientName) {
       errors.clientName = 'O nome é obrigatório.';
@@ -37,12 +37,23 @@ function RegisterClient() {
     setErrors(errors)
     return isValid
   }
-  const handleSubmit = (event: any) => {
+
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (validate()) {
       // Lógica de submissão do formulário
-      setSucess('Cadastro realizado!')
-      sendData(clientName, segment, cpf)
+      try{
+        await sendData(clientName, segment, cpf)
+        setSucess('Cadastro realizado!')
+      }catch(error: any){
+        if(error.response.status == 400){
+          errors.response = 'Esse CPF/CNPJ já está vinculado a outro cliente'
+        }else {
+          errors.response = 'Ocorreu um erro ao registrar o cliente. Tente novamente'
+          console.log(error)
+        }
+        setErrors(errors)
+      }
     }
   }
 
@@ -78,6 +89,7 @@ function RegisterClient() {
               </div>
 
               {sucess && <p className='funciona'>{sucess}</p>}
+              {errors.response && <p className='erro'>{errors.response}</p>}
               <button type='submit'>Cadastrar</button>
             </form>
           </div>

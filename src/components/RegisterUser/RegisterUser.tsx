@@ -15,12 +15,12 @@ function RegisterUser() {
     const [senhaConfirm, setSenhaConfirm] = useState('')
     const [cpf, setCpf] = useState('')
     const [funcao, setFuncao] = useState('')
-    const [errors, setErrors] = useState({userName: '', email: '', senhaConfirm: '', cpf: '', funcao: '', senha:''})
+    const [errors, setErrors] = useState({userName: '', email: '', senhaConfirm: '', cpf: '', funcao: '', senha:'', response: ''})
     const [sucess, setSucess] = useState('')
 
     const validate = () => {
         let isValid = true;
-        const errors = { userName: '', email: '', senhaConfirm: '', cpf: '', funcao: '', senha: ''};
+        const errors = { userName: '', email: '', senhaConfirm: '', cpf: '', funcao: '', senha: '', response: ''};
 
         if (!userName) {
             errors.userName = 'O nome é obrigatório.';
@@ -73,12 +73,22 @@ function RegisterUser() {
         setErrors(errors)
         return isValid
     }
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         if (validate()) {
             // Lógica de submissão do formulário
-            setSucess('Cadastro realizado!')
-            sendData(userName, email, cpf, funcao, senhaConfirm)
+            try{
+              await sendData(userName, email, cpf, funcao, senha)
+              setSucess('Cadastro realizado!')
+            }catch(error: any){
+              if(error.response.status === 400){
+                errors.response = 'CPF ou email já está vinculado a outro usuário'
+              }else{
+                errors.response = 'Ocorreu um erro ao registrar o produto. Tente novamente'
+              }
+              setErrors(errors)
+              console.log(error)
+            }
         }
     }
 
@@ -145,6 +155,7 @@ function RegisterUser() {
                 
               </div>
                   {sucess && <p className='funciona'>{sucess}</p>}
+                  {errors.response && <p className='erro'>{errors.response}</p>}
                   <button type='submit'>Cadastrar</button>
             </form>
           </div>

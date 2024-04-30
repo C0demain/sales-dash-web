@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function sendData(userName: String, email: string, cpf: string, funcao: string, senha: string) {
+export async function sendData(userName: String, email: string, cpf: string, funcao: string, senha: string) {
   
   const url = 'http://localhost:8000/api/v1/auth/register';
 
@@ -12,13 +12,8 @@ export function sendData(userName: String, email: string, cpf: string, funcao: s
     'role': funcao
   };
 
-  axios.post(url, userData)
-    .then(response => {
-      console.log('Dados enviados com sucesso:', response.data);
-    })
-    .catch(error => {
-      console.error('Erro ao enviar dados:', error);
-    });
+  const response = await axios.post(url, userData)
+  if(response.status === 201) console.log("Dados enviados com sucesso")
 }
 
 export function isValidCPF(value: string): boolean {
