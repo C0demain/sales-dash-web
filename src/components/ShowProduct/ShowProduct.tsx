@@ -14,7 +14,7 @@ interface Product {
 
 function ShowProduct() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [form] = Form.useForm();
 
@@ -32,12 +32,13 @@ function ShowProduct() {
     {
       title: 'Valor',
       dataIndex: 'value',
-      key: 'value'
+      key: 'value',
+      render: (value: number) => `R$ ${value.toFixed(2).replace('.', ',')}`
     },
     {
       title: 'Ações',
       render: (text: any, record: Product) => (
-        <Button onClick={() => handleEdit(record)}>Editar</Button>
+        <Button className="button-edit" onClick={() => handleEdit(record)}>Editar</Button>
       )
     }
   ];
@@ -62,7 +63,7 @@ function ShowProduct() {
 
   const handleEdit = (record: Product) => {
     setCurrentProduct(record);
-    setVisible(true);
+    setOpen(true);
     form.setFieldsValue({
       name: record.name,
       description: record.description,
@@ -82,7 +83,7 @@ function ShowProduct() {
       const response = await axios.put(`http://localhost:8000/api/v1/products/${currentProduct.id}`, updatedProduct);
       
       if (response.status === 200) {
-        setVisible(false);
+        setOpen(false);
         message.success('Produto atualizado com sucesso!');
         getProducts(); 
       } else {
@@ -95,7 +96,7 @@ function ShowProduct() {
   };
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   return (
@@ -103,15 +104,15 @@ function ShowProduct() {
       <Navbargest/>
       <div className="containerCl">
         <h2>Lista de Produtos</h2>
-        <Button onClick={getProducts}>Recarregar produtos</Button>
+        <Button className="button-refresh" onClick={getProducts}>Recarregar produtos</Button>
         {products.length > 0 ? (
-          <Table columns={columns} dataSource={products} />
+          <Table columns={columns} dataSource={products} rowKey={'id'}/>
         ) : (
           <Empty description={"Nenhum produto encontrado"} />
         )}
         <Modal
           title="Editar Produto"
-          visible={visible}
+          open={open}
           onOk={handleOk}
           onCancel={handleCancel}
         >
@@ -135,7 +136,7 @@ function ShowProduct() {
                 label="Valor"
                 rules={[{ required: true, message: 'Por favor, insira o valor do produto!' }]}
               >
-              <Input />
+              <Input type="number" step="0.01" min="0" />
             </Form.Item>
           </Form>
         </Modal>
@@ -144,4 +145,4 @@ function ShowProduct() {
   );
 }
 
-export default ShowProduct; 
+export default ShowProduct;

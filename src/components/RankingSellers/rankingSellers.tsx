@@ -53,7 +53,7 @@ function RankingSellers() {
     return(
         <div className="ranking">
             <h2>Ranking de vendedores por valor</h2>
-            <Button onClick={e => {getSellers()} }>Recarregar ranking</Button>
+            <Button className="button-refresh" onClick={e => {getSellers()} }>Recarregar ranking</Button>
             {sellers.length>0 ?
             <Table columns={columns} dataSource={sellers} rowKey="id"/>
             : <Empty description={"Nenhuma venda encontrada"} />}

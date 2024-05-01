@@ -14,7 +14,7 @@ interface Client {
 
 function ShowClient() {
   const [clients, setClients] = useState<Client[]>([]);
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false); 
   const [currentClient, setCurrentClient] = useState<Client | null>(null);
   const [form] = Form.useForm();
 
@@ -38,8 +38,8 @@ function ShowClient() {
       title: 'Ações',
       render: (text: any, record: Client) => (
         <div>
-          <Button onClick={() => handleEdit(record)}>Editar</Button>
-          <Button onClick={() => handleDelete(record)} style={{ marginLeft: '8px' }}>Excluir</Button>
+          <Button className="button-edit" onClick={() => handleEdit(record)}>Editar</Button>
+          <Button className="button-delete" onClick={() => handleDelete(record)} style={{ marginLeft: '8px' }}>Excluir</Button>
         </div>
       )
     }
@@ -65,11 +65,11 @@ function ShowClient() {
 
   const handleEdit = (record: Client) => {
     setCurrentClient(record);
-    setVisible(true);
+    setOpen(true); 
     form.setFieldsValue({
       name: record.name,
       segment: record.segment,
-      cpf: formatCPF(record.cpf) // Aplica a máscara no CPF ao editar
+      cpf: formatCPF(record.cpf)
     });
   };
 
@@ -85,9 +85,9 @@ function ShowClient() {
       const response = await axios.put(`http://localhost:8000/api/v1/clients/update/${currentClient.id}`, updatedClient);
       
       if (response.status === 200) {
-        setVisible(false);
+        setOpen(false); 
         message.success('Cliente atualizado com sucesso!');
-        getClients(); // Atualiza a tabela após a atualização do cliente
+        getClients();
       } else {
         message.error('Falha ao atualizar o cliente. Por favor, tente novamente.');
       }
@@ -98,7 +98,7 @@ function ShowClient() {
   };
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false); 
   };
 
  const handleDelete = async (record: Client) => {
@@ -119,7 +119,6 @@ function ShowClient() {
     }
   };
 
-  // Função para formatar o CPF com a máscara
   const formatCPF = (value: string) => {
     return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
   };
@@ -129,15 +128,15 @@ function ShowClient() {
       <Navbargest/>
       <div className="containerCl">
         <h2>Lista de Clientes</h2>
-        <Button onClick={getClients}>Recarregar clientes</Button>
+        <Button className="button-refresh" onClick={getClients}>Recarregar clientes</Button>
         {clients.length > 0 ? (
-          <Table columns={columns} dataSource={clients} />
+          <Table columns={columns} dataSource={clients} rowKey={'id'} />
         ) : (
           <Empty description={"Nenhum cliente encontrado"} />
         )}
         <Modal
           title="Editar Cliente"
-          visible={visible}
+          open={open} 
           onOk={handleOk}
           onCancel={handleCancel}
         >

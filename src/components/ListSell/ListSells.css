@@ -1,7 +1,6 @@
 .listSells{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     text-align: center;
 }
 
@@ -25,10 +24,8 @@
 
 .filter{
     display: flex;
-    justify-content: space-between;
-    margin: 15px;
+    margin: 15px auto;
     align-items: center;
-    margin: auto;
 }
 
 .filter > .select{
@@ -38,4 +35,10 @@
 
 .font {
     font-size: 16px;
+}
+
+.button-refresh {
+    margin-bottom: 20px;
+    background-color: black;
+    color: white;
 }
