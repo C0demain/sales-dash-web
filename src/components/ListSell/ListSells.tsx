@@ -113,7 +113,7 @@ const ListSells = ()=>{
                 />
             </div>
             {sells.length > 0 ?
-            <Table columns={columns} dataSource={sells} />
+            <Table columns={columns} dataSource={sells} rowKey="id" />
             : <Empty description={"Nenhuma venda encontrada"} />}
         </div>
     )
