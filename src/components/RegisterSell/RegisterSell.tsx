@@ -87,7 +87,7 @@ export default function RegisterSell(){
 
             {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
           </div>
-          <div className='insertTextVenda'>
+          <div className='insertText'>
             <label>Vendedor</label>
 
             <SelectSeller controlState={[seller, setSeller]} dataKey="cpf" className='selectVendas'/>
@@ -95,7 +95,7 @@ export default function RegisterSell(){
             {errors.seller && <p style={{ color: 'red' }}>{errors.seller}</p>}
           </div>
 
-          <div className='insertTextVenda'>
+          <div className='insertText'>
             <label>Cliente</label>
 
             <SelectClient controlState={[client, setClient]} dataKey='cpf' className='selectVendas'/>
@@ -103,7 +103,7 @@ export default function RegisterSell(){
             {errors.client && <p style={{ color: 'red' }}>{errors.client}</p>}
           </div>
 
-          <div className='insertTextVenda'>
+          <div className='insertText'>
             <label>Produto</label>
 
             <SelectProduct controlState={[product, setProduct]} dataKey='id' className='selectProduct'/>
@@ -111,7 +111,7 @@ export default function RegisterSell(){
             {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
           </div>
 
-          <div className='insertTextVenda'>
+          <div className='insertText'>
             <label>Valor da venda</label>
 
             <InputNumber addonBefore="R$" onChange={e => {setValue(parseValue(e))} } stringMode/>

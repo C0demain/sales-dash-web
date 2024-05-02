@@ -28,17 +28,13 @@
     color: rgb(216, 4, 4);
 }
 
-.containerVenda input{
-    color: black;
-}
-
 body{
     margin: 0px;
     font-size: 2.5vh;
 }
 
 .containerVenda option, .containerVenda select, .containerVenda input, .containerVenda button{
-    font-size: 2.5vh;
+    font-size: 1.5vh;
 }
 
 .containerVenda input, .containerVenda select{
@@ -47,6 +43,17 @@ body{
     background-color: white;
     border-color: black;
 }
+
+.insertText ::placeholder, .containerVenda select {
+    color: #b3b3b3;
+    font-size: 1.5vh;
+}
+
+.insertText input {
+    font-size: 1.5vh;
+    color: rgb(0, 0, 0);
+}
+
 
 #tituloRequisito{
     margin: 2%;
