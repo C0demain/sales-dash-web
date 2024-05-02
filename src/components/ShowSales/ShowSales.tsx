@@ -138,7 +138,7 @@ function ShowSales() {
   return (
     <NavbarWrapper>
       <Navbargest/>
-      <div className="containerS1">
+      <div className="containerSl">
         <h2>Lista de Vendas</h2>
         <Button onClick={getSells}>Recarregar vendas</Button>
         {sales.length > 0 ? (
