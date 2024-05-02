@@ -14,7 +14,7 @@ const SelectSeller = (props: propsType) =>{
     const { dataKey, className } = props
 
     const getSellers = async () => {
-        const response = await axios.get("http://localhost:8000/api/v1/auth/users", {
+        const response = await axios.get("http://localhost:8000/api/v1/auth/users/sellers", {
             withCredentials: false,
         });
 

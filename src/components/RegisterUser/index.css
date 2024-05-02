@@ -46,6 +46,11 @@ body{
     border-radius: 1vh;
     background-color: white;
     border-color: black;
+    color: #000000
+}
+
+.Página select{
+    color: #b3b3b3;
 }
 
 .Página ::placeholder, .Página select ::placeholder {

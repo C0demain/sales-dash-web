@@ -61,7 +61,9 @@ function RegisterClient() {
     <NavbarWrapper>
       <Navbargest />
 
-        <div className='containerVenda'>
+        <div className='Página'>
+
+          <div className='container'>
 
           <div className="caixa">
             <h1 className='titulo'>Cadastro de Cliente</h1>
@@ -70,21 +72,21 @@ function RegisterClient() {
               <div className='insertText'>
                 <label>Nome:</label>
 
-                <input type="text" placeholder='Nome completo' onChange={(e) => setClientName(e.target.value)} required />
+                <input type="text" placeholder='  Nome completo' onChange={(e) => setClientName(e.target.value)} required />
                 {errors.clientName && <p className='erro'>{errors.clientName}</p>}
               </div>
 
               <div className='insertText'>
                 <label>Segmento do Cliente:</label>
 
-                <input type="text" placeholder='Ex: Contábil, Marketing' onChange={(e) => setSegment(e.target.value)} required />
+                <input type="text" placeholder='  Ex: Contábil, Marketing' onChange={(e) => setSegment(e.target.value)} required />
                 {errors.segment && <p className='erro'>{errors.segment}</p>}
               </div>
 
               <div className='insertText'>
                 <label>CPF/CNPJ do Cliente:</label>
 
-                <input type="text" placeholder='000.000.000-00' onChange={(e) => setCpf(e.target.value)} required />
+                <input type="text" placeholder='  000.000.000-00' onChange={(e) => setCpf(e.target.value)} required />
                 {errors.cpf && <p className='erro'>{errors.cpf}</p>}
               </div>
 
@@ -92,6 +94,7 @@ function RegisterClient() {
               {errors.response && <p className='erro'>{errors.response}</p>}
               <button type='submit'>Cadastrar</button>
             </form>
+          </div>
           </div>
         </div>
     </NavbarWrapper>
