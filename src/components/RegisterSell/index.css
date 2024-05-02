@@ -91,3 +91,8 @@ body{
     height: min-content;
     margin: 1%;
 }
+
+.inputValor{
+    background-color: white;
+    border-radius: 0.5vh;
+}
