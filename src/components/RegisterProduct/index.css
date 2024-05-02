@@ -11,21 +11,25 @@
 .funciona{
     color: green;
 }
-
-.containerVenda{
+.container{
     display: flex;
     flex-direction:column;
     justify-content: center;
     align-items: center;
     width: max-content;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.containerVenda label, .containerVenda h1, .containerVenda h4, .containerVenda ol{
+.Página label, .Página h1, .Página h4, .Página ol{
     color: rgb(255, 255, 255);
 }
 
-.containerVenda select{
-    color: rgb(216, 4, 4);
+.Página select{
+    color: #000000;
+}
+
+.Página input{
+    color: #000000;
 }
 
 body{
@@ -33,25 +37,24 @@ body{
     font-size: 2.5vh;
 }
 
-.containerVenda option, .containerVenda select, .containerVenda input, .containerVenda button{
+.Página option, .Página select, .Página input, .Página button{
     font-size: 1.5vh;
 }
 
-.containerVenda input, .containerVenda select{
+.Página input, .Página select{
     height: 5vh;
     border-radius: 1vh;
     background-color: white;
     border-color: black;
+    color: #000000
 }
 
-.insertText ::placeholder, .containerVenda select {
+.Página select{
     color: #b3b3b3;
-    font-size: 1.5vh;
 }
 
-.insertText input {
-    font-size: 1.5vh;
-    color: rgb(0, 0, 0);
+.Página ::placeholder, .Página select ::placeholder {
+    color: #b3b3b3;
 }
 
 
@@ -59,7 +62,15 @@ body{
     margin: 2%;
 }
 
-.caixaVenda{
+.senhas{
+    height: auto;
+    width: 75%;
+    text-align:start;
+    display: flex;
+    flex-direction: column;
+    font-size: 2vh;
+}
+.caixa{
     box-shadow: black;
     background-color:#1c1c1c;
     margin: 2%;
@@ -71,7 +82,7 @@ body{
     flex-direction: column;
     align-items: center;
 }
-.formularioVenda{
+.formulario{
     height: auto;
     width: 90%;
     padding: 0.5%;
@@ -81,7 +92,7 @@ body{
     align-items: center;
 }
 
-.insertTextVenda{
+.insertText{
     height: auto;
     width: 75%;
     padding-top: 0.5%;
@@ -90,9 +101,16 @@ body{
     flex-direction: column;
     margin-top: 0%;
     margin-bottom: 0%;
+    font-size: 2vh;
 }
 
-.containerVenda button{
+.inputSenha{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 2vh;
+}
+.Página .container button{
     margin: 2%;
     border-radius: 1vh;
     border: none;
@@ -100,7 +118,7 @@ body{
     width: max-content;
 }
 
-.containerVenda h4{
+.Página h4{
     height: min-content;
     margin: 1%;
 }

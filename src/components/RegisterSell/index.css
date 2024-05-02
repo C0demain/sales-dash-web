@@ -90,6 +90,7 @@ body{
     border: none;
     height: 5vh;
     width: max-content;
+    font-size: 1.5vh;
 }
 
 .containerRegisterSell h4{
