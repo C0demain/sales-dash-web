@@ -13,6 +13,7 @@ import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
+import ShowSales from "components/ShowSales/ShowSales";
 
 export function AppRoutes() {
   return (
@@ -61,6 +62,7 @@ export function AppRoutes() {
             </ProtectedLayout>} >
           </Route>
 
+
           <Route path='/sells/register' element={
             <ProtectedLayout>
               <RegisterSell />
@@ -90,9 +92,11 @@ export function AppRoutes() {
               <ShowClient />
             </ProtectedLayout>} >
           </Route>
-
-          
-
+          <Route path='/sell/showsales' element={
+            <ProtectedLayout>
+              <ShowSales />
+            </ProtectedLayout>} >
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

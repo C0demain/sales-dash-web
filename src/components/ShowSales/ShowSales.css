@@ -1,0 +1,9 @@
+.containerSl{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    margin-left: 5%;
+    margin-right: 5%;
+}
