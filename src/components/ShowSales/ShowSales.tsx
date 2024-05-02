@@ -140,7 +140,7 @@ function ShowSales() {
       <Navbargest/>
       <div className="containerSl">
         <h2>Lista de Vendas</h2>
-        <Button onClick={getSells}>Recarregar vendas</Button>
+        <Button className= 'button-refresh' onClick={getSells}>Recarregar vendas</Button>
         {sales.length > 0 ? (
           <Table columns={columns} dataSource={sales} />
         ) : (
