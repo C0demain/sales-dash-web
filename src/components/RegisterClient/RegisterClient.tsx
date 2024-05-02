@@ -46,7 +46,7 @@ function RegisterClient() {
         await sendData(clientName, segment, cpf)
         setSucess('Cadastro realizado!')
       }catch(error: any){
-        if(error.response.status == 400){
+        if(error.response.status === 400){
           errors.response = 'Esse CPF/CNPJ já está vinculado a outro cliente'
         }else {
           errors.response = 'Ocorreu um erro ao registrar o cliente. Tente novamente'

@@ -14,7 +14,6 @@ const Navbargest = () => {
         <h1>Olá Gestor</h1><br></br>
         <ul>
           <li><button onClick={e => navigate('/dashboard')} className='Botao_barra'>Dashboard</button></li>
-          <li><button onClick={e => navigate('/sells/table')}className='Botao_barra'>Upload Planilha</button></li>
           <li><button onClick={e => navigate('/sells/register')} className='Botao_barra'>Cadastro de Vendas</button></li>
           <li><button onClick={e => navigate('/sellers/register')}className='Botao_barra'>Cadastro de Usuários</button></li>
           <li><button onClick={e => navigate('/product/register')}className='Botao_barra'>Cadastro de Produtos</button></li>

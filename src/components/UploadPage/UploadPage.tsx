@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import Navbargest from "components/AdminNavbar/AdminNavbar";
-import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import { Container, Description, FileName, Title, UploadForm, UploadInput, UploadLabel } from "components/commons";
+import './index.css'
+import { Description, FileName, Title, UploadForm, UploadInput, UploadLabel } from "components/commons";
 
 const UploadExcelPage: React.FC = () => {
 
@@ -97,10 +96,8 @@ const UploadExcelPage: React.FC = () => {
   }
 
   return (
-    <NavbarWrapper>
-      <Navbargest />
-      <Container>
-        <UploadForm>
+
+        <UploadForm className="formUpload">
           <Title>Upload de Arquivo Excel</Title>
           <Description>
             Selecione um arquivo Excel (.xlsx ou .xls) para fazer upload.
@@ -114,8 +111,6 @@ const UploadExcelPage: React.FC = () => {
           <UploadLabel htmlFor="inputExcel">Escolher Arquivo</UploadLabel>
           {fileName && <FileName>{fileName}</FileName>}
         </UploadForm>
-      </Container>
-    </NavbarWrapper>
   );
 };
 

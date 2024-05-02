@@ -7,7 +7,6 @@ import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import RegisterSell from "components/RegisterSell/RegisterSell";
 import RegisterUser from "components/RegisterUser/RegisterUser";
 import ShowClient from "components/ShowClient/ShowClient";
-import UploadExcelPage from "components/UploadPage/UploadPage";
 import Dashboard from "components/Dashboard/dashboard";
 import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
@@ -55,13 +54,6 @@ export function AppRoutes() {
               <CommissionList />
             </ProtectedLayout>} >
           </Route>
-
-          <Route path='/sells/table' element={
-            <ProtectedLayout>
-              <UploadExcelPage />
-            </ProtectedLayout>} >
-          </Route>
-
 
           <Route path='/sells/register' element={
             <ProtectedLayout>

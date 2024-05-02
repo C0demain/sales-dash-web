@@ -5,8 +5,13 @@
 .funciona{
     color: green;
 }
-
-.containerVenda{
+.containerGlobal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.containerRegisterSell{
+    margin-top: 7vh;
     display: flex;
     flex-direction:column;
     justify-content: center;
@@ -14,15 +19,15 @@
     width: max-content;
 }
 
-.containerVenda label, .containerVenda h1, .containerVenda h4, .containerVenda ol{
+.containerRegisterSell span, .containerRegisterSell label, .containerRegisterSell h1, .containerRegisterSell h4, .containerRegisterSell ol, .containerRegisterSell p{
     color: rgb(255, 255, 255);
 }
 
-.containerVenda select{
+.containerRegisterSell select{
     color: rgb(216, 4, 4);
 }
 
-.containerVenda input{
+.containerRegisterSell input{
     color: black;
     font-size: 1.5vh;
 }
@@ -32,11 +37,11 @@ body{
     font-size: 2.5vh;
 }
 
-.containerVenda option, .containerVenda select, .containerVenda input, .containerVenda button{
+.containerRegisterSell option, .containerRegisterSell select, .containerRegisterSell input, .containerRegisterSell button{
     font-size: 2.5vh;
 }
 
-.containerVenda input, .containerVenda select{
+.containerRegisterSell input, .containerRegisterSell select{
     height: 5vh;
     border-radius: 1vh;
     background-color: white;
@@ -48,8 +53,7 @@ body{
 }
 
 .caixaVenda{
-    box-shadow: black;
-    background-color:#1c1c1c;
+    background-color: #1c1c1c;
     margin: 2%;
     height: auto;
     width: 80vh;
@@ -80,7 +84,7 @@ body{
     margin-bottom: 0%;
 }
 
-.containerVenda button{
+.containerRegisterSell button{
     margin: 2%;
     border-radius: 1vh;
     border: none;
@@ -88,7 +92,7 @@ body{
     width: max-content;
 }
 
-.containerVenda h4{
+.containerRegisterSell h4{
     height: min-content;
     margin: 1%;
 }

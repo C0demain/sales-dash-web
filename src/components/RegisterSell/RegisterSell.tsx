@@ -4,6 +4,7 @@ import './index.css'
 import SelectClient from 'components/SelectClient/SelectClient'
 import SelectProduct from 'components/SelectProduct/SelectProduct'
 import SelectSeller from 'components/SelectSeller/SelectSeller'
+import UploadExcelPage from 'components/UploadPage/UploadPage'
 import {sendData} from '.'
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
@@ -73,55 +74,57 @@ export default function RegisterSell(){
     return(
       <NavbarWrapper>
       <Navbargest/>
+      <div className='containerGlobal'>
+        <div className='containerRegisterSell'>
+          <UploadExcelPage/>
+        </div>
 
-      <div className='containerVenda'>
+        <div className='containerRegisterSell'>
 
-      <div className="caixaVenda">
-        <h1 className='titulo'>Cadastro de Venda</h1>
+        <div className="caixaVenda">
+          <h1 className='titulo'>Cadastro de Venda</h1>
 
-        <form className="formularioVenda" onSubmit={handleSubmit}>
-          <div className='insertText'>
-            <label placeholder='Escolha uma data'>Data da venda:</label>
+          <form className="formularioVenda" onSubmit={handleSubmit}>
+            <div className='insertText'>
+              <label placeholder='Escolha uma data'>Data da venda:</label>
 
-            <DatePicker style={{ height: '5vh', borderRadius: '1vh', backgroundColor: 'white', borderColor: 'black' }}onChange={e => {setDate(formatDate(e))} } />
+              <DatePicker style={{ height: '5vh', borderRadius: '1vh', backgroundColor: 'white', borderColor: 'black' }}onChange={e => {setDate(formatDate(e))} } />
 
-            {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
-          </div>
-          <div className='insertText'>
-            <label>Vendedor</label>
+              {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
+            </div>
 
-            <SelectSeller controlState={[seller, setSeller]} dataKey="cpf" className='selectVendas'/>
+            <div className='insertTextVenda'>
+              <label>Vendedor</label>
+              <SelectSeller controlState={[seller, setSeller]} dataKey="cpf" className='selectVendas'/>
 
-            {errors.seller && <p style={{ color: 'red' }}>{errors.seller}</p>}
-          </div>
+              {errors.seller && <p style={{ color: 'red' }}>{errors.seller}</p>}
+            </div>
 
-          <div className='insertText'>
-            <label>Cliente</label>
+            <div className='insertTextVenda'>
+              <label>Cliente</label>
 
-            <SelectClient controlState={[client, setClient]} dataKey='cpf' className='selectVendas'/>
+              <SelectClient controlState={[client, setClient]} dataKey='cpf' className='selectVendas'/>
 
-            {errors.client && <p style={{ color: 'red' }}>{errors.client}</p>}
-          </div>
+              {errors.client && <p style={{ color: 'red' }}>{errors.client}</p>}
+            </div>
 
-          <div className='insertText'>
-            <label>Produto</label>
+            <div className='insertTextVenda'>
+              <label>Produto</label>
+              <SelectProduct controlState={[product, setProduct]} dataKey='id' className='selectProduct'/>
+              {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
+            </div>
 
-            <SelectProduct controlState={[product, setProduct]} dataKey='id' className='selectProduct'/>
-
-            {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
-          </div>
-
-          <div className='insertText'>
-            <label>Valor da venda</label>
-
-            <InputNumber className='inputValor' addonBefore="R$" onChange={e => {setValue(parseValue(e))} } stringMode/>
-
-            {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
-          </div>
-            {sucess && <p className='funciona'>{sucess}</p>}
-            <button className='botaoEnvia' type='submit'>Cadastrar</button>
-        </form>
+            <div className='insertTextVenda'>
+              <label>Valor da venda</label>
+              <InputNumber addonBefore="R$" onChange={e => {setValue(parseValue(e))} } stringMode/>
+              {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
+            </div>
+              {sucess && <p className='funciona'>{sucess}</p>}
+              <button className='botaoEnvia' type='submit'>Cadastrar</button>
+          </form>
+        </div>
       </div>
+
     </div>
     </NavbarWrapper>
   )
