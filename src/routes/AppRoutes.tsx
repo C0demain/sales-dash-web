@@ -9,6 +9,7 @@ import RegisterUser from "components/RegisterUser/RegisterUser";
 import ShowClient from "components/ShowClient/ShowClient";
 import UploadExcelPage from "components/UploadPage/UploadPage";
 import Dashboard from "components/Dashboard/dashboard";
+import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
@@ -24,6 +25,12 @@ export function AppRoutes() {
           <Route path='/login' element={<Login />}></Route>
 
           {/* Rotas Privadas */}
+          <Route path="/dashboardSeller" element={
+            <ProtectedLayout>
+              <DashboardSeller/>
+            </ProtectedLayout>}>
+          </Route>
+
           <Route path='/dashboard' element={
             <ProtectedLayout>
               <Dashboard />
