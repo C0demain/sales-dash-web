@@ -39,7 +39,7 @@ function RegisterUser() {
     }
 
     if (!funcao) {
-      errors.funcao = 'Selecione sua função.'
+      errors.funcao = '  Selecione sua função.'
       isValid = false
     }
 
@@ -106,30 +106,30 @@ function RegisterUser() {
               <div className='insertText'>
                 <label>Nome:</label>
 
-                <input type="text" placeholder='Nome completo' onChange={(e) => setUserName(e.target.value)} required />
+                <input type="text" placeholder='  Nome completo' onChange={(e) => setUserName(e.target.value)} required />
                 {errors.userName && <p className='erro'>{errors.userName}</p>}
               </div>
 
               <div className='insertText'>
                 <label>CPF do usuário:</label>
 
-                <input type="text" placeholder='000.000.000-00' onChange={(e) => setCpf(e.target.value)} required />
+                <input type="text" placeholder='  000.000.000-00' onChange={(e) => setCpf(e.target.value)} required />
                 {errors.cpf && <p className='erro'>{errors.cpf}</p>}
               </div>
 
               <div className='insertText'>
                 <label>Email do usuário:</label>
 
-                <input type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
+                <input type="email" placeholder='  Email' onChange={(e) => setEmail(e.target.value)} required />
                 {errors.email && <p className='erro'>{errors.email}</p>}
               </div>
 
               <div className='insertText'>
                 <label>Função do usuário:</label>
-                <select title='Escolha sua função' value={funcao} onChange={(e) => setFuncao(e.target.value)}>
-                  <option value="" disabled hidden>Selecione uma função</option>
-                  <option value="user">Vendedor</option>
-                  <option value="admin">Gestor</option>
+                <select title='  Escolha sua função' value={funcao} onChange={(e) => setFuncao(e.target.value)}>
+                  <option value="" disabled hidden>  Selecione uma função</option>
+                  <option value="user">  Vendedor</option>
+                  <option value="admin">  Gestor</option>
                 </select>
                 {errors.funcao && <p className='erro'>{errors.funcao}</p>}
               </div>
@@ -143,13 +143,13 @@ function RegisterUser() {
                 </ol>
                 <div className='inputSenha'>
                   <label >Digite uma senha:</label>
-                  <input type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)} />
+                  <input type="password" name='senha' placeholder='  Senha' required onChange={(e) => setSenha(e.target.value)} />
                   {errors.senha && <p className='erro'>{errors.senha}</p>}
                 </div>
 
                 <div className='inputSenha'>
                   <label >Confirme sua senha:</label>
-                  <input type="password" placeholder='Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
+                  <input type="password" placeholder='  Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
                   {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
                 </div>
 

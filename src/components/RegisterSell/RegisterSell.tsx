@@ -119,7 +119,7 @@ export default function RegisterSell(){
             {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
           </div>
             {sucess && <p className='funciona'>{sucess}</p>}
-            <button className='botaoEnvia' type='submit'>Cadastrar</button>
+            <button type='submit'>Cadastrar</button>
         </form>
       </div>
     </div>
