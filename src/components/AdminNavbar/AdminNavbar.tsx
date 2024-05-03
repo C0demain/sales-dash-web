@@ -16,7 +16,6 @@ const Navbargest = () => {
         <h1>Olá Gestor</h1><br></br>
         <ul>
           <li><button onClick={e => navigate('/dashboard')} className='Botao_barra'>Dashboard</button></li>
-          <li><button onClick={e => navigate('/sells/table')}className='Botao_barra'>Upload Planilha</button></li>
           <li><button onClick={e => setShowCadastro(!showCadastro)} className='Botao_barra'>Cadastro</button></li>
                 {showCadastro && (
                     <>
