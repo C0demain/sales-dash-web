@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react"
 import './ListSells.css'
-import { Button, Empty, Table, DatePicker } from "antd";
+import { Button, Empty, Table, DatePicker, TableColumnsType } from "antd";
 import SelectSeller from 'components/SelectSeller/SelectSeller'
 import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
@@ -14,7 +14,7 @@ const ListSells = () => {
     const [startDate, setStartDate] = useState<any>()
     const [endDate, setEndDate] = useState<any>()
 
-    const columns = [
+    const columns:TableColumnsType = [
         {
             title: 'Data',
             dataIndex: 'date',
@@ -40,7 +40,8 @@ const ListSells = () => {
             title: 'Valor',
             dataIndex: 'value',
             key: 'value',
-            render: (value: number) => formatCurrency(value)
+            render: value => formatCurrency(value),
+            align: "end"
         },
     ]
 

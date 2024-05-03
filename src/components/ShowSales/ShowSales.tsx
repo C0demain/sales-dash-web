@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
 import './ShowSales.css'
@@ -25,7 +25,7 @@ function ShowSales() {
   const [currentSale, setCurrentSale] = useState<Sale | null>(null);
   const [seller, setSeller] = useState<any> ()
 
-  const columns = [
+  const columns:TableColumnsType = [
     {
       title: 'Data',
       dataIndex: 'date',
@@ -50,7 +50,9 @@ function ShowSales() {
     {
       title: 'Valor',
       dataIndex: 'value',
-      key: 'value'
+      key: 'value',
+      render: value => formatCurrency(value),
+      align: "end"
     },
     {
       title: 'Ações',
@@ -60,6 +62,9 @@ function ShowSales() {
     }
   ];
 
+  const formatCurrency = (value: number): string => {
+    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
 
   const formatDate = (value: string): string => {
     return new Date(value+'T00:00').toLocaleDateString('pt-BR')
