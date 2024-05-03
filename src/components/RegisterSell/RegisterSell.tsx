@@ -116,7 +116,7 @@ export default function RegisterSell(){
 
             <div className='insertTextVenda'>
               <label>Valor da venda</label>
-              <InputNumber addonBefore="R$" onChange={e => {setValue(parseValue(e))} } stringMode/>
+              <InputNumber className='inputValor' addonBefore="R$" onChange={e => {setValue(parseValue(e))} } stringMode/>
               {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
             </div>
               {sucess && <p className='funciona'>{sucess}</p>}
