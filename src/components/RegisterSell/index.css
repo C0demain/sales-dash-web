@@ -19,7 +19,7 @@
     width: max-content;
 }
 
-.containerRegisterSell span, .containerRegisterSell label, .containerRegisterSell h1, .containerRegisterSell h4, .containerRegisterSell ol, .containerRegisterSell p{
+.containerRegisterSell label, .containerRegisterSell h1, .containerRegisterSell h4, .containerRegisterSell ol, .containerRegisterSell p{
     color: rgb(255, 255, 255);
 }
 
@@ -29,28 +29,28 @@
 
 .containerRegisterSell input{
     color: black;
-    font-size: 1.5vh;
+    font-size: 2vh;
 }
 
 body{
     margin: 0px;
-    font-size: 2.5vh;
+    font-size: 2vh;
 }
 
 .containerRegisterSell option, .containerRegisterSell select, .containerRegisterSell input, .containerRegisterSell button{
-    font-size: 2.5vh;
+    font-size: 2vh;
 }
 
 .containerRegisterSell input, .containerRegisterSell select{
     height: 5vh;
     border-radius: 1vh;
-    background-color: white;
     border-color: black;
 }
-
 #tituloRequisito{
     margin: 2%;
 }
+
+
 
 .caixaVenda{
     background-color: #1c1c1c;
@@ -90,7 +90,7 @@ body{
     border: none;
     height: 5vh;
     width: max-content;
-    font-size: 1.5vh;
+    font-size: 2vh;
 }
 
 .containerRegisterSell h4{
@@ -101,4 +101,8 @@ body{
 .inputValor{
     background-color: white;
     border-radius: 0.5vh;
+}
+
+.selectProduct {
+    color: black;
 }

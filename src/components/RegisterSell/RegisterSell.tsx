@@ -85,7 +85,7 @@ export default function RegisterSell(){
           <h1 className='titulo'>Cadastro de Venda</h1>
 
           <form className="formularioVenda" onSubmit={handleSubmit}>
-            <div className='insertText'>
+            <div className='insertTextVenda'>
               <label placeholder='Escolha uma data'>Data da venda:</label>
 
               <DatePicker style={{ height: '5vh', borderRadius: '1vh', backgroundColor: 'white', borderColor: 'black' }}onChange={e => {setDate(formatDate(e))} } />
@@ -95,7 +95,7 @@ export default function RegisterSell(){
 
             <div className='insertTextVenda'>
               <label>Vendedor</label>
-              <SelectSeller controlState={[seller, setSeller]} dataKey="cpf" className='selectVendas'/>
+              <SelectSeller controlState={[seller, setSeller]} dataKey="cpf"/>
 
               {errors.seller && <p style={{ color: 'red' }}>{errors.seller}</p>}
             </div>
