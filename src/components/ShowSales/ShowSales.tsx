@@ -24,8 +24,6 @@ function ShowSales() {
   const [form] = Form.useForm();
   const [currentSale, setCurrentSale] = useState<Sale | null>(null);
   const [seller, setSeller] = useState<any> ()
-  const [client, setClient] = useState<any>()
-  const [product, setProduct] = useState<any>()
 
   const columns = [
     {
@@ -40,7 +38,7 @@ function ShowSales() {
     },
     {
       title: 'Cliente',
-      dataIndex: 'clientName',
+      dataIndex: 'clientname',
       key: 'client'
     },
     {
@@ -64,14 +62,9 @@ function ShowSales() {
   const getSells = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/v1/sells/getall');
-      if (response.data && response.data.sells) {
-        setSells(response.data.sells);
-        let sells = response.data.sells
-        for(let s of sells){
-          s.clientName=s.client.name
-          s.productName=s.product.name
-          s.seller=s.user.name
-        }
+      if (response.data && response.data.sell) {
+        setSells(response.data.sell);
+        let sells = response.data.sell
       } else {
         setSells([]);
       }
@@ -86,17 +79,14 @@ function ShowSales() {
   }, []);
 
   const handleEdit = (record: any) => {
-    setSeller(record.user.cpf[0]);
-    setProduct(record.product.id)
-    setClient(record.client.cpf[0])
-    console.log(client)
+    setSeller(record.user.cpf);
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
       date: record.date,
-      seller: seller,
-      client: client,
-      product: product,
+      seller: record.user.cpf,
+      client: record.clientname,
+      product: record.productName,
       value: record.value,
     });
     setVisible(true); 
@@ -110,13 +100,12 @@ function ShowSales() {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
       
-      const updatedSale = {date:null, seller_cpf:null, product_id:null, cpf_client:null, value:null};
-      updatedSale.date = values.date
-      updatedSale.seller_cpf = seller
-      updatedSale.product_id = product
-      updatedSale.cpf_client = client
-      updatedSale.value = values.value
-      console.log(updatedSale)
+      const updatedSale = {
+        date: values.date,
+        seller_cpf: seller,
+        value: values.value
+      }
+
       const response = await axios.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
       if (response.status === 200) {
         setVisible(false);
@@ -148,7 +137,7 @@ function ShowSales() {
         )}
         <Modal
           title="Editar Venda"
-          visible={visible}
+          open={visible}
           onOk={handleOk}
           onCancel={handleCancel}
         >
@@ -175,20 +164,14 @@ function ShowSales() {
               label="Cliente"
               rules={[{ required: true, message: 'Por favor, insira o cliente!' }]}
             >
-              <SelectClient
-              controlState={[client, setClient]}
-              dataKey="cpf"
-              />
+              <Input disabled/>
             </Form.Item>
             <Form.Item
               name="product"
               label="Produto"
               rules={[{ required: true, message: 'Por favor, insira o produto!' }]}
             >
-              <SelectProduct
-              controlState={[product, setProduct]}
-              dataKey="cpf"
-              />
+              <Input disabled/>
             </Form.Item>
             <Form.Item
               name="value"

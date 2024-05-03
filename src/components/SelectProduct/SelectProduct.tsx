@@ -48,6 +48,7 @@ const SelectProduct = (props: propsType) =>{
                 borderColor: 'black'
             }}
             showSearch
+            value={controlState}
             />
         </>
     )

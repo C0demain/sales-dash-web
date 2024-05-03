@@ -48,6 +48,7 @@ const SelectSeller = (props: propsType) =>{
                 borderColor: 'black'
             }}
             showSearch
+            value={controlState}
             />
         </>
     )
