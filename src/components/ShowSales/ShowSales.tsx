@@ -4,21 +4,28 @@ import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
 import './ShowSales.css'
+import { getUserLocalStorage } from "context/util";
+import SelectSeller from "components/SelectSeller/SelectSeller";
+import SelectClient from "components/SelectClient/SelectClient";
+import SelectProduct from "components/SelectProduct/SelectProduct";
 
 interface Sale {
   id: string;
   date: string;
   seller: string;
-  client: string;
-  product: string;
+  clientName: string;
+  productName: string;
   value: number;
 }
 
 function ShowSales() {
-  const [sales, setSales] = useState<Sale[]>([]);
+  const [sales, setSells] = useState<Sale[]>([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [currentSale, setCurrentSale] = useState<Sale | null>(null);
+  const [seller, setSeller] = useState<any> ()
+  const [client, setClient] = useState<any>()
+  const [product, setProduct] = useState<any>()
 
   const columns = [
     {
@@ -33,12 +40,12 @@ function ShowSales() {
     },
     {
       title: 'Cliente',
-      dataIndex: 'client',
+      dataIndex: 'clientName',
       key: 'client'
     },
     {
       title: 'Produto',
-      dataIndex: 'product',
+      dataIndex: 'productName',
       key: 'product'
     },
     {
@@ -54,33 +61,45 @@ function ShowSales() {
     }
   ];
 
-  const getSales = async () => {
+  const getSells = async () => {
     try {
-      const response = await axios.get<{ sales: Sale[] }>('http://localhost:8000/api/v1/sells/getall');
-      if (response.data && response.data.sales) {
-        setSales(response.data.sales);
+      const response = await axios.get('http://localhost:8000/api/v1/sells/getall');
+      if (response.data && response.data.sells) {
+        setSells(response.data.sells);
+        let sells = response.data.sells
+        for(let s of sells){
+          s.clientName=s.client.name
+          s.productName=s.product.name
+          s.seller=s.user.name
+        }
       } else {
-        setSales([]);
+        setSells([]);
       }
     } catch (error) {
       console.error("Erro ao buscar vendas:", error);
-      setSales([]);
+      setSells([]);
     }
   };
 
   useEffect(() => {
-    getSales();
+    getSells();
   }, []);
 
-  const handleEdit = (record: Sale) => {
+  const handleEdit = (record: any) => {
+    setSeller(record.user.cpf[0]);
+    setProduct(record.product.id)
+    setClient(record.client.cpf[0])
+    console.log(client)
     setCurrentSale(record);
     form.setFieldsValue({
+      id: record.id,
       date: record.date,
-      seller: record.seller,
-      client: record.client,
-      product: record.product,
+      seller: seller,
+      client: client,
+      product: product,
       value: record.value,
     });
+    setVisible(true); 
   };
 
   const handleOk = async () => {
@@ -91,13 +110,18 @@ function ShowSales() {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
       
-      const updatedSale = { ...currentSale, ...values };
+      const updatedSale = {date:null, seller_cpf:null, product_id:null, cpf_client:null, value:null};
+      updatedSale.date = values.date
+      updatedSale.seller_cpf = seller
+      updatedSale.product_id = product
+      updatedSale.cpf_client = client
+      updatedSale.value = values.value
+      console.log(updatedSale)
       const response = await axios.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
-      
       if (response.status === 200) {
         setVisible(false);
         message.success('Venda atualizada com sucesso!');
-        getSales(); // Atualiza a tabela após a atualização da venda
+        getSells(); // Atualiza a tabela após a atualização da venda
       } else {
         message.error('Falha ao atualizar a venda. Por favor, tente novamente.');
       }
@@ -114,9 +138,9 @@ function ShowSales() {
   return (
     <NavbarWrapper>
       <Navbargest/>
-      <div className="containerS1">
+      <div className="containerSl">
         <h2>Lista de Vendas</h2>
-        <Button onClick={getSales}>Recarregar vendas</Button>
+        <Button className= 'button-refresh' onClick={getSells}>Recarregar vendas</Button>
         {sales.length > 0 ? (
           <Table columns={columns} dataSource={sales} />
         ) : (
@@ -141,21 +165,30 @@ function ShowSales() {
               label="Vendedor"
               rules={[{ required: true, message: 'Por favor, insira o vendedor!' }]}
             >
-              <Input />
+              <SelectSeller
+              controlState={[seller, setSeller]}
+              dataKey="cpf"
+              />
             </Form.Item>
             <Form.Item
               name="client"
               label="Cliente"
               rules={[{ required: true, message: 'Por favor, insira o cliente!' }]}
             >
-              <Input />
+              <SelectClient
+              controlState={[client, setClient]}
+              dataKey="cpf"
+              />
             </Form.Item>
             <Form.Item
               name="product"
               label="Produto"
               rules={[{ required: true, message: 'Por favor, insira o produto!' }]}
             >
-              <Input />
+              <SelectProduct
+              controlState={[product, setProduct]}
+              dataKey="cpf"
+              />
             </Form.Item>
             <Form.Item
               name="value"
