@@ -19,10 +19,10 @@ const Navbargest = () => {
           <li><button onClick={e => setShowCadastro(!showCadastro)} className='Botao_barra'>Cadastro</button></li>
                 {showCadastro && (
                     <>
-                        <li><button onClick={e => navigate('/sells/register')} className='Botao_barra'>Cadastro de Vendas</button></li>
-                        <li><button onClick={e => navigate('/sellers/register')} className='Botao_barra'>Cadastro de Usuários</button></li>
-                        <li><button onClick={e => navigate('/product/register')} className='Botao_barra'>Cadastro de Produtos</button></li>
-                        <li><button onClick={e => navigate('/client/register')} className='Botao_barra'>Cadastro de Clientes</button></li>
+                        <li><button onClick={e => navigate('/sells/register')} className='Sub_Botao_barra'>Cadastro de Vendas</button></li>
+                        <li><button onClick={e => navigate('/sellers/register')} className='Sub_Botao_barra'>Cadastro de Usuários</button></li>
+                        <li><button onClick={e => navigate('/product/register')} className='Sub_Botao_barra'>Cadastro de Produtos</button></li>
+                        <li><button onClick={e => navigate('/client/register')} className='Sub_Botao_barra'>Cadastro de Clientes</button></li>
                     </>
                 )}
           <li><button onClick={e => navigate('/client/list')}className='Botao_barra'>Exibe Clientes</button></li>
