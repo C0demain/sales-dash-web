@@ -19,6 +19,7 @@ const ListSells = () => {
             title: 'Data',
             dataIndex: 'date',
             key: 'date',
+            render: (value: string) => formatDate(value)
         },
         {
             title: 'Vendedor',
@@ -46,6 +47,10 @@ const ListSells = () => {
     const formatCurrency = (value: number): string => {
         return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     };
+
+    const formatDate = (value: string): string => {
+        return new Date(value+'T00:00').toLocaleDateString('pt-BR')
+    }
 
     const handleDatePicker = (date: any) => {
         let newDate = date ? date.year() + "-" + (date.month() + 1) + "-" + date.date() : ""

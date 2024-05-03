@@ -29,7 +29,8 @@ function ShowSales() {
     {
       title: 'Data',
       dataIndex: 'date',
-      key: 'date'
+      key: 'date',
+      render: value => formatDate(value)
     },
     {
       title: 'Vendedor',
@@ -58,6 +59,11 @@ function ShowSales() {
       )
     }
   ];
+
+
+  const formatDate = (value: string): string => {
+    return new Date(value+'T00:00').toLocaleDateString('pt-BR')
+  }
 
   const getSells = async () => {
     try {
