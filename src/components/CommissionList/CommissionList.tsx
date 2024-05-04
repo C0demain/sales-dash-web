@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './index.css'
+import { useAuth } from "context/AuthProvider/useAuth";
 
 const CommissionList = () => {
     const [commissions, setCommissions] = useState<any>([])
@@ -12,6 +13,7 @@ const CommissionList = () => {
     const [currentCommission, setCurrentCommission] = useState<any>(null);
     const [form] = Form.useForm();
     const navigate = useNavigate();
+    const { isAdmin } = useAuth()
 
     const getCommissions = async () => {
         const response = await axios.get('http://localhost:8000/api/v1/commissions/getAll')
@@ -69,13 +71,13 @@ const CommissionList = () => {
                         commissions.map((el: any, index: number) => (
                             <Card key={index} bordered={true} className="commissionCard">
                                 <Statistic title={<strong>{el.title}</strong>} value={el.percentage*100} suffix="%" />
-                                <Button className="button-edit" onClick={() => handleEdit(el)} >Editar</Button>
+                                {isAdmin() && <Button className="button-edit" onClick={() => handleEdit(el)} >Editar</Button>}
                             </Card>
                         ))
                     : <Empty description="Nenhuma comissão encontrada" />}
                 </div>
                 <div className="buttonWrapper">
-                    <Button onClick={e => navigate('/commissions/register')}>Adicionar comissão</Button>
+                    {isAdmin() && <Button onClick={e => navigate('/commissions/register')}>Adicionar comissão</Button>}
                 </div>
                 <Modal
                     title="Editar Comissão"

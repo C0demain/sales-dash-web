@@ -6,7 +6,7 @@ import { useAuth } from 'context/AuthProvider/useAuth';
 const Navbargest = () => {
     const navigate = useNavigate()
     const [showCadastro, setShowCadastro] = useState(false);
-    const { isAdmin, isSeller } = useAuth()
+    const { isAdmin } = useAuth()
   
     const handleLogout = () => {
       localStorage.removeItem('user');
@@ -15,7 +15,7 @@ const Navbargest = () => {
 
     return (
       <div className="navbar">
-        <h1>Olá Gestor</h1><br></br>
+        <h1>Olá {isAdmin() ? "Gestor" : "Vendedor"}</h1><br></br>
         <ul>
           {isAdmin() ? 
           <li><button onClick={e => navigate('/dashboard')} className='Botao_barra'>Dashboard</button></li>
