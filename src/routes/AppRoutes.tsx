@@ -84,11 +84,13 @@ export function AppRoutes() {
               <ShowClient />
             </ProtectedLayout>} >
           </Route>
+
           <Route path='/sell/showsales' element={
             <ProtectedLayout>
               <ShowSales />
             </ProtectedLayout>} >
           </Route>
+          
         </Routes>
       </BrowserRouter>
     </AuthProvider>

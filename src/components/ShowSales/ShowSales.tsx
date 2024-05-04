@@ -54,7 +54,7 @@ function ShowSales() {
     {
       title: 'Ações',
       render: (text: any, record: Sale) => (
-        <Button onClick={() => handleEdit(record)}>Editar</Button>
+        <Button className='button-edit' onClick={() => handleEdit(record)}>Editar</Button>
       )
     }
   ];
@@ -139,7 +139,7 @@ function ShowSales() {
         <h2>Lista de Vendas</h2>
         <Button className= 'button-refresh' onClick={getSells}>Recarregar vendas</Button>
         {sales.length > 0 ? (
-          <Table columns={columns} dataSource={sales} />
+          <Table columns={columns} dataSource={sales} rowKey={'id'}/>
         ) : (
           <Empty description={"Nenhuma venda encontrada"} />
         )}
