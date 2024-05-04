@@ -4,7 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-export const ProtectedLayout = ({ children }: { children: JSX.Element }) => {
+interface Props{
+    children: JSX.Element;
+    adminOnly?: boolean;
+    sellerOnly?: boolean;
+}
+
+export const ProtectedLayout = ({ children,  adminOnly, sellerOnly}: Props) => {
     const auth = useAuth();
     const [authLoading, setAuthLoading] = useState(true);
     const navigate = useNavigate();
@@ -31,6 +37,14 @@ export const ProtectedLayout = ({ children }: { children: JSX.Element }) => {
     //usuario nao autenticado pelo email volta para a tela de login
     if (!auth.email) {
         navigate('/login')
+    }
+
+    if (adminOnly && !auth.isAdmin()){
+        navigate('/dashboardSeller')
+    }
+
+    if (sellerOnly && !auth.isSeller()){
+        navigate('/dashboard')
     }
 
     return children;

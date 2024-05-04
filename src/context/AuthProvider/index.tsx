@@ -21,7 +21,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         const payload = { 
             token: response.token, 
             id: response.userId, 
-            email, 
+            role: response.role,
+            email,
         };
 
         setUser(payload);
@@ -33,8 +34,16 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         setUserLocalStorage(null);
     }
 
+    function isAdmin(){
+        return user?.role === 'admin'
+    }
+
+    function isSeller(){
+        return user?.role === 'user'
+    }
+
     return (
-        <AuthContext.Provider value={{ ...user, authenticate, logout }}>
+        <AuthContext.Provider value={{ ...user, authenticate, logout, isAdmin, isSeller }}>
             {children}
         </AuthContext.Provider>
     )

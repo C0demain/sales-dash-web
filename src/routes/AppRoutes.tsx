@@ -26,25 +26,25 @@ export function AppRoutes() {
 
           {/* Rotas Privadas */}
           <Route path="/dashboardSeller" element={
-            <ProtectedLayout>
+            <ProtectedLayout sellerOnly>
               <DashboardSeller/>
             </ProtectedLayout>}>
           </Route>
 
           <Route path='/dashboard' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <Dashboard />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/sellers/register' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <RegisterUser />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/commissions/register' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <CommissionRegister />
             </ProtectedLayout>} >
           </Route>
