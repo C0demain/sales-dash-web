@@ -48,7 +48,7 @@ const ListSellsSeller = ()=>{
 
 
     const getSells = useCallback(async () => {
-        let url = "http://localhost:8000/api/v1/sells/getall/"
+        let url = "http://localhost:8000/api/v1/sells/getfilter/"
         const userFilter = userSelect !== undefined ? 'userId=' + userSelect : ""
         const productFilter =  productSelect !== undefined ? 'productId=' + productSelect : ""
         const clientFilter =  clientSelect !== undefined ? 'clientId=' + clientSelect : ""
@@ -64,6 +64,10 @@ const ListSellsSeller = ()=>{
         });
         setSells(response.data.sells);
     }, [userSelect, productSelect, clientSelect, startDate, endDate]);
+
+        if (endDate === ''){
+            setEndDate('3000-5-30')
+        }
 
     useEffect(() => { 
         getSells()

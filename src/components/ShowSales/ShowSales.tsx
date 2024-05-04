@@ -4,10 +4,7 @@ import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType } f
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
 import './ShowSales.css'
-import { getUserLocalStorage } from "context/util";
 import SelectSeller from "components/SelectSeller/SelectSeller";
-import SelectClient from "components/SelectClient/SelectClient";
-import SelectProduct from "components/SelectProduct/SelectProduct";
 
 interface Sale {
   id: string;

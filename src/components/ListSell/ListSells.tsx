@@ -76,6 +76,10 @@ const ListSells = () => {
         setSells(response.data.sells);
     }, [userSelect, productSelect, clientSelect, startDate, endDate]);
 
+    if (endDate === ''){
+        setEndDate('3000-5-30')
+    }
+
     useEffect(() => {
         getSells()
     }, [getSells])
