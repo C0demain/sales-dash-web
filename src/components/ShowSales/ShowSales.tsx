@@ -5,6 +5,7 @@ import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
 import './ShowSales.css'
 import SelectSeller from "components/SelectSeller/SelectSeller";
+import { formatCurrency, formatDate } from "util/formatters";
 
 interface Sale {
   id: string;
@@ -58,14 +59,6 @@ function ShowSales() {
       )
     }
   ];
-
-  const formatCurrency = (value: number): string => {
-    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  };
-
-  const formatDate = (value: string): string => {
-    return new Date(value+'T00:00').toLocaleDateString('pt-BR')
-  }
 
   const getSells = async () => {
     try {

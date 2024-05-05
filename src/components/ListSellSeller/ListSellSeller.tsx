@@ -4,6 +4,7 @@ import './index.css'
 import { Button, Empty, Table, DatePicker } from "antd";
 import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
+import { formatCurrency } from "util/formatters";
 
 const ListSellsSeller = ()=>{
     const [sells, setSells] = useState<any[]>([])
@@ -36,10 +37,6 @@ const ListSellsSeller = ()=>{
             render: (value: number) => formatCurrency(value)
         },
     ]
-
-    const formatCurrency = (value: number): string => {
-        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    };
 
     const handleDatePicker = (date: any) => {
         let newDate = date ? date.year() + "-" + (date.month()+1) + "-" + date.date() : ""

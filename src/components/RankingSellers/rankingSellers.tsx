@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Empty, Table, Button } from "antd";
 import './rankingSellers.css'
+import { formatCurrency } from "util/formatters";
 
 function RankingSellers() {
     const [sellers, setSellers] = useState <any[]>([])
@@ -30,10 +31,6 @@ function RankingSellers() {
         },
 
     ]
-
-    const formatCurrency = (value: number): string => {
-        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    };
 
     const getSellers = async () => {
         const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {

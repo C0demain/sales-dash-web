@@ -2,6 +2,7 @@ import axios from "axios";
 import { Statistic } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider/useAuth";
+import { formatCurrency } from "util/formatters";
 
 const TotalSellsSeller = () => {
     const [userStats, setUserStats] = useState <Record<string, {totalSales: number}>[]>([])
@@ -26,7 +27,7 @@ const TotalSellsSeller = () => {
           withCredentials: false,
         },);
         setUserStats(response.data.userSales)
-        setTotalSells(response.data.userSales.totalSales)
+        setTotalSells(response.data.userSales.totalValue)
         console.log(totalSells)
     }, [sellerId])
 
@@ -36,7 +37,7 @@ const TotalSellsSeller = () => {
     }, [getUserStats])
 
     return (
-        <Statistic title='Total de vendas' value={totalSells}/>
+        <Statistic title='Total de vendas' value={totalSells} formatter={ (value) => formatCurrency(parseFloat(value.toString())) }/>
     )
 }
 
