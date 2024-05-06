@@ -12,7 +12,7 @@ const ListSellsSeller = ()=>{
     const [productSelect, setProductSelect] = useState<any>()
     const [clientSelect, setClientSelect] = useState<any>()
     const [startDate, setStartDate] = useState<any>()
-    const [endDate, setEndDate] = useState<any>()
+    const [endDate, setEndDate] = useState<any>('3000-5-30')
     
     const columns = [
         {
@@ -70,10 +70,11 @@ const ListSellsSeller = ()=>{
         getSells()
         }, [getSells])
     
-        useEffect(()=>{
-            let user = JSON.parse(localStorage.getItem('user')||'')
-            setUserSelect(user.id)
-        }, [])
+    useEffect(()=>{
+        let user = JSON.parse(localStorage.getItem('user')||'')
+        setUserSelect(user.id)
+        setEndDate('3000-5-30')
+    }, [])
 
     return (
         <div className="ListSellsSeller">

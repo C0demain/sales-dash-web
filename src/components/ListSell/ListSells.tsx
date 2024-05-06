@@ -13,7 +13,7 @@ const ListSells = () => {
     const [productSelect, setProductSelect] = useState<any>()
     const [clientSelect, setClientSelect] = useState<any>()
     const [startDate, setStartDate] = useState<any>()
-    const [endDate, setEndDate] = useState<any>()
+    const [endDate, setEndDate] = useState<any>('3000-5-30')
 
     const columns:TableColumnsType = [
         {

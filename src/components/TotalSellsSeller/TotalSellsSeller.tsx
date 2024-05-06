@@ -28,16 +28,19 @@ const TotalSellsSeller = () => {
         },);
         setUserStats(response.data.userSales)
         setTotalSells(response.data.userSales.totalValue)
-        console.log(totalSells)
+        setTotalComission(response.data.totalComissions)
+        console.log(userStats)
     }, [sellerId])
 
     useEffect(()=>{
         getUserStats()
-
     }, [getUserStats])
 
     return (
-        <Statistic title='Total de vendas' value={totalSells} formatter={ (value) => formatCurrency(parseFloat(value.toString())) }/>
+        <div className="containerStats">
+            <Statistic title='Total de vendas' value={totalSells} formatter={ (value) => formatCurrency(parseFloat(value.toString())) }/>
+            <Statistic title='Total de Comissões' value={totalComission} formatter={ (value) => formatCurrency(parseFloat(value.toString())) }/>
+        </div>
     )
 }
 
