@@ -1,4 +1,12 @@
 .containerStats{
     display: flex;
-    
+    flex-direction:initial;
+    justify-content: center;
+    text-align: center;
+}
+.boxStats{
+    margin: 3vh 2vh;
+    background-color: gainsboro;
+    padding: 3vh;
+    border-radius: 2vh;
 }

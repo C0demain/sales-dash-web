@@ -1,34 +1,31 @@
-.listSellsSeller{
+.listSells{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     text-align: center;
 }
 
-.listSellsSeller > h1{
+.listSells > h1{
     font-size: 26px;
     margin-bottom: 5%;
 }
 
-.listSellsSellerGroup{
+.listSellsGroup{
     margin: 0 auto;
     width: 90%;
 }
 
-.listSellsSellerGroup th{
+.listSellsGroup th{
     font-size: 22px;
 }
 
-.listSellsSellerGroup > tr:first{
+.listSellsGroup > tr:first{
     padding: 10px;
 }
 
 .filter{
     display: flex;
-    justify-content: space-between;
-    margin: 15px;
+    margin: 15px auto;
     align-items: center;
-    margin: auto;
 }
 
 .filter > .select{
@@ -38,4 +35,15 @@
 
 .font {
     font-size: 16px;
+}
+
+.button-refresh {
+    margin-bottom: 20px;
+    background-color: black;
+    color: white;
+}
+.filter-group{
+    display: flex;
+    flex-direction: column;
+    margin: 1vh 4vh;
 }

@@ -79,37 +79,46 @@ const ListSellsSeller = ()=>{
     return (
         <div className="ListSellsSeller">
             <h2>Últimas vendas</h2>
-            <Button onClick={e => {getSells()} }>Recarregar vendas</Button>
+            <Button className="button-refresh" onClick={e => {getSells()} }>Recarregar vendas</Button>
             <div className="filter">
-
-                <label className="font">Produto: </label>
-                <SelectProduct
-                    controlState={[productSelect, setProductSelect]}
-                    dataKey="id"
-                    className="select"
-                />
-
-                <label className="font">Cliente: </label>
-                <SelectClient
-                    controlState={[clientSelect, setClientSelect]}
-                    dataKey="id"
-                    className="select"
-                />
-
-                <label className="font"> Data de início: </label>
-                <DatePicker 
-                    onChange={e => { setStartDate(handleDatePicker(e)) }}
-                    className="select"
-                />
-
-                <label className="font">Data de fim: </label>
-                <DatePicker 
-                    onChange={e => {setEndDate(handleDatePicker(e))}}
-                    className="select"
-                />
+                <div className="filter-group">
+                    <label className="font">Produto: </label>
+                    <SelectProduct
+                        controlState={[productSelect, setProductSelect]}
+                        dataKey="id"
+                        className="select"
+                    />
+                </div>
+                <div className="filter-group">
+                    <label className="font">Cliente: </label>
+                    <SelectClient
+                        controlState={[clientSelect, setClientSelect]}
+                        dataKey="id"
+                        className="select"
+                    />
+                </div>
+                <div className="filter-group">
+                    <label className="font"> Data de início:</label>
+                    <DatePicker
+                        onChange={e => { setStartDate(handleDatePicker(e)) }}
+                        format="DD/MM/YYYY"
+                        placeholder="Escolher"
+                        className="select"
+                    />
+                </div>
+                <div className="filter-group">
+                    <label className="font">Data de fim: </label>
+                    <DatePicker 
+                        onChange={e => {setEndDate(handleDatePicker(e)) }}
+                        format="DD/MM/YYYY"
+                        placeholder="Escolher"
+                        className="select"
+                    />
+                </div>
+                
             </div>
             {sells.length > 0 ?
-            <Table columns={columns} dataSource={sells} />
+            <Table className="listSellsTable" columns={columns} dataSource={sells} />
             : <Empty description={"Nenhuma venda encontrada"} />}
         </div>
     )
