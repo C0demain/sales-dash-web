@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react"
 import './index.css'
-import { Button, Empty, Table, DatePicker } from "antd";
+import { Button, Empty, Table, DatePicker, TableColumnsType } from "antd";
 import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
-import { formatCurrency } from "util/formatters";
+import { formatCurrency, formatDate } from "util/formatters";
 
 const ListSellsSeller = ()=>{
     const [sells, setSells] = useState<any[]>([])
@@ -14,11 +14,12 @@ const ListSellsSeller = ()=>{
     const [startDate, setStartDate] = useState<any>()
     const [endDate, setEndDate] = useState<any>('3000-5-30')
     
-    const columns = [
+    const columns: TableColumnsType = [
         {
             title: 'Data',
             dataIndex: 'date',
             key: 'date',
+            render: value => formatDate(value)
         },
         {
             title: 'Produto',
@@ -34,7 +35,8 @@ const ListSellsSeller = ()=>{
             title: 'Valor',
             dataIndex: 'value',
             key: 'value',
-            render: (value: number) => formatCurrency(value)
+            render: (value: number) => formatCurrency(value),
+            align: "end"
         },
     ]
 
