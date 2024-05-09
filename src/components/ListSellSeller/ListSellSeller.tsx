@@ -6,7 +6,13 @@ import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
 import { formatCurrency, formatDate } from "util/formatters";
 
-const ListSellsSeller = ()=>{
+interface ListSellsSellerProps {
+    onStartDateChange: (date: string) => void;
+    onEndDateChange: (date: string) => void;
+}
+
+
+const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSellerProps)=>{
     const [sells, setSells] = useState<any[]>([])
     const [userSelect, setUserSelect] = useState<any>()
     const [productSelect, setProductSelect] = useState<any>()
@@ -42,6 +48,7 @@ const ListSellsSeller = ()=>{
 
     const handleDatePicker = (date: any) => {
         let newDate = date ? date.year() + "-" + (date.month()+1) + "-" + date.date() : ""
+        onEndDateChange(newDate);
         return newDate
     }
 

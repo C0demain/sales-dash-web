@@ -5,7 +5,7 @@ import { useAuth } from "context/AuthProvider/useAuth";
 import { formatCurrency } from "util/formatters";
 import './index.css'
 
-const TotalSellsSeller = () => {
+const TotalSellsSeller = ({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) => {
     const [userStats, setUserStats] = useState <Record<string, {totalSales: number}>[]>([])
     const [totalSells, setTotalSells] = useState <any>()
     const [totalComission, setTotalComission] = useState<any>()
@@ -17,10 +17,10 @@ const TotalSellsSeller = () => {
     const getUserStats = useCallback(async() => {
         let url = `http://localhost:8000/api/v1/dashboard/user/`
         const userFilter = sellerId !== undefined ? 'id=' + sellerId : ""
-        const startDateFilter = startDate ? 'startDate=' + startDate: ""
-        const endDateFilter = endDate ? 'endDate=' + endDate: ""
+        const startDateFilter = startDateProp ? 'startDate=' + startDateProp: ""
+        const endDateFilter = endDateProp ? 'endDate=' + endDateProp: ""
 
-        let queryParams = [userFilter]
+        let queryParams = [userFilter, startDateFilter, endDateFilter]
         const query = queryParams.filter(e => e !== '').join('&')
         url += query !== "&" ? "?" + query : ""
     
@@ -31,7 +31,7 @@ const TotalSellsSeller = () => {
         setTotalSells(response.data.userSales.totalValue)
         setTotalComission(response.data.userSales.totalCommissions)
         console.log(userStats)
-    }, [sellerId])
+    }, [sellerId, startDateProp, endDateProp])
 
     useEffect(()=>{
         getUserStats()
