@@ -22,17 +22,20 @@ function ShowClient() {
     {
       title: 'Cliente',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      sorter: (a: any, b: any) => a.name.localeCompare(b.name)
     },
     {
       title: 'Segmento',
       dataIndex: 'segment',
-      key: 'segment'
+      key: 'segment',
+      sorter: (a: any, b: any) => a.segment.localeCompare(b.segment)
     },
     {
       title: 'CPF / CNPJ',
       dataIndex: 'cpf',
-      key: 'cpf'
+      key: 'cpf',
+      sorter: (a: any, b: any) => a.cpf - b.cpf
     },
     {
       title: 'Ações',

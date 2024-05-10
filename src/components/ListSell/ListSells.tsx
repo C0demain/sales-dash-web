@@ -20,22 +20,26 @@ const ListSells = () => {
             title: 'Data',
             dataIndex: 'date',
             key: 'date',
-            render: (value: string) => formatDate(value)
+            render: (value: string) => formatDate(value),
+            sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
         },
         {
             title: 'Vendedor',
             dataIndex: 'seller',
             key: 'seller',
+            sorter: (a, b) => a.seller.localeCompare(b.seller)
         },
         {
             title: 'Produto',
             dataIndex: 'productName',
             key: 'productName',
+            sorter: (a, b) => a.productName.localeCompare(b.productName)
         },
         {
             title: 'Cliente',
             dataIndex: 'clientname',
             key: 'clientname',
+            sorter: (a, b) => a.clientname.localeCompare(b.clientname)
         },
         {
             title: 'Valor',

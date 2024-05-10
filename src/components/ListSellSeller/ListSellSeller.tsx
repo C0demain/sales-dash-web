@@ -25,17 +25,20 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
             title: 'Data',
             dataIndex: 'date',
             key: 'date',
-            render: value => formatDate(value)
+            render: value => formatDate(value),
+            sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
         },
         {
             title: 'Produto',
             dataIndex: 'productName',
             key: 'productName',
+            sorter: (a, b) => a.productName.localeCompare(b.productName)
         },
         {
             title: 'Cliente',
             dataIndex: 'clientname',
             key: 'clientname',
+            sorter: (a, b) => a.clientname.localeCompare(b.clientname)
         },
         {
             title: 'Valor',

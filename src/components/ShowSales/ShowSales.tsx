@@ -28,22 +28,26 @@ function ShowSales() {
       title: 'Data',
       dataIndex: 'date',
       key: 'date',
-      render: value => formatDate(value)
+      render: value => formatDate(value),
+      sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
     },
     {
       title: 'Vendedor',
       dataIndex: 'seller',
-      key: 'seller'
+      key: 'seller',
+      sorter: (a: any, b: any) => a.seller.localeCompare(b.seller)
     },
     {
       title: 'Cliente',
       dataIndex: 'clientname',
-      key: 'client'
+      key: 'client',
+      sorter: (a: any, b: any) => a.clientname.localeCompare(b.clientname)
     },
     {
       title: 'Produto',
       dataIndex: 'productName',
-      key: 'product'
+      key: 'product',
+      sorter: (a: any, b: any) => a.productName.localeCompare(b.productName)
     },
     {
       title: 'Valor',

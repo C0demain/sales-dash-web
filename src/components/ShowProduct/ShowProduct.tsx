@@ -22,7 +22,8 @@ function ShowProduct() {
     {
       title: 'Nome',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      sorter: (a: any, b: any) => a.name.localeCompare(b.name)
     },
     {
       title: 'Ações',
