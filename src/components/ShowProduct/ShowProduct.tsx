@@ -25,17 +25,6 @@ function ShowProduct() {
       key: 'name'
     },
     {
-      title: 'Descrição',
-      dataIndex: 'description',
-      key: 'description'
-    },
-    {
-      title: 'Valor',
-      dataIndex: 'value',
-      key: 'value',
-      render: (value: number) => `R$ ${value.toFixed(2).replace('.', ',')}`
-    },
-    {
       title: 'Ações',
       render: (text: any, record: Product) => (
         <Button className="button-edit" onClick={() => handleEdit(record)}>Editar</Button>
@@ -65,9 +54,7 @@ function ShowProduct() {
     setCurrentProduct(record);
     setOpen(true);
     form.setFieldsValue({
-      name: record.name,
-      description: record.description,
-      value: record.value 
+      name: record.name
     });
   };
 
@@ -123,20 +110,6 @@ function ShowProduct() {
               rules={[{ required: true, message: 'Por favor, insira o nome do produto!' }]}
             >
               <Input />
-            </Form.Item>
-            <Form.Item
-              name="description"
-              label="Descrição"
-              rules={[{ required: true, message: 'Por favor, insira a descrição do produto!' }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-                name="value"
-                label="Valor"
-                rules={[{ required: true, message: 'Por favor, insira o valor do produto!' }]}
-              >
-              <Input type="number" step="0.01" min="0" />
             </Form.Item>
           </Form>
         </Modal>
