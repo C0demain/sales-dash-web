@@ -28,11 +28,11 @@ export const Login = () => {
                     onFinish={onFinish}
                     className="form-wrapper"
                 >
-                    <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Por favor, insira seu email.' }]}>
+                    <Form.Item label="Email" name="email" rules={[{ message: 'Por favor, insira seu email.' }]}>
                         <Input size="large" placeholder="Digite seu email" className="input-with-shadow" />
                     </Form.Item>
 
-                    <Form.Item label="Senha" name="password" rules={[{ required: true, message: 'Por favor, insira sua senha.' }]}>
+                    <Form.Item label="Senha" name="password" rules={[{ message: 'Por favor, insira sua senha.' }]}>
                         <Input.Password size="large" placeholder="Digite sua senha" className="input-with-shadow" />
                     </Form.Item>
 

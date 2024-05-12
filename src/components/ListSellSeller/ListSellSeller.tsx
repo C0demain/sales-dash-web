@@ -130,7 +130,7 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
                 
             </div>
             {sells.length > 0 ?
-            <Table className="listSellsTable" columns={columns} dataSource={sells} />
+            <Table className="listSellsTable" columns={columns} dataSource={sells} rowKey={'id'} />
             : <Empty description={"Nenhuma venda encontrada"} />}
         </div>
     )
