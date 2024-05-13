@@ -1,104 +1,104 @@
-import React from 'react'
-import { useState } from 'react'
-import {sendData} from './index'
-import {isValidCPF} from './index'
-import './index.css'
-import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper'
-import Navbargest from 'components/AdminNavbar/AdminNavbar'
+import React, { useState } from 'react';
+import { sendData } from './index';
+import './index.css';
+import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
+import Navbargest from 'components/AdminNavbar/AdminNavbar';
 
 function RegisterClient() {
-  
-  const [clientName, setClientName] = useState('')
-  const [segment, setSegment] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [errors, setErrors] = useState({ clientName: '', segment: '', cpf: '', response: ''})
-  const [sucess, setSucess] = useState('')
+  const [clientName, setClientName] = useState('');
+  const [segment, setSegment] = useState('');
+  const [cpfCnpj, setCpfCnpj] = useState('');
+  const [response, setResponse] = useState('');
+  const [success, setSuccess] = useState('');
 
   const validate = () => {
     let isValid = true;
-    const errors = { clientName: '', segment: '', cpf: '', response: '' };
 
-    if (!clientName) {
-      errors.clientName = 'O nome é obrigatório.';
+    if (!clientName || clientName.length < 3) {
+      setResponse('O nome é obrigatório e deve ter mais de 3 caracteres.');
       isValid = false;
-    } else if (clientName.length < 3) {
-      errors.clientName = 'O nome deve ter mais de 3 caracteres.';
+    } else if (!cpfCnpj || cpfCnpj.length !== 14 && cpfCnpj.length !== 18) {
+      setResponse('O CPF/CNPJ é inválido.');
       isValid = false;
+    } else {
+      setResponse('');
     }
 
-    if (!cpf) {
-      errors.cpf = 'É obrigatório confirmar um CPF.'
-      isValid = false
-    } else if (isValidCPF(cpf)) {
-      errors.cpf = 'Esse CPF é inválido'
-      isValid = false
+    return isValid;
+  };
+
+  const formatCPF = (value: string) => {
+    value = value.replace(/\D/g, '');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    return value;
+  };
+
+  const formatCNPJ = (value: string) => {
+    value = value.replace(/\D/g, '');
+    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    value = value.replace(/(\d{4})(\d)/, '$1-$2');
+    return value;
+  };
+
+  const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+      setCpfCnpj(formatCPF(value));
+    } else {
+      setCpfCnpj(formatCNPJ(value));
     }
+  };
 
-    setErrors(errors)
-    return isValid
-  }
-
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validate()) {
-      // Lógica de submissão do formulário
-      try{
-        await sendData(clientName, segment, cpf)
-        setSucess('Cadastro realizado!')
-      }catch(error: any){
-        if(error.response.status === 400){
-          errors.response = 'Esse CPF/CNPJ já está vinculado a outro cliente'
-        }else {
-          errors.response = 'Ocorreu um erro ao registrar o cliente. Tente novamente'
-          console.log(error)
+      try {
+        await sendData(clientName, segment, cpfCnpj);
+        setSuccess('Cadastro realizado!');
+      } catch (error: any) {
+        if (error.response && error.response.status === 400) {
+          setResponse('Esse CPF/CNPJ já está vinculado a outro cliente.');
+        } else {
+          setResponse('Ocorreu um erro ao registrar o cliente. Tente novamente.');
+          console.log(error);
         }
-        setErrors(errors)
       }
     }
-  }
+  };
 
   return (
     <NavbarWrapper>
       <Navbargest />
-
-        <div className='Página'>
-
-          <div className='container'>
-
+      <div className="Página">
+        <div className="container">
           <div className="caixa">
-            <h1 className='titulo'>Cadastro de Cliente</h1>
-
+            <h1 className="titulo">Cadastro de Cliente</h1>
             <form className="formulario" id="form" onSubmit={handleSubmit}>
-              <div className='insertText'>
+              <div className="insertText">
                 <label>Nome:</label>
-
-                <input type="text" placeholder='  Nome completo' onChange={(e) => setClientName(e.target.value)} required />
-                {errors.clientName && <p className='erro'>{errors.clientName}</p>}
+                <input type="text" placeholder="Nome completo" onChange={(e) => setClientName(e.target.value)} required />
               </div>
-
-              <div className='insertText'>
+              <div className="insertText">
                 <label>Segmento do Cliente:</label>
-
-                <input type="text" placeholder='  Ex: Contábil, Marketing' onChange={(e) => setSegment(e.target.value)} required />
-                {errors.segment && <p className='erro'>{errors.segment}</p>}
+                <input type="text" placeholder="Ex: Contábil, Marketing" onChange={(e) => setSegment(e.target.value)} required />
               </div>
-
-              <div className='insertText'>
+              <div className="insertText">
                 <label>CPF/CNPJ do Cliente:</label>
-
-                <input type="text" placeholder='  000.000.000-00' onChange={(e) => setCpf(e.target.value)} required />
-                {errors.cpf && <p className='erro'>{errors.cpf}</p>}
+                <input type="text" placeholder="000.000.000-00 ou 00.000.000/0000-00" value={cpfCnpj} onChange={handleCpfCnpjChange} required />
               </div>
-
-              {sucess && <p className='funciona'>{sucess}</p>}
-              {errors.response && <p className='erro'>{errors.response}</p>}
-              <button type='submit'>Cadastrar</button>
+              {success && <p className="funciona">{success}</p>}
+              {response && <p className="erro">{response}</p>}
+              <button type="submit">Cadastrar</button>
             </form>
           </div>
-          </div>
         </div>
+      </div>
     </NavbarWrapper>
-  )
+  );
 }
 
-export default RegisterClient
+export default RegisterClient;
