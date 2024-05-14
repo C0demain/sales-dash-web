@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
@@ -126,6 +126,26 @@ function ShowClient() {
     return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
   };
 
+  const formatCNPJ = (value: string) => {
+    value = value.replace(/\D/g, '');
+    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+    value = value.replace(/(\d{4})(\d)/, '$1-$2');
+    return value;
+  };
+
+  const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    if (value.length <= 14) {
+      // CPF
+      form.setFieldsValue({ cpf: formatCPF(value) });
+    } else {
+      // CNPJ
+      form.setFieldsValue({ cpf: formatCNPJ(value) });
+    }
+  };
+
   return (
     <NavbarWrapper>
       <Navbargest/>
@@ -163,7 +183,7 @@ function ShowClient() {
               label="CPF / CNPJ"
               rules={[{ required: true, message: 'Por favor, insira o CPF / CNPJ do cliente!' }]}
             >
-              <Input onChange={(e) => form.setFieldsValue({ cpf: formatCPF(e.target.value) })} />
+              <Input onChange={handleCpfCnpjChange} />
             </Form.Item>
           </Form>
         </Modal>
