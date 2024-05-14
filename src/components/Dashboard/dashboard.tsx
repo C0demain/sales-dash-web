@@ -3,7 +3,6 @@ import './index.css'
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import RankingSellers from "components/RankingSellers/rankingSellers";
-import TotalSellsSeller from "components/TotalSellsSeller/TotalSellsSeller";
 
 function Dashboard() {
     return(

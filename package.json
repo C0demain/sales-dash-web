@@ -14,6 +14,7 @@
     "antd": "^5.16.1",
     "axios": "^0.27.2",
     "baseui": "^12.1.2",
+    "chart.js": "^4.4.2",
     "cpf-cnpj-validator": "^1.0.3",
     "dayjs": "^1.11.10",
     "formik": "^2.2.9",
