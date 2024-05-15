@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import './index.css'
 import { Description, FileName, Title, UploadForm, UploadInput, UploadLabel } from "components/commons";
+import { message } from "antd";
 
 const UploadExcelPage: React.FC = () => {
 
@@ -11,10 +12,10 @@ const UploadExcelPage: React.FC = () => {
     const file = event.target.files?.[0];
 
     if (!file) {
-      alert('Nenhum arquivo selecionado!');
+      message.error('Nenhum arquivo selecionado!');
       return;
     }
-    setFileName("Arquivo carregado: " + file.name);
+    message.success("Arquivo carregado: " + file.name);
 
     const reader = new FileReader();
 

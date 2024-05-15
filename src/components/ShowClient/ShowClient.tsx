@@ -72,7 +72,7 @@ function ShowClient() {
     form.setFieldsValue({
       name: record.name,
       segment: record.segment,
-      cpf: formatCPF(record.cpf)
+      cpf: record.cpf
     });
   };
 
@@ -122,74 +122,130 @@ function ShowClient() {
     }
   };
 
-  const formatCPF = (value: string) => {
-    return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-  };
+  const isValidCPF = (cpf: string) => {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11 || /^(.)\1+$/.test(cpf)) return false;
 
-  const formatCNPJ = (value: string) => {
-    value = value.replace(/\D/g, '');
-    value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-    value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-    value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
-    value = value.replace(/(\d{4})(\d)/, '$1-$2');
-    return value;
-  };
+    let sum = 0;
+    let remainder: number;
 
-  const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    if (value.length <= 14) {
-      // CPF
-      form.setFieldsValue({ cpf: formatCPF(value) });
-    } else {
-      // CNPJ
-      form.setFieldsValue({ cpf: formatCNPJ(value) });
-    }
-  };
+    for (let i = 1; i <= 9; i++)
+      sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
 
-  return (
-    <NavbarWrapper>
-      <Navbargest/>
+    remainder = (sum * 10) % 11;
+
+    if (remainder === 10 || remainder === 11)
+    {
+      remainder = 0;
+  }
+  
+  if (remainder !== parseInt(cpf.substring(9, 10))) return false;
+
+  sum = 0;
+  for (let i = 1; i <= 10; i++)
+    sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+
+  remainder = (sum * 10) % 11;
+
+  if (remainder === 10 || remainder === 11) {
+      remainder = 0;
+  }
+
+  if (remainder !== parseInt(cpf.substring(10, 11))) return false;
+
+  return true;
+};
+
+const isValidCNPJ = (cnpj: string) => {
+  cnpj = cnpj.replace(/\D/g, '');
+  if (cnpj.length !== 14 || /^(.)\1+$/.test(cnpj)) return false;
+
+  let size = cnpj.length - 2;
+  let numbers = cnpj.substring(0, size);
+  const digits = cnpj.substring(size);
+  let sum = 0;
+  let pos = size - 7;
+  for (let i = size; i >= 1; i--) {
+      sum += parseInt(numbers.charAt(size - i)) * pos--;
+      if (pos < 2)
+          pos = 9;
+  }
+  let result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+  if (result !== parseInt(digits.charAt(0))) return false;
+
+  size += 1;
+  numbers = cnpj.substring(0, size);
+  sum = 0;
+  pos = size - 7;
+  for (let i = size; i >= 1; i--) {
+      sum += parseInt(numbers.charAt(size - i)) * pos--;
+      if (pos < 2)
+          pos = 9;
+  }
+  result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+  if (result !== parseInt(digits.charAt(1))) return false;
+
+  return true;
+};
+
+const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value;
+  form.setFieldsValue({ cpf: value });
+  if (value.length > 11) {
+      if (!isValidCNPJ(value)) {
+          // CNPJ inválido
+      }
+  } else {
+      if (!isValidCPF(value)) {
+          // CPF inválido
+      }
+  }
+};
+
+return (
+  <NavbarWrapper>
+      <Navbargest />
       <div className="containerCl">
-        <h2>Lista de Clientes</h2>
-        <Button className="button-refresh" onClick={getClients}>Recarregar clientes</Button>
-        {clients.length > 0 ? (
-          <Table columns={columns} dataSource={clients} rowKey={'id'} />
-        ) : (
-          <Empty description={"Nenhum cliente encontrado"} />
-        )}
-        <Modal
-          title="Editar Cliente"
-          open={open} 
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Form form={form} layout="vertical">
-            <Form.Item
-              name="name"
-              label="Nome"
-              rules={[{ required: true, message: 'Por favor, insira o nome do cliente!' }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="segment"
-              label="Segmento"
-              rules={[{ required: true, message: 'Por favor, insira o segmento do cliente!' }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="cpf"
-              label="CPF / CNPJ"
-              rules={[{ required: true, message: 'Por favor, insira o CPF / CNPJ do cliente!' }]}
-            >
-              <Input onChange={handleCpfCnpjChange} />
-            </Form.Item>
-          </Form>
-        </Modal>
+          <h2>Lista de Clientes</h2>
+          <Button className="button-refresh" onClick={getClients}>Recarregar clientes</Button>
+          {clients.length > 0 ? (
+              <Table columns={columns} dataSource={clients} rowKey={'id'} />
+          ) : (
+              <Empty description={"Nenhum cliente encontrado"} />
+          )}
+          <Modal
+              title="Editar Cliente"
+              open={open}
+              onOk={handleOk}
+              onCancel={handleCancel}
+          >
+              <Form form={form} layout="vertical">
+                  <Form.Item
+                      name="name"
+                      label="Nome"
+                      rules={[{ required: true, message: 'Por favor, insira o nome do cliente!' }]}
+                  >
+                      <Input />
+                  </Form.Item>
+                  <Form.Item
+                      name="segment"
+                      label="Segmento"
+                      rules={[{ required: true, message: 'Por favor, insira o segmento do cliente!' }]}
+                  >
+                      <Input />
+                  </Form.Item>
+                  <Form.Item
+                      name="cpf"
+                      label="CPF / CNPJ"
+                      rules={[{ required: true, message: 'Por favor, insira o CPF / CNPJ do cliente!' }]}
+                  >
+                      <Input onChange={handleCpfCnpjChange} />
+                  </Form.Item>
+              </Form>
+          </Modal>
       </div>
-    </NavbarWrapper>
-  );
+  </NavbarWrapper>
+);
 }
 
-export default ShowClient; 
+export default ShowClient;
