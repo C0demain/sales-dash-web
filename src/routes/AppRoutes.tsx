@@ -3,7 +3,6 @@ import CommissionRegister from "components/CommissionRegister/CommissionRegister
 import { Login } from "components/Login";
 import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";
-import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import RegisterSell from "components/RegisterSell/RegisterSell";
 import RegisterUser from "components/RegisterUser/RegisterUser";
 import ShowClient from "components/ShowClient/ShowClient";
@@ -58,12 +57,6 @@ export function AppRoutes() {
           <Route path='/sells/register' element={
             <ProtectedLayout>
               <RegisterSell />
-            </ProtectedLayout>} >
-          </Route>
-
-          <Route path='/product/register' element={
-            <ProtectedLayout>
-              <RegisterProduct />
             </ProtectedLayout>} >
           </Route>
 

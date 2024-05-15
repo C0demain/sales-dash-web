@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './index.css'
 import { useAuth } from 'context/AuthProvider/useAuth';
@@ -26,7 +26,6 @@ const Navbargest = () => {
                     <>
                         <li><button onClick={e => navigate('/sells/register')} className='Sub_Botao_barra'>Cadastro de Vendas</button></li>
                         {isAdmin() && <li><button onClick={e => navigate('/sellers/register')} className='Sub_Botao_barra'>Cadastro de Usuários</button></li>}
-                        <li><button onClick={e => navigate('/product/register')} className='Sub_Botao_barra'>Cadastro de Produtos</button></li>
                         <li><button onClick={e => navigate('/client/register')} className='Sub_Botao_barra'>Cadastro de Clientes</button></li>
                     </>
                 )}
