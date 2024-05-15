@@ -5,7 +5,7 @@ import RegisterClient from "components/RegisterClient/RegisterClient";
 import RegisterSell from "components/RegisterSell/RegisterSell";
 import RegisterUser from "components/RegisterUser/RegisterUser";
 import ShowClient from "components/ShowClient/ShowClient";
-import Dashboard from "components/Dashboard/dashboard";
+import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
 import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -29,9 +29,9 @@ export function AppRoutes() {
             </ProtectedLayout>}>
           </Route>
 
-          <Route path='/dashboard' element={
+          <Route path='/dashboardAdmin' element={
             <ProtectedLayout adminOnly>
-              <Dashboard />
+              <DashboardAdmin />
             </ProtectedLayout>} >
           </Route>
 

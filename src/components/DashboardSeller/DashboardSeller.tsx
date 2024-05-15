@@ -12,7 +12,7 @@ function DashboardSeller () {
         <NavbarWrapper>
         <Navbargest/>
         <div className="container">
-            <h1 className="tituloDashboard">Seu Dashboard</h1>
+            <h1 className="tituloDashboard">Dashboard Vendedor</h1>
             <div className="box">
                 <ListSellsSeller 
                         onStartDateChange={setStartDate} 

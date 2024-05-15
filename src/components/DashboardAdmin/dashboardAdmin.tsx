@@ -4,12 +4,12 @@ import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import RankingSellers from "components/RankingSellers/rankingSellers";
 
-function Dashboard() {
+function DashboardAdmin() {
     return(
         <NavbarWrapper>
         <Navbargest/>
         <div className="container">
-            <h1 className="tituloDashboard">Dashboard Geral</h1>
+            <h1 className="tituloDashboard">Dashboard Gestor</h1>
             <div className="box">
                 <ListSells/>
             </div>
@@ -22,4 +22,4 @@ function Dashboard() {
     )
 }
 
-export default Dashboard;
+export default DashboardAdmin;

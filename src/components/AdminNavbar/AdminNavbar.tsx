@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './index.css'
+import { FaChartBar, FaUserPlus, FaUsers, FaSignOutAlt, FaUser, FaClipboardList, FaShoppingCart, FaMoneyBillAlt, FaAngleDown, FaAngleUp } from 'react-icons/fa'; // Importe os ícones necessários
 import { useAuth } from 'context/AuthProvider/useAuth';
+import './index.css';
 
-const Navbargest = () => {
-    const navigate = useNavigate()
+const Navbar = () => {
+    const navigate = useNavigate();
     const [showCadastro, setShowCadastro] = useState(false);
-    const { isAdmin } = useAuth()
+    const { isAdmin } = useAuth();
   
     const handleLogout = () => {
       localStorage.removeItem('user');
@@ -15,28 +16,33 @@ const Navbargest = () => {
 
     return (
       <div className="navbar">
-        <h1>Olá {isAdmin() ? "Gestor" : "Vendedor"}</h1><br></br>
+        <h2><FaUser /> Olá {isAdmin() ? "Gestor" : "Vendedor"}</h2>
+        <hr />
         <ul>
           {isAdmin() ? 
-          <li><button onClick={e => navigate('/dashboard')} className='Botao_barra'>Dashboard</button></li>
-          : <li><button onClick={e => navigate('/dashboardSeller')} className='Botao_barra'>Dashboard</button></li>
+            <li><button onClick={() => navigate('/dashboardAdmin')}><FaChartBar /> Dashboard</button></li>
+            : <li><button onClick={() => navigate('/dashboardSeller')}><FaChartBar /> Dashboard</button></li>
           }
-          <li><button onClick={e => setShowCadastro(!showCadastro)} className='Botao_barra'>Cadastro</button></li>
-                {showCadastro && (
-                    <>
-                        <li><button onClick={e => navigate('/sells/register')} className='Sub_Botao_barra'>Cadastro de Vendas</button></li>
-                        {isAdmin() && <li><button onClick={e => navigate('/sellers/register')} className='Sub_Botao_barra'>Cadastro de Usuários</button></li>}
-                        <li><button onClick={e => navigate('/client/register')} className='Sub_Botao_barra'>Cadastro de Clientes</button></li>
-                    </>
-                )}
-          <li><button onClick={e => navigate('/client/list')}className='Botao_barra'>Exibe Clientes</button></li>
-          <li><button onClick={e => navigate('/product/list')}className='Botao_barra'>Exibe Produtos</button></li>
-          <li><button onClick={e => navigate('/sell/showsales')}className='Botao_barra'>Exibe Vendas</button></li>
-          <li><button onClick={e => navigate('/commissions')}className='Botao_barra'>Comissões</button></li>
-          <li><button onClick={e => handleLogout()} className='Botao_barra'>Sair da conta</button></li>
+          <li>
+            <button onClick={() => setShowCadastro(!showCadastro)}>
+              <FaUserPlus /> Cadastro {showCadastro ? <FaAngleUp /> : <FaAngleDown />}
+            </button>
+            {showCadastro && (
+              <ul>
+                <li><button onClick={() => navigate('/sells/register')}><FaClipboardList /> Cadastro de Vendas</button></li>
+                {isAdmin() && <li><button onClick={() => navigate('/sellers/register')}><FaUsers /> Cadastro de Usuários</button></li>}
+                <li><button onClick={() => navigate('/client/register')}><FaUserPlus /> Cadastro de Clientes</button></li>
+              </ul>
+            )}
+          </li>
+          <li><button onClick={() => navigate('/client/list')}><FaUsers /> Exibe Clientes</button></li>
+          <li><button onClick={() => navigate('/product/list')}><FaShoppingCart /> Exibe Produtos</button></li>
+          <li><button onClick={() => navigate('/sell/showsales')}><FaClipboardList /> Exibe Vendas</button></li>
+          <li><button onClick={() => navigate('/commissions')}><FaMoneyBillAlt /> Comissões</button></li>
+          <li><button onClick={handleLogout}><FaSignOutAlt /> Sair da conta</button></li>
         </ul>
       </div>
     );
-  }
-  
-  export default Navbargest;
+}
+
+export default Navbar;

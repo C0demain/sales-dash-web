@@ -11,7 +11,7 @@ export const Login = () => {
         try {
             await auth.authenticate(values.email, values.password);
             message.success('Login realizado com sucesso!');
-            navigate('/dashboard');
+            navigate('/dashboardAdmin');
         } catch (error: any) {
             message.error('Email ou senha incorretos. Por favor, tente novamente.');
         }
