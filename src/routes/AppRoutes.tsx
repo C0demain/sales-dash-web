@@ -1,5 +1,4 @@
 import CommissionList from "components/CommissionList/CommissionList";
-import CommissionRegister from "components/CommissionRegister/CommissionRegister";
 import { Login } from "components/Login";
 import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";
@@ -39,12 +38,6 @@ export function AppRoutes() {
           <Route path='/sellers/register' element={
             <ProtectedLayout adminOnly>
               <RegisterUser />
-            </ProtectedLayout>} >
-          </Route>
-
-          <Route path='/commissions/register' element={
-            <ProtectedLayout adminOnly>
-              <CommissionRegister />
             </ProtectedLayout>} >
           </Route>
 

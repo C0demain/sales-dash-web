@@ -2,7 +2,6 @@ import { Button, Card, Empty, Modal, Form, Input, message, Statistic } from "ant
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './index.css'
 import { useAuth } from "context/AuthProvider/useAuth";
@@ -12,7 +11,6 @@ const CommissionList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [currentCommission, setCurrentCommission] = useState<any>(null);
     const [form] = Form.useForm();
-    const navigate = useNavigate();
     const { isAdmin } = useAuth()
 
     const getCommissions = async () => {
@@ -76,9 +74,7 @@ const CommissionList = () => {
                         ))
                     : <Empty description="Nenhuma comissão encontrada" />}
                 </div>
-                <div className="buttonWrapper">
-                    {isAdmin() && <Button onClick={e => navigate('/commissions/register')}>Adicionar comissão</Button>}
-                </div>
+                
                 <Modal
                     title="Editar Comissão"
                     open={isModalOpen} 
