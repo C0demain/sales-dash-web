@@ -8,7 +8,7 @@ import UploadExcelPage from 'components/UploadPage/UploadPage'
 import {sendData} from '.'
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import { DatePicker, InputNumber } from 'antd'
+import { DatePicker, InputNumber, message } from 'antd'
 import dayjs from 'dayjs'
 
 export default function RegisterSell(){
@@ -27,27 +27,27 @@ export default function RegisterSell(){
         const errors = {date: '', seller: '', client: '', product: '', value: ''}
 
         if(!date){
-          errors.date = 'Você deve preencher a data da venda.'
+          message.error('Você deve preencher a data da venda.')
           isValid = false
         }
 
         if(!seller){
-          errors.seller = 'Você deve preencher o e-mail de vendedor.'
+          message.error('Você deve preencher o e-mail de vendedor.')
           isValid = false
         }
 
         if(!client){
-          errors.client = 'Você deve preencher o CPF do cliente.'
+          message.error('Você deve preencher o CPF do cliente.')
           isValid = false
         }
 
         if(!product){
-          errors.product = 'Você deve escolher o produto.'
+          message.error('Você deve escolher o produto.')
           isValid = false
         }
 
         if(!value){
-          errors.value = 'Você deve preencher o valor.'
+          message.error('Você deve preencher o valor.')
           isValid = false
         }
 
@@ -58,7 +58,7 @@ export default function RegisterSell(){
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (validate()) {
-          setSucess('Cadastro realizado!')
+          message.success('Cadastro realizado!')
           sendData(date, seller[0], client[0], product[0], value)
         }
       }

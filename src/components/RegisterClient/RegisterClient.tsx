@@ -3,6 +3,7 @@ import { sendData } from './index';
 import './index.css';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import Navbargest from 'components/AdminNavbar/AdminNavbar';
+import message from 'antd/es/message';
 
 function RegisterClient() {
   const [clientName, setClientName] = useState('');
@@ -15,10 +16,10 @@ function RegisterClient() {
     let isValid = true;
 
     if (!clientName || clientName.length < 3) {
-      setResponse('O nome é obrigatório e deve ter mais de 3 caracteres.');
+      message.error('O nome é obrigatório e deve ter mais de 3 caracteres.');
       isValid = false;
     } else if (!cpfCnpj || cpfCnpj.length !== 14 && cpfCnpj.length !== 18) {
-      setResponse('O CPF/CNPJ é inválido.');
+      message.error('O CPF/CNPJ é inválido.');
       isValid = false;
     } else {
       setResponse('');
@@ -58,12 +59,12 @@ function RegisterClient() {
     if (validate()) {
       try {
         await sendData(clientName, segment, cpfCnpj);
-        setSuccess('Cadastro realizado!');
+        message.success('Cliente atualizado com sucesso!');
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
-          setResponse('Esse CPF/CNPJ já está vinculado a outro cliente.');
+          message.error('Esse CPF/CNPJ já está vinculado a outro cliente.');
         } else {
-          setResponse('Ocorreu um erro ao registrar o cliente. Tente novamente.');
+          message.error('Ocorreu um erro ao registrar o cliente. Tente novamente.');
           console.log(error);
         }
       }
@@ -102,3 +103,7 @@ function RegisterClient() {
 }
 
 export default RegisterClient;
+function setOpen(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+

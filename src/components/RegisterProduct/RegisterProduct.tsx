@@ -3,6 +3,7 @@ import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper'
 import Navbargest from 'components/AdminNavbar/AdminNavbar'
 import { sendData } from '.'
 import './index.css'
+import { message } from 'antd'
 
 function RegisterProduct() {
 
@@ -17,20 +18,20 @@ function RegisterProduct() {
     const errors = { productName: '', description: '', value: '', response: ''};
 
     if (!productName) {
-      errors.productName = 'O nome é obrigatório.';
+      message.error('O nome é obrigatório.')
       isValid = false;
     } else if (productName.length < 3) {
-      errors.productName = 'O nome deve ter mais de 3 caracteres.';
+      message.error('O nome deve ter mais de 3 caracteres.')
       isValid = false;
     }
 
     if (!description) {
-      errors.description = 'Adicione uma descrição para o produto.'
+      message.error('Adicione uma descrição para o produto.')
       isValid = false
     }
 
     if(!value){
-      errors.value = 'Insira um preço para o produto!'
+      message.error('Insira um preço para o produto!')
       isValid = false
     }
 
@@ -44,9 +45,9 @@ function RegisterProduct() {
       // Lógica de submissão do formulário
       try{
         await sendData(productName, description, parseFloat(value))
-        setSucess('Cadastro realizado!')
+        message.success('Cadastro realizado!')
       }catch(error: any){
-        errors.response = 'Ocorreu um erro ao registrar o produto. Tente novamente'
+        message.error('Ocorreu um erro ao registrar o produto. Tente novamente')
         setErrors(errors)
         console.log(error)
       }
