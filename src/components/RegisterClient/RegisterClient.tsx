@@ -4,11 +4,11 @@ import './index.css';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import Navbargest from 'components/AdminNavbar/AdminNavbar';
 import message from 'antd/es/message';
+import InputMask from 'react-input-mask'; 
 
-// Função para validar CPF
-const isValidCPF = (cpf: string) => {
+const isValidCPF = (cpf: string): boolean => {
   if (typeof cpf !== "string") return false;
-  cpf = cpf.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
+  cpf = cpf.replace(/[^\d]/g, ''); 
   if (cpf.length !== 11) return false;
   let sum = 0;
   let mod;
@@ -34,10 +34,9 @@ const isValidCPF = (cpf: string) => {
   return true;
 };
 
-// Função para validar CNPJ
-const isValidCNPJ = (cnpj: string) => {
+const isValidCNPJ = (cnpj: string): boolean => {
   if (typeof cnpj !== "string") return false;
-  cnpj = cnpj.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
+  cnpj = cnpj.replace(/[^\d]/g, ''); 
   if (cnpj.length !== 14) return false;
   let sum = 0;
   let mod;
@@ -73,6 +72,12 @@ function RegisterClient() {
   const [cpfCnpj, setCpfCnpj] = useState('');
   const [response, setResponse] = useState('');
   const [success, setSuccess] = useState('');
+  const [isCpf, setIsCpf] = useState(true); 
+
+  const toggleIsCpf = () => {
+    setIsCpf(!isCpf);
+    setCpfCnpj(''); 
+  };
 
   const validate = () => {
     let isValid = true;
@@ -97,12 +102,25 @@ function RegisterClient() {
   };
 
   const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const formattedValue = value
-      .replace(/\D/g, '') // Remove caracteres não numéricos
-      .replace(/(\d{3})(\d)/, '$1.$2') // Insere ponto após o terceiro dígito
-      .replace(/(\d{3})(\d)/, '$1.$2') // Insere ponto após o sexto dígito
-      .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Insere hífen após o nono dígito ou o segundo dígito verificador
+    let value = e.target.value;
+    value = value.replace(/\D/g, ''); 
+    const isCpf = value.length <= 11; 
+    const mask = isCpf ? '999.999.999-99' : '99.999.999/9999-99'; 
+    let formattedValue = '';
+    
+    let i = 0;
+    let j = 0;
+  
+    while (i < value.length && j < mask.length) {
+      if (mask[j] === '9') {
+        formattedValue += value[i];
+        i++;
+      } else {
+        formattedValue += mask[j];
+      }
+      j++;
+    }
+  
     setCpfCnpj(formattedValue);
   };
 
@@ -122,7 +140,6 @@ function RegisterClient() {
       }
     }
   };
-
   return (
     <NavbarWrapper>
       <Navbargest />
@@ -141,7 +158,21 @@ function RegisterClient() {
               </div>
               <div className="insertText">
                 <label>CPF/CNPJ do Cliente:</label>
-                <input type="text" placeholder="000.000.000-00 ou 00.000.000/0000-00" value={cpfCnpj} onChange={(e) => setCpfCnpj(e.target.value)} required />
+                <InputMask
+                  mask={isCpf ? '999.999.999-99' : '99.999.999/9999-99'}
+                  placeholder={isCpf ? '000.000.000-00' : '00.000.000/0000-00'}
+                  value={cpfCnpj}
+                  onChange={handleCpfCnpjChange}
+                  required
+                />
+              </div>
+              <div className="toggle">
+                <span className='cor'>CNPJ</span>
+                <label className="switch">
+                  <input type="checkbox" checked={isCpf} onChange={toggleIsCpf} />
+                  <span className="slider round"></span>
+                </label>
+                <span className='cor'>CPF</span>
               </div>
               {success && <p className="funciona">{success}</p>}
               {response && <p className="erro">{response}</p>}
