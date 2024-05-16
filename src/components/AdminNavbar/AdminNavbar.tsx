@@ -16,8 +16,8 @@ const Navbar = () => {
 
     return (
       <div className="navbar">
-        <h2><FaUser /> Olá {isAdmin() ? "Gestor" : "Vendedor"}</h2>
-        <hr />
+        <div className='navbarTitle'>
+          <h2><FaUser /> Olá {isAdmin() ? "Gestor" : "Vendedor"}</h2>
         <ul>
           {isAdmin() ? 
             <li><button onClick={() => navigate('/dashboardAdmin')}><FaChartBar /> Dashboard</button></li>
@@ -41,6 +41,7 @@ const Navbar = () => {
           <li><button onClick={() => navigate('/commissions')}><FaMoneyBillAlt /> Comissões</button></li>
           <li><button onClick={handleLogout}><FaSignOutAlt /> Sair da conta</button></li>
         </ul>
+        </div>
       </div>
     );
 }
