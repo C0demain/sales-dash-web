@@ -1,3 +1,4 @@
+import { Button, Col, Form, Input, Row, message } from "antd";
 import { useState } from 'react'
 import './index.css'
 import { isValidCPF } from '.'
@@ -143,13 +144,13 @@ function RegisterUser() {
                 </ol>
                 <div className='inputSenha'>
                   <label >Digite uma senha:</label>
-                  <input type="password" name='senha' placeholder='  Senha' required onChange={(e) => setSenha(e.target.value)} />
+                  <Input.Password type="password" name='senha' placeholder='  Senha' required onChange={(e) => setSenha(e.target.value)} />
                   {errors.senha && <p className='erro'>{errors.senha}</p>}
                 </div>
 
                 <div className='inputSenha'>
                   <label >Confirme sua senha:</label>
-                  <input type="password" placeholder='  Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
+                  <Input.Password  type="password" placeholder='  Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
                   {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
                 </div>
 
