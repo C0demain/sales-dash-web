@@ -3,6 +3,7 @@ import './index.css'
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import RankingSellers from "components/RankingSellers/rankingSellers";
+import BasicLineChart from "components/LineChart/LineChart";
 
 function DashboardAdmin() {
     return(
@@ -10,6 +11,9 @@ function DashboardAdmin() {
         <Navbargest/>
         <div className="container">
             <h1 className="tituloDashboard">Dashboard Gestor</h1>
+            <div className="box">
+                <BasicLineChart/>
+            </div>
             <div className="box">
                 <ListSells/>
             </div>
