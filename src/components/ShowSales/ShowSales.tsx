@@ -117,10 +117,9 @@ function ShowSales() {
       if (!currentSale) {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
-      
       const updatedSale = {
         date: values.date,
-        seller_cpf: seller,
+        seller_cpf: seller[0],
         value: values.value
       };
 
