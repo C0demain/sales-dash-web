@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
 import './ShowSales.css'
 import SelectSeller from "components/SelectSeller/SelectSeller";
 import { formatCurrency, formatDate } from "util/formatters";
+import moment from 'moment';
+import SelectProduct from "components/SelectProduct/SelectProduct";
+import SelectClient from "components/SelectClient/SelectClient";
+
+const { RangePicker } = DatePicker;
 
 interface Sale {
   id: string;
@@ -21,9 +26,14 @@ function ShowSales() {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [currentSale, setCurrentSale] = useState<Sale | null>(null);
-  const [seller, setSeller] = useState<any> ()
+  const [seller, setSeller] = useState<any>(null);
+  const [userSelect, setUserSelect] = useState<any>(null);
+  const [productSelect, setProductSelect] = useState<any>(null);
+  const [clientSelect, setClientSelect] = useState<any>(null);
+  const [startDate, setStartDate] = useState<any>(null);
+  const [endDate, setEndDate] = useState<any>('3000-5-30');
 
-  const columns:TableColumnsType = [
+  const columns: TableColumnsType = [
     {
       title: 'Data',
       dataIndex: 'date',
@@ -64,24 +74,27 @@ function ShowSales() {
     }
   ];
 
-  const getSells = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/v1/sells/getall');
-      if (response.data && response.data.sell) {
-        setSells(response.data.sell);
-        let sells = response.data.sell
-      } else {
-        setSells([]);
-      }
-    } catch (error) {
-      console.error("Erro ao buscar vendas:", error);
-      setSells([]);
-    }
-  };
+  const getSells = useCallback(async () => {
+    let url = "http://localhost:8000/api/v1/sells/getfilter/";
+    const userFilter = userSelect ? `userId=${userSelect}` : "";
+    const productFilter = productSelect ? `productId=${productSelect}` : "";
+    const clientFilter = clientSelect ? `clientId=${clientSelect}` : "";
+    const startDateFilter = startDate ? `startDate=${moment(startDate).format('YYYY-MM-DD')}` : "";
+    const endDateFilter = endDate ? `endDate=${moment(endDate).format('YYYY-MM-DD')}` : "";
+
+    let queryParams = [userFilter, productFilter, clientFilter, startDateFilter, endDateFilter];
+    const query = queryParams.filter(e => e !== '').join('&');
+    url += query ? `?${query}` : "";
+
+    const response = await axios.get(url, {
+        withCredentials: false,
+    });
+    setSells(response.data.sells);
+  }, [userSelect, productSelect, clientSelect, startDate, endDate]);
 
   useEffect(() => {
     getSells();
-  }, []);
+  }, [getSells]);
 
   const handleEdit = (record: any) => {
     setSeller(record.user.cpf);
@@ -104,12 +117,11 @@ function ShowSales() {
       if (!currentSale) {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
-      
       const updatedSale = {
         date: values.date,
-        seller_cpf: seller,
+        seller_cpf: seller[0],
         value: values.value
-      }
+      };
 
       const response = await axios.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
       if (response.status === 200) {
@@ -128,15 +140,60 @@ function ShowSales() {
   const handleCancel = () => {
     setVisible(false);
   };
+  const handleDatePicker = (date: any) => {
+    let newDate = date ? date.year() + "-" + (date.month() + 1) + "-" + date.date() : ""
+    return newDate
+}
 
   return (
     <NavbarWrapper>
-      <Navbargest/>
+      <Navbargest />
       <div className="containerSl">
         <h2>Lista de Vendas</h2>
-        <Button className= 'button-refresh' onClick={getSells}>Recarregar vendas</Button>
+        <Row gutter={16}>
+          <Col>
+          <SelectSeller
+            controlState={[userSelect, setUserSelect]}
+            dataKey="id"
+            className="select"
+                    />
+          </Col>
+          <Col>
+          <SelectProduct
+            controlState={[productSelect, setProductSelect]}
+            dataKey="id"
+            className="select"
+                    />
+          </Col>
+          <Col>
+          <SelectClient
+            controlState={[clientSelect, setClientSelect]}
+            dataKey="id"
+            className="select"
+                    />
+          </Col>
+          <Col>
+                    <DatePicker
+                        onChange={e => { setStartDate(handleDatePicker(e)) }}
+                        format="DD/MM/YYYY"
+                        placeholder="Data de início"
+                        className="select"
+                    />
+          </Col>
+          <Col>
+                    <DatePicker
+                        onChange={e => { setEndDate(handleDatePicker(e)) }}
+                        format="DD/MM/YYYY"
+                        placeholder="Data final"
+                        className="select"
+                    />
+          </Col>
+          <Col>
+            <Button className='button-refresh' onClick={getSells}>Filtrar vendas</Button>
+          </Col>
+        </Row>
         {sales.length > 0 ? (
-          <Table columns={columns} dataSource={sales} rowKey={'id'}/>
+          <Table columns={columns} dataSource={sales} rowKey={'id'} />
         ) : (
           <Empty description={"Nenhuma venda encontrada"} />
         )}
@@ -160,8 +217,8 @@ function ShowSales() {
               rules={[{ required: true, message: 'Por favor, insira o vendedor!' }]}
             >
               <SelectSeller
-              controlState={[seller, setSeller]}
-              dataKey="cpf"
+                controlState={[seller, setSeller]}
+                dataKey="cpf"
               />
             </Form.Item>
             <Form.Item
@@ -169,14 +226,14 @@ function ShowSales() {
               label="Cliente"
               rules={[{ required: true, message: 'Por favor, insira o cliente!' }]}
             >
-              <Input disabled/>
+              <Input disabled />
             </Form.Item>
             <Form.Item
               name="product"
               label="Produto"
               rules={[{ required: true, message: 'Por favor, insira o produto!' }]}
             >
-              <Input disabled/>
+              <Input disabled />
             </Form.Item>
             <Form.Item
               name="value"
