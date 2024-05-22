@@ -4,6 +4,7 @@ import Navbargest from "components/AdminNavbar/AdminNavbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import RankingSellers from "components/RankingSellers/rankingSellers";
 import BasicLineChart from "components/LineChart/LineChart";
+import BarChart from "components/Barchart/BarChart";
 
 function DashboardAdmin() {
     return(
@@ -13,6 +14,9 @@ function DashboardAdmin() {
             <h1 className="tituloDashboard">Dashboard Gestor</h1>
             <div className="box">
                 <BasicLineChart/>
+            </div>
+            <div className="box">
+                <BarChart/>
             </div>
             <div className="box">
                 <ListSells/>
