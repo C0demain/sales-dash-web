@@ -1,6 +1,6 @@
 .containerStats{
     display: flex;
-    flex-direction:initial;
+    flex-direction: column;
     justify-content: center;
     text-align: center;
 }

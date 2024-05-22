@@ -52,7 +52,7 @@ function RankingSellers() {
             <h2>Ranking de vendedores por valor</h2>
             <Button className="button-refresh" onClick={e => {getSellers()} }>Recarregar ranking</Button>
             {sellers.length>0 ?
-            <Table columns={columns} dataSource={sellers} rowKey="id"/>
+            <Table columns={columns} dataSource={sellers} rowKey="id" pagination={{defaultPageSize: 10}}/>
             : <Empty description={"Nenhuma venda encontrada"} />}
         </div>
     )

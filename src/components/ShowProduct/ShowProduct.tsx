@@ -94,7 +94,7 @@ function ShowProduct() {
         <h2>Lista de Produtos</h2>
         <Button className="button-refresh" onClick={getProducts}>Recarregar produtos</Button>
         {products.length > 0 ? (
-          <Table columns={columns} dataSource={products} rowKey={'id'}/>
+          <Table columns={columns} dataSource={products} rowKey={'id'} pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}/>
         ) : (
           <Empty description={"Nenhum produto encontrado"} />
         )}

@@ -2,16 +2,16 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
-import './index.css'
 import Switch from '@mui/material/Switch';
 
-export default function BasicLineChart() {
+export default function LineChartSeller() {
   const [dataSells, setDataSells] = useState<any[]>([])
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
   const [startDate, setStartDate] = useState<any>()
   const [endDate, setEndDate] = useState<any>()
   const [checked, setChecked] = useState(true)
   const [title, setTitle] = useState<any>('Valor vendido nos últimos 6 meses')
+  const [user, setUser] = useState<any>()
   const today = new Date()
 
   const [options, setOptions] = useState<any>({
@@ -53,8 +53,9 @@ export default function BasicLineChart() {
     let url = "http://localhost:8000/api/v1/dashboard/date"
     const startDateFilter = startDate ? 'startDate=' + startDate : ""
     const endDateFilter = endDate ? 'endDate=' + endDate : ""
+    const userFilter = user !== null ? 'userId=' + user : "";
 
-    let queryParams = [startDateFilter, endDateFilter]
+    let queryParams = [userFilter, startDateFilter, endDateFilter]
     const query = queryParams.filter(e => e !== '').join('&')
     url += query !== "&" ? "?" + query : ""
 
@@ -62,32 +63,38 @@ export default function BasicLineChart() {
         withCredentials: false,
     });
     setDataSells(response.data.stats)
-  }, [startDate, endDate]) 
+  }, [startDate, endDate, user]) 
 
   const setDataStats = async(event: React.ChangeEvent<HTMLInputElement>) => {
     if( data[0][1] === "Valor vendido"){
       setData([["Mês", "Quantidade vendida"],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalSales],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalSales],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalSales],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalSales],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalSales],
       [`${dataSells[0]?.month}`, dataSells[0]?.totalSales],
+      [`${dataSells[1]?.month}`, dataSells[1]?.totalSales],
+      [`${dataSells[2]?.month}`, dataSells[2]?.totalSales],
+      [`${dataSells[3]?.month}`, dataSells[3]?.totalSales],
+      [`${dataSells[4]?.month}`, dataSells[4]?.totalSales],
+      [`${dataSells[5]?.month}`, dataSells[5]?.totalSales],
       ])
     setTitle('Quantidade vendida nos últimos 6 meses')
     }else{
       setData([["Mês", "Valor vendido"],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
       [`${dataSells[0]?.month}`, dataSells[0]?.totalValue],
+      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
+      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
+      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
+      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
+      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
       ])
     setTitle('Valor vendido nos últimos 6 meses')
     }
     setChecked(event.target.checked);
   }
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user && user.id) {
+        setUser(user.id);
+    }
+}, []);
 
   useEffect(()=>{ 
     getSellsPeriod()
@@ -95,12 +102,12 @@ export default function BasicLineChart() {
   useEffect(()=>{
     if(dataSells.length>0){
       setData([["Mês", "Valor vendido"],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
       [`${dataSells[0]?.month}`, dataSells[0]?.totalValue],
+      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
+      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
+      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
+      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
+      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
       ])
     }
   }, [getSellsPeriod, dataSells])

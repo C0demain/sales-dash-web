@@ -9,8 +9,6 @@ import {
   FileTextOutlined,
   DollarOutlined,
   LogoutOutlined,
-  DownOutlined,
-  UpOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Breadcrumb, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +19,7 @@ const { Header, Content, Footer, Sider } = Layout;
  
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [showCadastro, setShowCadastro] = useState(false);
   const { isAdmin } = useAuth();
  
@@ -105,7 +103,7 @@ const Navbar: React.FC = () => {
         collapsible
         collapsed={collapsed}
         onCollapse={setCollapsed}
-        style={{ position: 'fixed', left: 0, top: 0, bottom: 0, zIndex: 1 }}>
+        style={{ left: 0, top: 0, bottom: 0, zIndex: 1 }}>
         <div style={{ padding: '16px', color: 'white', textAlign: 'center', background: '#001529' }}>
           <UserOutlined />
           {!collapsed && <span> Olá {isAdmin() ? "Gestor" : "Vendedor"}</span>}

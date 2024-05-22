@@ -10,13 +10,15 @@ function DashboardAdmin() {
     return(
         <NavbarWrapper>
         <Navbargest/>
-        <div className="container">
-            <h1 className="tituloDashboard">Dashboard Gestor</h1>
-            <div className="box">
-                <BasicLineChart/>
-            </div>
-            <div className="box">
-                <BarChart/>
+        <div className="containerDash">
+            <div style={{backgroundColor: '#001529', width: '100%', height: '7vh'}}><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
+            <div className="chartsBox">
+                <div>
+                    <BasicLineChart/>
+                </div>
+                <div>
+                    <BarChart/>
+                </div>
             </div>
             <div className="box">
                 <ListSells/>

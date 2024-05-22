@@ -199,7 +199,7 @@ function ShowSales() {
           </Col>
         </Row>
         {sales.length > 0 ? (
-          <Table columns={columns} dataSource={sales} rowKey={'id'} />
+          <Table columns={columns} dataSource={sales} rowKey={'id'} pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}/>
         ) : (
           <Empty description={"Nenhuma venda encontrada"} />
         )}

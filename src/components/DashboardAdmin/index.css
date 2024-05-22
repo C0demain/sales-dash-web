@@ -1,14 +1,13 @@
-.container{
+.containerDash{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin: 0 auto;
+    align-items: center;
 }
 
 .tituloDashboard{
-    align-self: flex-start;
     font-family:Arial, Helvetica, sans-serif;
+    color: white;
+    margin: 1vh;
 }
 
 .box{
@@ -20,4 +19,9 @@
     height: 0.2vh;
     background-color: black;
     margin: 3vh 3vh;
+}
+
+.chartsBox{
+    display: flex;
+    flex-direction: row;
 }

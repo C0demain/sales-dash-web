@@ -33,14 +33,14 @@ export default function BarChart() {
   };
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+    <div style={{margin: '5vh'}}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5vh' }}>
         <button onClick={handleNextMonth}>Próximo Mês</button>
       </div>
       <div style={{ display: 'flex', maxWidth: 600 }}>
         <Chart
-          width={'100%'}
-          height={'400px'}
+          width="75vh"
+          height="35vh"
           chartType="Bar"
           loader={<div>Carregando Gráfico</div>}
           data={commissions}

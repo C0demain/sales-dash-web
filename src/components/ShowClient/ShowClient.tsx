@@ -209,7 +209,7 @@ return (
           <h2>Lista de Clientes</h2>
           <Button className="button-refresh" onClick={getClients}>Recarregar clientes</Button>
           {clients.length > 0 ? (
-              <Table columns={columns} dataSource={clients} rowKey={'id'} />
+              <Table columns={columns} dataSource={clients} rowKey={'id'} pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}/>
           ) : (
               <Empty description={"Nenhum cliente encontrado"} />
           )}
