@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DashboardOutlined,
   UserAddOutlined,
@@ -10,108 +10,141 @@ import {
   DollarOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Breadcrumb, theme } from 'antd';
+import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'context/AuthProvider/useAuth';
-import './index.css';
- 
-const { Header, Content, Footer, Sider } = Layout;
- 
+
+const { Sider } = Layout;
+
+type MenuItem = {
+  key: string;
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+};
+
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(true);
-  const [showCadastro, setShowCadastro] = useState(false);
   const { isAdmin } = useAuth();
- 
+  const [collapsed] = useState(true);
+  const [selectedKey, setSelectedKey] = useState<string>('0');
+
+  useEffect(() => {
+    const storedKey = localStorage.getItem('selectedKey');
+    if (storedKey) setSelectedKey(storedKey);
+  }, []);
+
+  const handleSelect = (key: string) => {
+    setSelectedKey(key);
+    localStorage.setItem('selectedKey', key);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('selectedKey')
     navigate("/login");
   };
- 
-  const items = [
+
+  const items: MenuItem[] = [
     {
       key: '1',
       icon: <DashboardOutlined />,
       label: isAdmin() ? 'Dashboard Admin' : 'Dashboard Vendedor',
-      onClick: () => navigate(isAdmin() ? '/dashboardAdmin' : '/dashboardSeller'),
+      onClick: () => {
+        handleSelect('1');
+        navigate(isAdmin() ? '/dashboardAdmin' : '/dashboardSeller');
+      },
     },
     {
-      key: '2',
+      key: '2-1',
+      icon: <FileTextOutlined />,
+      label: 'Cadastro de Vendas',
+      onClick: () => {
+        handleSelect('2-1');
+        navigate('/sells/register');
+      },
+    },
+    isAdmin() && {
+      key: '2-2',
+      icon: <TeamOutlined />,
+      label: 'Cadastro de Usuários',
+      onClick: () => {
+        handleSelect('2-2');
+        navigate('/sellers/register');
+      },
+    },
+    {
+      key: '2-3',
       icon: <UserAddOutlined />,
-      label: 'Cadastro',
-      onClick: () => setShowCadastro(!showCadastro),
-      children: showCadastro ? [
-        {
-          key: '2-1',
-          icon: <FileTextOutlined />,
-          label: 'Cadastro de Vendas',
-          onClick: () => navigate('/sells/register'),
-        },
-        isAdmin() && {
-          key: '2-2',
-          icon: <TeamOutlined />,
-          label: 'Cadastro de Usuários',
-          onClick: () => navigate('/sellers/register'),
-        },
-        {
-          key: '2-3',
-          icon: <UserAddOutlined />,
-          label: 'Cadastro de Clientes',
-          onClick: () => navigate('/client/register'),
-        }
-      ].filter(Boolean) : null,
+      label: 'Cadastro de Clientes',
+      onClick: () => {
+        handleSelect('2-3');
+        navigate('/client/register');
+      },
     },
     {
       key: '3',
       icon: <UnorderedListOutlined />,
       label: 'Exibe Clientes',
-      onClick: () => navigate('/client/list'),
+      onClick: () => {
+        handleSelect('3');
+        navigate('/client/list');
+      },
     },
     {
       key: '4',
       icon: <ShoppingOutlined />,
       label: 'Exibe Produtos',
-      onClick: () => navigate('/product/list'),
+      onClick: () => {
+        handleSelect('4');
+        navigate('/product/list');
+      },
     },
     {
       key: '5',
       icon: <FileTextOutlined />,
       label: 'Exibe Vendas',
-      onClick: () => navigate('/sell/showsales'),
+      onClick: () => {
+        handleSelect('5');
+        navigate('/sell/showsales');
+      },
     },
     {
       key: '6',
       icon: <DollarOutlined />,
       label: 'Comissões',
-      onClick: () => navigate('/commissions'),
+      onClick: () => {
+        handleSelect('6');
+        navigate('/commissions');
+      },
     },
     {
       key: '7',
       icon: <LogoutOutlined />,
       label: 'Sair da conta',
-      onClick: handleLogout,
+      onClick: () => {
+        handleSelect('7');
+        handleLogout();
+      },
     }
-  ];
- 
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
- 
+  ].filter(Boolean) as MenuItem[];
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
         collapsible
-        collapsed={collapsed}
-        onCollapse={setCollapsed}
-        style={{ left: 0, top: 0, bottom: 0, zIndex: 1 }}>
+        width={250}
+        style={{ minHeight: '100vh'}}
+      >
         <div style={{ padding: '16px', color: 'white', textAlign: 'center', background: '#001529' }}>
           <UserOutlined />
-          {!collapsed && <span> Olá {isAdmin() ? "Gestor" : "Vendedor"}</span>}
+          {collapsed && <span> Olá {isAdmin() ? "Gestor" : "Vendedor"}</span>}
         </div>
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <Menu theme="dark" selectedKeys={[selectedKey]} mode="inline" items={items} onSelect={({ key }) => handleSelect(key)}>
+        </Menu>
       </Sider>
     </Layout>
   );
 };
- 
+
 export default Navbar;
