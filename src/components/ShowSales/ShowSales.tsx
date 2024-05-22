@@ -5,16 +5,18 @@ import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
 import './ShowSales.css'
 import SelectSeller from "components/SelectSeller/SelectSeller";
-import { formatCurrency, formatDate } from "util/formatters";
+import { formatCurrency, formatDate, formatDateObj } from "util/formatters";
 import moment from 'moment';
 import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
+import dayjs from "dayjs";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-const { RangePicker } = DatePicker;
+dayjs.extend(customParseFormat);
 
 interface Sale {
   id: string;
-  date: string;
+  date: Date;
   seller: string;
   clientName: string;
   productName: string;
@@ -32,6 +34,9 @@ function ShowSales() {
   const [clientSelect, setClientSelect] = useState<any>(null);
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>('3000-5-30');
+  const [initDate, setInitDate] = useState<any>()
+  const dateFormat = 'YYYY-MM-DD';
+
 
   const columns: TableColumnsType = [
     {
@@ -97,17 +102,17 @@ function ShowSales() {
   }, [getSells]);
 
   const handleEdit = (record: any) => {
+    setInitDate(record.date)
     setSeller(record.user.cpf);
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
-      date: record.date,
       seller: record.user.cpf,
       client: record.clientname,
       product: record.productName,
       value: record.value,
     });
-    setVisible(true); 
+    setVisible(true);
   };
 
   const handleOk = async () => {
@@ -118,7 +123,7 @@ function ShowSales() {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
       const updatedSale = {
-        date: values.date,
+        date: `${moment(endDate).format('YYYY-MM-DD')}`,
         seller_cpf: seller[0],
         value: values.value
       };
@@ -140,6 +145,7 @@ function ShowSales() {
   const handleCancel = () => {
     setVisible(false);
   };
+
   const handleDatePicker = (date: any) => {
     let newDate = date ? date.year() + "-" + (date.month() + 1) + "-" + date.date() : ""
     return newDate
@@ -209,7 +215,7 @@ function ShowSales() {
               label="Data"
               rules={[{ required: true, message: 'Por favor, insira a data da venda!' }]}
             >
-              <Input />
+              <DatePicker defaultValue={dayjs(initDate, dateFormat)}/>
             </Form.Item>
             <Form.Item
               name="seller"
