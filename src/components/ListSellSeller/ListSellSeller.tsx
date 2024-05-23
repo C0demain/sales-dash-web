@@ -19,7 +19,8 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
             dataIndex: 'date',
             key: 'date',
             render: value => formatDate(value),
-            sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+            sorter: ((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()), 
+            defaultSortOrder: "descend"
         },
         {
             title: 'Produto',

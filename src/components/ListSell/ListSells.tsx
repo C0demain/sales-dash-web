@@ -13,7 +13,8 @@ const ListSells = () => {
             dataIndex: 'date',
             key: 'date',
             render: (value: string) => formatDate(value),
-            sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+            sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+            defaultSortOrder: "descend"
         },
         {
             title: 'Vendedor',
