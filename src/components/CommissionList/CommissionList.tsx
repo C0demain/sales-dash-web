@@ -8,7 +8,7 @@ import { useAuth } from "context/AuthProvider/useAuth";
 
 const CommissionList = () => {
     const [commissions, setCommissions] = useState<any>([])
-    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentCommission, setCurrentCommission] = useState<any>(null);
     const [form] = Form.useForm();
     const { isAdmin } = useAuth()
@@ -18,7 +18,7 @@ const CommissionList = () => {
         setCommissions(response.data.commissions)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getCommissions()
     }, [])
 
@@ -34,18 +34,18 @@ const CommissionList = () => {
     const handleOk = async () => {
         try {
             const values = await form.validateFields();
-            
+
             if (!currentCommission) {
                 throw new Error('Nenhuma comissão selecionada para atualização.');
             }
-            
+
             const updatedCommission = { ...currentCommission, ...values, percentage: values.percentage / 100 };
             const response = await axios.put(`http://localhost:8000/api/v1/commissions/${currentCommission.id}`, updatedCommission);
-            
+
             if (response.status === 200) {
-                setIsModalOpen(false); 
+                setIsModalOpen(false);
                 message.success('Comissão atualizada com sucesso!');
-                getCommissions(); 
+                getCommissions();
             } else {
                 message.error('Falha ao atualizar a comissão. Por favor, tente novamente.');
             }
@@ -61,44 +61,43 @@ const CommissionList = () => {
 
     return (
         <NavbarWrapper>
-            <Navbargest/>
-            <div className="container commissionList">
+            <Navbargest />
+            <div className="container">
                 <h1 className="commissionTitle">Comissões</h1>
                 <div className="commissions">
-                    {commissions.length > 0 ? 
+                    {commissions.length > 0 ?
                         commissions.map((el: any, index: number) => (
                             <Card key={index} bordered={true} className="commissionCard">
-                                <Statistic title={<strong>{el.title}</strong>} value={el.percentage*100} suffix="%" />
+                                <Statistic title={<strong>{el.title}</strong>} value={el.percentage * 100} suffix="%" />
                                 {isAdmin() && <Button className="button-edit" onClick={() => handleEdit(el)} >Editar</Button>}
                             </Card>
                         ))
-                    : <Empty description="Nenhuma comissão encontrada" />}
+                        : <Empty description="Nenhuma comissão encontrada" />}
                 </div>
-                
-                <Modal
-                    title="Editar Comissão"
-                    open={isModalOpen} 
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                >
-                    <Form form={form} layout="vertical">
-                        <Form.Item
-                            name="title"
-                            label="Título"
-                            rules={[{ required: true, message: 'Por favor, insira o título da comissão!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            name="percentage"
-                            label="Porcentagem"
-                            rules={[{ required: true, message: 'Por favor, insira a porcentagem da comissão!' }]}
-                        >
-                            <Input type="number" step="0.01" min="0" max="100" />
-                        </Form.Item>
-                    </Form>
-                </Modal>
             </div>
+            <Modal
+                title="Editar Comissão"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <Form form={form} layout="vertical">
+                    <Form.Item
+                        name="title"
+                        label="Título"
+                        rules={[{ required: true, message: 'Por favor, insira o título da comissão!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="percentage"
+                        label="Porcentagem"
+                        rules={[{ required: true, message: 'Por favor, insira a porcentagem da comissão!' }]}
+                    >
+                        <Input type="number" step="0.01" min="0" max="100" />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </NavbarWrapper>
     )
 };

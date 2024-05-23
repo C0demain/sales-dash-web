@@ -23,52 +23,49 @@
     align-items: center;
 }
 
-.titulo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-}
-
 .formularioUsuario {
     width: 100%;
 }
 
-.insertText {
+.insertText,
+.inputSenha {
+    width: 100%;
     margin-bottom: 20px;
 }
 
-.insertText label {
+.insertText label,
+.inputSenha label {
     display: block;
     font-size: 16px;
     margin-bottom: 5px;
     color: #555;
 }
 
-.selectRole {
-    width: 100%;
-    height: 5vh;
+.insertText input,
+.selectRole,
+.inputSenha .ant-input {
     border-radius: 1vh;
     background-color: white;
-    border: 1px solid #d9d9d9; /* Adicione uma borda */
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 40px;
 }
 
-.inputValor input {
-    border-width: 0; /* Remova a largura da borda */
-    font-weight: normal; /* Remova o negrito */
+.selectRole {
+    height: auto;
+    padding-left: 10px;
 }
 
-.inputValor input:focus {
-    border-color: #001529; /* Mude a cor da borda quando o input estiver focado */
+.erro {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
-.inputValor::placeholder,
-.ant-picker input::placeholder,
-.ant-input-number input::placeholder {
-    color: #aaa;
-}
-
-.botaoEnvia {
+.botaoCadastrar {
     background-color: #001529;
     border: none;
     color: white;
@@ -84,14 +81,23 @@
     width: 100%;
 }
 
-.botaoEnvia:hover {
+.botaoCadastrar:hover {
     background-color: #001529;
 }
 
-.ant-picker {
+.ant-picker,
+.ant-input-number {
     width: 100%;
 }
 
-.ant-input-number {
-    width: 100%;
+::placeholder {
+    color: #a9a9a9;
+    opacity: 1;
+    font-size: 16px;
+}
+
+.inputSenha input::placeholder,
+.insertText input::placeholder {
+    color: #a9a9a9;
+    opacity: 1;
 }

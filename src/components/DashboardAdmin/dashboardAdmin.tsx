@@ -11,7 +11,7 @@ function DashboardAdmin() {
         <NavbarWrapper>
             <Navbargest />
             <div className="containerDash">
-                <div style={{ backgroundColor: '#001529', width: '100%', height: '7vh' }}><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
+                <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
                 <div className="chartsBox">
                     <div>
                         <BasicLineChart />

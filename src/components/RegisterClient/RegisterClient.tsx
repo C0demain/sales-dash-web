@@ -4,11 +4,11 @@ import './index.css';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import Navbargest from 'components/AdminNavbar/AdminNavbar';
 import message from 'antd/es/message';
-import InputMask from 'react-input-mask'; 
+import InputMask from 'react-input-mask';
 
 const isValidCPF = (cpf: string): boolean => {
   if (typeof cpf !== "string") return false;
-  cpf = cpf.replace(/[^\d]/g, ''); 
+  cpf = cpf.replace(/[^\d]/g, '');
   if (cpf.length !== 11) return false;
   let sum = 0;
   let mod;
@@ -36,7 +36,7 @@ const isValidCPF = (cpf: string): boolean => {
 
 const isValidCNPJ = (cnpj: string): boolean => {
   if (typeof cnpj !== "string") return false;
-  cnpj = cnpj.replace(/[^\d]/g, ''); 
+  cnpj = cnpj.replace(/[^\d]/g, '');
   if (cnpj.length !== 14) return false;
   let sum = 0;
   let mod;
@@ -72,11 +72,11 @@ function RegisterClient() {
   const [cpfCnpj, setCpfCnpj] = useState('');
   const [response, setResponse] = useState('');
   const [success, setSuccess] = useState('');
-  const [isCpf, setIsCpf] = useState(true); 
+  const [isCpf, setIsCpf] = useState(true);
 
   const toggleIsCpf = () => {
     setIsCpf(!isCpf);
-    setCpfCnpj(''); 
+    setCpfCnpj('');
   };
 
   const validate = () => {
@@ -103,14 +103,14 @@ function RegisterClient() {
 
   const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    value = value.replace(/\D/g, ''); 
-    const isCpf = value.length <= 11; 
-    const mask = isCpf ? '999.999.999-99' : '99.999.999/9999-99'; 
+    value = value.replace(/\D/g, '');
+    const isCpf = value.length <= 11;
+    const mask = isCpf ? '999.999.999-99' : '99.999.999/9999-99';
     let formattedValue = '';
-    
+
     let i = 0;
     let j = 0;
-  
+
     while (i < value.length && j < mask.length) {
       if (mask[j] === '9') {
         formattedValue += value[i];
@@ -120,7 +120,7 @@ function RegisterClient() {
       }
       j++;
     }
-  
+
     setCpfCnpj(formattedValue);
   };
 
@@ -143,19 +143,22 @@ function RegisterClient() {
   return (
     <NavbarWrapper>
       <Navbargest />
-      <div className="Página">
-        <div className="container">
-          <div className="caixa">
+      <div className="containerGlobal">
+        <div className="containerRegisterClient">
+          <div className="caixaCliente">
             <h1 className="titulo">Cadastro de Cliente</h1>
-            <form className="formulario" id="form" onSubmit={handleSubmit}>
+            <form className="formularioCliente" id="form" onSubmit={handleSubmit}>
+
               <div className="insertText">
                 <label>Nome:</label>
                 <input type="text" placeholder="Nome completo" onChange={(e) => setClientName(e.target.value)} required />
               </div>
+
               <div className="insertText">
                 <label>Segmento do Cliente:</label>
                 <input type="text" placeholder="Ex: Contábil, Marketing" onChange={(e) => setSegment(e.target.value)} required />
               </div>
+
               <div className="insertText">
                 <label>CPF/CNPJ do Cliente:</label>
                 <InputMask
@@ -166,6 +169,7 @@ function RegisterClient() {
                   required
                 />
               </div>
+
               <div className="toggle">
                 <span className='cor'>CNPJ</span>
                 <label className="switch">
@@ -174,9 +178,10 @@ function RegisterClient() {
                 </label>
                 <span className='cor'>CPF</span>
               </div>
+
               {success && <p className="funciona">{success}</p>}
               {response && <p className="erro">{response}</p>}
-              <button type="submit">Cadastrar</button>
+              <button type="submit" className='botaoCadastrar'>Cadastrar</button>
             </form>
           </div>
         </div>

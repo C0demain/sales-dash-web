@@ -4,7 +4,6 @@ import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar";
 
-
 interface Product {
   id: number;
   name: string;

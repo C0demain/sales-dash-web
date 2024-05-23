@@ -20,7 +20,7 @@ export const Login = () => {
     return (
         <Row justify="center" align="middle" className="login-container">
             <Col span={12}>
-                
+
                 <Form
                     name="basic"
                     labelCol={{ span: 24 }}
@@ -36,8 +36,8 @@ export const Login = () => {
                         <Input.Password size="large" placeholder="Digite sua senha" className="input-with-shadow" />
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ span: 24}} className="button-wrapper">
-                        <Button type="primary" htmlType="submit" style={{ width: '100%', backgroundColor: 'black' }}>
+                    <Form.Item wrapperCol={{ span: 24 }} className="button-wrapper">
+                        <Button type="primary" htmlType="submit" style={{ width: '100%', backgroundColor: '#001529' }}>
                             Entrar
                         </Button>
                     </Form.Item>

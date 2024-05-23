@@ -37,11 +37,6 @@
     font-size: 16px;
 }
 
-.button-refresh {
-    margin-bottom: 20px;
-    background-color: black;
-    color: white;
-}
 .filter-group{
     display: flex;
     flex-direction: column;
