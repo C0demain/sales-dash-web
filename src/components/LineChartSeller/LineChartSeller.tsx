@@ -67,15 +67,15 @@ export default function LineChartSeller() {
 
   const setDataStats = async(event: React.ChangeEvent<HTMLInputElement>) => {
     if( data[0][1] === "Valor vendido"){
-      setData([["Mês", "Quantidade vendida"],
-      [`${dataSells[0]?.month}`, dataSells[0]?.totalSales],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalSales],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalSales],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalSales],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalSales],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalSales],
+      setData([["Mês", "Comissão de venda"],
+      [`${dataSells[0]?.month}`, dataSells[0]?.totalCommissionValue],
+      [`${dataSells[1]?.month}`, dataSells[1]?.totalCommissionValue],
+      [`${dataSells[2]?.month}`, dataSells[2]?.totalCommissionValue],
+      [`${dataSells[3]?.month}`, dataSells[3]?.totalCommissionValue],
+      [`${dataSells[4]?.month}`, dataSells[4]?.totalCommissionValue],
+      [`${dataSells[5]?.month}`, dataSells[5]?.totalCommissionValue],
       ])
-    setTitle('Quantidade vendida nos últimos 6 meses')
+    setTitle('Comissão nos últimos 6 meses')
     }else{
       setData([["Mês", "Valor vendido"],
       [`${dataSells[0]?.month}`, dataSells[0]?.totalValue],
