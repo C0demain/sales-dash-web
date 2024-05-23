@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, message } from "antd";
+import { Input} from "antd";
 import { useState } from 'react'
 import './index.css'
 import { isValidCPF } from '.'
@@ -96,14 +96,12 @@ function RegisterUser() {
   return (
     <NavbarWrapper>
       <Navbargest />
-      <div className='Página'>
-
-        <div className='container'>
-
-          <div className="caixa">
+      <div className='containerGlobal'>
+        <div className='containerRegisterUser'>
+          <div className="caixaUsuario">
             <h1 className='titulo'>Cadastro de Usuário</h1>
 
-            <form className="formulario" onSubmit={handleSubmit}>
+            <form className="formularioUsuario" onSubmit={handleSubmit}>
               <div className='insertText'>
                 <label>Nome:</label>
 
@@ -127,7 +125,7 @@ function RegisterUser() {
 
               <div className='insertText'>
                 <label>Função do usuário:</label>
-                <select title='  Escolha sua função' value={funcao} onChange={(e) => setFuncao(e.target.value)}>
+                <select title='  Escolha sua função' value={funcao} onChange={(e) => setFuncao(e.target.value)} className="selectRole">
                   <option value="" disabled hidden>  Selecione uma função</option>
                   <option value="user">  Vendedor</option>
                   <option value="admin">  Gestor</option>
@@ -150,14 +148,14 @@ function RegisterUser() {
 
                 <div className='inputSenha'>
                   <label >Confirme sua senha:</label>
-                  <Input.Password  type="password" placeholder='  Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
+                  <Input.Password type="password" placeholder='  Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
                   {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
                 </div>
 
               </div>
               {sucess && <p className='funciona'>{sucess}</p>}
               {errors.response && <p className='erro'>{errors.response}</p>}
-              <button type='submit'>Cadastrar</button>
+              <button type='submit' className="botaoCadastrar">Cadastrar</button>
             </form>
           </div>
         </div>

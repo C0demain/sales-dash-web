@@ -1,108 +1,101 @@
-
-.erro{
-    color: red;
-}
-.funciona{
-    color: green;
-}
-.containerGlobal{
+.containerGlobal {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.containerRegisterSell{
-    margin-top: 7vh;
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-    width: max-content;
+    background-color: #f5f5f5;
+    padding: 20px;
+    min-height: 100vh;
 }
 
-.containerRegisterSell label, .containerRegisterSell h1, .containerRegisterSell h4, .containerRegisterSell ol, .containerRegisterSell p{
-    color: rgb(255, 255, 255);
-}
-
-.containerRegisterSell select{
-    color: rgb(216, 4, 4);
-}
-
-.containerRegisterSell input{
-    color: black;
-    font-size: 2vh;
-}
-
-body{
-    margin: 0px;
-    font-size: 2vh;
-}
-
-.containerRegisterSell option, .containerRegisterSell select, .containerRegisterSell input, .containerRegisterSell button{
-    font-size: 2vh;
-}
-
-.containerRegisterSell input, .containerRegisterSell select{
-    height: 5vh;
-    border-radius: 1vh;
-    border-color: black;
-}
-#tituloRequisito{
-    margin: 2%;
-}
-
-
-
-.caixaVenda{
-    background-color: #1c1c1c;
-    margin: 2%;
-    height: auto;
-    width: 80vh;
-    padding: 0.5%;
-    border-radius: 3%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.formularioVenda{
-    height: auto;
-    width: 90%;
-    padding: 0.5%;
-    border-radius: 3%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.insertTextVenda{
-    height: auto;
-    width: 75%;
-    padding-top: 0.5%;
-    text-align:start;
-    display: flex;
-    flex-direction: column;
-    margin-top: 0%;
-    margin-bottom: 0%;
-}
-
-.containerRegisterSell button{
-    margin: 2%;
-    border-radius: 1vh;
-    border: none;
-    height: 5vh;
-    width: max-content;
-    font-size: 2vh;
-}
-
-.containerRegisterSell h4{
-    height: min-content;
-    margin: 1%;
-}
-
-.inputValor{
+.containerRegisterSell {
     background-color: white;
-    border-radius: 0.5vh;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
 }
 
-.selectProduct {
-    color: black;
+.caixaVenda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.formularioVenda {
+    width: 100%;
+}
+
+.insertTextVenda {
+    margin-bottom: 20px;
+}
+
+.insertTextVenda label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.selectVendas,
+.selectProduct,
+.inputValor,
+.ant-picker,
+.ant-input-number {
+    width: 100%;
+    height: 5vh;
+    border-radius: 1vh;
+    background-color: white;
+    border: 1px solid #d9d9d9; /* Adicione uma borda */
+}
+
+.inputValor input {
+    border-width: 0; /* Remova a largura da borda */
+    font-weight: normal; /* Remova o negrito */
+}
+
+.inputValor input:focus {
+    border-color: #001529; /* Mude a cor da borda quando o input estiver focado */
+}
+
+.inputValor::placeholder,
+.ant-picker input::placeholder,
+.ant-input-number input::placeholder {
+    color: #aaa;
+}
+
+.botaoCadastrar {
+    background-color: #001529;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.botaoCadastrar:hover {
+    background-color: #001529;
+}
+
+.ant-picker {
+    width: 100%;
+}
+
+.ant-input-number {
+    width: 100%;
 }

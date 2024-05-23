@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import './index.css'
-import { Description, FileName, Title, UploadForm, UploadInput, UploadLabel } from "components/commons";
-import { message } from "antd";
+import { Input, message } from "antd";
 
 const UploadExcelPage: React.FC = () => {
-
   const [fileName, setFileName] = useState<string>("");
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,6 +13,7 @@ const UploadExcelPage: React.FC = () => {
       message.error('Nenhum arquivo selecionado!');
       return;
     }
+    setFileName(file.name);
     message.success("Arquivo carregado: " + file.name);
 
     const reader = new FileReader();
@@ -97,21 +96,20 @@ const UploadExcelPage: React.FC = () => {
   }
 
   return (
-
-        <UploadForm className="formUpload">
-          <Title>Upload de Arquivo Excel</Title>
-          <Description>
-            Selecione um arquivo Excel (.xlsx ou .xls) para fazer upload.
-          </Description>
-          <UploadInput
-            type="file"
-            id="inputExcel"
-            accept=".xlsx, .xls"
-            onChange={handleFileChange}
-          />
-          <UploadLabel htmlFor="inputExcel">Escolher Arquivo</UploadLabel>
-          {fileName && <FileName>{fileName}</FileName>}
-        </UploadForm>
+    <div className="containerRegisterSell">
+      <div className="caixaVenda">
+        <h1 className='titulo'>Upload de Arquivo Excel</h1>
+        <form className="formularioVenda">
+          <div className='insertTextVenda'>
+            <Input type="file" id="inputExcel" accept=".xlsx, .xls" onChange={handleFileChange} />
+            <label htmlFor="inputExcel" className="fileInputLabel">
+              <span> Escolher Arquivo </span>
+            </label>
+          </div>
+          {fileName && <p>Arquivo: {fileName}</p>}
+        </form>
+      </div>
+    </div>
   );
 };
 
