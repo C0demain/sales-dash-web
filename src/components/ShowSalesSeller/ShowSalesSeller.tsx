@@ -3,8 +3,6 @@ import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
-import './ShowSales.css'
-import SelectSeller from "components/SelectSeller/SelectSeller";
 import { formatCurrency, formatDate, formatDateObj } from "util/formatters";
 import moment from 'moment';
 import SelectProduct from "components/SelectProduct/SelectProduct";
@@ -23,7 +21,7 @@ interface Sale {
   value: number;
 }
 
-function ShowSales() {
+function ShowSalesSeller() {
   const [sales, setSells] = useState<Sale[]>([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -42,12 +40,6 @@ function ShowSales() {
       key: 'date',
       render: value => formatDate(value),
       sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    },
-    {
-      title: 'Vendedor',
-      dataIndex: 'seller',
-      key: 'seller',
-      sorter: (a: any, b: any) => a.seller.localeCompare(b.seller)
     },
     {
       title: 'Cliente',
@@ -95,6 +87,13 @@ function ShowSales() {
   }, [userSelect, productSelect, clientSelect, startDate, endDate]);
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user && user.id) {
+        setUserSelect(user.id);
+    }
+}, []);
+
+  useEffect(() => {
     getSells();
   }, [getSells]);
 
@@ -103,7 +102,7 @@ function ShowSales() {
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
-      seller: record.user.cpf,
+      seller: record.user.name,
       client: record.clientname,
       product: record.productName,
       value: record.value,
@@ -118,6 +117,7 @@ function ShowSales() {
       if (!currentSale) {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
+      console.log(values.date)
       const updatedSale = {
         date: `${values.date.format('YYYY-MM-DD')}`,
         seller_cpf: seller,
@@ -153,13 +153,6 @@ function ShowSales() {
       <div className="containerSl">
         <h2>Lista de Vendas</h2>
         <Row gutter={16}>
-          <Col>
-          <SelectSeller
-            controlState={[userSelect, setUserSelect]}
-            dataKey="id"
-            className="select"
-                    />
-          </Col>
           <Col>
           <SelectProduct
             controlState={[productSelect, setProductSelect]}
@@ -218,10 +211,7 @@ function ShowSales() {
               label="Vendedor"
               rules={[{ required: true, message: 'Por favor, insira o vendedor!' }]}
             >
-              <SelectSeller
-                controlState={[seller, setSeller]}
-                dataKey="cpf"
-              />
+              <Input disabled />
             </Form.Item>
             <Form.Item
               name="client"
@@ -250,4 +240,5 @@ function ShowSales() {
     </NavbarWrapper>
   );
 }
-export default ShowSales;
+
+export default ShowSalesSeller;

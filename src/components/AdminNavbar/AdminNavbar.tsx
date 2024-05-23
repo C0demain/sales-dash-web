@@ -103,10 +103,10 @@ const Navbar: React.FC = () => {
     {
       key: '5',
       icon: <FileTextOutlined />,
-      label: 'Exibe Vendas',
+      label: isAdmin() ? 'Exibe vendas' : 'Suas vendas',
       onClick: () => {
         handleSelect('5');
-        navigate('/sell/showsales');
+        navigate(isAdmin() ? '/sell/showsales' : '/sell/showsalesseller')
       },
     },
     {

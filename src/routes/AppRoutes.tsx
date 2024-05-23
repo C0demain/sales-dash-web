@@ -11,6 +11,7 @@ import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
 import ShowSales from "components/ShowSales/ShowSales";
+import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 
 export function AppRoutes() {
   return (
@@ -74,6 +75,12 @@ export function AppRoutes() {
           <Route path='/sell/showsales' element={
             <ProtectedLayout>
               <ShowSales />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/sell/showsalesseller' element={
+            <ProtectedLayout>
+              <ShowSalesSeller />
             </ProtectedLayout>} >
           </Route>
           
