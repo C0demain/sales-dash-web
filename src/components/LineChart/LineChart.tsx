@@ -77,12 +77,12 @@ export default function BasicLineChart() {
     setTitle('Comissão de venda nos últimos 6 meses')
     }else{
       setData([["Mês", "Valor vendido"],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
       [`${dataSells[0]?.month}`, dataSells[0]?.totalValue],
+      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
+      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
+      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
+      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
+      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
       ])
     setTitle('Valor vendido nos últimos 6 meses')
     }
@@ -95,12 +95,12 @@ export default function BasicLineChart() {
   useEffect(()=>{
     if(dataSells.length>0){
       setData([["Mês", "Valor vendido"],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
       [`${dataSells[0]?.month}`, dataSells[0]?.totalValue],
+      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
+      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
+      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
+      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
+      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
       ])
     }
   }, [getSellsPeriod, dataSells])

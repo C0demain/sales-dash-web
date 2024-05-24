@@ -2,7 +2,7 @@ import ListSellsSeller from "components/ListSellSeller/ListSellSeller";
 import './index.css'
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar";
-import TotalSellsSeller from "components/TotalSellsSeller/TotalSellsSeller";
+import UserStats from "components/UserStats/UserStats";
 import { useState } from "react";
 import LineChartSeller from "components/LineChartSeller/LineChartSeller";
 
@@ -17,7 +17,7 @@ function DashboardSeller () {
             <h1 className="tituloDashboard">Dashboard Vendedor</h1>
             <div className="chartsBox">
                 <LineChartSeller/>
-                <TotalSellsSeller 
+                <UserStats 
                         startDateProp={startDate} 
                         endDateProp={endDate} />
             </div>
