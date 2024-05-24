@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react"
-import './ListSells.css'
+import './index.css'
 import { Empty, Table, TableColumnsType } from "antd";
 import { formatCurrency, formatDate } from "util/formatters";
 

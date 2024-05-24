@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Empty, Table, Button } from "antd";
-import './rankingSellers.css'
+import './index.css'
 import { formatCurrency } from "util/formatters";
 
 function RankingSellers() {
