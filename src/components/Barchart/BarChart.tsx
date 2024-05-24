@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 
@@ -7,13 +8,13 @@ export default function BarChart() {
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']; 
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/v1/commissions/getAll')
+    fetch('http://localhost:8000/api/v1/dashboard/date/commission')
       .then(response => response.json())
       .then(data => {
-        const chartData = [['Comissão', 'Valor', { role: 'style' }]];
-        data[selectedMonthIndex]?.commissions.forEach((commission: any, index: number) => {
+        const chartData = [['Tipo', 'Valor', { role: 'style' }]];
+        data[selectedMonthIndex]?.commissionValues.forEach((commission: any, index: number) => {
           const color = getRandomColor(index);
-          chartData.push([commission.name, commission.value, color]);
+          chartData.push([commission.title, commission.totalValue, color]);
         });
         setCommissions(chartData);
       })
@@ -26,16 +27,15 @@ export default function BarChart() {
     setSelectedMonthIndex((prevIndex) => (prevIndex + 1) % months.length);
   };
 
-  // Função para gerar cores aleatórias
   const getRandomColor = (index: number) => {
-    const colors = ['#FF5733', '#33FF57', '#5733FF', '#FF33DD', '#33DDFF']; 
+    const colors = ['#FF5733', '#5733FF', '#FF33DD', '#33DDFF']; 
     return colors[index % colors.length];
   };
 
   return (
     <div style={{margin: '5vh'}}>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5vh' }}>
-        <button onClick={handleNextMonth}>Próximo Mês</button>
+        <Button onClick={handleNextMonth}>Próximo Mês</Button>
       </div>
       <div style={{ display: 'flex', maxWidth: 600 }}>
         <Chart
