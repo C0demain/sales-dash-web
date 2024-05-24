@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
 
 const formatCurrency = (value: number): string => {
-    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    const currencyValue = new Number(value);
+    return currencyValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 };
 
 const formatDate = (value: string): string => {

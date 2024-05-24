@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, DatePicker, Row, Col } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbargest from "components/AdminNavbar/AdminNavbar"; 
 import './index.css'
 import SelectSeller from "components/SelectSeller/SelectSeller";
-import { formatCurrency, formatDate, formatDateObj } from "util/formatters";
+import { formatCurrency } from "util/formatters";
 import moment from 'moment';
 import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
@@ -23,6 +23,20 @@ interface Sale {
   value: number;
 }
 
+const customLocale = {
+  filterTitle: 'Filtrar',
+  filterConfirm: 'OK',
+  filterReset: 'Resetar',
+  filterEmptyText: 'Sem filtros',
+  emptyText: 'Nenhuma venda encontrada',
+  selectAll: 'Selecionar página atual',
+  selectInvert: 'Inverter seleção na página atual',
+  sortTitle: 'Ordenar',
+  triggerDesc: 'Clique para ordenar descendentemente',
+  triggerAsc: 'Clique para ordenar ascendentemente',
+  cancelSort: 'Clique para cancelar ordenação'
+};
+
 function ShowSales() {
   const [sales, setSells] = useState<Sale[]>([]);
   const [visible, setVisible] = useState(false);
@@ -34,13 +48,16 @@ function ShowSales() {
   const [clientSelect, setClientSelect] = useState<any>(null);
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>('3000-5-30');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalSales, setTotalSales] = useState(0);
 
   const columns: TableColumnsType = [
     {
       title: 'Data',
       dataIndex: 'date',
       key: 'date',
-      render: value => formatDate(value),
+      render: value => dayjs(value).format('DD/MM/YYYY'),
       sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       defaultSortOrder: "descend"
     },
@@ -84,16 +101,19 @@ function ShowSales() {
     const clientFilter = clientSelect ? `clientId=${clientSelect}` : "";
     const startDateFilter = startDate ? `startDate=${moment(startDate).format('YYYY-MM-DD')}` : "";
     const endDateFilter = endDate ? `endDate=${moment(endDate).format('YYYY-MM-DD')}` : "";
+    const paginationParams = `page=${currentPage}&pageSize=${pageSize}`;
 
-    let queryParams = [userFilter, productFilter, clientFilter, startDateFilter, endDateFilter];
+    let queryParams = [userFilter, productFilter, clientFilter, startDateFilter, endDateFilter, paginationParams];
     const query = queryParams.filter(e => e !== '').join('&');
     url += query ? `?${query}` : "";
 
     const response = await axios.get(url, {
-        withCredentials: false,
+      withCredentials: false,
     });
+
     setSells(response.data.sells);
-  }, [userSelect, productSelect, clientSelect, startDate, endDate]);
+    setTotalSales(response.data.total); // Assume the API returns total sales count
+  }, [userSelect, productSelect, clientSelect, startDate, endDate, currentPage, pageSize]);
 
   useEffect(() => {
     getSells();
@@ -104,6 +124,7 @@ function ShowSales() {
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
+      date: dayjs(record.date),
       seller: record.user.cpf,
       client: record.clientname,
       product: record.productName,
@@ -143,10 +164,15 @@ function ShowSales() {
     setVisible(false);
   };
 
+  const handleTableChange = (pagination : any) => {
+    setCurrentPage(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
+
   const handleDatePicker = (date: any) => {
     let newDate = date ? date.year() + "-" + (date.month() + 1) + "-" + date.date() : ""
-    return newDate
-}
+    return newDate;
+  };
 
   return (
     <NavbarWrapper>
@@ -155,48 +181,61 @@ function ShowSales() {
         <h2>Lista de Vendas</h2>
         <Row gutter={16}>
           <Col>
-          <SelectSeller
-            controlState={[userSelect, setUserSelect]}
-            dataKey="id"
-            className="select"
-                    />
+            <SelectSeller
+              controlState={[userSelect, setUserSelect]}
+              dataKey="id"
+              className="fixed-height-select"
+            />
           </Col>
           <Col>
-          <SelectProduct
-            controlState={[productSelect, setProductSelect]}
-            dataKey="id"
-            className="select"
-                    />
+            <SelectProduct
+              controlState={[productSelect, setProductSelect]}
+              dataKey="id"
+              className="fixed-height-select"
+            />
           </Col>
           <Col>
-          <SelectClient
-            controlState={[clientSelect, setClientSelect]}
-            dataKey="id"
-            className="select"
-                    />
+            <SelectClient
+              controlState={[clientSelect, setClientSelect]}
+              dataKey="id"
+              className="fixed-height-select"
+            />
           </Col>
           <Col>
-                    <DatePicker
-                        onChange={e => { setStartDate(handleDatePicker(e)) }}
-                        format="DD/MM/YYYY"
-                        placeholder="Data de início"
-                        className="select"
-                    />
+            <DatePicker
+              onChange={e => { setStartDate(handleDatePicker(e)) }}
+              format="DD/MM/YYYY"
+              placeholder="Data de início"
+              className="fixed-height-select"
+            />
           </Col>
           <Col>
-                    <DatePicker
-                        onChange={e => { setEndDate(handleDatePicker(e)) }}
-                        format="DD/MM/YYYY"
-                        placeholder="Data final"
-                        className="select"
-                    />
+            <DatePicker
+              onChange={e => { setEndDate(handleDatePicker(e)) }}
+              format="DD/MM/YYYY"
+              placeholder="Data final"
+              className="fixed-height-select"
+            />
           </Col>
-          <Col>
-            <Button className='button-refresh' onClick={getSells}>Filtrar vendas</Button>
+          <Col style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
+            <Button className='button-filter' onClick={getSells}>Filtrar vendas</Button>
           </Col>
         </Row>
         {sales.length > 0 ? (
-          <Table columns={columns} dataSource={sales} rowKey={'id'} pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}/>
+          <Table 
+            columns={columns} 
+            dataSource={sales} 
+            rowKey={'id'} 
+            pagination={{
+              current: currentPage,
+              pageSize: pageSize,
+              total: totalSales,
+              defaultPageSize: 10,
+              pageSizeOptions: [10, 20, 30]
+            }}
+            onChange={handleTableChange}
+            locale={customLocale}
+          />
         ) : (
           <Empty description={"Nenhuma venda encontrada"} />
         )}
@@ -212,7 +251,7 @@ function ShowSales() {
               label="Data"
               rules={[{ required: true, message: 'Por favor, insira a data da venda!' }]}
             >
-              <DatePicker/>
+              <DatePicker format="DD/MM/YYYY" />
             </Form.Item>
             <Form.Item
               name="seller"
@@ -251,4 +290,5 @@ function ShowSales() {
     </NavbarWrapper>
   );
 }
+
 export default ShowSales;
