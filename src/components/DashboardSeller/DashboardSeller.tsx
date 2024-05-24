@@ -13,8 +13,7 @@ function DashboardSeller () {
         <NavbarWrapper>
         <Navbargest/>
         <div className="containerDash">
-            <div style={{backgroundColor: '#001529', width: '100%', height: '7vh'}}><h1 className="tituloDashboard">Dashboard Vendedor</h1></div>
-            <h1 className="tituloDashboard">Dashboard Vendedor</h1>
+            <div><h1 className="tituloDashboard">Dashboard Vendedor</h1></div>
             <div className="chartsBox">
                 <LineChartSeller/>
                 <UserStats 

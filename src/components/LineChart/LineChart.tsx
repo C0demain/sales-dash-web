@@ -108,7 +108,7 @@ export default function BasicLineChart() {
   return (
     <div  style={{margin: '5vh'}}>
       <div className='titleChart'>
-      <Switch checked={checked} onChange={setDataStats} defaultChecked />
+      <Switch checked={checked} onChange={setDataStats}  />
       <h3>{title}</h3>
       </div>
       <Chart

@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
     {
       key: '1',
       icon: <DashboardOutlined />,
-      label: isAdmin() ? 'Dashboard Admin' : 'Dashboard Vendedor',
+      label: 'Dashboard',
       onClick: () => {
         handleSelect('1');
         navigate(isAdmin() ? '/dashboardAdmin' : '/dashboardSeller');
