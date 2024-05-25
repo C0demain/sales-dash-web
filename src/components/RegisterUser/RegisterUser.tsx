@@ -1,10 +1,11 @@
-import { Button, Col, Form, Input, Row, message } from "antd";
-import { useState } from 'react'
-import './index.css'
-import { isValidCPF } from '.'
-import { sendData } from '.'
-import Navbargest from 'components/AdminNavbar/AdminNavbar'
-import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper'
+import { Input } from "antd";
+import { useState } from 'react';
+import './index.css';
+import { isValidCPF } from '.';
+import { sendData } from '.';
+import Navbargest from 'components/Navbar/Navbar';
+import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
+import InputMask from 'react-input-mask';
 
 function RegisterUser() {
 
@@ -96,74 +97,74 @@ function RegisterUser() {
   return (
     <NavbarWrapper>
       <Navbargest />
-      <div className='Página'>
-
-        <div className='container'>
-
-          <div className="caixa">
+      <div className='containerGlobal'>
+        <div className='containerRegisterUser'>
+          <div className="caixaCliente">
             <h1 className='titulo'>Cadastro de Usuário</h1>
+            <form className="formularioCliente" onSubmit={handleSubmit}>
 
-            <form className="formulario" onSubmit={handleSubmit}>
               <div className='insertText'>
                 <label>Nome:</label>
-
-                <input type="text" placeholder='  Nome completo' onChange={(e) => setUserName(e.target.value)} required />
+                <input type="text" placeholder='Nome completo' onChange={(e) => setUserName(e.target.value)} required />
                 {errors.userName && <p className='erro'>{errors.userName}</p>}
               </div>
 
               <div className='insertText'>
                 <label>CPF do usuário:</label>
-
-                <input type="text" placeholder='  000.000.000-00' onChange={(e) => setCpf(e.target.value)} required />
+                <InputMask
+                  mask="999.999.999-99"
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
+                  placeholder="000.000.000-00"
+                >
+                </InputMask>
                 {errors.cpf && <p className='erro'>{errors.cpf}</p>}
               </div>
 
               <div className='insertText'>
                 <label>Email do usuário:</label>
-
-                <input type="email" placeholder='  Email' onChange={(e) => setEmail(e.target.value)} required />
+                <input type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
                 {errors.email && <p className='erro'>{errors.email}</p>}
               </div>
 
               <div className='insertText'>
                 <label>Função do usuário:</label>
-                <select title='  Escolha sua função' value={funcao} onChange={(e) => setFuncao(e.target.value)}>
-                  <option value="" disabled hidden>  Selecione uma função</option>
-                  <option value="user">  Vendedor</option>
-                  <option value="admin">  Gestor</option>
+                <select title='Escolha sua função' value={funcao} onChange={(e) => setFuncao(e.target.value)} className="selectRole">
+                  <option value="" disabled hidden>Selecione uma função</option>
+                  <option value="user">Vendedor</option>
+                  <option value="admin">Gestor</option>
                 </select>
                 {errors.funcao && <p className='erro'>{errors.funcao}</p>}
               </div>
 
-              <div className='senhas'>
-                <h4>A senha deve conter:</h4>
-                <ol>
-                  <li>8 ou mais caractéres.</li>
-                  <li>Ao menos 1 número.</li>
-                  <li>Ao menos 1 digito especial.</li>
-                </ol>
-                <div className='inputSenha'>
-                  <label >Digite uma senha:</label>
-                  <Input.Password type="password" name='senha' placeholder='  Senha' required onChange={(e) => setSenha(e.target.value)} />
-                  {errors.senha && <p className='erro'>{errors.senha}</p>}
-                </div>
-
-                <div className='inputSenha'>
-                  <label >Confirme sua senha:</label>
-                  <Input.Password  type="password" placeholder='  Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
-                  {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
-                </div>
-
+              <div className='insertText'>
+                <h3>A senha deve conter:</h3>
+                  <label>- 8 ou mais caracteres.</label>
+                  <label>- Ao menos 1 número.</label>
+                  <label>- Ao menos 1 caractere especial.</label>
               </div>
+
+              <div className='inputSenha'>
+                <label>Digite uma senha:</label>
+                <Input.Password type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)} />
+                {errors.senha && <p className='erro'>{errors.senha}</p>}
+              </div>
+
+              <div className='inputSenha'>
+                <label>Confirme sua senha:</label>
+                <Input.Password type="password" placeholder='Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
+                {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
+              </div>
+              
               {sucess && <p className='funciona'>{sucess}</p>}
               {errors.response && <p className='erro'>{errors.response}</p>}
-              <button type='submit'>Cadastrar</button>
+              <button type='submit' className="botaoCadastrar">Cadastrar</button>
             </form>
           </div>
         </div>
       </div>
     </NavbarWrapper>
-  )
+  );
 }
 
 export default RegisterUser;

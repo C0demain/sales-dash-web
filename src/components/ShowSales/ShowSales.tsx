@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, DatePicker, Row, Col } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, DatePicker, Row, Col, TableColumnsType } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import Navbargest from "components/AdminNavbar/AdminNavbar"; 
+import Navbargest from "components/Navbar/Navbar"; 
 import './index.css'
 import SelectSeller from "components/SelectSeller/SelectSeller";
 import { formatCurrency } from "util/formatters";
-import moment from 'moment';
-import SelectProduct from "components/SelectProduct/SelectProduct";
-import SelectClient from "components/SelectClient/SelectClient";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import SelectClient from "components/SelectClient/SelectClient";
+import SelectProduct from "components/SelectProduct/SelectProduct";
 
 dayjs.extend(customParseFormat);
 
@@ -47,7 +46,7 @@ function ShowSales() {
   const [productSelect, setProductSelect] = useState<any>(null);
   const [clientSelect, setClientSelect] = useState<any>(null);
   const [startDate, setStartDate] = useState<any>(null);
-  const [endDate, setEndDate] = useState<any>('3000-5-30');
+  const [endDate, setEndDate] = useState<any>('30/05/3000');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalSales, setTotalSales] = useState(0);
@@ -57,8 +56,8 @@ function ShowSales() {
       title: 'Data',
       dataIndex: 'date',
       key: 'date',
-      render: value => dayjs(value).format('DD/MM/YYYY'),
-      sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      render: (value: string | number | dayjs.Dayjs | Date | null | undefined) => dayjs(value).format('DD/MM/YYYY'), // Formata a data
+      sorter: (a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       defaultSortOrder: "descend"
     },
     {
@@ -83,7 +82,7 @@ function ShowSales() {
       title: 'Valor',
       dataIndex: 'value',
       key: 'value',
-      render: value => formatCurrency(value),
+      render: (value: number) => formatCurrency(value),
       align: "end"
     },
     {
@@ -99,18 +98,15 @@ function ShowSales() {
     const userFilter = userSelect ? `userId=${userSelect}` : "";
     const productFilter = productSelect ? `productId=${productSelect}` : "";
     const clientFilter = clientSelect ? `clientId=${clientSelect}` : "";
-    const startDateFilter = startDate ? `startDate=${moment(startDate).format('YYYY-MM-DD')}` : "";
-    const endDateFilter = endDate ? `endDate=${moment(endDate).format('YYYY-MM-DD')}` : "";
+    const startDateFilter = startDate ? `startDate=${dayjs(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD')}` : "";
+    const endDateFilter = endDate ? `endDate=${dayjs(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD')}` : "";
     const paginationParams = `page=${currentPage}&pageSize=${pageSize}`;
 
     let queryParams = [userFilter, productFilter, clientFilter, startDateFilter, endDateFilter, paginationParams];
     const query = queryParams.filter(e => e !== '').join('&');
     url += query ? `?${query}` : "";
 
-    const response = await axios.get(url, {
-      withCredentials: false,
-    });
-
+    const response = await axios.get(url);
     setSells(response.data.sells);
     setTotalSales(response.data.total); // Assume the API returns total sales count
   }, [userSelect, productSelect, clientSelect, startDate, endDate, currentPage, pageSize]);
@@ -124,7 +120,7 @@ function ShowSales() {
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
-      date: dayjs(record.date),
+      date: dayjs(record.date).format('DD/MM/YYYY'),  // Certifique-se de que a data está no formato `DD/MM/YYYY`
       seller: record.user.cpf,
       client: record.clientname,
       product: record.productName,
@@ -141,7 +137,7 @@ function ShowSales() {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
       const updatedSale = {
-        date: `${values.date.format('YYYY-MM-DD')}`,
+        date: dayjs(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD'),  // Formatar a data corretamente para o backend
         seller_cpf: seller,
         value: values.value
       };
@@ -170,8 +166,7 @@ function ShowSales() {
   };
 
   const handleDatePicker = (date: any) => {
-    let newDate = date ? date.year() + "-" + (date.month() + 1) + "-" + date.date() : ""
-    return newDate;
+    return date ? dayjs(date).format('DD/MM/YYYY') : ""; // Certifique-se de usar o formato correto para o backend
   };
 
   return (

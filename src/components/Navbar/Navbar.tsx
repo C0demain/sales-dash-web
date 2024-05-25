@@ -28,6 +28,7 @@ const Navbar: React.FC = () => {
   const { isAdmin } = useAuth();
   const [collapsed] = useState(true);
   const [selectedKey, setSelectedKey] = useState<string>('0');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   useEffect(() => {
     const storedKey = localStorage.getItem('selectedKey');
@@ -138,7 +139,7 @@ const Navbar: React.FC = () => {
       >
         <div style={{ padding: '16px', color: 'white', textAlign: 'center', background: '#001529' }}>
           <UserOutlined />
-          {collapsed && <span> Olá {isAdmin() ? "Gestor" : "Vendedor"}</span>}
+          {collapsed && <span> Olá, {user.name}</span>}
         </div>
         <Menu theme="dark" selectedKeys={[selectedKey]} mode="inline" items={items} onSelect={({ key }) => handleSelect(key)}>
         </Menu>

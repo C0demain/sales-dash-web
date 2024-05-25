@@ -1,6 +1,6 @@
 import ListSells from "components/ListSell/ListSells";
 import './index.css'
-import Navbargest from "components/AdminNavbar/AdminNavbar";
+import Navbargest from "components/Navbar/Navbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import RankingSellers from "components/RankingSellers/rankingSellers";
 import BasicLineChart from "components/LineChart/LineChart";
@@ -11,7 +11,7 @@ function DashboardAdmin() {
         <NavbarWrapper>
             <Navbargest />
             <div className="containerDash">
-                <div ><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
+                <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
                 <div className="chartsBox">
                     <div>
                         <BasicLineChart />

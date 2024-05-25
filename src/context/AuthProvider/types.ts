@@ -4,6 +4,7 @@ export interface IUser {
     email?: string;
     token?: string;
     role?: string;
+    name?: string;
 }
 
 export interface IContext extends IUser {

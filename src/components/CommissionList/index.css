@@ -1,7 +1,7 @@
 .container {
-    max-width: 1200px;
+    max-width: 700px;
     margin: auto;
-    padding: 20px;
+    padding: 10px;
 }
 
 .commissionTitle {
@@ -16,7 +16,7 @@
 .commissions {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
+    grid-gap: 10px;
 }
 
 .commissionCard {

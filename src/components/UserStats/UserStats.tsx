@@ -3,74 +3,72 @@ import { Statistic } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider/useAuth";
 import { formatCurrency, formatDateToBack } from "util/formatters";
-import './index.css'
+import './index.css';
 
 const UserStats = ({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) => {
-    const [userStats, setUserStats] = useState <Record<string, {totalSales: number}>[]>([])
-    const [totalSells, setTotalSells] = useState <any>()
-    const [totalComission, setTotalComission] = useState<any>()
-    const [startDate, setStartDate] = useState<any>()
-    const [endDate, setEndDate] = useState<any>()
-    const today = new Date
-    const sellerId = useAuth().id
+    const [userStats, setUserStats] = useState<Record<string, { totalSales: number }>[]>([]);
+    const [totalSells, setTotalSells] = useState<number | undefined>(undefined);
+    const [totalComission, setTotalComission] = useState<number | undefined>(undefined);
+    const [startDate, setStartDate] = useState<string>('');
+    const [endDate, setEndDate] = useState<string>('');
+    const today = new Date();
+    const sellerId = useAuth().id;
 
-    const setDates = useCallback(async()=>{
+    const setDates = useCallback(() => {
         const year = today.getFullYear();
         const month = today.getMonth();
-    
-        // Calcular o mês do 5º mês passado
+
         const targetMonth = month - 5;
-    
-        // Verificar se precisa ajustar o ano
         let targetYear = year;
         if (targetMonth < 0) {
             targetYear -= 1;
         }
-    
-        // Obter o mês ajustado dentro do intervalo [0, 11]
+
         const adjustedMonth = (targetMonth + 12) % 12;
-    
-        // Retornar o primeiro dia do mês desejado
-        let startDate = new Date(targetYear, adjustedMonth, 1);
-    
-        setStartDate(formatDateToBack (startDate))
-        setEndDate(formatDateToBack (today))
-        getUserStats()
-      },[today])
+        const startDate = new Date(targetYear, adjustedMonth, 1);
 
-    const getUserStats = useCallback(async() => {
-        console.log(startDate)
-        console.log(endDate)
-        let url = `http://localhost:8000/api/v1/dashboard/user/`
-        const userFilter = sellerId !== undefined ? 'id=' + sellerId : ""
-        const startDateFilter = startDate ? 'startDate=' + startDate: ""
-        const endDateFilter = endDate ? 'endDate=' + endDate: ""
+        setStartDate(formatDateToBack(startDate));
+        setEndDate(formatDateToBack(today));
+    }, [today]);
 
-        let queryParams = [userFilter, startDateFilter, endDateFilter]
-        const query = queryParams.filter(e => e !== '').join('&')
-        url += query !== "&" ? "?" + query : ""
-    
-        const response = await axios.get(url, {
-          withCredentials: false,
-        },);
-        setTotalSells(response.data.userSales.totalValue)
-        setTotalComission(response.data.userSales.totalCommissions)
-    }, [startDate, endDate])
+    const getUserStats = useCallback(async () => {
+        const url = `http://localhost:8000/api/v1/dashboard/user/`;
+        const userFilter = sellerId ? `id=${sellerId}` : '';
+        const startDateFilter = startDate ? `startDate=${startDate}` : '';
+        const endDateFilter = endDate ? `endDate=${endDate}` : '';
 
-    useEffect(()=>{
-        setDates()
-    }, [setDates])
+        const queryParams = [userFilter, startDateFilter, endDateFilter].filter(Boolean);
+        const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+
+        try {
+            const response = await axios.get(`${url}${queryString}`, { withCredentials: false });
+            setTotalSells(response.data.userSales.totalValue);
+            setTotalComission(response.data.userSales.totalCommissions);
+        } catch (error) {
+            console.error('Failed to fetch user stats:', error);
+        }
+    }, [sellerId, startDate, endDate]);
+
+    useEffect(() => {
+        setDates();
+    }, [setDates]);
+
+    useEffect(() => {
+        if (startDate && endDate) {
+            getUserStats();
+        }
+    }, [startDate, endDate, getUserStats]);
 
     return (
         <div className="containerStats">
             <div className="boxStats">
-                <Statistic title='Total de vendas' value={totalSells} formatter={ (value) => formatCurrency(parseFloat(value.toString())) }/>
+                <Statistic title='Total de vendas' value={totalSells} formatter={(value) => formatCurrency(parseFloat(value.toString()))} />
             </div>
             <div className="boxStats">
-            <Statistic title='Total de Comissões' value={totalComission} formatter={ (value) => formatCurrency(parseFloat(value.toString())) }/>
+                <Statistic title='Total de Comissões' value={totalComission} formatter={(value) => formatCurrency(parseFloat(value.toString()))} />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default UserStats
+export default UserStats;

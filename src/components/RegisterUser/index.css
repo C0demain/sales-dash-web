@@ -25,11 +25,11 @@
 }
 
 .Página select{
-    color: #001529;
+    color: #000000;
 }
 
 .Página input{
-    color: #001529;
+    color: #000000;
 }
 
 body{
@@ -45,7 +45,7 @@ body{
     height: 5vh;
     border-radius: 1vh;
     background-color: white;
-    border-color: #000000;
+    border-color: black;
     color: #000000
 }
 
@@ -71,8 +71,8 @@ body{
     font-size: vh;
 }
 .caixa{
-    box-shadow: #001529;
-    background-color:#001529;
+    box-shadow: black;
+    background-color:#1c1c1c;
     margin: 2%;
     height: auto;
     width: 80vh;
@@ -81,44 +81,102 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px;
+    min-height: 100vh;
 }
-.formulario{
-    height: auto;
+
+.containerRegisterUser {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    padding: 20px;
     width: 90%;
-    padding: 0.5%;
-    border-radius: 3%;
+    max-width: 600px;
+}
+
+.caixaUsuario {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.insertText{
-    height: auto;
-    width: 75%;
-    padding-top: 0.5%;
-    text-align:start;
-    display: flex;
-    flex-direction: column;
-    margin-top: 0%;
-    margin-bottom: 0%;
-    font-size: 2vh;
-}
-
-.inputSenha{
+.formularioUsuario {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    font-size: 2vh;
-}
-.Página .container button{
-    margin: 2%;
-    border-radius: 1vh;
-    border: none;
-    height: 5vh;
-    width: max-content;
 }
 
-.Página h4{
-    height: min-content;
-    margin: 1%;
+.insertText,
+.inputSenha {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.insertText label,
+.inputSenha label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.insertText input,
+.selectRole,
+.inputSenha .ant-input {
+    border-radius: 1vh;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.selectRole {
+    height: auto;
+    padding-left: 10px;
+}
+
+.erro {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.botaoCadastrar {
+    background-color: #001529;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.botaoCadastrar:hover {
+    background-color: #001529;
+}
+
+.ant-picker,
+.ant-input-number {
+    width: 100%;
+}
+
+::placeholder {
+    color: #a9a9a9;
+    opacity: 1;
+    font-size: 16px;
+}
+
+.inputSenha input::placeholder,
+.insertText input::placeholder {
+    color: #a9a9a9;
+    opacity: 1;
 }
