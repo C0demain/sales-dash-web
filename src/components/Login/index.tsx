@@ -37,7 +37,7 @@ export const Login = () => {
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ span: 24}} className="button-wrapper">
-                        <Button type="primary" htmlType="submit" style={{ width: '100%', backgroundColor: 'black' }}>
+                        <Button type="primary" htmlType="submit" style={{ width: '100%', backgroundColor: '#001529' }}>
                             Entrar
                         </Button>
                     </Form.Item>

@@ -4,6 +4,20 @@ import './index.css'
 import { Empty, Table, TableColumnsType } from "antd";
 import { formatCurrency, formatDate } from "util/formatters";
 
+const customLocale = {
+    filterTitle: 'Filtrar',
+    filterConfirm: 'OK',
+    filterReset: 'Resetar',
+    filterEmptyText: 'Sem filtros',
+    emptyText: 'Nenhuma venda encontrada',
+    selectAll: 'Selecionar página atual',
+    selectInvert: 'Inverter seleção na página atual',
+    sortTitle: 'Ordenar',
+    triggerDesc: 'Clique para ordenar descendentemente',
+    triggerAsc: 'Clique para ordenar ascendentemente',
+    cancelSort: 'Clique para cancelar ordenação'
+};
+
 const ListSells = () => {
     const [sells, setSells] = useState<any[]>([])
 
@@ -60,7 +74,14 @@ const ListSells = () => {
         <div className="listSells">
             <h2>Últimas vendas</h2>
             {sells.length > 0 ?
-                <Table className="listSellsTable" columns={columns} dataSource={sells} rowKey="id" pagination={{defaultPageSize: 5}} />
+                <Table 
+                    className="listSellsTable" 
+                    columns={columns} 
+                    dataSource={sells} 
+                    rowKey="id" 
+                    pagination={{defaultPageSize: 5}} 
+                    locale={customLocale}
+                    />
                 : <Empty description={"Nenhuma venda encontrada"} />}
         </div>
     )

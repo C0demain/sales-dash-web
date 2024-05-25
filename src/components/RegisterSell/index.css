@@ -28,7 +28,7 @@
 }
 
 .containerRegisterSell input{
-    color: black;
+    color: #001529;
     font-size: 2vh;
 }
 
@@ -44,7 +44,7 @@ body{
 .containerRegisterSell input, .containerRegisterSell select{
     height: 5vh;
     border-radius: 1vh;
-    border-color: black;
+    border-color: #001529;
 }
 #tituloRequisito{
     margin: 2%;
@@ -53,7 +53,7 @@ body{
 
 
 .caixaVenda{
-    background-color: #1c1c1c;
+    background-color: #001529;
     margin: 2%;
     height: auto;
     width: 80vh;
@@ -104,5 +104,5 @@ body{
 }
 
 .selectProduct {
-    color: black;
+    color: #001529;
 }

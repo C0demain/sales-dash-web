@@ -16,7 +16,7 @@ export const UploadInput = styled.input`
 `;
 
 export const UploadLabel = styled.label`
-  background-color: #444;
+  background-color: #445;
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;

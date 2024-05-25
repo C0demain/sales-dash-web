@@ -21,6 +21,20 @@ interface Sale {
   value: number;
 }
 
+const customLocale = {
+  filterTitle: 'Filtrar',
+  filterConfirm: 'OK',
+  filterReset: 'Resetar',
+  filterEmptyText: 'Sem filtros',
+  emptyText: 'Nenhuma venda encontrada',
+  selectAll: 'Selecionar página atual',
+  selectInvert: 'Inverter seleção na página atual',
+  sortTitle: 'Ordenar',
+  triggerDesc: 'Clique para ordenar descendentemente',
+  triggerAsc: 'Clique para ordenar ascendentemente',
+  cancelSort: 'Clique para cancelar ordenação'
+};
+
 function ShowSalesSeller() {
   const [sales, setSells] = useState<Sale[]>([]);
   const [visible, setVisible] = useState(false);
@@ -158,14 +172,14 @@ function ShowSalesSeller() {
           <SelectProduct
             controlState={[productSelect, setProductSelect]}
             dataKey="id"
-            className="select"
+            className="fixed-height-select"
                     />
           </Col>
           <Col>
           <SelectClient
             controlState={[clientSelect, setClientSelect]}
             dataKey="id"
-            className="select"
+            className="fixed-height-select"
                     />
           </Col>
           <Col>
@@ -173,7 +187,7 @@ function ShowSalesSeller() {
                         onChange={e => { setStartDate(handleDatePicker(e)) }}
                         format="DD/MM/YYYY"
                         placeholder="Data de início"
-                        className="select"
+                        className="fixed-height-select"
                     />
           </Col>
           <Col>
@@ -181,15 +195,21 @@ function ShowSalesSeller() {
                         onChange={e => { setEndDate(handleDatePicker(e)) }}
                         format="DD/MM/YYYY"
                         placeholder="Data final"
-                        className="select"
+                        className="fixed-height-select"
                     />
           </Col>
-          <Col>
-            <Button className='button-refresh' onClick={getSells}>Filtrar vendas</Button>
+          <Col style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
+            <Button className='button-filter' onClick={getSells}>Filtrar vendas</Button>
           </Col>
         </Row>
         {sales.length > 0 ? (
-          <Table columns={columns} dataSource={sales} rowKey={'id'} pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}/>
+          <Table 
+            columns={columns} 
+            dataSource={sales} 
+            rowKey={'id'} 
+            pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}
+            locale={customLocale}
+            />
         ) : (
           <Empty description={"Nenhuma venda encontrada"} />
         )}

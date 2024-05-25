@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import './index.css'
-import { Description, FileName, Title, UploadForm, UploadInput, UploadLabel } from "components/commons";
+import { Description, FileName, Title, UploadForm, UploadInput, UploadLabel } from "components/UploadPage/commons";
 import { message } from "antd";
 
 const UploadExcelPage: React.FC = () => {
@@ -110,7 +110,7 @@ const UploadExcelPage: React.FC = () => {
             onChange={handleFileChange}
           />
           <UploadLabel htmlFor="inputExcel">Escolher Arquivo</UploadLabel>
-          {fileName && <FileName>{fileName}</FileName>}
+          {fileName && <p> Arquivo: {fileName}</p>}
         </UploadForm>
   );
 };

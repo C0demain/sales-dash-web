@@ -12,6 +12,20 @@ interface Product {
   value: number;
 }
 
+const customLocale = {
+  filterTitle: 'Filtrar',
+  filterConfirm: 'OK',
+  filterReset: 'Resetar',
+  filterEmptyText: 'Sem filtros',
+  emptyText: 'Nenhuma venda encontrada',
+  selectAll: 'Selecionar página atual',
+  selectInvert: 'Inverter seleção na página atual',
+  sortTitle: 'Ordenar',
+  triggerDesc: 'Clique para ordenar descendentemente',
+  triggerAsc: 'Clique para ordenar ascendentemente',
+  cancelSort: 'Clique para cancelar ordenação'
+};
+
 function ShowProduct() {
   const [products, setProducts] = useState<Product[]>([]);
   const [open, setOpen] = useState(false);
@@ -94,7 +108,13 @@ function ShowProduct() {
         <h2>Lista de Produtos</h2>
         <Button className="button-refresh" onClick={getProducts}>Recarregar produtos</Button>
         {products.length > 0 ? (
-          <Table columns={columns} dataSource={products} rowKey={'id'} pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}/>
+          <Table 
+            columns={columns} 
+            dataSource={products} 
+            rowKey={'id'} 
+            pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}
+            locale={customLocale}
+            />
         ) : (
           <Empty description={"Nenhum produto encontrado"} />
         )}

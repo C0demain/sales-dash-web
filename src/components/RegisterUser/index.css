@@ -25,11 +25,11 @@
 }
 
 .Página select{
-    color: #000000;
+    color: #001529;
 }
 
 .Página input{
-    color: #000000;
+    color: #001529;
 }
 
 body{
@@ -45,7 +45,7 @@ body{
     height: 5vh;
     border-radius: 1vh;
     background-color: white;
-    border-color: black;
+    border-color: #000000;
     color: #000000
 }
 
@@ -71,8 +71,8 @@ body{
     font-size: vh;
 }
 .caixa{
-    box-shadow: black;
-    background-color:#1c1c1c;
+    box-shadow: #001529;
+    background-color:#001529;
     margin: 2%;
     height: auto;
     width: 80vh;

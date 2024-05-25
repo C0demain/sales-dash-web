@@ -9,6 +9,21 @@ interface ListSellsSellerProps {
     onEndDateChange: (date: string) => void;
 }
 
+const customLocale = {
+    filterTitle: 'Filtrar',
+    filterConfirm: 'OK',
+    filterReset: 'Resetar',
+    filterEmptyText: 'Sem filtros',
+    emptyText: 'Nenhuma venda encontrada',
+    selectAll: 'Selecionar página atual',
+    selectInvert: 'Inverter seleção na página atual',
+    sortTitle: 'Ordenar',
+    triggerDesc: 'Clique para ordenar descendentemente',
+    triggerAsc: 'Clique para ordenar ascendentemente',
+    cancelSort: 'Clique para cancelar ordenação'
+};
+  
+
 const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSellerProps) => {
     const [sells, setSells] = useState<any[]>([]);
     const [userSelect, setUserSelect] = useState<any>(null);
@@ -74,7 +89,14 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
         <div className="ListSellsSeller">
             <h2>Últimas vendas</h2>
             {sells.length > 0 ?
-                <Table className="listSellsTable" columns={columns} dataSource={sells} rowKey={'id'} pagination={{defaultPageSize: 5}} />
+                <Table 
+                    className="listSellsTable" 
+                    columns={columns} 
+                    dataSource={sells} 
+                    rowKey={'id'} 
+                    pagination={{defaultPageSize: 5}} 
+                    locale={customLocale}
+                    />
                 : <Empty description={"Nenhuma venda encontrada"} />}
         </div>
     );

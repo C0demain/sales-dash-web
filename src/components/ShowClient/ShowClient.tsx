@@ -12,6 +12,21 @@ interface Client {
   cpf: string;
 }
 
+const customLocale = {
+  filterTitle: 'Filtrar',
+  filterConfirm: 'OK',
+  filterReset: 'Resetar',
+  filterEmptyText: 'Sem filtros',
+  emptyText: 'Nenhuma venda encontrada',
+  selectAll: 'Selecionar página atual',
+  selectInvert: 'Inverter seleção na página atual',
+  sortTitle: 'Ordenar',
+  triggerDesc: 'Clique para ordenar descendentemente',
+  triggerAsc: 'Clique para ordenar ascendentemente',
+  cancelSort: 'Clique para cancelar ordenação'
+};
+
+
 function ShowClient() {
   const [clients, setClients] = useState<Client[]>([]);
   const [open, setOpen] = useState(false); 
@@ -209,7 +224,13 @@ return (
           <h2>Lista de Clientes</h2>
           <Button className="button-refresh" onClick={getClients}>Recarregar clientes</Button>
           {clients.length > 0 ? (
-              <Table columns={columns} dataSource={clients} rowKey={'id'} pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}/>
+              <Table 
+                  columns={columns} 
+                  dataSource={clients} 
+                  rowKey={'id'} 
+                  pagination={{defaultPageSize: 10, pageSizeOptions: [10,20,30]}}
+                  locale={customLocale}
+                  />
           ) : (
               <Empty description={"Nenhum cliente encontrado"} />
           )}
