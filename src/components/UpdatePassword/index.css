@@ -1,0 +1,15 @@
+.inputField {
+    width: 100%;
+    height: 50px; 
+    font-size: 20px;
+}
+.containerUpdatePassword  {
+    max-width: 400px;
+    margin: 0 auto;
+    color: #001529;
+}
+
+.containerUpdatePassword h2 {
+    margin-bottom: 50px;
+}
+

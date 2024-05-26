@@ -9,6 +9,7 @@ import {
   FileTextOutlined,
   DollarOutlined,
   LogoutOutlined,
+  KeyOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +30,9 @@ const Navbar: React.FC = () => {
   const [collapsed] = useState(true);
   const [selectedKey, setSelectedKey] = useState<string>('0');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const role = isAdmin() ? 'Gestor' : 'Vendedor';
+
+  const firstName = user.name ? user.name.split(' ')[0] : '';
 
   useEffect(() => {
     const storedKey = localStorage.getItem('selectedKey');
@@ -71,15 +75,24 @@ const Navbar: React.FC = () => {
       label: 'Cadastro de Usuários',
       onClick: () => {
         handleSelect('2-2');
-        navigate('/sellers/register');
+        navigate('/users/register');
+      },
+    },
+    isAdmin() && {
+      key: '2-3',
+      icon: <KeyOutlined />,
+      label: 'Atualização de Senha',
+      onClick: () => {
+        handleSelect('2-3');
+        navigate('/users/update');
       },
     },
     {
-      key: '2-3',
+      key: '2-4',
       icon: <UserAddOutlined />,
       label: 'Cadastro de Clientes',
       onClick: () => {
-        handleSelect('2-3');
+        handleSelect('2-4');
         navigate('/client/register');
       },
     },
@@ -139,7 +152,8 @@ const Navbar: React.FC = () => {
       >
         <div style={{ padding: '16px', color: 'white', textAlign: 'center', background: '#001529' }}>
           <UserOutlined />
-          {collapsed && <span> Olá, {user.name}</span>}
+          {collapsed && <span> Olá, {firstName} </span>}
+          {collapsed && <div style={{ fontSize: '12px', color: '#ddd' }}> {role} </div>}
         </div>
         <Menu theme="dark" selectedKeys={[selectedKey]} mode="inline" items={items} onSelect={({ key }) => handleSelect(key)}>
         </Menu>

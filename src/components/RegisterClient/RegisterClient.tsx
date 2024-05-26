@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { sendData } from './index';
 import './index.css';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
-import Navbargest from 'components/Navbar/Navbar';
+import Navbar from 'components/Navbar/Navbar';
 import message from 'antd/es/message';
 import InputMask from 'react-input-mask';
 
@@ -142,7 +142,7 @@ function RegisterClient() {
   };
   return (
     <NavbarWrapper>
-      <Navbargest />
+      <Navbar />
       <div className="containerGlobal">
         <div className="containerRegisterClient">
           <div className="caixaCliente">

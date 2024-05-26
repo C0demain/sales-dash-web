@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, DatePicker, Row, Col, TableColumnsType } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import Navbargest from "components/Navbar/Navbar"; 
+import Navbar from "components/Navbar/Navbar"; 
 import './index.css'
 import SelectSeller from "components/SelectSeller/SelectSeller";
 import { formatCurrency } from "util/formatters";
@@ -171,7 +171,7 @@ function ShowSales() {
 
   return (
     <NavbarWrapper>
-      <Navbargest />
+      <Navbar />
       <div className="containerSl">
         <h2>Lista de Vendas</h2>
         <Row gutter={16}>

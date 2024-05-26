@@ -1,15 +1,15 @@
 import ListSells from "components/ListSell/ListSells";
 import './index.css'
-import Navbargest from "components/Navbar/Navbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import RankingSellers from "components/RankingSellers/rankingSellers";
 import BasicLineChart from "components/LineChart/LineChart";
 import BarChart from "components/Barchart/BarChart";
+import Navbar from "components/Navbar/Navbar";
 
 function DashboardAdmin() {
     return (
         <NavbarWrapper>
-            <Navbargest />
+            <Navbar />
             <div className="containerDash">
                 <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
                 <div className="chartsBox">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import Navbargest from "components/Navbar/Navbar";
+import Navbar from "components/Navbar/Navbar";
 import './index.css'
 
 interface Client {
@@ -219,7 +219,7 @@ const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 return (
   <NavbarWrapper>
-      <Navbargest />
+      <Navbar />
       <div className="containerCl">
           <h2>Lista de Clientes</h2>
           <Button className="button-refresh" onClick={getClients}>Recarregar clientes</Button>

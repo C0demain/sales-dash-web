@@ -6,7 +6,7 @@ import SelectProduct from 'components/SelectProduct/SelectProduct';
 import SelectSeller from 'components/SelectSeller/SelectSeller';
 import UploadExcelPage from 'components/UploadPage/UploadPage';
 import { sendData } from '.';
-import Navbargest from "components/Navbar/Navbar";
+import Navbar from "components/Navbar/Navbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import { DatePicker, message } from 'antd';
 import dayjs from 'dayjs';
@@ -77,7 +77,7 @@ export default function RegisterSell() {
 
   return (
     <NavbarWrapper>
-      <Navbargest />
+      <Navbar />
       <div className='containerGlobal'>
         <UploadExcelPage />
         <div className='containerRegisterSell'>

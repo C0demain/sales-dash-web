@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import Navbargest from "components/Navbar/Navbar";
+import Navbar from "components/Navbar/Navbar";
 
 interface Product {
   id: number;
@@ -102,7 +102,7 @@ function ShowProduct() {
 
   return (
     <NavbarWrapper>
-      <Navbargest/>
+      <Navbar/>
       <div className="containerCl">
         <h2>Lista de Produtos</h2>
         <Button className="button-refresh" onClick={getProducts}>Recarregar produtos</Button>

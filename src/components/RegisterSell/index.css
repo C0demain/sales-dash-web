@@ -62,16 +62,16 @@
     height: 5vh;
     border-radius: 1vh;
     background-color: white;
-    border: 1px solid #d9d9d9; /* Adicione uma borda */
+    border: 1px solid #d9d9d9; 
 }
 
 .inputValor input {
-    border-width: 0; /* Remova a largura da borda */
-    font-weight: normal; /* Remova o negrito */
+    border-width: 0;
+    font-weight: normal; 
 }
 
 .inputValor input:focus {
-    border-color: #001529; /* Mude a cor da borda quando o input estiver focado */
+    border-color: #001529; 
 }
 
 .inputValor::placeholder,

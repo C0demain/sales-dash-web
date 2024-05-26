@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
 import ShowSales from "components/ShowSales/ShowSales";
 import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
+import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 
 export function AppRoutes() {
   return (
@@ -36,9 +37,9 @@ export function AppRoutes() {
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/sellers/register' element={
+          <Route path='/users/register' element={
             <ProtectedLayout adminOnly>
-              <RegisterUser />
+              <RegisterUser/>
             </ProtectedLayout>} >
           </Route>
 
@@ -82,6 +83,12 @@ export function AppRoutes() {
             <ProtectedLayout>
               <ShowSalesSeller />
             </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/users/update' element={
+            <ProtectedLayout>
+              <UpdatePassword/>
+            </ProtectedLayout> }>
           </Route>
           
         </Routes>

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export async function sendData(userName: String, email: string, cpf: string, funcao: string, senha: string) {
+export async function sendDataSeller(userName: String, email: string, cpf: string, funcao: string, senha: string) {
   
-  const url = 'http://localhost:8000/api/v1/auth/register';
+  const urlSeller = 'http://localhost:8000/api/v1/auth/register';
 
   const userData = {
     'name':userName,
@@ -12,7 +12,21 @@ export async function sendData(userName: String, email: string, cpf: string, fun
     'role': funcao
   };
 
-  const response = await axios.post(url, userData)
+  const response = await axios.post(urlSeller, userData)
+  if(response.status === 201) console.log("Dados enviados com sucesso")
+}
+
+export async function sendDataAdmin(name: String, email: string, cpf: string) {
+  
+  const urlAdmin = 'http://localhost:8000/api/v1/auth/registerAdmin';
+
+  const userData = {
+    'name': name,
+    'email': email,
+    'cpf': cpf
+  };
+
+  const response = await axios.post(urlAdmin, userData)
   if(response.status === 201) console.log("Dados enviados com sucesso")
 }
 
