@@ -5,6 +5,7 @@ const formatCurrency = (value: number): string => {
 };
 
 const formatDate = (value: string): string => {
+    if(!value) return ""
     return new Date(value+'T00:00').toLocaleDateString('pt-BR')
 }
 

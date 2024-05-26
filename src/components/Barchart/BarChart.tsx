@@ -1,27 +1,42 @@
-import { Button } from 'antd';
+import { InputNumber, Select } from 'antd';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 
 export default function BarChart() {
   const [commissions, setCommissions] = useState<any>([]);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(0);
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']; 
 
+  const getStats = async () => {
+    try{
+      const url = 'http://localhost:8000/api/v1/dashboard/date/commission'
+      const startDate = `${selectedYear}-01-01`
+      const endDate = `${selectedYear}-12-31`
+      const response = await axios.get(url, {params: {startDate, endDate} })
+      const chartData: any[] = [];
+      chartData.push(['Tipo', 'Valor', { role: 'style' }])
+      const currentMonth = response.data.stats.find((e: any) => e.month == months[selectedMonthIndex])
+      if(currentMonth){
+        currentMonth.commissionValues.forEach((value: any) => {
+          chartData.push([value.title, value.totalValue, getRandomColor(selectedMonthIndex)])
+        })
+      }else{
+        chartData.push(["Cliente novo/Produto novo", 0, getRandomColor(selectedMonthIndex)])
+        chartData.push(["Cliente novo/Produto velho", 0, getRandomColor(selectedMonthIndex)])
+        chartData.push(["Cliente velho/Produto novo", 0, getRandomColor(selectedMonthIndex)])
+        chartData.push(["Cliente velho/Produto velho", 0, getRandomColor(selectedMonthIndex)])
+      }
+      setCommissions(chartData);
+    }catch(error){
+      console.error('Erro ao buscar os dados das comissões:', error);
+    }
+  }
+
   useEffect(() => {
-    fetch('http://localhost:8000/api/v1/dashboard/date/commission')
-      .then(response => response.json())
-      .then(data => {
-        const chartData = [['Tipo', 'Valor', { role: 'style' }]];
-        data[selectedMonthIndex]?.commissionValues.forEach((commission: any, index: number) => {
-          const color = getRandomColor(index);
-          chartData.push([commission.title, commission.totalValue, color]);
-        });
-        setCommissions(chartData);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar os dados das comissões:', error);
-      });
-  }, [selectedMonthIndex]);
+    getStats()
+  }, [selectedMonthIndex, selectedYear]);
 
   const handleNextMonth = () => {
     setSelectedMonthIndex((prevIndex) => (prevIndex + 1) % months.length);
@@ -34,8 +49,22 @@ export default function BarChart() {
 
   return (
     <div style={{margin: '5vh'}}>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '5vh' }}>
-        <Button onClick={handleNextMonth}>Próximo Mês</Button>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '5vh', minWidth: '100%' }}>
+        
+        <Select
+        style={ {minWidth: '30%'} }
+        placeholder="Escolha um mês"
+        defaultValue={selectedMonthIndex}
+        onChange={(value: number) => {setSelectedMonthIndex(value)}}
+        options={months.map((month: string, index: number) => {return {label: month, value: index} })}
+        />
+        <InputNumber
+        min={1970}
+        max={new Date().getFullYear()}
+        defaultValue={selectedYear}
+        onChange={(value: number | null) => {setSelectedYear(value || new Date().getFullYear())}}
+        style={ {height: 'min-content', width: 'fit-content'} }
+        />
       </div>
       <div style={{ display: 'flex', maxWidth: 600 }}>
         <Chart
