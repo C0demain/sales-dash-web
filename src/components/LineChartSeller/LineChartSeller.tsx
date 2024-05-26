@@ -13,6 +13,7 @@ export default function LineChartSeller() {
   const [title, setTitle] = useState<any>('Valor vendido nos últimos 6 meses')
   const [user, setUser] = useState<any>()
   const today = new Date()
+  const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
   const [options, setOptions] = useState<any>({
   colors: ["#8e0152", "#276419"],
@@ -66,24 +67,30 @@ export default function LineChartSeller() {
   }, [startDate, endDate, user]) 
 
   const setDataStats = async(event: React.ChangeEvent<HTMLInputElement>) => {
+    
+    // Completa com os meses restantes
+    const cleanDataSells = Array.from(Array(12).keys(), month => {
+      return dataSells.find(sell => sell.month === meses[month]) || {month: meses[month], totalCommissionValue: 0, totalValue: 0}
+    })
+
     if( data[0][1] === "Valor vendido"){
       setData([["Mês", "Comissão de venda"],
-      [`${dataSells[0]?.month}`, dataSells[0]?.totalCommissionValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalCommissionValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalCommissionValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalCommissionValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalCommissionValue],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalCommissionValue],
+      [`${cleanDataSells[0]?.month}`, cleanDataSells[0]?.totalCommissionValue],
+      [`${cleanDataSells[1]?.month}`, cleanDataSells[1]?.totalCommissionValue],
+      [`${cleanDataSells[2]?.month}`, cleanDataSells[2]?.totalCommissionValue],
+      [`${cleanDataSells[3]?.month}`, cleanDataSells[3]?.totalCommissionValue],
+      [`${cleanDataSells[4]?.month}`, cleanDataSells[4]?.totalCommissionValue],
+      [`${cleanDataSells[5]?.month}`, cleanDataSells[5]?.totalCommissionValue],
       ])
     setTitle('Comissão nos últimos 6 meses')
     }else{
       setData([["Mês", "Valor vendido"],
-      [`${dataSells[0]?.month}`, dataSells[0]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
+      [`${cleanDataSells[0]?.month}`, cleanDataSells[0]?.totalValue],
+      [`${cleanDataSells[1]?.month}`, cleanDataSells[1]?.totalValue],
+      [`${cleanDataSells[2]?.month}`, cleanDataSells[2]?.totalValue],
+      [`${cleanDataSells[3]?.month}`, cleanDataSells[3]?.totalValue],
+      [`${cleanDataSells[4]?.month}`, cleanDataSells[4]?.totalValue],
+      [`${cleanDataSells[5]?.month}`, cleanDataSells[5]?.totalValue],
       ])
     setTitle('Valor vendido nos últimos 6 meses')
     }
@@ -100,14 +107,19 @@ export default function LineChartSeller() {
     getSellsPeriod()
   }, [getSellsPeriod])
   useEffect(()=>{
+    // Completa com os meses restantes
+    const cleanDataSells = Array.from(Array(12).keys(), month => {
+      return dataSells.find(sell => sell.month === meses[month]) || {month: meses[month], totalCommissionValue: 0, totalValue: 0}
+    })
+
     if(dataSells.length>0){
       setData([["Mês", "Valor vendido"],
-      [`${dataSells[0]?.month}`, dataSells[0]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue],
+      [`${cleanDataSells[0]?.month}`, cleanDataSells[0]?.totalValue],
+      [`${cleanDataSells[1]?.month}`, cleanDataSells[1]?.totalValue],
+      [`${cleanDataSells[2]?.month}`, cleanDataSells[2]?.totalValue],
+      [`${cleanDataSells[3]?.month}`, cleanDataSells[3]?.totalValue],
+      [`${cleanDataSells[4]?.month}`, cleanDataSells[4]?.totalValue],
+      [`${cleanDataSells[5]?.month}`, cleanDataSells[5]?.totalValue],
       ])
     }
   }, [getSellsPeriod, dataSells])
