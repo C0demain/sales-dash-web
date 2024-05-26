@@ -56,7 +56,7 @@ function ShowSales() {
       title: 'Data',
       dataIndex: 'date',
       key: 'date',
-      render: (value: string | number | dayjs.Dayjs | Date | null | undefined) => dayjs(value).format('DD/MM/YYYY'), // Formata a data
+      render: (value: string | number | dayjs.Dayjs | Date) => dayjs(value).format('DD/MM/YYYY'), // Formata a data
       sorter: (a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       defaultSortOrder: "descend"
     },
