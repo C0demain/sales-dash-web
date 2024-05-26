@@ -120,7 +120,7 @@ function ShowSales() {
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
-      date: dayjs(record.date).format('DD/MM/YYYY'),  // Certifique-se de que a data está no formato `DD/MM/YYYY`
+      date: dayjs(record.date),  // Certifique-se de que a data está no formato `DD/MM/YYYY`
       seller: record.user.cpf,
       client: record.clientname,
       product: record.productName,
@@ -136,9 +136,10 @@ function ShowSales() {
       if (!currentSale) {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
+      const cleanSeller = Array.isArray(seller) ? seller[0] : seller
       const updatedSale = {
         date: dayjs(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD'),  // Formatar a data corretamente para o backend
-        seller_cpf: seller,
+        seller_cpf: cleanSeller,
         value: values.value
       };
 
