@@ -3,6 +3,7 @@ import axios from 'axios';
 import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
 import Switch from '@mui/material/Switch';
+import { Empty } from 'antd';
 
 export default function LineChartSeller() {
   const [dataSells, setDataSells] = useState<any[]>([])
@@ -130,6 +131,7 @@ export default function LineChartSeller() {
       <Switch checked={checked} onChange={setDataStats} />
       <h3>{title}</h3>
       </div>
+      { dataSells.length > 0 ?
       <Chart
         chartType="LineChart"
         data={data}
@@ -137,7 +139,8 @@ export default function LineChartSeller() {
         width="80vh"
         height="35vh"
         loader={<div>Carregando Gráfico</div>}
-      />
+      /> : <Empty description="Você não possui nenhum venda nos últimos 6 meses" />
+      }
     </div>
   );
   }
