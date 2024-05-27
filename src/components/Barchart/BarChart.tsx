@@ -20,15 +20,16 @@ export default function BarChart() {
       const currentMonth = response.data.stats.find((e: any) => e.month == months[selectedMonthIndex])
       if(currentMonth){
         currentMonth.commissionValues.forEach((value: any) => {
-          chartData.push([value.title, value.totalValue, getRandomColor(selectedMonthIndex)])
+          chartData.push([value.title.replace('/', '\n'), value.totalValue, getRandomColor(selectedMonthIndex)])
         })
       }else{
-        chartData.push(["Cliente novo/Produto novo", 0, getRandomColor(selectedMonthIndex)])
-        chartData.push(["Cliente novo/Produto velho", 0, getRandomColor(selectedMonthIndex)])
-        chartData.push(["Cliente velho/Produto novo", 0, getRandomColor(selectedMonthIndex)])
-        chartData.push(["Cliente velho/Produto velho", 0, getRandomColor(selectedMonthIndex)])
+        chartData.push(["Cliente novo\n Produto novo", 0, getRandomColor(selectedMonthIndex)])
+        chartData.push(["Cliente novo\n Produto velho", 0, getRandomColor(selectedMonthIndex)])
+        chartData.push(["Cliente velho\n Produto novo", 0, getRandomColor(selectedMonthIndex)])
+        chartData.push(["Cliente velho\n Produto velho", 0, getRandomColor(selectedMonthIndex)])
       }
       setCommissions(chartData);
+      console.log(currentMonth)
     }catch(error){
       console.error('Erro ao buscar os dados das comissões:', error);
     }
@@ -48,8 +49,8 @@ export default function BarChart() {
   };
 
   return (
-    <div style={{margin: '5vh'}}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '5vh', minWidth: '100%' }}>
+    <div className='charts'>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '3vh', marginTop: '3vh', minWidth: '100%' }}>
         
         <Select
         style={ {minWidth: '30%'} }
@@ -68,7 +69,7 @@ export default function BarChart() {
       </div>
       <div style={{ display: 'flex', maxWidth: 600 }}>
         <Chart
-          width="75vh"
+          width="50vh"
           height="35vh"
           chartType="Bar"
           loader={<div>Carregando Gráfico</div>}
@@ -78,6 +79,11 @@ export default function BarChart() {
               title: `Comissões Mensais - ${months[selectedMonthIndex]}`,
             },
             legend: { position: 'none' },
+            animation: {
+              duration: 3000,
+              easing: "linear",
+              startup: true,
+            }
           }}
         />
       </div>

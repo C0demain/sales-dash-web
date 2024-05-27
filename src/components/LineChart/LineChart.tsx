@@ -20,7 +20,7 @@ export default function BasicLineChart() {
   colors: ["#8e0152", "#276419"],
   pointSize: 10,
   animation: {
-    duration: 1000,
+    duration: 3000,
     easing: "linear",
     startup: true,
   },
@@ -63,6 +63,7 @@ export default function BasicLineChart() {
     const response = await axios.get(url, {
         withCredentials: false,
     });
+    console.log(url)
     setDataSells(response.data.stats)
   }, [startDate, endDate]) 
 
@@ -118,7 +119,7 @@ export default function BasicLineChart() {
   }, [getSellsPeriod, dataSells])
 
   return (
-    <div  style={{margin: '5vh'}}>
+    <div>
       <div className='titleChart'>
       <Switch checked={checked} onChange={setDataStats}  />
       <h3>{title}</h3>
@@ -128,7 +129,7 @@ export default function BasicLineChart() {
         chartType="LineChart"
         data={data}
         options={options}
-        width="80vh"
+        width="75vh"
         height="35vh"
         loader={<div>Carregando Gráfico</div>}
       /> : <Empty description="Não foi registrada nenhum venda nos últimos 6 meses" />

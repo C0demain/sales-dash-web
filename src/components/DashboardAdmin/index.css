@@ -6,9 +6,7 @@
 
 .tituloDashboard{
     font-family:Arial, Helvetica, sans-serif;
-    color: white;
-    margin: 1vh;
-    margin-top: 30px;
+    margin: 2vh;
 }
 
 .box{
@@ -25,4 +23,6 @@
 .chartsBox{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
