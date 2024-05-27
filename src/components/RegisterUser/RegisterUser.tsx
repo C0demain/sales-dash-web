@@ -119,7 +119,7 @@ function RegisterUser() {
     if (validateSeller()) {
       setLoadingSeller(true);
       try {
-        await sendDataSeller(userName, email, cpf, 'user', senha);
+        await sendDataSeller(userName, email, cpf, senha);
         setSuccess('Cadastro realizado!');
       } catch (error: any) {
         if (error.response && error.response.status === 400) {

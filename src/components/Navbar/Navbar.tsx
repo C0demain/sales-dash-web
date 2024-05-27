@@ -78,66 +78,75 @@ const Navbar: React.FC = () => {
         navigate('/users/register');
       },
     },
-    isAdmin() && {
-      key: '2-3',
-      icon: <KeyOutlined />,
-      label: 'Atualização de Senha',
-      onClick: () => {
-        handleSelect('2-3');
-        navigate('/users/update');
-      },
-    },
     {
-      key: '2-4',
+      key: '2-3',
       icon: <UserAddOutlined />,
       label: 'Cadastro de Clientes',
       onClick: () => {
-        handleSelect('2-4');
+        handleSelect('2-3');
         navigate('/client/register');
       },
     },
     {
+      key: '2-4',
+      icon: <ShoppingOutlined/>,
+      label: 'Cadastro de Produtos',
+      onClick: () => {
+        handleSelect('2-4');
+        navigate('/product/register');
+      },
+    },
+    isAdmin() && {
       key: '3',
-      icon: <UnorderedListOutlined />,
-      label: 'Exibe Clientes',
+      icon: <KeyOutlined />,
+      label: 'Atualização de Senha',
       onClick: () => {
         handleSelect('3');
-        navigate('/client/list');
+        navigate('/users/update');
       },
     },
     {
       key: '4',
-      icon: <ShoppingOutlined />,
-      label: 'Exibe Produtos',
+      icon: <UnorderedListOutlined />,
+      label: 'Exibe Clientes',
       onClick: () => {
         handleSelect('4');
-        navigate('/product/list');
+        navigate('/client/list');
       },
     },
     {
       key: '5',
-      icon: <FileTextOutlined />,
-      label: isAdmin() ? 'Exibe vendas' : 'Suas vendas',
+      icon: <ShoppingOutlined />,
+      label: 'Exibe Produtos',
       onClick: () => {
         handleSelect('5');
-        navigate(isAdmin() ? '/sell/showsales' : '/sell/showsalesseller')
+        navigate('/product/list');
       },
     },
     {
       key: '6',
-      icon: <DollarOutlined />,
-      label: 'Comissões',
+      icon: <FileTextOutlined />,
+      label: isAdmin() ? 'Exibe vendas' : 'Suas vendas',
       onClick: () => {
         handleSelect('6');
-        navigate('/commissions');
+        navigate(isAdmin() ? '/sell/showsales' : '/sell/showsalesseller')
       },
     },
     {
       key: '7',
+      icon: <DollarOutlined />,
+      label: 'Comissões',
+      onClick: () => {
+        handleSelect('7');
+        navigate('/commissions');
+      },
+    },
+    {
+      key: '8',
       icon: <LogoutOutlined />,
       label: 'Sair da conta',
       onClick: () => {
-        handleSelect('7');
+        handleSelect('8');
         handleLogout();
       },
     }

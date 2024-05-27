@@ -1,15 +1,14 @@
 import axios from 'axios';
 
-export async function sendDataSeller(userName: String, email: string, cpf: string, funcao: string, senha: string) {
+export async function sendDataSeller(userName: String, email: string, cpf: string, senha: string) {
   
-  const urlSeller = 'http://localhost:8000/api/v1/auth/register';
+  const urlSeller = 'http://localhost:8000/api/v1/auth/registerUser';
 
   const userData = {
     'name':userName,
     'email':email,
     'password':senha,
-    'cpf': cpf,
-    'role': funcao
+    'cpf': cpf
   };
 
   const response = await axios.post(urlSeller, userData)

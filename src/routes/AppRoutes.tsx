@@ -13,6 +13,7 @@ import ShowProduct from "components/ShowProduct/ShowProduct";
 import ShowSales from "components/ShowSales/ShowSales";
 import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 import UpdatePassword from "components/UpdatePassword/UpdatePassword";
+import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 
 export function AppRoutes() {
   return (
@@ -52,6 +53,12 @@ export function AppRoutes() {
           <Route path='/sells/register' element={
             <ProtectedLayout>
               <RegisterSell />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/product/register' element={
+            <ProtectedLayout>
+              <RegisterProduct />
             </ProtectedLayout>} >
           </Route>
 
