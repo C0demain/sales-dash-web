@@ -1,6 +1,18 @@
 import axios from "axios";
 
-export async function updatePassword( newPassword: string) {
+export async function updatePassword(newPassword: string) {
+    // Função para validar a senha
+    const validatePassword = (password: string) => {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+        return passwordRegex.test(password);
+    };
+
+    // Verifica se a nova senha atende aos requisitos
+    if (!validatePassword(newPassword)) {
+        console.error("Erro: A senha deve ter pelo menos 8 caracteres, incluir pelo menos um número e um caractere especial.");
+        return { success: false, message: "A senha deve ter pelo menos 8 caracteres, incluir pelo menos um número e um caractere especial." };
+    }
+
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const userId = user.id;  
     const email = user.email;  

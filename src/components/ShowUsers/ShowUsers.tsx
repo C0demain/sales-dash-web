@@ -87,30 +87,15 @@ const ShowUsers: React.FC = () => {
     }
   };
 
-  const handleRemove = async () => {
-    try {
-      if (!currentUser) {
-        throw new Error('Nenhum usuário selecionado para remoção.');
-      }
-
-      const response = await axios.delete(`http://localhost:8000/api/v1/auth/user/${currentUser.id}`);
-
-      if (response.status === 200) {
-        message.success('Usuário removido com sucesso!');
-        setVisible(false);
-        getUsers();
-      } else {
-        message.error('Falha ao remover o usuário. Por favor, tente novamente.');
-      }
-    } catch (error) {
-      console.error('Erro ao enviar a requisição:', error);
-      message.error('Ocorreu um erro ao remover o usuário. Por favor, tente novamente.');
-    }
-  };
-
   const handleCancel = () => {
     setVisible(false);
   };
+
+  const formatCPF = (cpf: string) => {
+    if (!cpf) return '';
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  };
+  
 
   const columns = [
     {
@@ -136,6 +121,7 @@ const ShowUsers: React.FC = () => {
       dataIndex: 'cpf',
       key: 'cpf',
       sorter: (a: User, b: User) => a.cpf.localeCompare(b.cpf),
+      render: (text: string) => (text ? formatCPF(text) : 'CPF não disponível'),
     },
     {
       title: 'Ações',

@@ -6,7 +6,6 @@ import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import './index.css'
 
 function UpdatePassword() {
-  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,12 +18,17 @@ function UpdatePassword() {
       return;
     }
     try {
-      await updatePassword(newPassword);
-      setSuccess('Senha atualizada com sucesso');
-      setError(''); // Clear error message if success
+      const response : any = await updatePassword(newPassword);
+      if (response.success) {
+        setSuccess('Senha atualizada com sucesso');
+        setError('');
+      } else {
+        setError(response.message);
+        setSuccess('');
+      }
     } catch (error) {
       setError('Erro ao atualizar a senha');
-      setSuccess(''); // Clear success message if error
+      setSuccess('');
     }
   };
 
@@ -33,8 +37,17 @@ function UpdatePassword() {
       <Navbar />
       <div className='containerGlobal'>
         <div className='containerUpdatePassword'>
-          <h2> Atualização de Senha</h2>
+          <h2>Atualização de Senha</h2>
           <form onSubmit={handleSubmit}>
+            
+            <div className='passwordRules'>
+              <p>A nova senha deve conter:</p>
+              <ul>
+                <li>Pelo menos 8 caracteres</li>
+                <li>Pelo menos um número</li>
+                <li>Pelo menos um caractere especial (!@#$%^&*)</li>
+              </ul>
+            </div>
 
             <div className='insertText'>
               <label>Nova Senha:</label>

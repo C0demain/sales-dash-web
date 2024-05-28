@@ -187,11 +187,13 @@ function RegisterUser() {
                   {errors.email && <p className='erro'>{errors.email}</p>}
                 </div>
 
-                <div className='insertText'>
-                  <h3>A senha deve conter:</h3>
-                  <label>- 8 ou mais caracteres.</label>
-                  <label>- Ao menos 1 número.</label>
-                  <label>- Ao menos 1 caractere especial.</label>
+                <div className='passwordRules'>
+                  <p>A nova senha deve conter:</p>
+                  <ul>
+                    <li>Pelo menos 8 caracteres</li>
+                    <li>Pelo menos um número</li>
+                    <li>Pelo menos um caractere especial (!@#$%^&*)</li>
+                  </ul>
                 </div>
 
                 <div className='inputSenha'>

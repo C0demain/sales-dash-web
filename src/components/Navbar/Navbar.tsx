@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
       label: 'Cadastro de Clientes',
       onClick: () => {
         handleSelect('2-3');
-        navigate('/client/register');
+        navigate('/clients/register');
       },
     },
     {
@@ -93,10 +93,10 @@ const Navbar: React.FC = () => {
       label: 'Cadastro de Produtos',
       onClick: () => {
         handleSelect('2-4');
-        navigate('/product/register');
+        navigate('/products/register');
       },
     },
-    isAdmin() && {
+    {
       key: '3',
       icon: <KeyOutlined />,
       label: 'Atualização de Senha',
@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
       label: 'Exibe Usuários',
       onClick: () => {
         handleSelect('4');
-        navigate('/users/showusers');
+        navigate('/users');
       },
     },
     {
@@ -120,7 +120,7 @@ const Navbar: React.FC = () => {
       label: 'Exibe Clientes',
       onClick: () => {
         handleSelect('5');
-        navigate('/client/list');
+        navigate('/clients');
       },
     },
     {
@@ -129,16 +129,16 @@ const Navbar: React.FC = () => {
       label: 'Exibe Produtos',
       onClick: () => {
         handleSelect('6');
-        navigate('/product/list');
+        navigate('/products');
       },
     },
     {
       key: '7',
       icon: <FileTextOutlined />,
-      label: isAdmin() ? 'Exibe vendas' : 'Suas vendas',
+      label: isAdmin() ? 'Exibe Vendas' : 'Suas Vendas',
       onClick: () => {
         handleSelect('7');
-        navigate(isAdmin() ? '/sell/showsales' : '/sell/showsalesseller')
+        navigate(isAdmin() ? '/salesManager' : '/salesSeller')
       },
     },
     {

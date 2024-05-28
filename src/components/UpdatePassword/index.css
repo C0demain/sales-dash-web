@@ -15,9 +15,31 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
 }
 
 .containerUpdatePassword h2 {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.passwordRules {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.passwordRules p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.passwordRules ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.passwordRules li {
+    margin-bottom: 5px;
 }

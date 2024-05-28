@@ -57,43 +57,43 @@ export function AppRoutes() {
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/product/register' element={
+          <Route path='/products/register' element={
             <ProtectedLayout>
               <RegisterProduct />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/product/list' element={
+          <Route path='/products' element={
             <ProtectedLayout>
               <ShowProduct />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/client/register' element={
+          <Route path='/clients/register' element={
             <ProtectedLayout>
               <RegisterClient />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/client/list' element={
+          <Route path='/clients' element={
             <ProtectedLayout>
               <ShowClient />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/sell/showsales' element={
+          <Route path='/salesManager' element={
             <ProtectedLayout>
               <ShowSales />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/sell/showsalesseller' element={
+          <Route path='/salesSeller' element={
             <ProtectedLayout>
               <ShowSalesSeller />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/users/showusers' element={
+          <Route path='/users' element={
             <ProtectedLayout>
               <ShowUsers />
             </ProtectedLayout>} >
