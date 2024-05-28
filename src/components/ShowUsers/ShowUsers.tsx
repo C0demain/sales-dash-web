@@ -51,7 +51,6 @@ const ShowUsers: React.FC = () => {
     }
   };
 
-
   const handleEdit = (record: User) => {
     setCurrentUser(record);
     setVisible(true);
@@ -72,6 +71,10 @@ const ShowUsers: React.FC = () => {
       }
 
       const updatedUser = { ...currentUser, ...values };
+
+      // Remove senha se existir para garantir que não seja alterada
+      delete updatedUser.password;
+
       const response = await axios.put(`http://localhost:8000/api/v1/auth/user/${currentUser.id}`, updatedUser);
 
       if (response.status === 200) {
@@ -95,7 +98,6 @@ const ShowUsers: React.FC = () => {
     if (!cpf) return '';
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   };
-  
 
   const columns = [
     {
