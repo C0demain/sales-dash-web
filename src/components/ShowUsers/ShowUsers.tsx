@@ -39,13 +39,18 @@ const ShowUsers: React.FC = () => {
   const getUsers = async () => {
     try {
       const response = await axios.get<{ users: User[] }>("http://localhost:8000/api/v1/auth/users");
-      setUsers(response.data.users || []);
+      const transformedUsers = response.data.users.map(user => ({
+        ...user,
+        role: user.role === 'admin' ? 'Gestor' : user.role === 'user' ? 'Vendedor' : user.role,
+      }));
+      setUsers(transformedUsers || []);
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
       setUsers([]);
       message.error('Erro ao buscar usuários. Por favor, tente novamente.');
     }
   };
+
 
   const handleEdit = (record: User) => {
     setCurrentUser(record);
@@ -121,7 +126,7 @@ const ShowUsers: React.FC = () => {
       sorter: (a: User, b: User) => a.email.localeCompare(b.email),
     },
     {
-      title: 'Role',
+      title: 'Função',
       dataIndex: 'role',
       key: 'role',
       sorter: (a: User, b: User) => a.role.localeCompare(b.role),
@@ -183,8 +188,7 @@ const ShowUsers: React.FC = () => {
             </Form.Item>
             <Form.Item
               name="role"
-              label="Role"
-              rules={[{ required: true, message: 'Por favor, insira a role do usuário!' }]}
+              label="Função"
             >
               <Input disabled/>
             </Form.Item>

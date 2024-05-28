@@ -1,32 +1,43 @@
-import { Button, Card, Empty, Modal, Form, Input, message, Statistic } from "antd";
+import { Button, Empty, Modal, Form, Input, message, Table, TableColumnsType } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import Navbargest from "components/Navbar/Navbar";
+import Navbar from "components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import './index.css'
 import { useAuth } from "context/AuthProvider/useAuth";
+import './index.css'; 
 
-const CommissionList = () => {
-    const [commissions, setCommissions] = useState<any>([])
+interface Commission {
+    id: number;
+    title: string;
+    percentage: number;
+}
+
+const ShowCommissions: React.FC = () => {
+    const [commissions, setCommissions] = useState<Commission[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentCommission, setCurrentCommission] = useState<any>(null);
+    const [currentCommission, setCurrentCommission] = useState<Commission | null>(null);
     const [form] = Form.useForm();
-    const { isAdmin } = useAuth()
+    const { isAdmin } = useAuth();
 
     const getCommissions = async () => {
-        const response = await axios.get('http://localhost:8000/api/v1/commissions/getAll')
-        setCommissions(response.data.commissions)
-    }
+        try {
+            const response = await axios.get<{ commissions: Commission[] }>('http://localhost:8000/api/v1/commissions/getAll');
+            setCommissions(response.data.commissions);
+        } catch (error) {
+            console.error("Erro ao buscar comissões:", error);
+            message.error('Erro ao buscar comissões. Por favor, tente novamente.');
+        }
+    };
 
     useEffect(() => {
-        getCommissions()
-    }, [])
+        getCommissions();
+    }, []);
 
-    const handleEdit = (commission: any) => {
+    const handleEdit = (commission: Commission) => {
         setCurrentCommission(commission);
         form.setFieldsValue({
             title: commission.title,
-            percentage: commission.percentage * 100
+            percentage: commission.percentage * 100,
         });
         setIsModalOpen(true);
     };
@@ -59,20 +70,48 @@ const CommissionList = () => {
         setIsModalOpen(false);
     };
 
+    const columns: TableColumnsType<Commission> = [
+        {
+            title: 'Título',
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: 'Porcentagem',
+            dataIndex: 'percentage',
+            key: 'percentage',
+            render: (text: number) => `${text * 100}%`,
+        },
+    ];
+
+    if (isAdmin()) {
+        columns.push({
+            title: 'Ações',
+            key: 'actions',
+            render: (_: any, record: Commission) => (
+                <>
+                    <Button className="button-edit" onClick={() => handleEdit(record)}>Editar</Button>
+                </>
+            ),
+        });
+    }
+
     return (
         <NavbarWrapper>
-            <Navbargest />
+            <Navbar />
             <div className="container">
                 <h1 className="commissionTitle">Comissões</h1>
                 <div className="commissions">
-                    {commissions.length > 0 ?
-                        commissions.map((el: any, index: number) => (
-                            <Card key={index} bordered={true} className="commissionCard">
-                                <Statistic title={<strong>{el.title}</strong>} value={el.percentage * 100} suffix="%" />
-                                {isAdmin() && <Button className="button-edit" onClick={() => handleEdit(el)} >Editar</Button>}
-                            </Card>
-                        ))
-                        : <Empty description="Nenhuma comissão encontrada" />}
+                    {commissions.length > 0 ? (
+                        <Table
+                            columns={columns}
+                            dataSource={commissions}
+                            rowKey="id"
+                            pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                        />
+                    ) : (
+                        <Empty description="Nenhuma comissão encontrada" />
+                    )}
                 </div>
             </div>
             <Modal
@@ -99,7 +138,7 @@ const CommissionList = () => {
                 </Form>
             </Modal>
         </NavbarWrapper>
-    )
+    );
 };
 
-export default CommissionList;
+export default ShowCommissions;

@@ -1,4 +1,4 @@
-import CommissionList from "components/CommissionList/CommissionList";
+import ShowCommissions from "components/CommissionList/ShowCommissions";
 import { Login } from "components/Login";
 import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";
@@ -47,7 +47,7 @@ export function AppRoutes() {
 
           <Route path='/commissions' element={
             <ProtectedLayout>
-              <CommissionList />
+              <ShowCommissions />
             </ProtectedLayout>} >
           </Route>
 

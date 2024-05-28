@@ -49,8 +49,7 @@ const ShowProduct: React.FC = () => {
     setCurrentProduct(record);
     setOpen(true);
     form.setFieldsValue({
-      name: record.name,
-      description: record.description,
+      name: record.name
     });
   };
 
@@ -90,12 +89,6 @@ const ShowProduct: React.FC = () => {
       sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
     },
     {
-      title: 'Descrição',
-      dataIndex: 'description',
-      key: 'description',
-      sorter: (a: Product, b: Product) => a.description.localeCompare(b.description),
-    },
-    {
       title: 'Ações',
       key: 'actions',
       render: (_: any, record: Product) => (
@@ -132,13 +125,6 @@ const ShowProduct: React.FC = () => {
               name="name"
               label="Nome"
               rules={[{ required: true, message: 'Por favor, insira o nome do produto!' }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="description"
-              label="Descrição"
-              rules={[{ required: true, message: 'Por favor, insira uma descrição do produto!' }]}
             >
               <Input />
             </Form.Item>

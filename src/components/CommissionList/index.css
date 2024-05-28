@@ -1,53 +1,52 @@
 .container {
-    max-width: 700px;
-    margin: auto;
-    padding: 10px;
+  padding: 20px;
 }
 
 .commissionTitle {
-    font-family:Arial, Helvetica, sans-serif;
-    font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.commissionList {
-    text-align: center;
-}
-
-.commissions {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-}
-
-.commissionCard {
-    width: 300px; 
-    height: 200px; 
-    border: 1px solid #ccc; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.commissionCard .ant-statistic-title {
-    color: black; 
-}
-
-.buttonWrapper {
-    margin-top: 20px; 
-}
-
-.buttonWrapper .ant-btn {
-    color: black;
-    width: 200px; 
-    height: 40px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+.ant-table {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .button-edit {
-    background-color: rgb(12, 91, 218);
-    color: white;
-    margin-top: 16px;
+  margin-right: 8px;
+  background-color: rgb(12, 91, 218);
+  color: white;
 }
-  
+
+@media (max-width: 768px) {
+  .ant-table {
+    font-size: 12px;
+  }
+
+  .ant-table th,
+  .ant-table td {
+    padding: 8px;
+  }
+
+  .ant-btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .ant-table th,
+  .ant-table td {
+    padding: 6px;
+  }
+
+  .ant-btn {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .commissionTitle {
+    font-size: 18px;
+  }
+}
