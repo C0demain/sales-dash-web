@@ -4,7 +4,7 @@ import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
 import './index.css'
 import Switch from '@mui/material/Switch';
-import { Empty } from 'antd';
+import { Button, Empty, InputNumber, Select } from 'antd';
 
 export default function BasicLineChart() {
   const [dataSells, setDataSells] = useState<any[]>([])
@@ -12,15 +12,31 @@ export default function BasicLineChart() {
   const [startDate, setStartDate] = useState<any>()
   const [endDate, setEndDate] = useState<any>()
   const [checked, setChecked] = useState(true)
-  const [title, setTitle] = useState<any>('Valor vendido nos últimos 6 meses')
+  const [title, setTitle] = useState<any>('Valor vendido')
+  const [monthDiff, setMonthDiff] = useState<any>(5)
   const today = new Date()
   const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+
+  const periodOptions = [
+    {
+      label: 'Últimos 12 meses',
+      value: 11
+    },
+    {
+      label: 'Últimos 6 meses',
+      value: 5
+    },
+    {
+      label: 'Últimos 3 meses',
+      value: 2
+    },
+  ]
 
   const [options, setOptions] = useState<any>({
   colors: ["#8e0152", "#276419"],
   pointSize: 10,
   animation: {
-    duration: 3000,
+    duration: 800,
     easing: "linear",
     startup: true,
   },
@@ -37,7 +53,7 @@ export default function BasicLineChart() {
     const month = today.getMonth();
 
     // Calcular o mês do 5º mês passado
-    const targetMonth = month - 5;
+    const targetMonth = month - monthDiff;
 
     // Verificar se precisa ajustar o ano
     let targetYear = year;
@@ -70,32 +86,26 @@ export default function BasicLineChart() {
     });
     console.log(url)
     setDataSells(response.data.stats)
-  }, [startDate, endDate]) 
+  }, [startDate, endDate, monthDiff]) 
 
   const setDataStats = async(event: React.ChangeEvent<HTMLInputElement>) => {
 
     // Completa com os meses restantes
 
     if( data[0][1] === "Valor vendido"){
-      setData([["Mês", "Comissão de venda", "Comissão de venda"],
-      [`${dataSells[0]?.month}`, dataSells[0]?.totalCommissionValue, dataSells[0]?.totalCommissionValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalCommissionValue, dataSells[1]?.totalCommissionValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalCommissionValue, dataSells[2]?.totalCommissionValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalCommissionValue, dataSells[3]?.totalCommissionValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalCommissionValue, dataSells[4]?.totalCommissionValue],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalCommissionValue, dataSells[5]?.totalCommissionValue],
-      ])
-    setTitle('Comissão de venda nos últimos 6 meses')
+      let chartData: Array<any> = [["Mês", "Comissão de venda", "Comissão de venda"]]
+      dataSells.forEach(stat => {
+        chartData.push([stat.month, stat.totalCommissionValue, stat.totalCommissionValue])
+      })
+      setData(chartData)
+    setTitle('Comissão de venda mensal')
     }else{
-      setData([["Mês", "Valor vendido", "Valor vendido"],
-      [`${dataSells[0]?.month}`, dataSells[0]?.totalValue, dataSells[0]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue, dataSells[1]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue, dataSells[2]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue, dataSells[3]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue, dataSells[4]?.totalValue],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue, dataSells[5]?.totalValue],
-      ])
-    setTitle('Valor vendido nos últimos 6 meses')
+      let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
+      dataSells.forEach(stat => {
+        chartData.push([stat.month, stat.totalValue, stat.totalValue])
+      })
+      setData(chartData)
+    setTitle('Valor vendido mensalmente')
     }
     setChecked(event.target.checked);
   }
@@ -103,24 +113,26 @@ export default function BasicLineChart() {
   useEffect(()=>{ 
     getSellsPeriod()
   }, [getSellsPeriod])
+
   useEffect(()=>{
     if(dataSells.length>0){
-      setData([["Mês", "Valor vendido", "Valor vendido"],
-      [`${dataSells[0]?.month}`, dataSells[0]?.totalValue, dataSells[0]?.totalValue],
-      [`${dataSells[1]?.month}`, dataSells[1]?.totalValue, dataSells[1]?.totalValue],
-      [`${dataSells[2]?.month}`, dataSells[2]?.totalValue, dataSells[2]?.totalValue],
-      [`${dataSells[3]?.month}`, dataSells[3]?.totalValue, dataSells[3]?.totalValue],
-      [`${dataSells[4]?.month}`, dataSells[4]?.totalValue, dataSells[4]?.totalValue],
-      [`${dataSells[5]?.month}`, dataSells[5]?.totalValue, dataSells[5]?.totalValue],
-      ])
+      let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
+      dataSells.forEach(stat => {
+        chartData.push([stat.month, stat.totalValue, stat.totalValue])
+      })
+      setData(chartData)
     }
   }, [getSellsPeriod, dataSells])
 
   return (
     <div>
       <div className='titleChart'>
-      <Switch checked={checked} onChange={setDataStats}  />
-      <h3>{title}</h3>
+      <Switch checked={checked} onChange={setDataStats}/>
+      <Select
+        options={periodOptions}
+        onSelect={setMonthDiff}
+        defaultValue={5}
+      />
       </div>
       { dataSells.length > 0 ?
       <Chart
