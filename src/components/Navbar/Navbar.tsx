@@ -105,48 +105,57 @@ const Navbar: React.FC = () => {
         navigate('/users/update');
       },
     },
-    {
+    isAdmin() && {
       key: '4',
-      icon: <UnorderedListOutlined />,
-      label: 'Exibe Clientes',
+      icon: <TeamOutlined />,
+      label: 'Exibe Usuários',
       onClick: () => {
         handleSelect('4');
-        navigate('/client/list');
+        navigate('/users/showusers');
       },
     },
     {
       key: '5',
-      icon: <ShoppingOutlined />,
-      label: 'Exibe Produtos',
+      icon: <UnorderedListOutlined />,
+      label: 'Exibe Clientes',
       onClick: () => {
         handleSelect('5');
-        navigate('/product/list');
+        navigate('/client/list');
       },
     },
     {
       key: '6',
-      icon: <FileTextOutlined />,
-      label: isAdmin() ? 'Exibe vendas' : 'Suas vendas',
+      icon: <ShoppingOutlined />,
+      label: 'Exibe Produtos',
       onClick: () => {
         handleSelect('6');
-        navigate(isAdmin() ? '/sell/showsales' : '/sell/showsalesseller')
+        navigate('/product/list');
       },
     },
     {
       key: '7',
-      icon: <DollarOutlined />,
-      label: 'Comissões',
+      icon: <FileTextOutlined />,
+      label: isAdmin() ? 'Exibe vendas' : 'Suas vendas',
       onClick: () => {
         handleSelect('7');
-        navigate('/commissions');
+        navigate(isAdmin() ? '/sell/showsales' : '/sell/showsalesseller')
       },
     },
     {
       key: '8',
+      icon: <DollarOutlined />,
+      label: 'Comissões',
+      onClick: () => {
+        handleSelect('8');
+        navigate('/commissions');
+      },
+    },
+    {
+      key: '9',
       icon: <LogoutOutlined />,
       label: 'Sair da conta',
       onClick: () => {
-        handleSelect('8');
+        handleSelect('9');
         handleLogout();
       },
     }

@@ -14,6 +14,7 @@ import ShowSales from "components/ShowSales/ShowSales";
 import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 import RegisterProduct from "components/RegisterProduct/RegisterProduct";
+import ShowUsers from "components/ShowUsers/ShowUsers";
 
 export function AppRoutes() {
   return (
@@ -89,6 +90,12 @@ export function AppRoutes() {
           <Route path='/sell/showsalesseller' element={
             <ProtectedLayout>
               <ShowSalesSeller />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/users/showusers' element={
+            <ProtectedLayout>
+              <ShowUsers />
             </ProtectedLayout>} >
           </Route>
 

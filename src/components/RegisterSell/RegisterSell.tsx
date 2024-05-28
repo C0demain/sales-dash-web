@@ -117,7 +117,8 @@ export default function RegisterSell() {
                 <label>Valor da venda</label>
                 <InputMask
                   placeholder='R$'
-                  mask="9999999"
+                  mask="R$9999999"
+                  maskChar={null}
                   className='inputValor'
                   onChange={e => setValue(e.target.value)}
                 />
