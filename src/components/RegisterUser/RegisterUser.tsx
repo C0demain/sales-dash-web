@@ -1,8 +1,7 @@
-import { Input } from "antd";
+import { Input, Spin, message } from "antd";
 import { useState } from 'react';
 import './index.css';
-import { isValidCPF, sendDataAdmin } from '.';
-import { sendDataSeller } from '.';
+import { isValidCPF, sendDataAdmin, sendDataSeller } from '.';
 import Navbar from 'components/Navbar/Navbar';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import InputMask from 'react-input-mask';
@@ -113,19 +112,18 @@ function RegisterUser() {
     setErrorsAdmin(errorsAdmin)
     return isValid
   }
-
   const handleSubmitSeller = async (event: any) => {
     event.preventDefault();
     if (validateSeller()) {
       setLoadingSeller(true);
       try {
         await sendDataSeller(userName, email, cpf, senha);
-        setSuccess('Cadastro realizado!');
+        message.success('Vendedor cadastrado com sucesso!');
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
-          setErrors({ ...errors, response: 'CPF ou email já está vinculado a outro usuário' });
+          message.error('CPF ou email já está vinculado a outro usuário.');
         } else {
-          setErrors({ ...errors, response: 'Ocorreu um erro ao registrar o usuário. Tente novamente' });
+          message.error('Ocorreu um erro ao registrar o usuário. Tente novamente.');
         }
       } finally {
         setLoadingSeller(false);
@@ -139,19 +137,19 @@ function RegisterUser() {
       setLoadingAdmin(true);
       try {
         await sendDataAdmin(userNameAdmin, emailAdmin, cpfAdmin);
-        setSuccessAdmin('Cadastro realizado! Verifique sua caixa de email principal ou o spam.');
+        message.success('Gestor cadastrado com sucesso!');
+        message.success('Verifique sua caixa de email principal ou o spam.');
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
-          setErrorsAdmin({ ...errorsAdmin, response: 'CPF ou email já está vinculado a outro usuário' });
+          message.error('CPF ou email já está vinculado a outro usuário.');
         } else {
-          setErrorsAdmin({ ...errorsAdmin, response: 'Ocorreu um erro ao registrar o usuário. Tente novamente' });
+          message.error('Ocorreu um erro ao registrar o usuário. Tente novamente.');
         }
       } finally {
         setLoadingAdmin(false);
       }
     }
   };
-
 
   return (
     <NavbarWrapper>
@@ -167,7 +165,6 @@ function RegisterUser() {
                 <div className='insertText'>
                   <label>Nome:</label>
                   <input type="text" placeholder='Nome completo' onChange={(e) => setUserName(e.target.value)} required />
-                  {errors.userName && <p className='erro'>{errors.userName}</p>}
                 </div>
 
                 <div className='insertText'>
@@ -178,13 +175,11 @@ function RegisterUser() {
                     onChange={(e) => setCpf(e.target.value)}
                     placeholder="000.000.000-00"
                   />
-                  {errors.cpf && <p className='erro'>{errors.cpf}</p>}
                 </div>
 
                 <div className='insertText'>
                   <label>Email do vendedor:</label>
                   <input type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
-                  {errors.email && <p className='erro'>{errors.email}</p>}
                 </div>
 
                 <div className='passwordRules'>
@@ -199,17 +194,13 @@ function RegisterUser() {
                 <div className='inputSenha'>
                   <label>Digite uma senha:</label>
                   <Input.Password type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)} />
-                  {errors.senha && <p className='erro'>{errors.senha}</p>}
                 </div>
 
                 <div className='inputSenha'>
                   <label>Confirme sua senha:</label>
                   <Input.Password type="password" placeholder='Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
-                  {errors.senhaConfirm && <p className='erro'>{errors.senhaConfirm}</p>}
                 </div>
 
-                {success && <p className='funciona'>{success}</p>}
-                {errors.response && <p className='erro'>{errors.response}</p>}
                 <button type='submit' className="botaoCadastrar">Cadastrar</button>
               </form>
             </div>
@@ -218,33 +209,29 @@ function RegisterUser() {
             <div className="caixaAdmin">
               <h1 className='titulo'>Cadastro de Gestor</h1>
               <form className="formularioCliente" onSubmit={handleSubmitAdmin}>
-                <div className='insertText'>
-                  <label>Nome:</label>
-                  <input type="text" placeholder='Nome completo' onChange={(e) => setUserNameAdmin(e.target.value)} required />
-                  {errorsAdmin.userName && <p className='erro'>{errorsAdmin.userName}</p>}
-                </div>
+                <Spin spinning={loadingAdmin}>
+                  <div className='insertText'>
+                    <label>Nome:</label>
+                    <input type="text" placeholder='Nome completo' onChange={(e) => setUserNameAdmin(e.target.value)} required />
+                  </div>
 
-                <div className='insertText'>
-                  <label>CPF do gestor:</label>
-                  <InputMask
-                    mask="999.999.999-99"
-                    value={cpfAdmin}
-                    onChange={(e) => setCpfAdmin(e.target.value)}
-                    placeholder="000.000.000-00"
-                  />
-                  {errorsAdmin.cpf && <p className='erro'>{errorsAdmin.cpf}</p>}
-                </div>
+                  <div className='insertText'>
+                    <label>CPF do gestor:</label>
+                    <InputMask
+                      mask="999.999.999-99"
+                      value={cpfAdmin}
+                      onChange={(e) => setCpfAdmin(e.target.value)}
+                      placeholder="000.000.000-00"
+                    />
+                  </div>
 
-                <div className='insertText'>
-                  <label>Email do gestor:</label>
-                  <input type="email" placeholder='Email' onChange={(e) => setEmailAdmin(e.target.value)} required />
-                  {errorsAdmin.email && <p className='erro'>{errorsAdmin.email}</p>}
-                </div>
+                  <div className='insertText'>
+                    <label>Email do gestor:</label>
+                    <input type="email" placeholder='Email' onChange={(e) => setEmailAdmin(e.target.value)} required />
+                  </div>
 
-                {successAdmin && <p className='funciona'>{successAdmin}</p>}
-                {errorsAdmin.response && <p className='erro'>{errorsAdmin.response}</p>}
-                {loadingAdmin && <p className='loading'>Aguarde, cadastrando...</p>}
-                <button type='submit' className="botaoCadastrar">Cadastrar</button>
+                  <button type='submit' className="botaoCadastrar">Cadastrar</button>
+                </Spin>
               </form>
             </div>
 

@@ -129,7 +129,7 @@ function RegisterClient() {
     if (validate()) {
       try {
         await sendData(clientName, segment, cpfCnpj);
-        message.success('Cliente atualizado com sucesso!');
+        message.success('Cliente cadastrado com sucesso!');
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
           message.error('Esse CPF/CNPJ já está vinculado a outro cliente.');

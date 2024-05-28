@@ -57,7 +57,7 @@ export default function RegisterSell() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validate()) {
-      message.success('Cadastro realizado!');
+      message.success('Venda Cadastrada com Sucesso!');
       sendData(date, seller[0], client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
     }
   };
