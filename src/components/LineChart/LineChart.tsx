@@ -128,6 +128,7 @@ export default function BasicLineChart() {
     <div>
       <div className='titleChart'>
       <Switch checked={checked} onChange={setDataStats}/>
+      <h3>{title}</h3>
       <Select
         options={periodOptions}
         onSelect={setMonthDiff}
