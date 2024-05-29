@@ -4,7 +4,7 @@ import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
 import './index.css'
 import Switch from '@mui/material/Switch';
-import { Button, Empty, InputNumber, Select } from 'antd';
+import { Empty, Select } from 'antd';
 
 export default function BasicLineChart() {
   const [dataSells, setDataSells] = useState<any[]>([])
@@ -143,7 +143,7 @@ export default function BasicLineChart() {
         width="75vh"
         height="35vh"
         loader={<div>Carregando Gráfico</div>}
-      /> : <Empty description="Não foi registrada nenhum venda nos últimos 6 meses" />
+      /> : <Empty description="Não foi registrada nenhum venda nesse período" />
       }
     </div>
   );
