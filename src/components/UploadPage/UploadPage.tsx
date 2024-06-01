@@ -96,10 +96,11 @@ const UploadExcelPage: React.FC = () => {
   }
 
   return (
-    <div className="containerRegisterSell">
-      <div className="caixaVenda">
+    <div className="containerUploadPage">
+      <div className="caixa">
         <h1 className='titulo'>Upload de Arquivo Excel</h1>
-        <form className="formularioVenda">
+        <p>Clique no botão abaixo para realizar o upload da planilha (.xlsx ou .xls)</p>
+        <form className="formulario">
           <div className='insertTextVenda'>
             <Input type="file" id="inputExcel" accept=".xlsx, .xls" onChange={handleFileChange} />
             <label htmlFor="inputExcel" className="fileInputLabel">

@@ -22,9 +22,19 @@
 
 .fileInputLabel span {
   color: rgb(255, 255, 255);
-  /* Altere para a cor desejada */
 }
 
 .fileInputLabel:hover {
   background-color: #001529;
+}
+
+.containerUploadPage {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
 }

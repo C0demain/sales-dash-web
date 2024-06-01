@@ -11,6 +11,7 @@ import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import { DatePicker, message } from 'antd';
 import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
+import DatabaseCleaner from 'components/DatabaseCleaner';
 
 export default function RegisterSell() {
   const [seller, setSeller] = useState<any>();
@@ -80,6 +81,7 @@ export default function RegisterSell() {
       <Navbar />
       <div className='containerGlobal'>
         <UploadExcelPage />
+        <DatabaseCleaner/>
         <div className='containerRegisterSell'>
           <div className="caixaVenda">
             <h1 className='titulo'>Cadastro de Venda</h1>
