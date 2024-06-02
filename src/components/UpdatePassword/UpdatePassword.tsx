@@ -1,34 +1,29 @@
 import { useState } from 'react';
-import { Input } from 'antd';
+import { Input, message } from 'antd';
 import { updatePassword } from '.';
 import Navbar from 'components/Navbar/Navbar';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
-import './index.css'
+import './index.css';
 
 function UpdatePassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (newPassword !== confirmPassword) {
-      setError('As novas senhas não coincidem');
+      message.error('As novas senhas não coincidem');
       return;
     }
     try {
-      const response : any = await updatePassword(newPassword);
+      const response: any = await updatePassword(newPassword);
       if (response.success) {
-        setSuccess('Senha atualizada com sucesso');
-        setError('');
+        message.success('Senha atualizada com sucesso');
       } else {
-        setError(response.message);
-        setSuccess('');
+        message.error(response.message);
       }
     } catch (error) {
-      setError('Erro ao atualizar a senha');
-      setSuccess('');
+      message.error('Erro ao atualizar a senha');
     }
   };
 
@@ -39,7 +34,6 @@ function UpdatePassword() {
         <div className='containerUpdatePassword'>
           <h2>Atualização de Senha</h2>
           <form onSubmit={handleSubmit}>
-            
             <div className='passwordRules'>
               <p>A nova senha deve conter:</p>
               <ul>
@@ -69,8 +63,6 @@ function UpdatePassword() {
               />
             </div>
 
-            {error && <p className='erro'>{error}</p>}
-            {success && <p className='funciona'>{success}</p>}
             <button type='submit' className='botaoCadastrar'>Atualizar Senha</button>
           </form>
         </div>

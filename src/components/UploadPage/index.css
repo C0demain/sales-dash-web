@@ -1,32 +1,3 @@
-.insertTextVenda {
-  margin-bottom: 20px;
-}
-
-.insertTextVenda input[type="file"] {
-  display: none;
-}
-
-.fileInputLabel {
-  background-color: #001529;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.fileInputLabel span {
-  color: rgb(255, 255, 255);
-}
-
-.fileInputLabel:hover {
-  background-color: #001529;
-}
 
 .containerUploadPage {
   background-color: white;
