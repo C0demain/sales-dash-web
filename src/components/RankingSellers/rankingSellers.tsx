@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Empty, Table, Button } from "antd";
+import { Empty, Table, Button, Spin } from "antd";
 import './index.css'
 import { formatCurrency } from "util/formatters";
 
 function RankingSellers() {
-    const [sellers, setSellers] = useState <any[]>([])
+    const [sellers, setSellers] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const columns = [
         {
@@ -30,32 +31,42 @@ function RankingSellers() {
             key: 'productsSold'
         },
 
-    ]
+    ];
 
     const getSellers = async () => {
+        setLoading(true);
         const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
-          withCredentials: false,
+            withCredentials: false,
         });
 
-        const ranking = response.data.ranking.map((e: any, k: number) => ({...e, rankPosition: k+1}))
-        
+        const ranking = response.data.ranking.map((e: any, k: number) => ({ ...e, rankPosition: k + 1 }));
 
-        setSellers(ranking)
-      };
+        setSellers(ranking);
+        setLoading(false);
+    };
 
-    useEffect(() => { 
-        getSellers()
-        }, [])
+    useEffect(() => {
+        getSellers();
+    }, []);
 
-    return(
+    return (
         <div className="ranking">
-            <h2>Ranking de vendedores por valor</h2>
-            <Button className="button-refresh" onClick={e => {getSellers()} }>Recarregar ranking</Button>
-            {sellers.length>0 ?
-            <Table columns={columns} dataSource={sellers} rowKey="id" pagination={{defaultPageSize: 10}}/>
-            : <Empty description={"Nenhuma venda encontrada"} />}
+            <Spin spinning={loading}>
+                {sellers.length > 0 ?
+                    <>
+                        <h2>Ranking de vendedores por valor</h2>
+                        <Button type="primary" className="custom-button-refresh" onClick={getSellers}>Recarregar Ranking</Button>
+                        <Table 
+                            columns={columns} 
+                            dataSource={sellers} 
+                            rowKey="id" 
+                            pagination={{ defaultPageSize: 10 }}
+                        />
+                    </>
+                    : <Empty description={"Nenhuma venda encontrada"} />}
+            </Spin>
         </div>
-    )
+    );
 }
 
-export default RankingSellers
+export default RankingSellers;

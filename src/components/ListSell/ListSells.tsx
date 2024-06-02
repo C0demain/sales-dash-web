@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react"
 import './index.css'
-import { Empty, Table, TableColumnsType } from "antd";
+import { Button, Empty, Spin, Table, TableColumnsType } from "antd";
 import { customLocale, formatCurrency, formatDate } from "util/formatters";
 
 const ListSells = () => {
     const [sells, setSells] = useState<any[]>([])
+    const [loading, setLoading] = useState<boolean>(true);
 
-    const columns:TableColumnsType = [
+    const columns: TableColumnsType = [
         {
             title: 'Data',
             dataIndex: 'date',
@@ -44,12 +45,14 @@ const ListSells = () => {
     ]
 
     const getSells = useCallback(async () => {
+        setLoading(true);
         let url = "http://localhost:8000/api/v1/sells/getfilter/"
 
         const response = await axios.get(url, {
             withCredentials: false,
         });
         setSells(response.data.sells);
+        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -58,17 +61,22 @@ const ListSells = () => {
 
     return (
         <div className="listSells">
-            <h2>Últimas vendas</h2>
-            {sells.length > 0 ?
-                <Table 
-                    className="listSellsTable" 
-                    columns={columns} 
-                    dataSource={sells} 
-                    rowKey="id" 
-                    pagination={{defaultPageSize: 5}} 
-                    locale={customLocale}
-                    />
-                : <Empty description={"Nenhuma venda encontrada"} />}
+            <Spin spinning={loading}>
+                {sells.length > 0 ?
+                    <>
+                        <h2>Últimas vendas</h2>
+                        <Button type="primary" className="custom-button-refresh" onClick={getSells}>Recarregar</Button>
+                        <Table
+                            className="listSellsTable"
+                            columns={columns}
+                            dataSource={sells}
+                            rowKey="id"
+                            pagination={{ defaultPageSize: 5 }}
+                            locale={customLocale}
+                        />
+                    </>
+                    : <Empty description={"Nenhuma venda encontrada"} />}
+            </Spin>
         </div>
     )
 }

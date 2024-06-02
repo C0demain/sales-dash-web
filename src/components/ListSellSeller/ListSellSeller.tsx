@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import './index.css';
-import { Empty, Table, TableColumnsType } from "antd";
+import { Button, Empty, Spin, Table, TableColumnsType } from "antd";
 import { customLocale, formatCurrency, formatDate } from "util/formatters";
 
 interface ListSellsSellerProps {
@@ -12,6 +12,7 @@ interface ListSellsSellerProps {
 const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSellerProps) => {
     const [sells, setSells] = useState<any[]>([]);
     const [userSelect, setUserSelect] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const columns: TableColumnsType = [
         {
@@ -19,7 +20,7 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
             dataIndex: 'date',
             key: 'date',
             render: value => formatDate(value),
-            sorter: ((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()), 
+            sorter: ((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
             defaultSortOrder: "descend"
         },
         {
@@ -55,6 +56,7 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
             withCredentials: false,
         });
         setSells(response.data.sells);
+        setLoading(false);
     }, [userSelect]);
 
     useEffect(() => {
@@ -71,20 +73,25 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
     }, [getSells, userSelect]);
 
     return (
-        <div className="ListSellsSeller">
-            <h2>Últimas vendas</h2>
-            {sells.length > 0 ?
-                <Table 
-                    className="listSellsTable" 
-                    columns={columns} 
-                    dataSource={sells} 
-                    rowKey={'id'} 
-                    pagination={{defaultPageSize: 5}} 
-                    locale={customLocale}
-                    />
-                : <Empty description={"Nenhuma venda encontrada"} />}
+        <div className="listSells">
+            <Spin spinning={loading}>
+                {sells.length > 0 ?
+                    <>
+                        <h2>Últimas vendas</h2>
+                        <Button type="primary" className="custom-button-refresh" onClick={getSells}>Recarregar</Button>
+                        <Table
+                            className="listSellsTable"
+                            columns={columns}
+                            dataSource={sells}
+                            rowKey="id"
+                            pagination={{ defaultPageSize: 5 }}
+                            locale={customLocale}
+                        />
+                    </>
+                    : <Empty description={"Nenhuma venda encontrada"} />}
+            </Spin>
         </div>
-    );
-};
+    )
+}
 
 export default ListSellsSeller;

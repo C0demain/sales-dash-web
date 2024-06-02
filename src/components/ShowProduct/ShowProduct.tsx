@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale } from "util/formatters";
@@ -16,12 +16,15 @@ const ShowProduct: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     getProducts();
   }, []);
 
   const getProducts = async () => {
+    setLoading(true);
     try {
       const response = await axios.get<{ products: Product[] }>("http://localhost:8000/api/v1/products/getAll");
       setProducts(response.data.products || []);
@@ -29,6 +32,9 @@ const ShowProduct: React.FC = () => {
       console.error("Erro ao buscar produtos:", error);
       setProducts([]);
       message.error('Erro ao buscar produtos. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
+      setDataLoaded(true);
     }
   };
 
@@ -36,7 +42,8 @@ const ShowProduct: React.FC = () => {
     setCurrentProduct(record);
     setOpen(true);
     form.setFieldsValue({
-      name: record.name
+      name: record.name,
+      description: record.description,
     });
   };
 
@@ -88,19 +95,27 @@ const ShowProduct: React.FC = () => {
     <NavbarWrapper>
       <Navbar />
       <div className="containerCl">
-        <h2>Lista de Produtos</h2>
-        <Button className="button-refresh" onClick={getProducts}>Recarregar produtos</Button>
-        {products.length > 0 ? (
-          <Table
-            columns={columns}
-            dataSource={products}
-            rowKey="id"
-            pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-            locale={customLocale}
-          />
-        ) : (
-          <Empty description="Nenhum produto encontrado" />
-        )}
+        <Spin spinning={loading}>
+          {dataLoaded && products.length === 0 ? (
+            <Empty description="Nenhum produto encontrado" />
+          ) : (
+            <>
+              {products.length > 0 && (
+                <>
+                  <h2>Lista de Produtos</h2>
+                  <Button type="primary" className="custom-button-refresh" onClick={getProducts}> Recarregar produtos </Button>
+                </>
+              )}
+              <Table
+                columns={columns}
+                dataSource={products}
+                rowKey="id"
+                pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                locale={customLocale}
+              />
+            </>
+          )}
+        </Spin>
         <Modal
           title="Editar Produto"
           open={open}
@@ -112,6 +127,13 @@ const ShowProduct: React.FC = () => {
               name="name"
               label="Nome"
               rules={[{ required: true, message: 'Por favor, insira o nome do produto!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="description"
+              label="Descrição"
+              rules={[{ required: true, message: 'Por favor, insira a descrição do produto!' }]}
             >
               <Input />
             </Form.Item>
