@@ -2,13 +2,12 @@ import { useState } from 'react'
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper'
 import { sendData } from '.'
 import './index.css'
-import { message } from 'antd'
+import { Button, message } from 'antd'
 import Navbar from 'components/Navbar/Navbar'
 
 function RegisterProduct() {
 
     const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
     const [errors, setErrors] = useState({ name: '', description: '', response: '' })
     const [sucess, setSucess] = useState('')
 
@@ -24,13 +23,8 @@ function RegisterProduct() {
             isValid = false;
         }
 
-        if (!description) {
-            message.error('Adicione uma descrição para o produto.')
-            isValid = false
-        }
-
         setErrors(errors)
-        return isValid
+        return isValid;
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,14 +32,13 @@ function RegisterProduct() {
         if (validate()) {
             // Lógica de submissão do formulário
             try {
-                await sendData(name, description)
-                message.success('Cadastro realizado!')
-                setName('')
-                setDescription('')
+                await sendData(name);
+                message.success('Produto Cadastrado com Sucesso!');
+                setName('');
             } catch (error: any) {
-                message.error('Ocorreu um erro ao registrar o produto. Tente novamente')
-                setErrors(errors)
-                console.log(error)
+                message.error('Ocorreu um erro ao registrar o produto. Tente novamente');
+                setErrors(errors);
+                console.log(error);
             }
         }
     }
@@ -67,16 +60,11 @@ function RegisterProduct() {
                                     {errors.name && <p className='erro'>{errors.name}</p>}
                                 </div>
 
-                                <div className='insertText'>
-                                    <label>Descrição</label>
-
-                                    <input placeholder="  Descreva o produto" type="text" onChange={(e) => setDescription(e.target.value)} required />
-                                    {errors.description && <p className='erro'>{errors.description}</p>}
-                                </div>
+                        
 
                                 {sucess && <p className='funciona'>{sucess}</p>}
                                 {errors.response && <p className='erro'>{errors.response}</p>}
-                                <button type='submit' className='botaoCadastrar'>Cadastrar</button>
+                                <Button type='primary' htmlType='submit' className='custom-button'>Cadastrar</Button>
                             </form>
                         </div>
                     </div>

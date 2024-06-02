@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input, message } from 'antd';
+import { Button, Input, message } from 'antd';
 import { updatePassword } from '.';
 import Navbar from 'components/Navbar/Navbar';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
@@ -18,12 +18,14 @@ function UpdatePassword() {
     try {
       const response: any = await updatePassword(newPassword);
       if (response.success) {
-        message.success('Senha atualizada com sucesso');
+        message.success('Senha Atualizada com Sucesso!');
+        setNewPassword('');
+        setConfirmPassword('');
       } else {
         message.error(response.message);
       }
     } catch (error) {
-      message.error('Erro ao atualizar a senha');
+      message.error('Erro ao Atualizar a Senha');
     }
   };
 
@@ -46,6 +48,7 @@ function UpdatePassword() {
             <div className='insertText'>
               <label>Nova Senha:</label>
               <Input.Password
+                value={newPassword}
                 className='inputField'
                 placeholder='Nova Senha'
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -56,6 +59,7 @@ function UpdatePassword() {
             <div className='insertText'>
               <label>Confirme a Nova Senha:</label>
               <Input.Password
+                value={confirmPassword}
                 className='inputField'
                 placeholder='Confirme a Nova Senha'
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -63,7 +67,7 @@ function UpdatePassword() {
               />
             </div>
 
-            <button type='submit' className='botaoCadastrar'>Atualizar Senha</button>
+            <Button type='primary' htmlType='submit' className='custom-button'>Atualizar Senha</Button>
           </form>
         </div>
       </div>

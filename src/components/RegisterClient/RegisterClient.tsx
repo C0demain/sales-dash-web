@@ -5,73 +5,14 @@ import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import Navbar from 'components/Navbar/Navbar';
 import message from 'antd/es/message';
 import InputMask from 'react-input-mask';
-
-const isValidCPF = (cpf: string): boolean => {
-  if (typeof cpf !== "string") return false;
-  cpf = cpf.replace(/[^\d]/g, '');
-  if (cpf.length !== 11) return false;
-  let sum = 0;
-  let mod;
-  for (let i = 0; i < 9; i++) {
-    sum += parseInt(cpf.charAt(i)) * (10 - i);
-  }
-  mod = sum % 11;
-  if (mod === 0 || mod === 1) {
-    if (parseInt(cpf.charAt(9)) !== 0) return false;
-  } else {
-    if (parseInt(cpf.charAt(9)) !== 11 - mod) return false;
-  }
-  sum = 0;
-  for (let i = 0; i < 10; i++) {
-    sum += parseInt(cpf.charAt(i)) * (11 - i);
-  }
-  mod = sum % 11;
-  if (mod === 0 || mod === 1) {
-    if (parseInt(cpf.charAt(10)) !== 0) return false;
-  } else {
-    if (parseInt(cpf.charAt(10)) !== 11 - mod) return false;
-  }
-  return true;
-};
-
-const isValidCNPJ = (cnpj: string): boolean => {
-  if (typeof cnpj !== "string") return false;
-  cnpj = cnpj.replace(/[^\d]/g, '');
-  if (cnpj.length !== 14) return false;
-  let sum = 0;
-  let mod;
-  let weight = 2;
-  for (let i = 11; i >= 0; i--) {
-    sum += parseInt(cnpj.charAt(i)) * weight;
-    weight = weight === 9 ? 2 : weight + 1;
-  }
-  mod = sum % 11;
-  if (mod < 2) {
-    if (parseInt(cnpj.charAt(12)) !== 0) return false;
-  } else {
-    if (parseInt(cnpj.charAt(12)) !== 11 - mod) return false;
-  }
-  sum = 0;
-  weight = 2;
-  for (let i = 12; i >= 0; i--) {
-    sum += parseInt(cnpj.charAt(i)) * weight;
-    weight = weight === 9 ? 2 : weight + 1;
-  }
-  mod = sum % 11;
-  if (mod < 2) {
-    if (parseInt(cnpj.charAt(13)) !== 0) return false;
-  } else {
-    if (parseInt(cnpj.charAt(13)) !== 11 - mod) return false;
-  }
-  return true;
-};
+import { isValidCNPJ, isValidCPF } from 'util/validation';
+import { Button } from 'antd';
 
 function RegisterClient() {
   const [clientName, setClientName] = useState('');
   const [segment, setSegment] = useState('');
   const [cpfCnpj, setCpfCnpj] = useState('');
   const [response, setResponse] = useState('');
-  const [success, setSuccess] = useState('');
   const [isCpf, setIsCpf] = useState(true);
 
   const toggleIsCpf = () => {
@@ -130,6 +71,9 @@ function RegisterClient() {
       try {
         await sendData(clientName, segment, cpfCnpj);
         message.success('Cliente cadastrado com sucesso!');
+        setClientName('');
+        setSegment('');
+        setCpfCnpj('');
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
           message.error('Esse CPF/CNPJ já está vinculado a outro cliente.');
@@ -151,16 +95,16 @@ function RegisterClient() {
 
               <div className="insertText">
                 <label>Nome:</label>
-                <input type="text" placeholder="Nome completo" onChange={(e) => setClientName(e.target.value)} required />
+                <input type="text" placeholder="Nome completo" value={clientName} onChange={(e) => setClientName(e.target.value)} required />
               </div>
 
               <div className="insertText">
                 <label>Segmento do Cliente:</label>
-                <input type="text" placeholder="Ex: Contábil, Marketing" onChange={(e) => setSegment(e.target.value)} required />
+                <input type="text" placeholder="Ex: Contábil, Marketing" value={segment} onChange={(e) => setSegment(e.target.value)} required />
               </div>
 
               <div className="insertText">
-                <label>CPF/CNPJ do Cliente:</label>
+              <label>{isCpf ? 'CPF' : 'CNPJ'} do Cliente:</label>
                 <InputMask
                   mask={isCpf ? '999.999.999-99' : '99.999.999/9999-99'}
                   placeholder={isCpf ? '000.000.000-00' : '00.000.000/0000-00'}
@@ -179,9 +123,7 @@ function RegisterClient() {
                 <span className='cor'>CPF</span>
               </div>
 
-              {success && <p className="funciona">{success}</p>}
-              {response && <p className="erro">{response}</p>}
-              <button type="submit" className='botaoCadastrar'>Cadastrar</button>
+              <Button type='primary' htmlType="submit" className='custom-button'>Cadastrar</Button>
             </form>
           </div>
         </div>

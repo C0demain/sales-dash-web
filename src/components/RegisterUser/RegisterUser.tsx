@@ -1,125 +1,71 @@
-import { Input, Spin, message } from "antd";
+import { Button, Input, Spin, message } from "antd";
 import { useState } from 'react';
 import './index.css';
-import { isValidCPF, sendDataAdmin, sendDataSeller } from '.';
+import { sendDataAdmin, sendDataSeller } from '.';
 import Navbar from 'components/Navbar/Navbar';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import InputMask from 'react-input-mask';
+import { isValidCPF } from "util/validation";
 
 function RegisterUser() {
-
   const regex = /^(?=.*[!@#$%^&*()_+{}\]:;<>,.?~])(?=.*[0-9])(?=.*[a-zA-Z]).*$/
 
-  // States para o formulário de vendedor
-  const [userName, setUserName] = useState('')
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
-  const [senhaConfirm, setSenhaConfirm] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [errors, setErrors] = useState({ userName: '', email: '', senhaConfirm: '', cpf: '', funcao: '', senha: '', response: '' })
-  const [success, setSuccess] = useState('');
+  //Vendedor
+  const [nameUser, setNameUser] = useState('');
+  const [emailUser, setEmailUser] = useState('');
+  const [passwordUser, setPasswordUser] = useState('');
+  const [confirmPasswordUser, setConfirmPasswordUser] = useState('');
+  const [cpfUser, setCpfUser] = useState('');
   const [loadingSeller, setLoadingSeller] = useState(false);
 
-  // States para o formulário de administrador
-  const [userNameAdmin, setUserNameAdmin] = useState('');
+  //Gestor
+  const [nameAdmin, setNameAdmin] = useState('');
   const [emailAdmin, setEmailAdmin] = useState('');
   const [cpfAdmin, setCpfAdmin] = useState('');
-  const [errorsAdmin, setErrorsAdmin] = useState({ userName: '', email: '', cpf: '', response: '' })
-  const [successAdmin, setSuccessAdmin] = useState('');
   const [loadingAdmin, setLoadingAdmin] = useState(false);
 
-  // Validação do formulário de vendedor
-  const validateSeller = () => {
-    let isValid = true;
-    const errors = { userName: '', email: '', senhaConfirm: '', cpf: '', funcao: '', senha: '', response: '' };
+  const validateFieldsSeller = () => {
 
-    if (!userName) {
-      errors.userName = 'O nome é obrigatório.';
-      isValid = false;
-    } else if (userName.length < 3) {
-      errors.userName = 'O nome deve ter mais de 3 caracteres.';
-      isValid = false;
+    if (nameUser.length < 3) {
+      message.error('O nome deve ter mais de 3 caracteres.');
+      return false;
     }
-
-    if (!email) {
-      errors.email = 'O email é obrigatório.';
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = 'Email inválido.';
-      isValid = false;
+    if (!/\S+@\S+\.\S+/.test(emailUser)) {
+      message.error('Email inválido.');
+      return false;
     }
-
-    if (!senha) {
-      errors.senha = 'É obrigatório definir uma senha.'
-      isValid = false
-    } else if (senha.length < 8) {
-      errors.senha = 'A senha deve ter mais de 8 caracteres.'
-      isValid = false
-    } else if (!regex.test(senha)) {
-      errors.senha = 'A senha não atende aos requisitos.'
-      isValid = false
+    if (cpfUser.length === 14 && !isValidCPF(cpfUser)) {
+      message.error('Esse CPF é inválido');
+      return false;
     }
-
-    if (!senhaConfirm) {
-      errors.senhaConfirm = 'É obrigatório ter e confirmar uma senha.'
-      isValid = false
-    } else if (senha !== senhaConfirm) {
-      errors.senhaConfirm = 'As duas senhas devem ser iguais'
-      isValid = false
+    if (passwordUser.length < 8) {
+      message.error('A senha deve ter pelo menos 8 caracteres.');
+      return false;
     }
-
-    if (!cpf) {
-      errors.cpf = 'É obrigatório confirmar um CPF.'
-      isValid = false
-    } else if (isValidCPF(cpf)) {
-      errors.cpf = 'Esse CPF é inválido'
-      isValid = false
+    if (!regex.test(passwordUser)) {
+      message.error('A senha deve conter pelo menos um número e um caractere especial.');
+      return false;
     }
-
-    setErrors(errors)
-    return isValid
+    if (passwordUser !== confirmPasswordUser) {
+      message.error('As senhas não coincidem.');
+      return false;
+    }
+    return true;
   }
 
-  // Validação do formulário de administrador
-  const validateAdmin = () => {
-    let isValid = true;
-    const errorsAdmin = { userName: '', email: '', cpf: '', response: '' };
-
-    if (!userNameAdmin) {
-      errorsAdmin.userName = 'O nome é obrigatório.';
-      isValid = false;
-    } else if (userNameAdmin.length < 3) {
-      errorsAdmin.userName = 'O nome deve ter mais de 3 caracteres.';
-      isValid = false;
-    }
-
-    if (!emailAdmin) {
-      errorsAdmin.email = 'O email é obrigatório.';
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(emailAdmin)) {
-      errorsAdmin.email = 'Email inválido.';
-      isValid = false;
-    }
-
-    if (!cpfAdmin) {
-      errorsAdmin.cpf = 'É obrigatório confirmar um CPF.';
-      isValid = false;
-    } else if (isValidCPF(cpfAdmin)) {
-      errorsAdmin.cpf = 'Esse CPF é inválido';
-      isValid = false;
-    }
-
-    setErrorsAdmin(errorsAdmin)
-    return isValid
-  }
   const handleSubmitSeller = async (event: any) => {
     event.preventDefault();
-    if (validateSeller()) {
+    if (validateFieldsSeller()) {
       setLoadingSeller(true);
       try {
-        await sendDataSeller(userName, email, cpf, senha);
+        await sendDataSeller(nameUser, emailUser, cpfUser, passwordUser);
         message.success('Vendedor cadastrado com sucesso!');
-      } catch (error: any) {
+        setNameUser('');
+        setEmailUser('');
+        setPasswordUser('');
+        setConfirmPasswordUser('');
+        setCpfUser('');
+      } catch (error : any) {
         if (error.response && error.response.status === 400) {
           message.error('CPF ou email já está vinculado a outro usuário.');
         } else {
@@ -131,14 +77,33 @@ function RegisterUser() {
     }
   };
 
+  const validateFieldsAdmin = () => {
+    if (nameAdmin.length < 3) {
+      message.error('O nome deve ter mais de 3 caracteres.');
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(emailAdmin)) {
+      message.error('Email inválido.');
+      return false;
+    }
+    if (cpfAdmin.length === 14 && !isValidCPF(cpfAdmin)) {
+      message.error('Esse CPF é inválido');
+      return false;
+    }
+    return true;
+  }
+
   const handleSubmitAdmin = async (event: any) => {
     event.preventDefault();
-    if (validateAdmin()) {
+    if (validateFieldsAdmin()) {
       setLoadingAdmin(true);
       try {
-        await sendDataAdmin(userNameAdmin, emailAdmin, cpfAdmin);
+        await sendDataAdmin(nameAdmin, emailAdmin, cpfAdmin);
         message.success('Gestor cadastrado com sucesso!');
         message.success('Verifique sua caixa de email principal ou o spam.');
+        setNameAdmin('');
+        setCpfAdmin('');
+        setEmailAdmin('');        
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
           message.error('CPF ou email já está vinculado a outro usuário.');
@@ -164,26 +129,26 @@ function RegisterUser() {
               <form className="formularioVendedor" onSubmit={handleSubmitSeller}>
                 <div className='insertText'>
                   <label>Nome:</label>
-                  <input type="text" placeholder='Nome completo' onChange={(e) => setUserName(e.target.value)} required />
+                  <input type="text" placeholder='Nome completo' value={nameUser} onChange={(e) => setNameUser(e.target.value)} required />
                 </div>
 
                 <div className='insertText'>
                   <label>CPF do vendedor:</label>
                   <InputMask
                     mask="999.999.999-99"
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
+                    value={cpfUser}
+                    onChange={(e) => setCpfUser(e.target.value)}
                     placeholder="000.000.000-00"
                   />
                 </div>
 
                 <div className='insertText'>
                   <label>Email do vendedor:</label>
-                  <input type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
+                  <input type="email" placeholder='Email' value={emailUser} onChange={(e) => setEmailUser(e.target.value)} required />
                 </div>
 
                 <div className='passwordRules'>
-                  <p>A nova senha deve conter:</p>
+                  <p>A senha deve conter:</p>
                   <ul>
                     <li>Pelo menos 8 caracteres</li>
                     <li>Pelo menos um número</li>
@@ -193,15 +158,15 @@ function RegisterUser() {
 
                 <div className='inputSenha'>
                   <label>Digite uma senha:</label>
-                  <Input.Password type="password" name='senha' placeholder='Senha' required onChange={(e) => setSenha(e.target.value)} />
+                  <Input.Password type="password" value={passwordUser} placeholder='Senha' required onChange={(e) => setPasswordUser(e.target.value)} />
                 </div>
 
                 <div className='inputSenha'>
                   <label>Confirme sua senha:</label>
-                  <Input.Password type="password" placeholder='Confirme sua senha' required onChange={(e) => setSenhaConfirm(e.target.value)} />
+                  <Input.Password type="password" value={confirmPasswordUser} placeholder='Confirme sua senha' required onChange={(e) => setConfirmPasswordUser(e.target.value)} />
                 </div>
 
-                <button type='submit' className="botaoCadastrar">Cadastrar</button>
+                <Button htmlType='submit' type='primary' className="custom-button"> Cadastrar </Button>
               </form>
             </div>
 
@@ -212,7 +177,7 @@ function RegisterUser() {
                 <Spin spinning={loadingAdmin}>
                   <div className='insertText'>
                     <label>Nome:</label>
-                    <input type="text" placeholder='Nome completo' onChange={(e) => setUserNameAdmin(e.target.value)} required />
+                    <input type="text" placeholder='Nome completo' value={nameAdmin} onChange={(e) => setNameAdmin(e.target.value)} required />
                   </div>
 
                   <div className='insertText'>
@@ -227,10 +192,10 @@ function RegisterUser() {
 
                   <div className='insertText'>
                     <label>Email do gestor:</label>
-                    <input type="email" placeholder='Email' onChange={(e) => setEmailAdmin(e.target.value)} required />
+                    <input type="email" placeholder='Email' value={emailAdmin} onChange={(e) => setEmailAdmin(e.target.value)} required />
                   </div>
 
-                  <button type='submit' className="botaoCadastrar">Cadastrar</button>
+                  <Button htmlType="submit" type='primary' className="custom-button">Cadastrar</Button>
                 </Spin>
               </form>
             </div>

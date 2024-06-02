@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-export async function sendData(name: string, description: string) {
+export async function sendData(name: string) {
   const url = 'http://localhost:8000/api/v1/products/register';
 
   const userData = {
-    'name': name,
-    'description': description
+    'name': name
   };
 
   try {

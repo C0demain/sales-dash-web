@@ -46,26 +46,3 @@
 .inputSenha {
   margin-bottom: 15px;
 }
-
-.erro {
-  color: red;
-  font-size: 12px;
-}
-
-.funciona {
-  color: green;
-  font-size: 14px;
-}
-
-.botaoCadastrar {
-  padding: 10px 20px;
-  background-color: #001529;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.botaoCadastrar:hover {
-  background-color: #001529;
-}
