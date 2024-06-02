@@ -3,26 +3,13 @@ import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
+import { customLocale } from "util/formatters";
 
 interface Product {
   id: number;
   name: string;
   description: string;
 }
-
-const customLocale = {
-  filterTitle: 'Filtrar',
-  filterConfirm: 'OK',
-  filterReset: 'Resetar',
-  filterEmptyText: 'Sem filtros',
-  emptyText: 'Nenhuma venda encontrada',
-  selectAll: 'Selecionar página atual',
-  selectInvert: 'Inverter seleção na página atual',
-  sortTitle: 'Ordenar',
-  triggerDesc: 'Clique para ordenar descendentemente',
-  triggerAsc: 'Clique para ordenar ascendentemente',
-  cancelSort: 'Clique para cancelar ordenação',
-};
 
 const ShowProduct: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);

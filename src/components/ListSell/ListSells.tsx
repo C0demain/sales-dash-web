@@ -2,21 +2,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react"
 import './index.css'
 import { Empty, Table, TableColumnsType } from "antd";
-import { formatCurrency, formatDate } from "util/formatters";
-
-const customLocale = {
-    filterTitle: 'Filtrar',
-    filterConfirm: 'OK',
-    filterReset: 'Resetar',
-    filterEmptyText: 'Sem filtros',
-    emptyText: 'Nenhuma venda encontrada',
-    selectAll: 'Selecionar página atual',
-    selectInvert: 'Inverter seleção na página atual',
-    sortTitle: 'Ordenar',
-    triggerDesc: 'Clique para ordenar descendentemente',
-    triggerAsc: 'Clique para ordenar ascendentemente',
-    cancelSort: 'Clique para cancelar ordenação'
-};
+import { customLocale, formatCurrency, formatDate } from "util/formatters";
 
 const ListSells = () => {
     const [sells, setSells] = useState<any[]>([])

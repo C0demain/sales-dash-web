@@ -3,6 +3,7 @@ import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
+import { customLocale } from "util/formatters";
 
 interface User {
   id: number;
@@ -11,20 +12,6 @@ interface User {
   role: string;
   cpf: string;
 }
-
-const customLocale = {
-  filterTitle: 'Filtrar',
-  filterConfirm: 'OK',
-  filterReset: 'Resetar',
-  filterEmptyText: 'Sem filtros',
-  emptyText: 'Nenhum usuário encontrado',
-  selectAll: 'Selecionar página atual',
-  selectInvert: 'Inverter seleção na página atual',
-  sortTitle: 'Ordenar',
-  triggerDesc: 'Clique para ordenar descendentemente',
-  triggerAsc: 'Clique para ordenar ascendentemente',
-  cancelSort: 'Clique para cancelar ordenação',
-};
 
 const ShowUsers: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

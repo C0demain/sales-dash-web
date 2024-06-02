@@ -1,12 +1,20 @@
-.containerStats{
+.containerStats {
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
 }
-.boxStats{
+
+.boxStats {
     margin: 3vh 2vh;
-    background-color: gainsboro;
     padding: 3vh;
-    border-radius: 2vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border: 2px solid black; 
+}
+
+.boxStats .ant-statistic-title {
+    color: black; 
 }

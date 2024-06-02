@@ -3,7 +3,7 @@ import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
-import { formatCurrency } from "util/formatters";
+import { customLocale, formatCurrency } from "util/formatters";
 import moment from 'moment';
 import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
@@ -20,20 +20,6 @@ interface Sale {
   productName: string;
   value: number;
 }
-
-const customLocale = {
-  filterTitle: 'Filtrar',
-  filterConfirm: 'OK',
-  filterReset: 'Resetar',
-  filterEmptyText: 'Sem filtros',
-  emptyText: 'Nenhuma venda encontrada',
-  selectAll: 'Selecionar página atual',
-  selectInvert: 'Inverter seleção na página atual',
-  sortTitle: 'Ordenar',
-  triggerDesc: 'Clique para ordenar descendentemente',
-  triggerAsc: 'Clique para ordenar ascendentemente',
-  cancelSort: 'Clique para cancelar ordenação'
-};
 
 function ShowSalesSeller() {
   const [sales, setSells] = useState<Sale[]>([]);

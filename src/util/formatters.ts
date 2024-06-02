@@ -5,12 +5,12 @@ const formatCurrency = (value: number): string => {
 };
 
 const formatDate = (value: string): string => {
-    if(!value) return ""
-    return new Date(value+'T00:00').toLocaleDateString('pt-BR')
+    if (!value) return ""
+    return new Date(value + 'T00:00').toLocaleDateString('pt-BR')
 }
 
-const formatDateObj = (value:string): Date => {
-    return new Date(value+'T00:00')
+const formatDateObj = (value: string): Date => {
+    return new Date(value + 'T00:00')
 }
 
 function formatDateToBack(date: Date): string {
@@ -20,4 +20,18 @@ function formatDateToBack(date: Date): string {
     return `${year}-${month}-${day}`;
 }
 
-export {formatCurrency, formatDate, formatDateToBack, formatDateObj}
+const customLocale = {
+    filterTitle: 'Filtrar',
+    filterConfirm: 'OK',
+    filterReset: 'Resetar',
+    filterEmptyText: 'Sem filtros',
+    emptyText: 'Nenhuma venda encontrada',
+    selectAll: 'Selecionar página atual',
+    selectInvert: 'Inverter seleção na página atual',
+    sortTitle: 'Ordenar',
+    triggerDesc: 'Clique para ordenar descendentemente',
+    triggerAsc: 'Clique para ordenar ascendentemente',
+    cancelSort: 'Clique para cancelar ordenação'
+};
+
+export { formatCurrency, formatDate, formatDateToBack, formatDateObj, customLocale }
