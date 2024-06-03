@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Empty, Table, Button, Modal, Form, Input, message } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale } from "util/formatters";
@@ -18,6 +18,9 @@ const ShowUsers: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
 
   useEffect(() => {
     getUsers();
@@ -35,6 +38,9 @@ const ShowUsers: React.FC = () => {
       console.error("Erro ao buscar usuários:", error);
       setUsers([]);
       message.error('Erro ao buscar usuários. Por favor, tente novamente.');
+    } finally {
+      setLoading(false);
+      setDataLoaded(true);
     }
   };
 
@@ -127,19 +133,29 @@ const ShowUsers: React.FC = () => {
     <NavbarWrapper>
       <Navbar />
       <div className="containerCl">
-        <h2>Lista de Usuários</h2>
-        <Button className="button-refresh" onClick={getUsers}>Recarregar usuários</Button>
-        {users.length > 0 ? (
-          <Table
-            columns={columns}
-            dataSource={users}
-            rowKey="id"
-            pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-            locale={customLocale}
-          />
-        ) : (
-          <Empty description="Nenhum usuário encontrado" />
-        )}
+        <Spin spinning={loading}>
+          {dataLoaded && users.length === 0 ? (
+            <Empty description="Nenhum usuário encontrado" />
+          ) : (
+            <>
+              {users.length > 0 && (
+                <>
+                  <h2>Lista de Usuários</h2>
+                  <Button type="primary" className="custom-button-refresh" onClick={getUsers}>Recarregar usuários</Button>
+                </>
+              )}
+
+              <Table
+                columns={columns}
+                dataSource={users}
+                rowKey="id"
+                pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                locale={customLocale}
+              />
+
+            </>
+          )}
+        </Spin>
         <Modal
           title="Editar Usuário"
           open={visible}
@@ -165,7 +181,7 @@ const ShowUsers: React.FC = () => {
               name="role"
               label="Função"
             >
-              <Input disabled/>
+              <Input disabled />
             </Form.Item>
             <Form.Item
               name="cpf"
