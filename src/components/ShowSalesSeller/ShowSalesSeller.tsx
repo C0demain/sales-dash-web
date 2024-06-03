@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale, formatCurrency } from "util/formatters";
-import moment from 'moment';
 import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { apiInstance } from "services/api";
 
 dayjs.extend(customParseFormat);
 
@@ -81,7 +80,7 @@ function ShowSalesSeller() {
     const query = queryParams.filter(e => e !== '').join('&');
     url += query ? `?${query}` : "";
 
-    const response = await axios.get(url, {
+    const response = await apiInstance.get(url, {
       withCredentials: false,
     });
     setSells(response.data.sells);
@@ -126,7 +125,7 @@ function ShowSalesSeller() {
         value: values.value
       };
 
-      const response = await axios.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
+      const response = await apiInstance.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
       if (response.status === 200) {
         setVisible(false);
         message.success('Venda atualizada com sucesso!');
@@ -145,7 +144,7 @@ function ShowSalesSeller() {
   };
 
   const handleDatePicker = (date: any) => {
-    return date ? dayjs(date).format('DD/MM/YYYY') : ""; // Certifique-se de usar o formato correto para o backend
+    return date ? dayjs(date).format('DD/MM/YYYY') : ""; 
   };
 
   return (

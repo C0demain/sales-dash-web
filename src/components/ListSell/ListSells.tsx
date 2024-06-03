@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react"
 import './index.css'
 import { Button, Empty, Spin, Table, TableColumnsType } from "antd";
 import { customLocale, formatCurrency, formatDate } from "util/formatters";
+import { apiInstance } from "services/api";
 
 const ListSells = () => {
     const [sells, setSells] = useState<any[]>([])
@@ -48,7 +48,7 @@ const ListSells = () => {
         setLoading(true);
         let url = "http://localhost:8000/api/v1/sells/getfilter/"
 
-        const response = await axios.get(url, {
+        const response = await apiInstance.get(url, {
             withCredentials: false,
         });
         setSells(response.data.sells);

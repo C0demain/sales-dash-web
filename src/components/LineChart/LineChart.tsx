@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
 import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
 import './index.css'
 import Switch from '@mui/material/Switch';
 import { Empty, Select } from 'antd';
+import { apiInstance } from 'services/api';
 
 export default function BasicLineChart() {
   const [dataSells, setDataSells] = useState<any[]>([])
@@ -81,7 +81,7 @@ export default function BasicLineChart() {
     const query = queryParams.filter(e => e !== '').join('&')
     url += query !== "&" ? "?" + query : ""
 
-    const response = await axios.get(url, {
+    const response = await apiInstance.get(url, {
         withCredentials: false,
     });
     console.log(url)

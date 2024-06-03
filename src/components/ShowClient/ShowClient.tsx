@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import './index.css'
 import { isValidCNPJ, isValidCPF } from "util/validation";
 import { customLocale } from "util/formatters";
+import { apiInstance } from "services/api";
 
 interface Client {
   id: string;
@@ -54,7 +54,7 @@ function ShowClient() {
 
   const getClients = async () => {
     try {
-      const response = await axios.get<{ client: Client[] }>('http://localhost:8000/api/v1/clients/getclients');
+      const response = await apiInstance.get<{ client: Client[] }>('http://localhost:8000/api/v1/clients/getclients');
       if (response.data && response.data.client) {
         setClients(response.data.client);
       } else {
@@ -92,7 +92,7 @@ function ShowClient() {
       }
 
       const updatedClient = { ...currentClient, ...values };
-      const response = await axios.put(`http://localhost:8000/api/v1/clients/update/${currentClient.id}`, updatedClient);
+      const response = await apiInstance.put(`http://localhost:8000/api/v1/clients/update/${currentClient.id}`, updatedClient);
 
       if (response.status === 200) {
         setOpen(false);
@@ -113,7 +113,7 @@ function ShowClient() {
 
   const handleDelete = async (record: Client) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/v1/clients/delete/${record.id}`);
+      const response = await apiInstance.delete(`http://localhost:8000/api/v1/clients/delete/${record.id}`);
       if (response.status === 204) message.success('Cliente excluído com sucesso!');
 
       getClients()

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, DatePicker, Row, Col, TableColumnsType } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar"; 
@@ -10,6 +9,7 @@ import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import SelectClient from "components/SelectClient/SelectClient";
 import SelectProduct from "components/SelectProduct/SelectProduct";
+import { apiInstance } from "services/api";
 
 dayjs.extend(customParseFormat);
 
@@ -42,7 +42,7 @@ function ShowSales() {
       title: 'Data',
       dataIndex: 'date',
       key: 'date',
-      render: (value: string | number | dayjs.Dayjs | Date) => dayjs(value).format('DD/MM/YYYY'), // Formata a data
+      render: (value: string | number | dayjs.Dayjs | Date) => dayjs(value).format('DD/MM/YYYY'),
       sorter: (a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       defaultSortOrder: "descend"
     },
@@ -92,9 +92,9 @@ function ShowSales() {
     const query = queryParams.filter(e => e !== '').join('&');
     url += query ? `?${query}` : "";
 
-    const response = await axios.get(url);
+    const response = await apiInstance.get(url);
     setSells(response.data.sells);
-    setTotalSales(response.data.total); // Assume the API returns total sales count
+    setTotalSales(response.data.total); 
   }, [userSelect, productSelect, clientSelect, startDate, endDate, currentPage, pageSize]);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ function ShowSales() {
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
-      date: dayjs(record.date),  // Certifique-se de que a data está no formato `DD/MM/YYYY`
+      date: dayjs(record.date),  
       seller: record.user.cpf,
       client: record.clientname,
       product: record.productName,
@@ -124,12 +124,12 @@ function ShowSales() {
       }
       const cleanSeller = Array.isArray(seller) ? seller[0] : seller
       const updatedSale = {
-        date: dayjs(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD'),  // Formatar a data corretamente para o backend
+        date: dayjs(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD'),  
         seller_cpf: cleanSeller,
         value: values.value
       };
 
-      const response = await axios.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
+      const response = await apiInstance.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
       if (response.status === 200) {
         setVisible(false);
         message.success('Venda atualizada com sucesso!');
@@ -153,7 +153,7 @@ function ShowSales() {
   };
 
   const handleDatePicker = (date: any) => {
-    return date ? dayjs(date).format('DD/MM/YYYY') : ""; // Certifique-se de usar o formato correto para o backend
+    return date ? dayjs(date).format('DD/MM/YYYY') : "";
   };
 
   return (

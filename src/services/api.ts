@@ -23,3 +23,22 @@ apiLogin.interceptors.request.use(
   }
 );
 
+export const apiInstance = axios.create();
+
+apiInstance.interceptors.request.use(
+  (config) => {
+    const user = getUserLocalStorage();
+
+    if (user?.token) {
+      if (!config.headers) {
+        config.headers = {};
+      }
+      config.headers.Authorization = `Bearer ${user.token}`; // Adicione 'Bearer ' antes do token
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);

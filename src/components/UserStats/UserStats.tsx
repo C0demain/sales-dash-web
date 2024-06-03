@@ -1,9 +1,9 @@
-import axios from "axios";
 import { Statistic } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider/useAuth";
 import { formatCurrency, formatDateToBack } from "util/formatters";
 import './index.css';
+import { apiInstance } from "services/api";
 
 const UserStats = ({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) => {
     const [userStats, setUserStats] = useState<Record<string, { totalSales: number }>[]>([]);
@@ -41,7 +41,7 @@ const UserStats = ({ startDateProp, endDateProp }: { startDateProp: string, endD
         const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
 
         try {
-            const response = await axios.get(`${url}${queryString}`, { withCredentials: false });
+            const response = await apiInstance.get(`${url}${queryString}`, { withCredentials: false });
             setTotalSells(response.data.userSales.totalValue);
             setTotalComission(response.data.userSales.totalCommissions);
         } catch (error) {

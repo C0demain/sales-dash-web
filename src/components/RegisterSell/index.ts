@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { apiInstance } from 'services/api';
 
 export async function sendData(date: string, seller: string, client: string, product: number, value: number) {
 
@@ -13,7 +13,7 @@ export async function sendData(date: string, seller: string, client: string, pro
   };
 
   try {
-    const response = await axios.post(url, userData);
+    const response = await apiInstance.post(url, userData);
     console.log('Dados enviados com sucesso:', response.data);
   } catch (error) {
     console.error('Erro ao enviar dados:', error);

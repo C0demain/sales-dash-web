@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Button, Modal, message } from 'antd';
 import './index.css';
+import { apiInstance } from 'services/api';
 
 const DatabaseCleaner = () => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ const DatabaseCleaner = () => {
     setVisible(false); 
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/dashboard/clean-database');
+      const response = await apiInstance.post('http://localhost:8000/api/v1/dashboard/clean-database');
       message.success(response.data.message); 
     } catch (error) {
       message.error('Falha ao limpar o banco de dados.'); 

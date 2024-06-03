@@ -1,7 +1,7 @@
 import { InputNumber, Select } from 'antd';
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
+import { apiInstance } from 'services/api';
 
 export default function BarChart() {
   const [commissions, setCommissions] = useState<any>([]);
@@ -14,7 +14,7 @@ export default function BarChart() {
       const url = 'http://localhost:8000/api/v1/dashboard/date/commission'
       const startDate = `${selectedYear}-01-01`
       const endDate = `${selectedYear}-12-31`
-      const response = await axios.get(url, {params: {startDate, endDate} })
+      const response = await apiInstance.get(url, {params: {startDate, endDate} })
       const chartData: any[] = [];
       chartData.push(['Tipo', 'Valor', { role: 'style' }])
       const currentMonth = response.data.stats.find((e: any) => e.month == months[selectedMonthIndex])

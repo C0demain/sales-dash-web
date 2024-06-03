@@ -1,4 +1,4 @@
-import axios from "axios";
+import { apiInstance } from "services/api";
 
 export async function updatePassword(newPassword: string) {
     // Função para validar a senha
@@ -30,7 +30,7 @@ export async function updatePassword(newPassword: string) {
     };
 
     try {
-        const response = await axios.put(urlUpdatePassword, passwordData);
+        const response = await apiInstance.put(urlUpdatePassword, passwordData);
         if (response.status === 200) {
             console.log("Senha atualizada com sucesso");
             return { success: true, message: "Senha atualizada com sucesso" };

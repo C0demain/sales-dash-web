@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx";
 import './index.css';
 import { Button, Input, message, Spin } from "antd";
+import { apiInstance } from "services/api";
 
 const UploadExcelPage: React.FC = () => {
   const [fileName, setFileName] = useState<string>("");
@@ -72,20 +73,13 @@ const UploadExcelPage: React.FC = () => {
 
   const sendDataToBackend = async (data: Record<string, any>) => {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/sells/table', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (!response.ok) {
+      const response = await apiInstance.post('http://localhost:8000/api/v1/sells/table', data);
+  
+      if (response.status !== 200) {
         throw new Error('Erro ao enviar os dados para o backend');
       }
-
-      const responseData = await response.json();
-      console.log('Resposta do backend:', responseData);
+  
+      console.log('Resposta do backend:', response.data);
     } catch (error) {
       console.error('Erro:', error);
     }

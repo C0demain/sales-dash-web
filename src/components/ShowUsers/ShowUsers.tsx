@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale } from "util/formatters";
+import { apiInstance } from "services/api";
 
 interface User {
   id: number;
@@ -28,7 +28,7 @@ const ShowUsers: React.FC = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get<{ users: User[] }>("http://localhost:8000/api/v1/auth/users");
+      const response = await apiInstance.get<{ users: User[] }>("http://localhost:8000/api/v1/auth/users");
       const transformedUsers = response.data.users.map(user => ({
         ...user,
         role: user.role === 'admin' ? 'Gestor' : user.role === 'user' ? 'Vendedor' : user.role,
@@ -68,7 +68,7 @@ const ShowUsers: React.FC = () => {
       // Remove senha se existir para garantir que não seja alterada
       delete updatedUser.password;
 
-      const response = await axios.put(`http://localhost:8000/api/v1/auth/user/${currentUser.id}`, updatedUser);
+      const response = await apiInstance.put(`http://localhost:8000/api/v1/auth/user/${currentUser.id}`, updatedUser);
 
       if (response.status === 200) {
         message.success('Usuário atualizado com sucesso!');

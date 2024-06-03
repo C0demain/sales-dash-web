@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Empty, Table, Button, Modal, Form, Input, message, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale } from "util/formatters";
+import { apiInstance } from "services/api";
 
 interface Product {
   id: number;
@@ -26,7 +26,7 @@ const ShowProduct: React.FC = () => {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get<{ products: Product[] }>("http://localhost:8000/api/v1/products/getAll");
+      const response = await apiInstance.get<{ products: Product[] }>("http://localhost:8000/api/v1/products/getAll");
       setProducts(response.data.products || []);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -56,7 +56,7 @@ const ShowProduct: React.FC = () => {
       }
 
       const updatedProduct = { ...currentProduct, ...values };
-      const response = await axios.put(`http://localhost:8000/api/v1/products/${currentProduct.id}`, updatedProduct);
+      const response = await apiInstance.put(`http://localhost:8000/api/v1/products/${currentProduct.id}`, updatedProduct);
 
       if (response.status === 200) {
         message.success('Produto atualizado com sucesso!');
@@ -130,13 +130,7 @@ const ShowProduct: React.FC = () => {
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              name="description"
-              label="Descrição"
-              rules={[{ required: true, message: 'Por favor, insira a descrição do produto!' }]}
-            >
-              <Input />
-            </Form.Item>
+            
           </Form>
         </Modal>
       </div>

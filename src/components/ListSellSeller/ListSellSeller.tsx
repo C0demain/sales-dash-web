@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import './index.css';
 import { Button, Empty, Spin, Table, TableColumnsType } from "antd";
 import { customLocale, formatCurrency, formatDate } from "util/formatters";
+import { apiInstance } from "services/api";
 
 interface ListSellsSellerProps {
     onStartDateChange: (date: string) => void;
@@ -52,7 +52,7 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
         const query = queryParams.filter(e => e !== '').join('&');
         url += query ? "?" + query : "";
 
-        const response = await axios.get(url, {
+        const response = await apiInstance.get(url, {
             withCredentials: false,
         });
         setSells(response.data.sells);

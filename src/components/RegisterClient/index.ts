@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { apiInstance } from 'services/api';
 
 export async function sendData(userName: string, segment: string, cpf: string) {
 
@@ -10,6 +10,6 @@ export async function sendData(userName: string, segment: string, cpf: string) {
     'cpf': cpf
   };
 
-    const response = await axios.post(url, userData)
+    const response = await apiInstance.post(url, userData)
     if(response.status === 201) console.log("Dados enviados com sucesso")
 }

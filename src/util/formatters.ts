@@ -1,4 +1,3 @@
-
 const formatCurrency = (value: number): string => {
     const currencyValue = new Number(value);
     return currencyValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })

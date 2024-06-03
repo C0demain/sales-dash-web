@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Empty, Table, Button, Spin } from "antd";
 import './index.css'
 import { formatCurrency } from "util/formatters";
+import { apiInstance } from "services/api";
 
 function RankingSellers() {
     const [sellers, setSellers] = useState<any[]>([]);
@@ -35,7 +35,7 @@ function RankingSellers() {
 
     const getSellers = async () => {
         setLoading(true);
-        const response = await axios.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
+        const response = await apiInstance.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
             withCredentials: false,
         });
 

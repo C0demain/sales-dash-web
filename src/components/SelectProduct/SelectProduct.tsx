@@ -1,6 +1,6 @@
 import { Cascader } from "antd";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { apiInstance } from "services/api";
 
 type propsType = {
     controlState: any[],
@@ -14,7 +14,7 @@ const SelectProduct = (props: propsType) =>{
     const { dataKey, className } = props
 
     const getProducts = async () => {
-        const response = await axios.get("http://localhost:8000/api/v1/products/getAll", {
+        const response = await apiInstance.get("http://localhost:8000/api/v1/products/getAll", {
             withCredentials: false,
         });
     

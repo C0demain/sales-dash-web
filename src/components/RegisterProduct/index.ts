@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { apiInstance } from 'services/api';
 
 export async function sendData(name: string) {
   const url = 'http://localhost:8000/api/v1/products/register';
@@ -8,7 +8,7 @@ export async function sendData(name: string) {
   };
 
   try {
-    const response = await axios.post(url, userData);
+    const response = await apiInstance.post(url, userData);
     if (response.status === 201) {
       console.log("Dados enviados com sucesso");
       return response.data;
