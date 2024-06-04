@@ -52,7 +52,6 @@ const UploadExcelPage: React.FC = () => {
           item["date"] = formatarData(excelSerialToDate(item["date"]));
           console.log(item);
           await sendDataToBackend(item);
-          await sleep(100);
         }
 
         message.success('Arquivo carregado com sucesso!');
