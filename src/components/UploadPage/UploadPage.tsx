@@ -1,3 +1,5 @@
+//frontend
+
 import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx";
 import './index.css';
@@ -8,6 +10,7 @@ const UploadExcelPage: React.FC = () => {
   const [fileName, setFileName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  let times = 1;
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -40,26 +43,39 @@ const UploadExcelPage: React.FC = () => {
           return dateA.getTime() - dateB.getTime();
         });
 
-        for (let i = 1; i < jsonData.length; i++) {
+        const dataToSend = jsonData.slice(1).map((row) => {
           const item: Record<string, any> = { role: "user" };
 
           for (let j = 0; j < headers.length; j++) {
             const propertyName = headers[j];
-            const propertyValue = jsonData[i][j];
+            const propertyValue = row[j];
             item[propertyName] = propertyValue;
           }
 
           item["date"] = formatarData(excelSerialToDate(item["date"]));
-          console.log(item);
-          await sendDataToBackend(item);
+          return item;
+        });
+
+        const batchSize = 100;
+        const batchPromises = [];
+
+        for (let i = 0; i < dataToSend.length; i += batchSize) {
+          const batch = dataToSend.slice(i, i + batchSize);
+          batchPromises.push(sendDataToBackend(batch));
         }
 
-        message.success('Arquivo carregado com sucesso!');
+        const results = await Promise.all(batchPromises);
+        const allBatchesSuccessful = results.every(success => success);
+
+        if (allBatchesSuccessful) {
+          message.success('Arquivo carregado com sucesso!');
+        } else {
+          message.error('Erro ao enviar algumas partes do arquivo!');
+        }
       } catch (error) {
         message.error('Erro ao processar o arquivo!');
       } finally {
         setLoading(false);
-
         if (fileInputRef.current) {
           fileInputRef.current.value = "";
         }
@@ -70,17 +86,20 @@ const UploadExcelPage: React.FC = () => {
     reader.readAsArrayBuffer(file);
   };
 
-  const sendDataToBackend = async (data: Record<string, any>) => {
+  const sendDataToBackend = async (data: Record<string, any>[]) => {
     try {
-      const response = await apiInstance.post('http://localhost:8000/api/v1/sells/table', data);
-  
+      const response = await apiInstance.post('http://localhost:8000/api/v1/sells/table', { data });
+
       if (response.status !== 200) {
         throw new Error('Erro ao enviar os dados para o backend');
       }
-  
-      console.log('Resposta do backend:', response.data);
+      
+      console.log('Resposta do backend:',`Lote ${times}`, response.data);
+      times++;
+      return true;
     } catch (error) {
       console.error('Erro:', error);
+      return false;
     }
   };
 
@@ -97,10 +116,6 @@ const UploadExcelPage: React.FC = () => {
     const ano = data.getFullYear();
     return `${ano}-${mes}-${dia}`;
   };
-
-  async function sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 
   return (
     <div className="containerUploadPage">
@@ -125,7 +140,7 @@ const UploadExcelPage: React.FC = () => {
         </form>
         {loading && (
           <div className="loadingSpinner">
-            <Spin  />
+            <Spin />
           </div>
         )}
       </div>
