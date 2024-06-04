@@ -11,6 +11,7 @@ import { Button, DatePicker, message } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
 import DatabaseCleaner from 'components/DatabaseCleaner';
+import { ProtectedLayout } from 'components/ProtectedLayout';
 
 export default function RegisterSell() {
   const [seller, setSeller] = useState<any>();
@@ -72,7 +73,6 @@ export default function RegisterSell() {
       <Navbar />
       <div className='containerGlobal'>
         <UploadExcelPage />
-        <DatabaseCleaner />
         <div className='containerRegisterSell'>
           <div className="caixaVenda">
             <h1 className='titulo'>Cadastro de Venda</h1>
@@ -92,29 +92,29 @@ export default function RegisterSell() {
 
               <div className='insertTextVenda'>
                 <label>Vendedor</label>
-                <SelectSeller 
-                  controlState={[seller, setSeller]} 
-                  dataKey="cpf"  
+                <SelectSeller
+                  controlState={[seller, setSeller]}
+                  dataKey="cpf"
                 />
                 {errors.seller && <p style={{ color: 'red' }}>{errors.seller}</p>}
               </div>
 
               <div className='insertTextVenda'>
                 <label>Cliente</label>
-                <SelectClient 
-                  controlState={[client, setClient]} 
-                  dataKey='cpf' 
-                  className='selectVendas' 
+                <SelectClient
+                  controlState={[client, setClient]}
+                  dataKey='cpf'
+                  className='selectVendas'
                 />
                 {errors.client && <p style={{ color: 'red' }}>{errors.client}</p>}
               </div>
 
               <div className='insertTextVenda'>
                 <label>Produto</label>
-                <SelectProduct 
-                  controlState={[product, setProduct]} 
-                  dataKey='id' 
-                  className='selectProduct' 
+                <SelectProduct
+                  controlState={[product, setProduct]}
+                  dataKey='id'
+                  className='selectProduct'
                 />
                 {errors.product && <p style={{ color: 'red' }}>{errors.product}</p>}
               </div>
@@ -132,7 +132,7 @@ export default function RegisterSell() {
                 />
                 {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
               </div>
-              
+
               <Button type='primary' className='custom-button' htmlType='submit'>Cadastrar</Button>
             </form>
           </div>

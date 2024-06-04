@@ -1,20 +1,19 @@
 .custom-button {
-    width: 100%;
-    font-size: 16px;
-    background-color: #001529;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    height: 5vh;
-    margin-top: 3vh;
-  }
+  width: 100%;
+  font-size: 16px;
+  background-color: #001529;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  height: 5vh;
+  margin-top: 3vh;
+}
 
 .containerDatabaseCleaner {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px;
-    padding: 20px;
-    width: 90%;
-    max-width: 600px;
-    text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
 }

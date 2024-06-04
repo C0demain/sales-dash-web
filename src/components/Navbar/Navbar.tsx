@@ -10,6 +10,7 @@ import {
   DollarOutlined,
   LogoutOutlined,
   KeyOutlined,
+  DeleteOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -114,48 +115,57 @@ const Navbar: React.FC = () => {
         navigate('/users');
       },
     },
-    {
+    isAdmin() && {
       key: '5',
-      icon: <UnorderedListOutlined />,
-      label: 'Exibe Clientes',
+      icon:  <DeleteOutlined />,
+      label: 'Apagar Dados',
       onClick: () => {
         handleSelect('5');
-        navigate('/clients');
+        navigate('/cleanDatabase');
       },
     },
     {
       key: '6',
-      icon: <ShoppingOutlined />,
-      label: 'Exibe Produtos',
+      icon: <UnorderedListOutlined />,
+      label: 'Exibe Clientes',
       onClick: () => {
         handleSelect('6');
-        navigate('/products');
+        navigate('/clients');
       },
     },
     {
       key: '7',
-      icon: <FileTextOutlined />,
-      label: isAdmin() ? 'Exibe Vendas' : 'Suas Vendas',
+      icon: <ShoppingOutlined />,
+      label: 'Exibe Produtos',
       onClick: () => {
         handleSelect('7');
-        navigate(isAdmin() ? '/salesManager' : '/salesSeller')
+        navigate('/products');
       },
     },
     {
       key: '8',
-      icon: <DollarOutlined />,
-      label: 'Comissões',
+      icon: <FileTextOutlined />,
+      label: isAdmin() ? 'Exibe Vendas' : 'Suas Vendas',
       onClick: () => {
         handleSelect('8');
-        navigate('/commissions');
+        navigate(isAdmin() ? '/salesManager' : '/salesSeller')
       },
     },
     {
       key: '9',
+      icon: <DollarOutlined />,
+      label: 'Comissões',
+      onClick: () => {
+        handleSelect('9');
+        navigate('/commissions');
+      },
+    },
+    {
+      key: '10',
       icon: <LogoutOutlined />,
       label: 'Sair da conta',
       onClick: () => {
-        handleSelect('9');
+        handleSelect('10');
         handleLogout();
       },
     }
