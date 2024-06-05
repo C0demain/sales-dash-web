@@ -46,7 +46,6 @@ function ShowClient() {
       render: (text: any, record: Client) => (
         <div>
           <Button className="button-edit" onClick={() => handleEdit(record)}>Editar</Button>
-          <Button className="button-delete" onClick={() => handleDelete(record)} style={{ marginLeft: '8px' }}>Excluir</Button>
         </div>
       )
     }
@@ -91,6 +90,20 @@ function ShowClient() {
         throw new Error('Nenhum cliente selecionado para atualização.');
       }
 
+      const { cpf } = values;
+
+      if (cpf.length > 11) {
+        if (!isValidCNPJ(cpf)) {
+          message.error('CNPJ inválido. Por favor, insira um CNPJ válido.');
+          return;
+        }
+      } else {
+        if (!isValidCPF(cpf)) {
+          message.error('CPF inválido. Por favor, insira um CPF válido.');
+          return;
+        }
+      }
+
       const updatedClient = { ...currentClient, ...values };
       const response = await apiInstance.put(`http://localhost:8000/api/v1/clients/update/${currentClient.id}`, updatedClient);
 
@@ -101,34 +114,18 @@ function ShowClient() {
       } else {
         message.error('Falha ao atualizar o cliente. Por favor, tente novamente.');
       }
-    } catch (error) {
-      console.error('Erro ao validar campos do formulário ou ao enviar a requisição:', error);
-      message.error('Ocorreu um erro ao atualizar o cliente. Por favor, tente novamente.');
+    } catch (error: any) {
+       if (error.response && error.response.status === 400) {
+          message.error('CPF já está vinculado a outro usuário ou cliente.');
+        } else {
+          message.error('Ocorreu um erro ao registrar o usuário. Tente novamente.');
+        }
     }
   };
 
   const handleCancel = () => {
     setOpen(false);
   };
-
-  const handleDelete = async (record: Client) => {
-    try {
-      const response = await apiInstance.delete(`http://localhost:8000/api/v1/clients/delete/${record.id}`);
-      if (response.status === 204) message.success('Cliente excluído com sucesso!');
-
-      getClients()
-
-    } catch (error: any) {
-      let status = error.response.status
-      if (status === 403) message.error('Este cliente possui vendas vinculadas e não pode ser excluído.');
-      else if (status === 404) message.error('Não foi possível encontrar o cliente especificado')
-      else {
-        message.error('Ocorreu um erro ao excluir o cliente. Por favor, tente novamente.');
-        console.error('Erro ao excluir cliente:', error);
-      }
-    }
-  };
-
 
   const handleCpfCnpjChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

@@ -4,47 +4,48 @@ import { useNavigate } from 'react-router-dom';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-interface Props{
+interface Props {
     children: JSX.Element;
     adminOnly?: boolean;
     sellerOnly?: boolean;
 }
 
-export const ProtectedLayout = ({ children,  adminOnly, sellerOnly}: Props) => {
+export const ProtectedLayout = ({ children, adminOnly, sellerOnly }: Props) => {
     const auth = useAuth();
     const [authLoading, setAuthLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        
         if (auth.loading) {
-            
             const timer = setTimeout(() => {
                 setAuthLoading(false);
             }, 1000); 
             return () => clearTimeout(timer);
         } else {
-            
             setAuthLoading(false);
         }
     }, [auth.loading]);
+
+    useEffect(() => {
+        if (!authLoading) {
+            if (!auth.email) {
+                navigate('/login');
+            } else if (adminOnly && !auth.isAdmin()) {
+                navigate('/dashboardSeller');
+            } else if (sellerOnly && !auth.isSeller()) {
+                navigate('/dashboard');
+            }
+        }
+    }, [authLoading, auth, navigate, adminOnly, sellerOnly]);
 
     if (authLoading) {
         const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
         return <Spin indicator={antIcon} />;
     }
 
-    //usuario nao autenticado pelo email volta para a tela de login
-    if (!auth.email) {
-        navigate('/login')
-    }
-
-    if (adminOnly && !auth.isAdmin()){
-        navigate('/dashboardSeller')
-    }
-
-    if (sellerOnly && !auth.isSeller()){
-        navigate('/dashboard')
+    // Ensure that the children are only rendered if the auth checks pass
+    if (!auth.email || (adminOnly && !auth.isAdmin()) || (sellerOnly && !auth.isSeller())) {
+        return null; // or return a fallback UI
     }
 
     return children;
