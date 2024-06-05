@@ -7,6 +7,7 @@ import { apiInstance } from "services/api";
 const ListSells = () => {
     const [sells, setSells] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true);
+    const customIndicator = <div style={{ display: 'none' }} />;
 
     const columns: TableColumnsType = [
         {
@@ -61,8 +62,8 @@ const ListSells = () => {
 
     return (
         <div className="listSells">
-            <Spin spinning={loading}>
-                {sells.length > 0 ?
+            <Spin spinning={loading} indicator={customIndicator}>
+                {sells.length > 0 ? (
                     <>
                         <h2>Últimas vendas</h2>
                         <Button type="primary" className="custom-button-refresh" onClick={getSells}>Recarregar</Button>
@@ -75,10 +76,12 @@ const ListSells = () => {
                             locale={customLocale}
                         />
                     </>
-                    : <Empty description={"Nenhuma venda encontrada"} />}
+                ) : (
+                    !loading && <Empty description="Nenhuma venda encontrada" />
+                )}
             </Spin>
         </div>
-    )
+    );
 }
 
-export default ListSells
+export default ListSells;

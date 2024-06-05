@@ -7,6 +7,7 @@ import { apiInstance } from "services/api";
 function RankingSellers() {
     const [sellers, setSellers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const customIndicator = <div style={{ display: 'none' }} />;
 
     const columns = [
         {
@@ -51,8 +52,8 @@ function RankingSellers() {
 
     return (
         <div className="ranking">
-            <Spin spinning={loading}>
-                {sellers.length > 0 ?
+            <Spin spinning={loading} indicator={customIndicator}>
+                {sellers.length > 0 ? (
                     <>
                         <h2>Ranking de vendedores por valor</h2>
                         <Button type="primary" className="custom-button-refresh" onClick={getSellers}>Recarregar Ranking</Button>
@@ -63,7 +64,9 @@ function RankingSellers() {
                             pagination={{ defaultPageSize: 10 }}
                         />
                     </>
-                    : <Empty description={"Nenhuma venda encontrada"} />}
+                   ) : (
+                    !loading && <Empty description="Nenhuma venda encontrada" />
+                )}
             </Spin>
         </div>
     );
