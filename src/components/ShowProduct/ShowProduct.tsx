@@ -104,15 +104,15 @@ const ShowProduct: React.FC = () => {
                 <>
                   <h2>Lista de Produtos</h2>
                   <Button type="primary" className="custom-button-refresh" onClick={getProducts}> Recarregar produtos </Button>
+                  <Table
+                    columns={columns}
+                    dataSource={products}
+                    rowKey="id"
+                    pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                    locale={customLocale}
+                  />
                 </>
               )}
-              <Table
-                columns={columns}
-                dataSource={products}
-                rowKey="id"
-                pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-                locale={customLocale}
-              />
             </>
           )}
         </Spin>
@@ -130,7 +130,7 @@ const ShowProduct: React.FC = () => {
             >
               <Input />
             </Form.Item>
-            
+
           </Form>
         </Modal>
       </div>

@@ -1,9 +1,9 @@
-import { Button, Empty, Modal, Form, Input, message, Table, TableColumnsType } from "antd";
+import { Button, Empty, Modal, Form, Input, message, Table, TableColumnsType, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider/useAuth";
-import './index.css'; 
+import './index.css';
 import { apiInstance } from "services/api";
 
 interface Commission {
@@ -12,17 +12,21 @@ interface Commission {
     percentage: number;
 }
 
-const ShowCommissions: React.FC = () => {
+const CommissionsList: React.FC = () => {
     const [commissions, setCommissions] = useState<Commission[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentCommission, setCurrentCommission] = useState<Commission | null>(null);
     const [form] = Form.useForm();
     const { isAdmin } = useAuth();
+    const [loading, setLoading] = useState(true);
+    const [dataLoaded, setDataLoaded] = useState(false);
 
     const getCommissions = async () => {
         try {
             const response = await apiInstance.get<{ commissions: Commission[] }>('http://localhost:8000/api/v1/commissions/getAll');
             setCommissions(response.data.commissions);
+            setLoading(false);
+            setDataLoaded(true);
         } catch (error) {
             console.error("Erro ao buscar comissões:", error);
             message.error('Erro ao buscar comissões. Por favor, tente novamente.');
@@ -100,18 +104,26 @@ const ShowCommissions: React.FC = () => {
         <NavbarWrapper>
             <Navbar />
             <div className="container">
-                <h1 className="commissionTitle">Comissões</h1>
                 <div className="commissions">
-                    {commissions.length > 0 ? (
-                        <Table
-                            columns={columns}
-                            dataSource={commissions}
-                            rowKey="id"
-                            pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-                        />
-                    ) : (
-                        <Empty description="Nenhuma comissão encontrada" />
-                    )}
+                    <Spin spinning={loading}>
+                        {dataLoaded && commissions.length === 0 ? (
+                            <Empty description="Nenhuma comissão encontrado" />
+                        ) : (
+                            <>
+                                {commissions.length > 0 && (
+                                    <>
+                                        <h1 className="commissionTitle">Comissões</h1>
+                                        <Table
+                                            columns={columns}
+                                            dataSource={commissions}
+                                            rowKey="id"
+                                            pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                                        />
+                                    </>
+                                )}
+                            </>
+                        )}
+                    </Spin>
                 </div>
             </div>
             <Modal
@@ -141,4 +153,4 @@ const ShowCommissions: React.FC = () => {
     );
 };
 
-export default ShowCommissions;
+export default CommissionsList;

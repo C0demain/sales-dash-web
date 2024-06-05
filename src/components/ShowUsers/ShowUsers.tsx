@@ -142,17 +142,15 @@ const ShowUsers: React.FC = () => {
                 <>
                   <h2>Lista de Usuários</h2>
                   <Button type="primary" className="custom-button-refresh" onClick={getUsers}>Recarregar usuários</Button>
+                  <Table
+                    columns={columns}
+                    dataSource={users}
+                    rowKey="id"
+                    pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                    locale={customLocale}
+                  />
                 </>
               )}
-
-              <Table
-                columns={columns}
-                dataSource={users}
-                rowKey="id"
-                pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-                locale={customLocale}
-              />
-
             </>
           )}
         </Spin>

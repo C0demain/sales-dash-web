@@ -115,11 +115,11 @@ function ShowClient() {
         message.error('Falha ao atualizar o cliente. Por favor, tente novamente.');
       }
     } catch (error: any) {
-       if (error.response && error.response.status === 400) {
-          message.error('CPF já está vinculado a outro usuário ou cliente.');
-        } else {
-          message.error('Ocorreu um erro ao registrar o usuário. Tente novamente.');
-        }
+      if (error.response && error.response.status === 400) {
+        message.error('CPF já está vinculado a outro usuário ou cliente.');
+      } else {
+        message.error('Ocorreu um erro ao registrar o usuário. Tente novamente.');
+      }
     }
   };
 
@@ -154,15 +154,15 @@ function ShowClient() {
                 <>
                   <h2>Lista de Clientes</h2>
                   <Button type="primary" className="custom-button-refresh" onClick={getClients}>Recarregar clientes</Button>
+                  <Table
+                    columns={columns}
+                    dataSource={clients}
+                    rowKey={'id'}
+                    pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                    locale={customLocale}
+                  />
                 </>
               )}
-              <Table
-                columns={columns}
-                dataSource={clients}
-                rowKey={'id'}
-                pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-                locale={customLocale}
-              />
             </>
           )}
         </Spin>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Empty, Table, Button, Modal, Form, Input, message, DatePicker, Row, Col, TableColumnsType } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, DatePicker, Row, Col, TableColumnsType, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import Navbar from "components/Navbar/Navbar"; 
+import Navbar from "components/Navbar/Navbar";
 import './index.css'
 import SelectSeller from "components/SelectSeller/SelectSeller";
 import { customLocale, formatCurrency } from "util/formatters";
@@ -36,6 +36,8 @@ function ShowSales() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalSales, setTotalSales] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const columns: TableColumnsType = [
     {
@@ -80,6 +82,7 @@ function ShowSales() {
   ];
 
   const getSells = useCallback(async () => {
+    setLoading(true);
     let url = "http://localhost:8000/api/v1/sells/getfilter/";
     const userFilter = userSelect ? `userId=${userSelect}` : "";
     const productFilter = productSelect ? `productId=${productSelect}` : "";
@@ -94,7 +97,9 @@ function ShowSales() {
 
     const response = await apiInstance.get(url);
     setSells(response.data.sells);
-    setTotalSales(response.data.total); 
+    setTotalSales(response.data.total);
+    setLoading(false);
+    setDataLoaded(true);
   }, [userSelect, productSelect, clientSelect, startDate, endDate, currentPage, pageSize]);
 
   useEffect(() => {
@@ -106,7 +111,7 @@ function ShowSales() {
     setCurrentSale(record);
     form.setFieldsValue({
       id: record.id,
-      date: dayjs(record.date),  
+      date: dayjs(record.date),
       seller: record.user.cpf,
       client: record.clientname,
       product: record.productName,
@@ -118,13 +123,13 @@ function ShowSales() {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      
+
       if (!currentSale) {
         throw new Error('Nenhuma venda selecionada para atualização.');
       }
       const cleanSeller = Array.isArray(seller) ? seller[0] : seller
       const updatedSale = {
-        date: dayjs(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD'),  
+        date: dayjs(values.date, 'DD/MM/YYYY').format('YYYY-MM-DD'),
         seller_cpf: cleanSeller,
         value: values.value
       };
@@ -133,7 +138,7 @@ function ShowSales() {
       if (response.status === 200) {
         setVisible(false);
         message.success('Venda atualizada com sucesso!');
-        getSells(); // Atualiza a tabela após a atualização da venda
+        getSells();
       } else {
         message.error('Falha ao atualizar a venda. Por favor, tente novamente.');
       }
@@ -147,7 +152,7 @@ function ShowSales() {
     setVisible(false);
   };
 
-  const handleTableChange = (pagination : any) => {
+  const handleTableChange = (pagination: any) => {
     setCurrentPage(pagination.current);
     setPageSize(pagination.pageSize);
   };
@@ -203,24 +208,32 @@ function ShowSales() {
             <Button className='button-filter' onClick={getSells}>Filtrar vendas</Button>
           </Col>
         </Row>
-        {sales.length > 0 ? (
-          <Table 
-            columns={columns} 
-            dataSource={sales} 
-            rowKey={'id'} 
-            pagination={{
-              current: currentPage,
-              pageSize: pageSize,
-              total: totalSales,
-              defaultPageSize: 10,
-              pageSizeOptions: [10, 20, 30]
-            }}
-            onChange={handleTableChange}
-            locale={customLocale}
-          />
-        ) : (
-          <Empty description={"Nenhuma venda encontrada"} />
-        )}
+        <Spin spinning={loading}>
+          {dataLoaded && sales.length === 0 ? (
+            <Empty description="Nenhuma venda encontrado" />
+          ) : (
+            <>
+              {sales.length > 0 && (
+                <>
+                  <Table
+                    columns={columns}
+                    dataSource={sales}
+                    rowKey={'id'}
+                    pagination={{
+                      current: currentPage,
+                      pageSize: pageSize,
+                      total: totalSales,
+                      defaultPageSize: 10,
+                      pageSizeOptions: [10, 20, 30]
+                    }}
+                    onChange={handleTableChange}
+                    locale={customLocale}
+                  />
+                </>
+              )}
+            </>
+          )}
+        </Spin>
         <Modal
           title="Editar Venda"
           open={visible}

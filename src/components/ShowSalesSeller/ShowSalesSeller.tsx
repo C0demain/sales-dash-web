@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col } from "antd";
+import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale, formatCurrency } from "util/formatters";
@@ -31,6 +31,8 @@ function ShowSalesSeller() {
   const [clientSelect, setClientSelect] = useState<any>(null);
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>('30/05/3000');
+  const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const columns: TableColumnsType = [
     {
@@ -69,6 +71,11 @@ function ShowSalesSeller() {
   ];
 
   const getSells = useCallback(async () => {
+    if (!userSelect) {
+      return; 
+    }
+
+    setLoading(true);
     let url = "http://localhost:8000/api/v1/sells/getfilter/";
     const userFilter = userSelect ? `userId=${userSelect}` : "";
     const productFilter = productSelect ? `productId=${productSelect}` : "";
@@ -84,6 +91,8 @@ function ShowSalesSeller() {
       withCredentials: false,
     });
     setSells(response.data.sells);
+    setLoading(false);
+    setDataLoaded(true);
   }, [userSelect, productSelect, clientSelect, startDate, endDate]);
 
   useEffect(() => {
@@ -144,7 +153,7 @@ function ShowSalesSeller() {
   };
 
   const handleDatePicker = (date: any) => {
-    return date ? dayjs(date).format('DD/MM/YYYY') : ""; 
+    return date ? dayjs(date).format('DD/MM/YYYY') : "";
   };
 
   return (
@@ -187,17 +196,25 @@ function ShowSalesSeller() {
             <Button className='button-filter' onClick={getSells}>Filtrar vendas</Button>
           </Col>
         </Row>
-        {sales.length > 0 ? (
-          <Table
-            columns={columns}
-            dataSource={sales}
-            rowKey={'id'}
-            pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-            locale={customLocale}
-          />
-        ) : (
-          <Empty description={"Nenhuma venda encontrada"} />
-        )}
+        <Spin spinning={loading}>
+          {dataLoaded && sales.length === 0 ? (
+            <Empty description="Nenhuma venda encontrado" />
+          ) : (
+            <>
+              {sales.length > 0 && (
+                <>
+                  <Table
+                    columns={columns}
+                    dataSource={sales}
+                    rowKey={'id'}
+                    pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                    locale={customLocale}
+                  />
+                </>
+              )}
+            </>
+          )}
+        </Spin>
         <Modal
           title="Editar Venda"
           open={visible}

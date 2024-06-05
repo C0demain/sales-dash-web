@@ -1,4 +1,4 @@
-import ShowCommissions from "components/CommissionList/ShowCommissions";
+import ShowCommissions from "components/CommissionList/CommissionsList";
 import { Login } from "components/Login";
 import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";

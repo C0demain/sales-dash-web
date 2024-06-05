@@ -108,20 +108,20 @@ const Navbar: React.FC = () => {
     },
     isAdmin() && {
       key: '4',
-      icon: <TeamOutlined />,
-      label: 'Exibe Usuários',
+      icon:  <DeleteOutlined />,
+      label: 'Apagar Dados',
       onClick: () => {
         handleSelect('4');
-        navigate('/users');
+        navigate('/cleanDatabase');
       },
     },
     isAdmin() && {
       key: '5',
-      icon:  <DeleteOutlined />,
-      label: 'Apagar Dados',
+      icon: <TeamOutlined />,
+      label: 'Exibe Usuários',
       onClick: () => {
         handleSelect('5');
-        navigate('/cleanDatabase');
+        navigate('/users');
       },
     },
     {
