@@ -76,7 +76,7 @@ function RegisterClient() {
         setCpfCnpj('');
       } catch (error: any) {
         if (error.response && error.response.status === 400) {
-          message.error('Esse CPF/CNPJ já está vinculado a outro cliente.');
+          message.error('Esse CPF/CNPJ já está vinculado a outro cliente ou usuário. Tente Outro.');
         } else {
           message.error('Ocorreu um erro ao registrar o cliente. Tente novamente.');
           console.log(error);

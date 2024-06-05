@@ -10,14 +10,9 @@ export async function sendDataSeller(userName: string, email: string, cpf: strin
     'cpf': cpf
   };
 
-  try {
-    const response = await apiInstance.post(urlSeller, userData);
-    console.log('Response from server (Seller):', response); 
-    if (response.status === 201) {
-      console.log("Dados enviados com sucesso");
-    }
-  } catch (error: any) {
-    console.error("Erro ao enviar dados do vendedor:", error);
+  const response = await apiInstance.post(urlSeller, userData);
+  if (response.status === 201) {
+    console.log('Response from server (Seller):', response);
   }
 }
 
@@ -30,13 +25,9 @@ export async function sendDataAdmin(name: string, email: string, cpf: string) {
     'cpf': cpf
   };
 
-  try {
-    const response = await apiInstance.post(urlAdmin, userData);
-    console.log('Response from server (Admin):', response); // Log da resposta do servidor
-    if (response.status === 201) {
-      console.log("Dados enviados com sucesso");
-    }
-  } catch (error: any) {
-    console.error("Erro ao enviar dados do administrador:", error);
+  const response = await apiInstance.post(urlAdmin, userData);
+  console.log('Response from server (Admin):', response);
+  if (response.status === 201) {
+    console.log("Dados enviados com sucesso");
   }
 }
