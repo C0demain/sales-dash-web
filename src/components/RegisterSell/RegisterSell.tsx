@@ -22,7 +22,7 @@ export default function RegisterSell() {
   const role = useAuth().role
   const user = useAuth().cpf
   const oculto = {display: 'none'}
-  const mostrar = {display: 'flex'}
+  const mostrar = {display: 'flex', flexDirection: 'column'}
 
   const validate = () => {
     let isValid = true;
