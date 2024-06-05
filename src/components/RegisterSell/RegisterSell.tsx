@@ -10,8 +10,7 @@ import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import { Button, DatePicker, message } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
-import DatabaseCleaner from 'components/DatabaseCleaner';
-import { ProtectedLayout } from 'components/ProtectedLayout';
+import { useAuth } from 'context/AuthProvider/useAuth';
 
 export default function RegisterSell() {
   const [seller, setSeller] = useState<any>();
@@ -19,12 +18,16 @@ export default function RegisterSell() {
   const [product, setProduct] = useState<any>();
   const [date, setDate] = useState<any>(null);
   const [value, setValue] = useState<any>();
-  const [errors] = useState({ date: '', seller: '', client: '', product: '', value: '' });
+  const [errors] = useState({ date: '', seller: '', client: '', product: '', value: '' })
+  const role = useAuth().role
+  const user = useAuth().cpf
+  const oculto = {display: 'none'}
+  const mostrar = {display: 'flex'}
 
   const validate = () => {
     let isValid = true;
-
-    if (!seller) {
+    
+    if (role === 'admin' && !seller) {
       message.error('Você deve preencher o vendedor.');
       isValid = false;
     }
@@ -44,9 +47,10 @@ export default function RegisterSell() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(user)
     if (validate()) {
       try {
-        await sendData(date, seller[0], client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
+        await sendData(date,role === 'admin'? seller[0]: user, client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
         message.success('Venda Cadastrada com Sucesso!');
         setDate(null);
         setSeller('');
@@ -90,7 +94,7 @@ export default function RegisterSell() {
                 {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
               </div>
 
-              <div className='insertTextVenda'>
+              <div className='insertTextVenda'style={role === 'user'? oculto : mostrar}>
                 <label>Vendedor</label>
                 <SelectSeller
                   controlState={[seller, setSeller]}

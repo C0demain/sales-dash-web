@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         const response = await LoginRequest(email, password);
 
         const payload = { 
+            cpf: response.cpf,
             token: response.token, 
             id: response.userId, 
             role: response.role,
