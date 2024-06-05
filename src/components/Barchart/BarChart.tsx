@@ -39,10 +39,6 @@ export default function BarChart() {
     getStats()
   }, [selectedMonthIndex, selectedYear]);
 
-  const handleNextMonth = () => {
-    setSelectedMonthIndex((prevIndex) => (prevIndex + 1) % months.length);
-  };
-
   const getRandomColor = (index: number) => {
     const colors = ['#FF5733', '#5733FF', '#FF33DD', '#33DDFF']; 
     return colors[index % colors.length];

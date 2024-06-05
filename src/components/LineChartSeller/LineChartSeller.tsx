@@ -4,6 +4,7 @@ import { Chart } from "react-google-charts";
 import Switch from '@mui/material/Switch';
 import { Empty, Select } from 'antd';
 import { apiInstance } from 'services/api';
+import { useAuth } from 'context/AuthProvider/useAuth';
 
 export default function LineChartSeller() {
   const [dataSells, setDataSells] = useState<any[]>([])
@@ -12,7 +13,7 @@ export default function LineChartSeller() {
   const [endDate, setEndDate] = useState<any>()
   const [checked, setChecked] = useState(true)
   const [title, setTitle] = useState<any>('Valor vendido')
-  const [user, setUser] = useState<any>()
+  const user = useAuth().id
   const [monthDiff, setMonthDiff] = useState<any>(5)
   const today = new Date()
   const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
@@ -106,12 +107,6 @@ export default function LineChartSeller() {
     }
     setChecked(event.target.checked);
   }
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user && user.id) {
-        setUser(user.id);
-    }
-}, []);
 
   useEffect(()=>{ 
     getSellsPeriod()
