@@ -133,4 +133,5 @@ export default function LineChartSeller() {
         /> : <Empty description="Você não possui nenhum venda nesse período" />
       }
     </div>
+  )
 }
