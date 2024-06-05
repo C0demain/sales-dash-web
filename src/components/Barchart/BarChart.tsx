@@ -29,7 +29,7 @@ export default function BarChart() {
         chartData.push(["Cliente velho\n Produto velho", 0, getRandomColor(selectedMonthIndex)])
       }
       setCommissions(chartData);
-      console.log(currentMonth)
+      //console.log(currentMonth)
     }catch(error){
       console.error('Erro ao buscar os dados das comissões:', error);
     }

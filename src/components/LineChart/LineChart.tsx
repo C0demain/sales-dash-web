@@ -33,22 +33,22 @@ export default function BasicLineChart() {
   ]
 
   const [options, setOptions] = useState<any>({
-  colors: ["#8e0152", "#276419"],
-  pointSize: 10,
-  animation: {
-    duration: 800,
-    easing: "linear",
-    startup: true,
-  },
-  seriesType: 'bar',
-  series: [
-    {type: 'bars', color: '#1976d2'},
-    {type: 'line', color: '#001529'},
-  ],
-  legend: { position: "none" },
-})
+    colors: ["#8e0152", "#276419"],
+    pointSize: 10,
+    animation: {
+      duration: 800,
+      easing: "linear",
+      startup: true,
+    },
+    seriesType: 'bar',
+    series: [
+      { type: 'bars', color: '#1976d2' },
+      { type: 'line', color: '#001529' },
+    ],
+    legend: { position: "none" },
+  })
 
-  const setDates = useCallback(async()=>{
+  const setDates = useCallback(async () => {
     const year = today.getFullYear();
     const month = today.getMonth();
 
@@ -58,7 +58,7 @@ export default function BasicLineChart() {
     // Verificar se precisa ajustar o ano
     let targetYear = year;
     if (targetMonth < 0) {
-        targetYear -= 1;
+      targetYear -= 1;
     }
 
     // Obter o mês ajustado dentro do intervalo [0, 11]
@@ -67,11 +67,11 @@ export default function BasicLineChart() {
     // Retornar o primeiro dia do mês desejado
     let startDate = new Date(targetYear, adjustedMonth, 1);
 
-    setStartDate(formatDateToBack (startDate))
-    setEndDate(formatDateToBack (today))
-  },[today])
+    setStartDate(formatDateToBack(startDate))
+    setEndDate(formatDateToBack(today))
+  }, [today])
 
-  const getSellsPeriod = useCallback(async() => {
+  const getSellsPeriod = useCallback(async () => {
     setDates()
     let url = "http://localhost:8000/api/v1/dashboard/date"
     const startDateFilter = startDate ? 'startDate=' + startDate : ""
@@ -82,40 +82,40 @@ export default function BasicLineChart() {
     url += query !== "&" ? "?" + query : ""
 
     const response = await apiInstance.get(url, {
-        withCredentials: false,
+      withCredentials: false,
     });
-    console.log(url)
+    //console.log(url)
     setDataSells(response.data.stats)
-  }, [startDate, endDate, monthDiff]) 
+  }, [startDate, endDate, monthDiff])
 
-  const setDataStats = async(event: React.ChangeEvent<HTMLInputElement>) => {
+  const setDataStats = async (event: React.ChangeEvent<HTMLInputElement>) => {
 
     // Completa com os meses restantes
 
-    if( data[0][1] === "Valor vendido"){
+    if (data[0][1] === "Valor vendido") {
       let chartData: Array<any> = [["Mês", "Comissão de venda", "Comissão de venda"]]
       dataSells.forEach(stat => {
         chartData.push([stat.month, stat.totalCommissionValue, stat.totalCommissionValue])
       })
       setData(chartData)
-    setTitle('Comissão de venda mensal')
-    }else{
+      setTitle('Comissão de venda mensal')
+    } else {
       let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
       dataSells.forEach(stat => {
         chartData.push([stat.month, stat.totalValue, stat.totalValue])
       })
       setData(chartData)
-    setTitle('Valor vendido mensalmente')
+      setTitle('Valor vendido mensalmente')
     }
     setChecked(event.target.checked);
   }
 
-  useEffect(()=>{ 
+  useEffect(() => {
     getSellsPeriod()
   }, [getSellsPeriod])
 
-  useEffect(()=>{
-    if(dataSells.length>0){
+  useEffect(() => {
+    if (dataSells.length > 0) {
       let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
       dataSells.forEach(stat => {
         chartData.push([stat.month, stat.totalValue, stat.totalValue])
@@ -124,27 +124,37 @@ export default function BasicLineChart() {
     }
   }, [getSellsPeriod, dataSells])
 
+  const originalWarn = console.warn;
+
+  console.warn = function (...args) {
+    const arg = args && args[0];
+
+    if (arg && arg.includes('Attempting to load version \'51\' of Google Charts')) return;
+
+    originalWarn(...args);
+  };
+
   return (
     <div>
       <div className='titleChart'>
-      <Switch checked={checked} onChange={setDataStats}/>
-      <h3>{title}</h3>
-      <Select
-        options={periodOptions}
-        onSelect={setMonthDiff}
-        defaultValue={5}
-      />
+        <Switch checked={checked} onChange={setDataStats} />
+        <h3>{title}</h3>
+        <Select
+          options={periodOptions}
+          onSelect={setMonthDiff}
+          defaultValue={5}
+        />
       </div>
-      { dataSells.length > 0 ?
-      <Chart
-        chartType="ComboChart"
-        data={data}
-        options={options}
-        width="75vh"
-        height="35vh"
-        loader={<div>Carregando Gráfico</div>}
-      /> : <Empty description="Não foi registrada nenhum venda nesse período" />
+      {dataSells.length > 0 ?
+        <Chart
+          chartType="ComboChart"
+          data={data}
+          options={options}
+          width="75vh"
+          height="35vh"
+          loader={<div>Carregando Gráfico</div>}
+        /> : <Empty description="Não foi registrada nenhum venda nesse período" />
       }
     </div>
   );
-  }
+}

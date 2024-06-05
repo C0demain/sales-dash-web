@@ -33,7 +33,7 @@ apiInstance.interceptors.request.use(
       if (!config.headers) {
         config.headers = {};
       }
-      config.headers.Authorization = `Bearer ${user.token}`; // Adicione 'Bearer ' antes do token
+      config.headers.Authorization = `Bearer ${user.token}`; 
     }
 
     return config;
