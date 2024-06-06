@@ -6,7 +6,12 @@ import { Empty, Select } from 'antd';
 import { apiInstance } from 'services/api';
 import { useAuth } from 'context/AuthProvider/useAuth';
 
-export default function LineChartSeller() {
+interface LineChartSellerProps {
+  onStartDateChange: (date: string) => void;
+  onEndDateChange: (date: string) => void;
+}
+
+export default function LineChartSeller({ onStartDateChange, onEndDateChange }: LineChartSellerProps) {
   const [dataSells, setDataSells] = useState<any[]>([])
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
   const [startDate, setStartDate] = useState<any>()
@@ -22,6 +27,7 @@ export default function LineChartSeller() {
     { label: 'Últimos 12 meses', value: 11 },
     { label: 'Últimos 6 meses', value: 5 },
     { label: 'Últimos 3 meses', value: 2 },
+    { label: 'Mês atual', value: 0 }
   ];
 
   const [options, setOptions] = useState<any>({
@@ -38,6 +44,9 @@ export default function LineChartSeller() {
       { type: 'line', color: '#001529' },
     ],
     legend: { position: "none" },
+    chart: {
+      title: `Vendas por mês`,
+    },
   });
 
   const setDates = useCallback(() => {
@@ -55,6 +64,8 @@ export default function LineChartSeller() {
 
     setStartDate(formatDateToBack(startDate));
     setEndDate(formatDateToBack(today));
+    onStartDateChange(formatDateToBack(startDate))
+    onEndDateChange(formatDateToBack(today))
   }, [monthDiff, today]);
 
   const getSellsPeriod = useCallback(async () => {
@@ -112,7 +123,7 @@ export default function LineChartSeller() {
   }, [dataSells]);
 
   return (
-    <div style={{ margin: '5vh' }}>
+    <div>
       <div className='titleChart'>
         <Switch checked={checked} onChange={setDataStats} />
         <h3>{title}</h3>

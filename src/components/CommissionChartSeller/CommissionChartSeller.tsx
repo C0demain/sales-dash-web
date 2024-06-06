@@ -4,7 +4,11 @@ import { useState, useEffect } from "react"
 import { Chart } from 'react-google-charts'
 import { apiInstance } from "services/api"
 
-export default function CommissionChartSeller(){
+interface CommissionChartSellerProps{
+  onTotalCommissionChange: (date: number) => void
+}
+
+export default function CommissionChartSeller({onTotalCommissionChange}: CommissionChartSellerProps){
     const [commissions, setCommissions] = useState<any>([]);
     const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(0);
     const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
@@ -20,12 +24,15 @@ export default function CommissionChartSeller(){
             
             const response = await apiInstance.get(url, {params: {userId, startDate, endDate} })
             const chartData: any[] = [];
-            chartData.push(['Tipo', 'Valor', { role: 'style' }])
+            chartData.push(['', 'Valor', { role: 'style' }])
             const currentMonth = response.data.stats.find((e: any) => e.month == months[selectedMonthIndex])
             if(currentMonth){
+                let soma = 0
                 currentMonth.commissionValues.forEach((value: any) => {
+                soma += value.totalValue
                 chartData.push([value.title.replace('/', '\n'), value.totalValue, getRandomColor(selectedMonthIndex)])
                 })
+                onTotalCommissionChange(soma)
             }else{
                 chartData.push(["Cliente novo\n Produto novo", 0, getRandomColor(selectedMonthIndex)])
                 chartData.push(["Cliente novo\n Produto velho", 0, getRandomColor(selectedMonthIndex)])
@@ -49,8 +56,8 @@ export default function CommissionChartSeller(){
       };
     
       return (
-        <div className='charts'>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '3vh', marginTop: '3vh', minWidth: '100%' }}>
+        <div className='charts' style={{marginBottom: '1vh'}}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '3vh', minWidth: '100%' }}>
             
             <Select
             style={ {minWidth: '30%'} }

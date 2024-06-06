@@ -21,3 +21,10 @@
     background-color: black;
     margin: 3vh 3vh;
 }
+
+.chartsBoxSeller{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

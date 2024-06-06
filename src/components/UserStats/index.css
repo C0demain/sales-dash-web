@@ -6,12 +6,11 @@
 }
 
 .boxStats {
-    margin: 3vh 2vh;
-    padding: 3vh;
+    margin: 0vh 2vh;
+    padding: 1vh;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
     border: 2px solid black; 
 }
 
