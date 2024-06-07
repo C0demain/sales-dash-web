@@ -1,7 +1,7 @@
 import { Statistic } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider/useAuth";
-import { formatCurrency, formatDateToBack } from "util/formatters";
+import { formatCurrency} from "util/formatters";
 import './index.css';
 import { apiInstance } from "services/api";
 
