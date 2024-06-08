@@ -27,7 +27,7 @@ const UserStatsSales = ({ startDateProp, endDateProp }: { startDateProp: string,
             setTotalSells(response.data.userSales.totalValue);
             setTotalComission(response.data.userSales.totalCommissions);
             setQtdeSells(response.data.userSales.totalSales)
-            console.log(response.data.userSales)
+            //console.log(response.data.userSales)
         } catch (error) {
             console.error('Failed to fetch user stats:', error);
         }

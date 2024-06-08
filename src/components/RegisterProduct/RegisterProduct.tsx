@@ -1,47 +1,37 @@
-import { useState } from 'react'
-import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper'
-import { sendData } from '.'
-import './index.css'
-import { Button, message } from 'antd'
-import Navbar from 'components/Navbar/Navbar'
+import { useState } from 'react';
+import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
+import { sendData } from './index';
+import './index.css';
+import { Button, message } from 'antd';
+import Navbar from 'components/Navbar/Navbar';
 
 function RegisterProduct() {
+    const [name, setName] = useState('');
 
-    const [name, setName] = useState('')
-    const [errors, setErrors] = useState({ name: '', description: '', response: '' })
-    const [sucess, setSucess] = useState('')
-
-    const validate = () => {
-        let isValid = true;
-        const errors = { name: '', description: '', value: '', response: '' };
-
+    const validate = (): boolean => {
         if (!name) {
-            message.error('O nome é obrigatório.')
-            isValid = false;
+            message.error('O nome é obrigatório.');
+            return false;
         } else if (name.length < 3) {
-            message.error('O nome deve ter mais de 3 caracteres.')
-            isValid = false;
+            message.error('O nome deve ter mais de 3 caracteres.');
+            return false;
         }
-
-        setErrors(errors)
-        return isValid;
-    }
+        return true;
+    };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (validate()) {
-            // Lógica de submissão do formulário
             try {
                 await sendData(name);
                 message.success('Produto Cadastrado com Sucesso!');
-                setName('');
+                setName(''); // Limpa o campo de nome após o sucesso
             } catch (error: any) {
-                message.error('Ocorreu um erro ao registrar o produto. Tente novamente');
-                setErrors(errors);
-                console.log(error);
+                message.error('Ocorreu um erro ao registrar o produto. Tente novamente.');
+                console.error('Erro ao registrar o produto:', error);
             }
         }
-    }
+    };
 
     return (
         <NavbarWrapper>
@@ -51,19 +41,17 @@ function RegisterProduct() {
                     <div className='containerRegisterProduct'>
                         <div className='caixa'>
                             <h1 className='titulo'>Cadastro de Produto</h1>
-
                             <form className="formulario" onSubmit={handleSubmit}>
                                 <div className='insertText'>
                                     <label>Nome do produto:</label>
-
-                                    <input placeholder="  Nome" type="text" onChange={(e) => setName(e.target.value)} required />
-                                    {errors.name && <p className='erro'>{errors.name}</p>}
+                                    <input
+                                        placeholder="Nome"
+                                        value={name}
+                                        type="text"
+                                        onChange={(e) => setName(e.target.value)}
+                                        required
+                                    />
                                 </div>
-
-                        
-
-                                {sucess && <p className='funciona'>{sucess}</p>}
-                                {errors.response && <p className='erro'>{errors.response}</p>}
                                 <Button type='primary' htmlType='submit' className='custom-button'>Cadastrar</Button>
                             </form>
                         </div>
@@ -71,7 +59,7 @@ function RegisterProduct() {
                 </div>
             </div>
         </NavbarWrapper>
-    )
+    );
 }
 
-export default RegisterProduct
+export default RegisterProduct;

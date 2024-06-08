@@ -20,7 +20,7 @@ export default function BarChart() {
       const response = await apiInstance.get(url, { params: { startDate, endDate } });
       const chartData: any[] = [];
       chartData.push(['Tipo', 'Valor', { role: 'style' }]);
-      const currentMonth = response.data.stats.find((e: any) => e.month == months[selectedMonthIndex]);
+      const currentMonth = response.data.stats.find((e: any) => e.month === months[selectedMonthIndex]);
       if (currentMonth) {
         currentMonth.commissionValues.forEach((value: any) => {
           chartData.push([value.title.replace('/', '\n'), value.totalValue, getRandomColor(selectedMonthIndex)]);

@@ -1,9 +1,7 @@
-//frontend
-
 import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx";
 import './index.css';
-import { Button, Input, message, Spin } from "antd";
+import { Button, message, Spin } from "antd";
 import { apiInstance } from "services/api";
 
 const UploadExcelPage: React.FC = () => {
