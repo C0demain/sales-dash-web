@@ -1,0 +1,19 @@
+.containerStats {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+.boxStats {
+    margin: 0vh 2vh;
+    padding: 1vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid black; 
+}
+
+.boxStats .ant-statistic-title {
+    color: black; 
+}

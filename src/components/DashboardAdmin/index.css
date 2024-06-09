@@ -1,0 +1,28 @@
+.containerDash{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tituloDashboard{
+    font-family:Arial, Helvetica, sans-serif;
+    margin: 2vh;
+}
+
+.box{
+    margin: 3vh;
+    width: 130vh;
+}
+
+.divider{
+    height: 0.2vh;
+    background-color: black;
+    margin: 3vh 3vh;
+}
+
+.chartsBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,48 @@
+.containerGlobal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.containerVendedor {
+  width: 100%;
+
+}
+
+.formContainer {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.caixaVendedor {
+  width: 45%;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ffffff;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.caixaAdmin {
+  width: 45%;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ffffff;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 45%;
+  height: 50%;
+}
+
+.titulo {
+  margin-bottom: 20px;
+}
+
+.insertText,
+.inputSenha {
+  margin-bottom: 15px;
+}

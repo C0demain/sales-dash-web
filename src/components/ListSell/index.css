@@ -1,0 +1,44 @@
+.listSells{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.listSells > h1{
+    font-size: 26px;
+    margin-bottom: 5%;
+}
+
+.listSellsGroup{
+    margin: 0 auto;
+    width: 90%;
+}
+
+.listSellsGroup th{
+    font-size: 22px;
+}
+
+.listSellsGroup > tr:first{
+    padding: 6vh;
+}
+
+.filter{
+    display: flex;
+    margin: 10vh auto;
+    align-items: center;
+}
+
+.filter > .select{
+    margin: 0 5vh;   
+    padding: 5vh 35vh;
+}
+
+.font {
+    font-size: 16px;
+}
+
+.button-refresh {
+    margin-bottom: 5vh;
+    background-color: #001529;
+    color: white;
+}

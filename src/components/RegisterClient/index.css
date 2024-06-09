@@ -1,0 +1,186 @@
+.containerGlobal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.containerRegisterClient {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.caixaCliente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formularioCliente {
+  width: 100%;
+}
+
+.insertText,
+.inputSenha {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.insertText label,
+.inputSenha label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.insertText input,
+.selectRole,
+.inputSenha .ant-input {
+  border-radius: 1vh;
+  background-color: white;
+  border: 1px solid #d9d9d9;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.selectRole {
+  height: auto;
+  padding-left: 10px;
+}
+
+.erro {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.botaoCadastrar {
+  background-color: #001529;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.botaoCadastrar:hover {
+  background-color: #001529;
+}
+
+.ant-picker,
+.ant-input-number {
+  width: 100%;
+}
+
+::placeholder {
+  color: #a9a9a9;
+  opacity: 1;
+  font-size: 16px;
+}
+
+.inputSenha input::placeholder,
+.insertText input::placeholder {
+  color: #a9a9a9;
+  opacity: 1;
+}
+.toggle {
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.toggle span {
+  margin-right: 5px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #204bca;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 14px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.cor {
+  color: #001529;
+}
+
+input:checked + .slider {
+  background-color: #001529;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #000000;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.senhas{
+  height: auto;
+  width: 75%;
+  text-align:start;
+  display: flex;
+  flex-direction: column;
+  font-size: 2vh;
+}

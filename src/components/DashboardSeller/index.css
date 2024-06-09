@@ -1,0 +1,30 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.tituloDashboard{
+    font-family:Arial, Helvetica, sans-serif;
+    margin: 2vh;
+}
+
+.box{
+    margin: 3vh;
+    width: 123vh;
+}
+
+.divider{
+    height: 0.2vh;
+    background-color: black;
+    margin: 3vh 3vh;
+}
+
+.chartsBoxSeller{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
