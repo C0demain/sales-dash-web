@@ -1,7 +1,7 @@
 import { Statistic } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider/useAuth";
-import { formatCurrency, formatDateToBack } from "util/formatters";
+import { formatCurrency} from "util/formatters";
 import './index.css';
 import { apiInstance } from "services/api";
 
@@ -27,7 +27,7 @@ const UserStatsSales = ({ startDateProp, endDateProp }: { startDateProp: string,
             setTotalSells(response.data.userSales.totalValue);
             setTotalComission(response.data.userSales.totalCommissions);
             setQtdeSells(response.data.userSales.totalSales)
-            console.log(response.data.userSales)
+            //console.log(response.data.userSales)
         } catch (error) {
             console.error('Failed to fetch user stats:', error);
         }

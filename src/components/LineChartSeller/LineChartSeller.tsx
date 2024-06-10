@@ -21,7 +21,7 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
   const user = useAuth().id
   const [monthDiff, setMonthDiff] = useState<any>(5)
   const today = new Date()
-  const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+  //const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
   const periodOptions = [
     { label: 'Últimos 12 meses', value: 11 },
@@ -30,7 +30,7 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
     { label: 'Mês atual', value: 0 }
   ];
 
-  const [options, setOptions] = useState<any>({
+  const [options] = useState<any>({
     colors: ["#8e0152", "#276419"],
     pointSize: 10,
     animation: {
@@ -87,6 +87,7 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
     } catch (error) {
       console.error('Erro ao buscar os dados de vendas:', error);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate, user, monthDiff]);
 
   const setDataStats = async (event: React.ChangeEvent<HTMLInputElement>) => {
