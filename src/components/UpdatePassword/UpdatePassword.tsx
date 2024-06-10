@@ -8,8 +8,10 @@ import './index.css';
 function UpdatePassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: any) => {
+    setLoading(true);
     event.preventDefault();
     if (newPassword !== confirmPassword) {
       message.error('As novas senhas não coincidem');
@@ -26,6 +28,8 @@ function UpdatePassword() {
       }
     } catch (error) {
       message.error('Erro ao Atualizar a Senha');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,7 +71,7 @@ function UpdatePassword() {
               />
             </div>
 
-            <Button type='primary' htmlType='submit' className='custom-button'>Atualizar Senha</Button>
+            <Button type='primary' htmlType='submit' className='custom-button' loading={loading}>Atualizar Senha</Button>
           </form>
         </div>
       </div>

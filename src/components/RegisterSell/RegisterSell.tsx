@@ -23,6 +23,7 @@ export default function RegisterSell() {
   const user = useAuth().cpf
   const oculto = {display: 'none'}
   const mostrar = {display: 'flex', flexDirection: 'column'}
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
     let isValid = true;
@@ -46,6 +47,7 @@ export default function RegisterSell() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
     console.log(user)
     if (validate()) {
@@ -58,12 +60,14 @@ export default function RegisterSell() {
         setProduct('');
         setValue('');
       } catch (error: any) {
-        console.error(error);
+        //console.error(error);
         if (error.response && error.response.status === 400) {
           message.error('Erro ao Cadastrar a Venda: ' + error.response.data.message);
         } else {
           message.error('Ocorreu um erro ao cadastrar a venda. Tente novamente.');
         }
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -137,7 +141,7 @@ export default function RegisterSell() {
                 {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
               </div>
 
-              <Button type='primary' className='custom-button' htmlType='submit'>Cadastrar</Button>
+              <Button type='primary' className='custom-button' htmlType='submit' loading={loading}>Cadastrar</Button>
             </form>
           </div>
         </div>
