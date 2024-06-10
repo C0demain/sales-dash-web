@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
 import './index.css'
-import { DatePicker, Select, Spin, Empty } from 'antd';
+import { DatePicker, Select, Spin, Empty, Flex } from 'antd';
 import { apiInstance } from 'services/api';
 
 interface Product {
@@ -16,7 +16,7 @@ export default function BasicLineChart() {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
   const [product, setProduct] = useState<string | undefined>();
-  const [title, setTitle] = useState<any>('Valor vendido');
+  const [title, setTitle] = useState<any>('Total do valor vendido de produto');
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const customIndicator = <div style={{ display: 'none' }} />;
@@ -40,6 +40,7 @@ export default function BasicLineChart() {
   const fetchProducts = useCallback(async () => {
     const response = await apiInstance.get("http://localhost:8000/api/v1/products");
     setProducts(response.data.products);
+    console.log(response.data.product)
   }, []);
 
   const getSellsPeriod = useCallback(async () => {
@@ -93,24 +94,27 @@ export default function BasicLineChart() {
         {dataSells.length > 0 ? (
             <>
               <div style={{ display: 'flex-wrap', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '3vh', marginTop: '3vh', minWidth: '100%' }}>
-             <DatePicker
-                  placeholder="Data Inicial"
-                  onChange={(date, dateString) => setStartDate(dateString)}
-                />
-                <DatePicker
-                  placeholder="Data Final"
-                  onChange={(date, dateString) => setEndDate(dateString)}
-                />
-                <Select
-                  showSearch
-                  placeholder="Selecione um produto"
-                  onChange={(value) => setProduct(value)}
-                  style={{ width: 200 }}
-                  options={products.map((product) => ({
-                    label: product.name,
-                    value: product.name,
-                  }))}
-                />
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <DatePicker
+                    placeholder="Data Inicial"
+                    onChange={(date, dateString) => setStartDate(dateString)}
+                  />
+                  <DatePicker
+                    placeholder="Data Final"
+                    onChange={(date, dateString) => setEndDate(dateString)}
+                  />
+                  <Select
+                    showSearch
+                    placeholder="Selecione um produto"
+                    onChange={(value) => setProduct(value)}
+                    style={{ width: 200 }}
+                    options={products.map((product) => ({
+                      label: product.name,
+                      value: product.name,
+                    }))}
+                  />
+                </div>
+             
               </div>
                   <h3>{title}</h3>
                   <Chart

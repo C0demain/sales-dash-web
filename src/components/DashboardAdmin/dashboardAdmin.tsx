@@ -14,23 +14,19 @@ function DashboardAdmin() {
             <div className="containerDash">
                 <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
                 <div className="chartsBox">
-                    <div>
-                        <BasicLineChart />
-                    </div>
-                    <div>
-                        <BarChart />
-                    </div>
-                    <div>
-                        <ProductChart/>    
-                    </div>
+                    <BasicLineChart/>
+                    <BarChart />
                 </div>
-                <div className="box">
-                    <ListSells />
+                <div className="box"></div>
+                <div className="chartsBox">
+                    <ProductChart/>    
+                </div>
+                <div className="box"></div>
+                <div className="chartsBox">
+                    <ListSells/>
+                    <RankingSellers/>
                 </div>
                 <div className="divider"></div>
-                <div className="box">
-                    <RankingSellers />
-                </div>
             </div>
         </NavbarWrapper>
     )

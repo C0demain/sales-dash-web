@@ -21,13 +21,13 @@ function RankingSellers() {
             key: 'name'
         },
         {
-            title: 'Valor total de vendas',
+            title: 'Total de vendas',
             dataIndex: 'value',
             key: 'value',
             render: (value: number) => formatCurrency(value)
         },
         {
-            title: 'Quantidade de vendas',
+            title: 'Qtde de vendas',
             dataIndex: 'productsSold',
             key: 'productsSold'
         },
@@ -61,7 +61,7 @@ function RankingSellers() {
                             columns={columns} 
                             dataSource={sellers} 
                             rowKey="id" 
-                            pagination={{ defaultPageSize: 10 }}
+                            pagination={{ defaultPageSize: 5 }}
                         />
                     </>
                    ) : (
