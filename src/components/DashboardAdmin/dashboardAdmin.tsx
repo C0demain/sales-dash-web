@@ -5,6 +5,7 @@ import RankingSellers from "components/RankingSellers/rankingSellers";
 import BasicLineChart from "components/LineChart/LineChart";
 import BarChart from "components/Barchart/BarChart";
 import Navbar from "components/Navbar/Navbar";
+import ProductChart from "components/ProductChart/ProductChart";
 
 function DashboardAdmin() {
     return (
@@ -18,6 +19,9 @@ function DashboardAdmin() {
                     </div>
                     <div>
                         <BarChart />
+                    </div>
+                    <div>
+                        <ProductChart/>    
                     </div>
                 </div>
                 <div className="box">
