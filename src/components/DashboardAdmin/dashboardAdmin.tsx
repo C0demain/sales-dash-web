@@ -1,4 +1,3 @@
-import ListSells from "components/ListSell/ListSells";
 import './index.css'
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import RankingSellers from "components/RankingSellers/rankingSellers";

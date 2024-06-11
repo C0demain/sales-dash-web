@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Empty, Table, Button, Spin } from "antd";
+import { Empty, Table, Spin } from "antd";
 import './index.css'
 import { formatCurrency } from "util/formatters";
 import { apiInstance } from "services/api";

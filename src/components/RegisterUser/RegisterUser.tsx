@@ -1,4 +1,4 @@
-import { Button, Input, Spin, message } from "antd";
+import { Button, Input, message } from "antd";
 import { useState } from 'react';
 import './index.css';
 import { sendDataAdmin, sendDataSeller } from '.';

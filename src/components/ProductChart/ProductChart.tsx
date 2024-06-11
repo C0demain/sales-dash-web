@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
-import Switch from '@mui/material/Switch';
-import { Empty, Select } from 'antd';
+import { Empty } from 'antd';
 import { apiInstance } from 'services/api';
 import SelectProduct from 'components/SelectProduct/SelectProduct';
 
@@ -12,9 +10,6 @@ export default function LineChartSeller({ startDateProp, endDateProp }: { startD
   const startDate = startDateProp
   const endDate = endDateProp
   const [product, setProduct] = useState<number>()
-  const [checked, setChecked] = useState(true)
-  const [title, setTitle] = useState<any>('Vendas do produto:')
-  const [monthDiff, setMonthDiff] = useState<any>(5)
 
   const [options] = useState<any>({
     colors: ["#8e0152", "#276419"],
@@ -37,7 +32,6 @@ export default function LineChartSeller({ startDateProp, endDateProp }: { startD
 
   const getSellsPeriod = useCallback(async () => {
     let url = "http://localhost:8000/api/v1/dashboard/date/product";
-
     try {
       const response = await apiInstance.get(url, {
         withCredentials: false, params:{
@@ -51,11 +45,11 @@ export default function LineChartSeller({ startDateProp, endDateProp }: { startD
       console.error('Erro ao buscar os dados de vendas:', error);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startDate, endDate, product, monthDiff]);
+  }, []);
 
   useEffect(() => {
     getSellsPeriod();
-  }, [getSellsPeriod]);
+  }, []);
 
   useEffect(() => {
     if (dataSells.length > 0) {
@@ -65,17 +59,17 @@ export default function LineChartSeller({ startDateProp, endDateProp }: { startD
       });
       setData(chartData);
     }
-  }, [dataSells]);
+  }, []);
 
   return (
     <div>
       <div className='titleChart'>
-          <h3>{title}</h3>
+          <h3>Vendas do produto:</h3>
         <div style={{width: '30%'}}>
         <SelectProduct controlState={[product, setProduct]} dataKey='id'/>
         </div>
       </div>
-      {product!=undefined ?
+      {product!==undefined ?
         <Chart
           chartType="ComboChart"
           data={data}
@@ -83,7 +77,7 @@ export default function LineChartSeller({ startDateProp, endDateProp }: { startD
           width="75vh"
           height="35vh"
           loader={<div>Carregando Gráfico</div>}
-        /> : dataSells.length>0?<Empty description='Selecione um produto'/>: <Empty description="Você não possui nenhum venda nesse período" />
+        /> : dataSells.length > 0 ? <Empty description='Selecione um produto'/> : <Empty description="Você não possui nenhum venda nesse período" />
       }
     </div>
   )
