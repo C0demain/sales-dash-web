@@ -47,10 +47,10 @@ export default function RegisterSell() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    setLoading(true);
     event.preventDefault();
     console.log(user)
     if (validate()) {
+      setLoading(true);
       try {
         await sendData(date,role === 'admin'? seller[0]: user, client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
         message.success('Venda Cadastrada com Sucesso!');

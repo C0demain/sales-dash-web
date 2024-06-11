@@ -128,19 +128,19 @@ const Navbar: React.FC = () => {
     {
       key: '6',
       icon: <UnorderedListOutlined />,
-      label: 'Exibe Clientes',
+      label: isAdmin() ? 'Exibe Clientes' : 'Seus Clientes',
       onClick: () => {
         handleSelect('6');
-        navigate('/clients');
+        navigate(isAdmin() ? '/clients' : '/clientsSeller');
       },
     },
     {
       key: '7',
       icon: <ShoppingOutlined />,
-      label: 'Exibe Produtos',
+      label: isAdmin() ? 'Exibe Produtos' : 'Seus Produtos',
       onClick: () => {
         handleSelect('7');
-        navigate('/products');
+        navigate(isAdmin() ? '/products' : '/productsSeller');
       },
     },
     {
@@ -184,7 +184,6 @@ const Navbar: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
-      collapsed
         width={250}
         style={{ minHeight: '100vh'}}
       >
