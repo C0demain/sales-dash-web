@@ -82,7 +82,7 @@ export default function BarChart() {
                     duration: 3000,
                     easing: "linear",
                     startup: true,
-                  }
+                  } 
                 }}
               />
             </>

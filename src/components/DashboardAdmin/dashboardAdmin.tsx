@@ -16,7 +16,7 @@ function DashboardAdmin() {
             <Navbar />
             <div className="containerDash">
                 <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div className= 'linha' >
                     <div style={{display: 'flex', flexDirection: 'column', marginRight: '2vh'}}>
                         <div className="chartsBox">
                             <BasicLineChart
@@ -31,7 +31,7 @@ function DashboardAdmin() {
                             endDateProp={endDate}/>    
                         </div>
                     </div>
-                    <div>
+                    <div className='ran'>
                         <RankingSellers/>
                     </div>
                 </div>
