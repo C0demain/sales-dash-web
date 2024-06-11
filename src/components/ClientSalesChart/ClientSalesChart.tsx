@@ -6,166 +6,201 @@ import Switch from '@mui/material/Switch';
 import { Empty, Select, Spin } from 'antd';
 import { apiInstance } from 'services/api';
 import ClientSelector from 'components/ClientSelector/ClientSelector';
+import { width } from '@mui/system';
+
+interface Client {
+    id: string;
+    name: string;
+    segment: string;
+    cpf: string;
+}
+interface MonthData {
+    month: string
+    year: number,
+    totalValue: number,
+    totalCommissionValue: number,
+    totalSales: number
+}
 
 export default function ClientSalesChart() {
-    const [dataSells, setDataSells] = useState<any[]>([])
-    const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
-    const [startDate, setStartDate] = useState<any>()
-    const [endDate, setEndDate] = useState<any>()
-    const [checked, setChecked] = useState(true)
-    const [title, setTitle] = useState<any>('Valor vendido por clientes')
-    const [monthDiff, setMonthDiff] = useState<any>(5)
-    const today = new Date()
-    const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
-    const [loading, setLoading] = useState(true);
+    const [dataSells, setDataSells] = useState<{ [clientId: string]: MonthData[] }>({});
+    const [data, setData] = useState<any[][]>([["Mês"]]);
+    const [selectedClients, setSelectedClients] = useState<Client[]>([]);
+    const [startDate, setStartDate] = useState<string>('');
+    const [endDate, setEndDate] = useState<string>('');
+    const [checked, setChecked] = useState<boolean>(true);
+    const [title, setTitle] = useState<string>('Valor vendido por clientes');
+    const [monthDiff, setMonthDiff] = useState<number>(5);
+    const [loading, setLoading] = useState<boolean>(true);
+    const today = new Date();
     const customIndicator = <div style={{ display: 'none' }} />;
+    let isClientSelected: boolean = selectedClients.length !== 0
 
     const periodOptions = [
-        {
-            label: 'Últimos 12 meses',
-            value: 11
-        },
-        {
-            label: 'Últimos 6 meses',
-            value: 5
-        },
-        {
-            label: 'Últimos 3 meses',
-            value: 2
-        },
-    ]
+        { label: 'Últimos 12 meses', value: 11 },
+        { label: 'Últimos 6 meses', value: 5 },
+        { label: 'Últimos 3 meses', value: 2 },
+    ];
 
-    const [options, setOptions] = useState<any>({
-        colors: ["#8e0152", "#276419"],
+    const chartOptions = {
+        colors: ["#1976d2", "#7CB9E8", "#00308F", "#b0b8ce", "#022954"],
         pointSize: 10,
+        height: 350,
         animation: {
-            duration: 800,
+            duration: 500,
             easing: "linear",
             startup: true,
         },
-        seriesType: 'bar',
-        series: [
+        seriesType: 'bars',
+        series: !isClientSelected ? [
             { type: 'bars', color: '#1976d2' },
             { type: 'line', color: '#001529' },
-        ],
-        legend: { position: "none" },
-    })
+        ] : [],
+        legend: !isClientSelected ? { position: "bottom" } : { position: "none" },
+    };
 
-    const setDates = useCallback(async () => {
+    const setDates = useCallback(() => {
         const year = today.getFullYear();
         const month = today.getMonth();
-
-        // Calcular o mês do 5º mês passado
         const targetMonth = month - monthDiff;
-
-        // Verificar se precisa ajustar o ano
-        let targetYear = year;
-        if (targetMonth < 0) {
-            targetYear -= 1;
-        }
-
-        // Obter o mês ajustado dentro do intervalo [0, 11]
+        const targetYear = targetMonth < 0 ? year - 1 : year;
         const adjustedMonth = (targetMonth + 12) % 12;
+        const startDate = new Date(targetYear, adjustedMonth, 1);
 
-        // Retornar o primeiro dia do mês desejado
-        let startDate = new Date(targetYear, adjustedMonth, 1);
-
-        setStartDate(formatDateToBack(startDate))
-        setEndDate(formatDateToBack(today))
-    }, [today])
+        setStartDate(formatDateToBack(startDate));
+        setEndDate(formatDateToBack(today));
+    }, [monthDiff]);
 
     const getSellsPeriod = useCallback(async () => {
-        setDates()
-        let url = "http://localhost:8000/api/v1/dashboard/date/client"
-        const startDateFilter = startDate ? 'startDate=' + startDate : ""
-        const endDateFilter = endDate ? 'endDate=' + endDate : ""
+        setLoading(true);
+        setDates();
+        if (selectedClients.length > 0) {
+            const allClientsSales = await Promise.all(selectedClients.map(async (client) => {
+                let url = "http://localhost:8000/api/v1/dashboard/date/client";
+                const clientFilter = `clientId=${client.id}`;
+                const startDateFilter = `startDate=${startDate}`;
+                const endDateFilter = `endDate=${endDate}`;
 
-        let queryParams = [startDateFilter, endDateFilter]
-        const query = queryParams.filter(e => e !== '').join('&')
-        url += query !== "&" ? "?" + query : ""
+                const queryParams = [clientFilter, startDateFilter, endDateFilter].filter(e => e).join('&');
+                url += queryParams ? `?${queryParams}` : "";
+                const response = await apiInstance.get(url, { withCredentials: false });
+                return { clientId: client.id, data: response.data.stats };
+            }));
 
-        const response = await apiInstance.get(url, {
-            withCredentials: false,
-        });
-        //console.log(url)
-        setDataSells(response.data.stats)
-        setLoading(false);
-    }, [startDate, endDate, monthDiff])
+            const clientSalesMap: { [clientId: string]: MonthData[] } = {};
+            allClientsSales.forEach(clientSales => {
+                clientSalesMap[clientSales.clientId] = clientSales.data;
+            });
 
-    const setDataStats = async (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        // Completa com os meses restantes
-
-        if (data[0][1] === "Valor vendido") {
-            let chartData: Array<any> = [["Mês", "Comissão de venda", "Comissão de venda"]]
-            dataSells.forEach(stat => {
-                chartData.push([stat.month, stat.totalCommissionValue, stat.totalCommissionValue])
-            })
-            setData(chartData)
-            setTitle('Comissão de venda mensal')
+            setDataSells(clientSalesMap);
         } else {
-            let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
-            dataSells.forEach(stat => {
-                chartData.push([stat.month, stat.totalValue, stat.totalValue])
-            })
-            setData(chartData)
-            setTitle('Valor vendido mensalmente')
+            let url = "http://localhost:8000/api/v1/dashboard/date/client";
+            const startDateFilter = `startDate=${startDate}`;
+            const endDateFilter = `endDate=${endDate}`;
+
+            const queryParams = [startDateFilter, endDateFilter].filter(e => e).join('&');
+            url += queryParams ? `?${queryParams}` : "";
+            const response = await apiInstance.get(url, { withCredentials: false });
+            setDataSells({ all: response.data.stats });
         }
+        setLoading(false);
+    }, [selectedClients, startDate, endDate, setDates]);
+
+    const updateChartData = useCallback(() => {
+        const chartData: any[][] = [
+            [
+                "Mês",
+                ...(isClientSelected
+                    ? selectedClients.map(client => client.name)
+                    : (checked
+                        ? ['Valor vendido mensalmente', 'Crescimento']
+                        : ['Comissão de venda mensal', 'Crescimento'])
+                )
+            ]
+        ];
+
+        const monthSet: Set<string> = new Set();
+
+        // Coloca meses em um Set para não haver repetições
+        Object.values(dataSells).forEach(clientSales => {
+            clientSales.forEach(monthData => {
+                monthSet.add(monthData.month);
+            });
+        });
+        const months = Array.from(monthSet);
+
+        months.forEach(month => {
+            const rowData: any[] = [month];
+
+            // Clientes selecionados
+            if (selectedClients.length > 0) {
+                selectedClients.forEach(client => {
+                    const clientSales = dataSells[client.id] || [];
+                    const monthData = clientSales.find(data => data.month === month);
+                    const saleValue = monthData ? (checked ? monthData.totalValue : monthData.totalCommissionValue) : 0;
+                    rowData.push(saleValue);
+                });
+            } else //Sem clientes selecionados
+            {
+                const monthData = Object.values(dataSells)[0].find(data => data.month === month);
+                const saleValue = monthData ? (checked ? monthData.totalValue : monthData.totalCommissionValue) : 0;
+                rowData.push(saleValue, saleValue);
+            }
+            chartData.push(rowData);
+        });
+
+        setData(chartData);
+    }, [selectedClients, dataSells, checked]);
+
+    const handleDataFromChild = (data: Client[]) => {
+        setSelectedClients(data);
+    };
+
+    const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-    }
+        setTitle(event.target.checked ? 'Valor vendido mensalmente' : 'Comissão de venda mensal');
+        updateChartData();
+    };
 
     useEffect(() => {
-        getSellsPeriod()
-    }, [getSellsPeriod])
+        getSellsPeriod();
+    }, [getSellsPeriod]);
 
     useEffect(() => {
-        if (dataSells.length > 0) {
-            let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
-            dataSells.forEach(stat => {
-                chartData.push([stat.month, stat.totalValue, stat.totalValue])
-            })
-            setData(chartData)
-        }
-    }, [getSellsPeriod, dataSells])
+        updateChartData();
+    }, [dataSells, checked, selectedClients]);
 
-    const originalWarn = console.warn;
 
-    console.warn = function (...args) {
-        const arg = args && args[0];
-
-        if (arg && arg.includes('Attempting to load version \'51\' of Google Charts')) return;
-
-        originalWarn(...args);
+    console.warn = (...args: any[]) => {
+        if (args[0] && args[0].includes('Attempting to load version \'51\' of Google Charts')) return;
+        console.warn(...args);
     };
 
     return (
         <div className='titleChart'>
             <Spin spinning={loading} indicator={customIndicator}>
-                {dataSells.length > 0 ? (
+                {Object.keys(dataSells).length > 0 ? (
                     <>
                         <div className='titleChart'>
-                            <ClientSelector />
-                            <Switch checked={checked} onChange={setDataStats} />
+                            <ClientSelector sendDataToParent={handleDataFromChild} />
+                            <Switch checked={checked} onChange={handleSwitchChange} />
                             <h3>{title}</h3>
                             <Select
                                 options={periodOptions}
-                                onSelect={setMonthDiff}
+                                onChange={value => setMonthDiff(value)}
                                 defaultValue={5}
                             />
-
                         </div>
                         <Chart
                             chartType="ComboChart"
                             data={data}
-                            options={options}
+                            options={chartOptions}
                         />
                     </>
                 ) : (
                     !loading && <Empty description="Não há comissões registradas." />
                 )}
             </Spin>
-
         </div>
-
     );
 }
