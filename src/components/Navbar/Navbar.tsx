@@ -10,7 +10,8 @@ import {
   DollarOutlined,
   LogoutOutlined,
   KeyOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  QuestionCircleOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -167,6 +168,15 @@ const Navbar: React.FC = () => {
       onClick: () => {
         handleSelect('10');
         handleLogout();
+      },
+    },
+    {
+      key: '11',
+      icon: <QuestionCircleOutlined />,
+      label: 'Docs',
+      onClick: () => {
+        handleSelect('11');
+        navigate('/docs');
       },
     }
   ].filter(Boolean) as MenuItem[];
