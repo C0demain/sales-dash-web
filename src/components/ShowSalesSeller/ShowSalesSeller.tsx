@@ -161,7 +161,8 @@ function ShowSalesSeller() {
       <Navbar />
       <div className="containerSl">
         <h2>Lista de Vendas</h2>
-        <Row gutter={16}>
+        {sales.length > 0? <div>
+          <Row gutter={16}>
           <Col>
             <SelectProduct
               controlState={[productSelect, setProductSelect]}
@@ -259,6 +260,9 @@ function ShowSalesSeller() {
             </Form.Item>
           </Form>
         </Modal>
+        </div> : <div style={{display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center'}}><Empty description='Não há vendas cadastradas'/></div>
+        }
+        
       </div>
     </NavbarWrapper>
   );

@@ -8,7 +8,7 @@ import { sendData } from '.';
 import Navbar from "components/Navbar/Navbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import { Button, DatePicker, message } from 'antd';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
 import { useAuth } from 'context/AuthProvider/useAuth';
 

@@ -16,6 +16,7 @@ import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import ShowUsers from "components/ShowUsers/ShowUsers";
 import DatabaseCleaner from "components/DatabaseCleaner";
+import APIdoc from "components/APIdoc/APIdoc";
 
 export function AppRoutes() {
   return (
@@ -110,6 +111,12 @@ export function AppRoutes() {
             <ProtectedLayout>
               <DatabaseCleaner/>
             </ProtectedLayout> }>
+          </Route>
+
+          <Route path="/docs" element={
+            <ProtectedLayout>
+              <APIdoc/>
+            </ProtectedLayout>}>
           </Route>
 
         </Routes>

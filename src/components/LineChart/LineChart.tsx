@@ -20,9 +20,9 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
   const [title, setTitle] = useState<any>('Valor vendido')
   const [monthDiff, setMonthDiff] = useState<any>(5)
   const today = new Date()
-  const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
   const [loading, setLoading] = useState(true);
   const customIndicator = <div style={{ display: 'none' }} />;
+  let totalQtde = 0
 
   const periodOptions = [
     {
@@ -39,7 +39,7 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
     },
   ]
 
-  const [options, setOptions] = useState<any>({
+  const [options] = useState<any>({
     colors: ["#8e0152", "#276419"],
     pointSize: 10,
     animation: {
@@ -128,6 +128,7 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
     if (dataSells.length > 0) {
       let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
       dataSells.forEach(stat => {
+        totalQtde =+ stat.totalValue
         chartData.push([stat.month, stat.totalValue, stat.totalValue])
       })
       setData(chartData)
@@ -168,7 +169,7 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
               />
             </>
           ) : (
-            !loading && <Empty description="Não há comissões registradas." />
+             <Empty description="Não há vendas registradas" />
           )}
         </Spin>
       </div>
