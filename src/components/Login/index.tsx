@@ -3,7 +3,7 @@ import { useAuth } from "context/AuthProvider/useAuth";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { useState } from "react";
-import logo from './logo.png';
+import logo from '../../images/logo.png'
 
 export const Login = () => {
     const auth = useAuth();
