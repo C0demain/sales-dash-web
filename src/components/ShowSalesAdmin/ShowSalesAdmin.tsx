@@ -22,7 +22,7 @@ interface Sale {
   value: number;
 }
 
-function ShowSales() {
+function ShowSalesAdmin() {
   const [sales, setSells] = useState<Sale[]>([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -281,4 +281,4 @@ function ShowSales() {
   );
 }
 
-export default ShowSales;
+export default ShowSalesAdmin;

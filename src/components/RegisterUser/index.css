@@ -2,18 +2,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 50px;
 }
 
 .containerVendedor {
   width: 100%;
-
 }
 
 .formContainer {
   display: flex;
   justify-content: space-between;
-
 }
 
 .caixaVendedor {

@@ -52,7 +52,6 @@ function DashboardAdmin() {
                 </div> 
                 <div style={{display: 'flex', alignItems: 'center', height: '100%'}}><Empty description='Não há vendas cadastradas'/></div>
                 
-                
             </div>
         </NavbarWrapper>
     )
