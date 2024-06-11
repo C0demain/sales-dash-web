@@ -28,7 +28,7 @@ type MenuItem = {
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
-  const [collapsed] = useState(true);
+  const [collapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState<string>('0');
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const role = isAdmin() ? 'Gestor' : 'Vendedor';
@@ -174,7 +174,7 @@ const Navbar: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
-        collapsible
+      collapsed
         width={250}
         style={{ minHeight: '100vh'}}
       >

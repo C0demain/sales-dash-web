@@ -6,7 +6,12 @@ import Switch from '@mui/material/Switch';
 import { Empty, Select, Spin } from 'antd';
 import { apiInstance } from 'services/api';
 
-export default function BasicLineChart() {
+interface LineChartSellerProps {
+  onStartDateChange: (date: string) => void;
+  onEndDateChange: (date: string) => void;
+}
+
+export default function BasicLineChart({ onStartDateChange, onEndDateChange }: LineChartSellerProps) {
   const [dataSells, setDataSells] = useState<any[]>([])
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
   const [startDate, setStartDate] = useState<any>()
@@ -70,7 +75,9 @@ export default function BasicLineChart() {
     let startDate = new Date(targetYear, adjustedMonth, 1);
 
     setStartDate(formatDateToBack(startDate))
+    onStartDateChange(formatDateToBack(startDate))
     setEndDate(formatDateToBack(today))
+    onEndDateChange(formatDateToBack(today))
   }, [today])
 
   const getSellsPeriod = useCallback(async () => {

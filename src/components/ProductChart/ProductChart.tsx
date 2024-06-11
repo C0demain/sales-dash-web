@@ -4,26 +4,17 @@ import { Chart } from "react-google-charts";
 import Switch from '@mui/material/Switch';
 import { Empty, Select } from 'antd';
 import { apiInstance } from 'services/api';
-import { useAuth } from 'context/AuthProvider/useAuth';
 import SelectProduct from 'components/SelectProduct/SelectProduct';
 
-export default function LineChartSeller() {
+export default function LineChartSeller({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) {
   const [dataSells, setDataSells] = useState<any[]>([])
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
-  const [startDate, setStartDate] = useState<any>()
-  const [endDate, setEndDate] = useState<any>()
+  const startDate = startDateProp
+  const endDate = endDateProp
   const [product, setProduct] = useState<number>()
   const [checked, setChecked] = useState(true)
-  const [title, setTitle] = useState<any>('Valor vendido')
+  const [title, setTitle] = useState<any>('Vendas do produto:')
   const [monthDiff, setMonthDiff] = useState<any>(5)
-  const today = new Date()
-
-  const periodOptions = [
-    { label: 'Últimos 12 meses', value: 11 },
-    { label: 'Últimos 6 meses', value: 5 },
-    { label: 'Últimos 3 meses', value: 2 },
-    { label: 'Mês atual', value: 0 }
-  ];
 
   const [options] = useState<any>({
     colors: ["#8e0152", "#276419"],
@@ -44,25 +35,7 @@ export default function LineChartSeller() {
     },
   });
 
-  const setDates = useCallback(() => {
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const targetMonth = month - monthDiff;
-    let targetYear = year;
-
-    if (targetMonth < 0) {
-      targetYear -= 1;
-    }
-
-    const adjustedMonth = (targetMonth + 12) % 12;
-    let startDate = new Date(targetYear, adjustedMonth, 1);
-
-    setStartDate(formatDateToBack(startDate));
-    setEndDate(formatDateToBack(today));
-  }, [monthDiff, today]);
-
   const getSellsPeriod = useCallback(async () => {
-    setDates();
     let url = "http://localhost:8000/api/v1/dashboard/date/product";
 
     try {
@@ -73,32 +46,12 @@ export default function LineChartSeller() {
           productId: product
         }
       });
-      console.log(response.data.stats)
       setDataSells(response.data.stats);
     } catch (error) {
       console.error('Erro ao buscar os dados de vendas:', error);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate, product, monthDiff]);
-
-  const setDataStats = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (data[0][1] === "Valor vendido") {
-      let chartData: Array<any> = [["Mês", "Comissão de venda", "Comissão de venda"]];
-      dataSells.forEach(stat => {
-        chartData.push([stat.month, stat.totalCommissionValue, stat.totalCommissionValue]);
-      });
-      setData(chartData);
-      setTitle('Comissão de venda mensal');
-    } else {
-      let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]];
-      dataSells.forEach(stat => {
-        chartData.push([stat.month, stat.totalValue, stat.totalValue]);
-      });
-      setData(chartData);
-      setTitle('Valor vendido mensalmente');
-    }
-    setChecked(event.target.checked);
-  }
 
   useEffect(() => {
     getSellsPeriod();
@@ -117,24 +70,20 @@ export default function LineChartSeller() {
   return (
     <div>
       <div className='titleChart'>
-        <Switch checked={checked} onChange={setDataStats} />
-        <h3>{title}</h3>
-        <Select
-          options={periodOptions}
-          onSelect={(value) => setMonthDiff(value)}
-          defaultValue={5}
-        />
+          <h3>{title}</h3>
+        <div style={{width: '30%'}}>
         <SelectProduct controlState={[product, setProduct]} dataKey='id'/>
+        </div>
       </div>
-      {dataSells.length > 0 ?
+      {product!=undefined ?
         <Chart
           chartType="ComboChart"
           data={data}
           options={options}
-          width="80vh"
+          width="75vh"
           height="35vh"
           loader={<div>Carregando Gráfico</div>}
-        /> : <Empty description="Você não possui nenhum venda nesse período" />
+        /> : dataSells.length>0?<Empty description='Selecione um produto'/>: <Empty description="Você não possui nenhum venda nesse período" />
       }
     </div>
   )
