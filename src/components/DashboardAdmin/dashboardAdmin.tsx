@@ -25,13 +25,13 @@ function DashboardAdmin() {
     useEffect(()=>{
         getSells()
     }, [])
-    
+
     return (
         <NavbarWrapper>
             <Navbar />
             <div className="containerDash">
                 <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
-                {totalQtde>0?(<div style={{display: 'flex', flexDirection: 'row'}}>
+                {totalQtde > 0 ? (<div style={{display: 'flex', flexDirection: 'row'}}>
                     <div style={{display: 'flex', flexDirection: 'column', marginRight: '2vh'}}>
                         <div className="chartsBox">
                             <BasicLineChart
@@ -49,7 +49,7 @@ function DashboardAdmin() {
                     <div>
                         <RankingSellers/>
                     </div>
-                </div>):(<div style={{display: 'flex', alignItems: 'center', height: '100%'}}><Empty description='Não há vendas cadastradas'/></div>)
+                </div>) : (<div style={{display: 'flex', alignItems: 'center', height: '100%'}}><Empty description='Não há vendas cadastradas'/></div>)
                 }
                 
             </div>
