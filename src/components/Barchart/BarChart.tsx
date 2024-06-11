@@ -49,13 +49,10 @@ export default function BarChart() {
   };
 
   return (
-    <div className='charts'>
-
-      <div style={{ display: 'flex', maxWidth: 600 }}>
-        <Spin spinning={loading} indicator={customIndicator}>
+      <div>
           {commissions.length > 1 ? (
             <>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '3vh', marginTop: '3vh', minWidth: '100%' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '5vh', marginTop: '1.5vh', minWidth: '100%' }}>
                 <Select
                   style={{ minWidth: '30%' }}
                   placeholder="Escolha um mês"
@@ -85,15 +82,13 @@ export default function BarChart() {
                     duration: 3000,
                     easing: "linear",
                     startup: true,
-                  }
+                  } 
                 }}
               />
             </>
           ) : (
-            !loading && <Empty description="Não há comissões registradas." />
+            <Empty description="Não há comissões registradas." />
           )}
-        </Spin>
       </div>
-    </div>
   );
 }

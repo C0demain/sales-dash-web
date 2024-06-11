@@ -56,7 +56,7 @@ export default function CommissionChartSeller({ onTotalCommissionChange }: Commi
   };
 
   return (
-    <div className='charts' style={{ marginBottom: '1vh' }}>
+    <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '3vh', minWidth: '100%' }}>
 
         <Select

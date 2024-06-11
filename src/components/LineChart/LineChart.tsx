@@ -6,7 +6,12 @@ import Switch from '@mui/material/Switch';
 import { Empty, Select, Spin } from 'antd';
 import { apiInstance } from 'services/api';
 
-export default function BasicLineChart() {
+interface LineChartSellerProps {
+  onStartDateChange: (date: string) => void;
+  onEndDateChange: (date: string) => void;
+}
+
+export default function BasicLineChart({ onStartDateChange, onEndDateChange }: LineChartSellerProps) {
   const [dataSells, setDataSells] = useState<any[]>([])
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
   const [startDate, setStartDate] = useState<any>()
@@ -15,9 +20,9 @@ export default function BasicLineChart() {
   const [title, setTitle] = useState<any>('Valor vendido')
   const [monthDiff, setMonthDiff] = useState<any>(5)
   const today = new Date()
-  const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
   const [loading, setLoading] = useState(true);
   const customIndicator = <div style={{ display: 'none' }} />;
+  let totalQtde = 0
 
   const periodOptions = [
     {
@@ -34,7 +39,7 @@ export default function BasicLineChart() {
     },
   ]
 
-  const [options, setOptions] = useState<any>({
+  const [options] = useState<any>({
     colors: ["#8e0152", "#276419"],
     pointSize: 10,
     animation: {
@@ -70,7 +75,9 @@ export default function BasicLineChart() {
     let startDate = new Date(targetYear, adjustedMonth, 1);
 
     setStartDate(formatDateToBack(startDate))
+    onStartDateChange(formatDateToBack(startDate))
     setEndDate(formatDateToBack(today))
+    onEndDateChange(formatDateToBack(today))
   }, [today])
 
   const getSellsPeriod = useCallback(async () => {
@@ -121,6 +128,7 @@ export default function BasicLineChart() {
     if (dataSells.length > 0) {
       let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
       dataSells.forEach(stat => {
+        totalQtde =+ stat.totalValue
         chartData.push([stat.month, stat.totalValue, stat.totalValue])
       })
       setData(chartData)
@@ -161,7 +169,7 @@ export default function BasicLineChart() {
               />
             </>
           ) : (
-            !loading && <Empty description="Não há comissões registradas." />
+             <Empty description="Não há vendas registradas" />
           )}
         </Spin>
       </div>

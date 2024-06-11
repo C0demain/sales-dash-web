@@ -7,6 +7,7 @@ import Navbar from 'components/Navbar/Navbar';
 
 function RegisterProduct() {
     const [name, setName] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const validate = (): boolean => {
         if (!name) {
@@ -22,6 +23,7 @@ function RegisterProduct() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (validate()) {
+            setLoading(true);
             try {
                 await sendData(name);
                 message.success('Produto Cadastrado com Sucesso!');
@@ -29,6 +31,8 @@ function RegisterProduct() {
             } catch (error: any) {
                 message.error('Ocorreu um erro ao registrar o produto. Tente novamente.');
                 console.error('Erro ao registrar o produto:', error);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -52,7 +56,7 @@ function RegisterProduct() {
                                         required
                                     />
                                 </div>
-                                <Button type='primary' htmlType='submit' className='custom-button'>Cadastrar</Button>
+                                <Button type='primary' htmlType='submit' className='custom-button' loading={loading}>Cadastrar</Button>
                             </form>
                         </div>
                     </div>

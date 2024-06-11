@@ -1,5 +1,5 @@
 import { Cascader } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { apiInstance } from "services/api";
 
 type propsType = {
@@ -11,13 +11,12 @@ type propsType = {
 const SelectProduct = (props: propsType) =>{
     const [productOpt, setProductOpt] = useState<any[]>([])
     const [controlState, setControlState] = props.controlState
-    const { dataKey, className } = props
+    const { dataKey } = props
 
-    const getProducts = async () => {
+    const getProducts = useCallback( async () => {
         const response = await apiInstance.get("http://localhost:8000/api/v1/products/getAll", {
             withCredentials: false,
         });
-    
         const options = []
         for(let p of response.data.products){
             options.push({
@@ -27,11 +26,11 @@ const SelectProduct = (props: propsType) =>{
         }
     
         setProductOpt(options)
-    }
+    },[])
 
     useEffect(()=>{
         getProducts()
-    }, [])
+    },[])
 
     return (
 
