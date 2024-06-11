@@ -17,6 +17,7 @@
     "@types/react-dom": "^18.0.6",
     "antd": "^5.16.1",
     "apexcharts": "^3.49.1",
+    "autosuggest-highlight": "^3.3.4",
     "axios": "^0.27.2",
     "baseui": "^12.1.2",
     "chart.js": "^4.4.2",
@@ -68,6 +69,7 @@
     ]
   },
   "devDependencies": {
+    "@types/autosuggest-highlight": "^3.2.3",
     "@types/react-input-mask": "^3.0.5",
     "@types/styled-components": "^5.1.26",
     "@types/swagger-ui": "^3.52.4",

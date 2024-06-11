@@ -1,46 +1,24 @@
-# Getting Started with Create React App
+## Sales Dash Web
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é um sistema de dashboard para vendas desenvolvido em React com TypeScript. O sistema fornece uma interface intuitiva para visualizar e analisar dados de vendas, ajudando gestores a tomar decisões informadas.
 
-## Available Scripts
+## Funcionalidades Principais
 
-In the project directory, you can run:
+- **Upload de Planilha**: Sistema para realizar o upload da planilha com dados de venda, do vendedor, e do cliente.
+- **Visualização de Vendas**: Gráficos interativos para visualizar dados de vendas ao longo do tempo.
+- **Visualização de Usuários**: Tabela interativa com filtros para visualizar dados dos usuários.
+- **Visualização de Clientes**: Tabela interativa com filtros para visualizar dados dos clientes.
+- **Visualização de Produtos**: Tabela interativa com filtros para visualizar dados dos produtos.
+- **Cadastro de Gestores**: Formulário para cadastrar novos gestores, com envio da primeira senha por e-mail.
+- **Cadastro de Vendedoress**: Formulário para cadastrar novos vendedores.
+- **Cadastro de Produtos**: Formulário para cadastrar novos produtos.
+- **Cadastro de Clientes**: Formulário para cadastrar novos clientes.
+- **Filtros e Pesquisas**: Ferramentas para filtrar e pesquisar dados de vendas por diferentes critérios.
+- **Atualização de Senha**: Formulário para atualização de senha do usuário.
 
-### `npm start`
+## Tecnologias Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **React**: Biblioteca principal para construção da interface do usuário.
+- **TypeScript**: Superset de JavaScript que adiciona tipagem estática ao código.
+- **Ant Design (antd)**: Biblioteca de componentes UI para React.
+- **Chart.js**: Biblioteca de gráficos utilizada para exibir dados de vendas.
