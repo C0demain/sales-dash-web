@@ -49,10 +49,10 @@ export default function ClientSelector({ sendDataToParent }: ClientSelectorProps
   }
 
   return (
-    <Stack spacing={3} sx={{ width: 450 }}>
+    <Stack spacing={3} sx={{ width: 250 }}>
       <Autocomplete
         multiple
-        limitTags={2}
+        limitTags={1}
         id="tags-outlined"
         options={clients}
         getOptionLabel={(option) => option.name}

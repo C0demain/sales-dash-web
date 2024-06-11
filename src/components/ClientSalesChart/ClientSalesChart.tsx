@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import { formatDateToBack } from 'util/formatters';
-import { Chart } from "react-google-charts";
-import './index.css'
 import Switch from '@mui/material/Switch';
 import { Empty, Select, Spin } from 'antd';
-import { apiInstance } from 'services/api';
 import ClientSelector from 'components/ClientSelector/ClientSelector';
-import { width } from '@mui/system';
+import { useCallback, useEffect, useState } from 'react';
+import { Chart } from "react-google-charts";
+import { apiInstance } from 'services/api';
+import { formatDateToBack } from 'util/formatters';
+import './index.css';
 
 interface Client {
     id: string;
@@ -29,7 +28,7 @@ export default function ClientSalesChart() {
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const [checked, setChecked] = useState<boolean>(true);
-    const [title, setTitle] = useState<string>('Valor vendido por clientes');
+    const [title, setTitle] = useState<string>('Valor mensal');
     const [monthDiff, setMonthDiff] = useState<number>(5);
     const [loading, setLoading] = useState<boolean>(true);
     const today = new Date();
@@ -45,7 +44,7 @@ export default function ClientSalesChart() {
     const chartOptions = {
         colors: ["#1976d2", "#7CB9E8", "#00308F", "#b0b8ce", "#022954"],
         pointSize: 10,
-        height: 350,
+        height: 300,
         animation: {
             duration: 500,
             easing: "linear",
@@ -158,7 +157,7 @@ export default function ClientSalesChart() {
 
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        setTitle(event.target.checked ? 'Valor vendido mensalmente' : 'Comissão de venda mensal');
+        setTitle(event.target.checked ? 'Valor mensal' : 'Comissão mensal');
         updateChartData();
     };
 
@@ -182,14 +181,15 @@ export default function ClientSalesChart() {
                 {Object.keys(dataSells).length > 0 ? (
                     <>
                         <div className='titleChart'>
-                            <ClientSelector sendDataToParent={handleDataFromChild} />
                             <Switch checked={checked} onChange={handleSwitchChange} />
                             <h3>{title}</h3>
                             <Select
                                 options={periodOptions}
                                 onChange={value => setMonthDiff(value)}
                                 defaultValue={5}
-                            />
+                                style={{marginLeft: 10}}
+                            />                            
+                            <ClientSelector sendDataToParent={handleDataFromChild} />
                         </div>
                         <Chart
                             chartType="ComboChart"
