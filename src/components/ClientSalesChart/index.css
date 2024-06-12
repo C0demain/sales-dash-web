@@ -1,0 +1,16 @@
+.charts{
+    display: flex;
+    flex-direction: column;
+    margin: 0%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.titleChart{
+    display: flex;
+    align-items: center;
+}
+
+.titleChart > *:last-child{
+    margin-left: 50px;
+}

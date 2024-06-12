@@ -8,15 +8,17 @@ import ShowClient from "components/ShowClient/ShowClient";
 import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
 import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
-import ShowSales from "components/ShowSales/ShowSales";
+import ShowSalesAdmin from "components/ShowSalesAdmin/ShowSalesAdmin";
 import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import ShowUsers from "components/ShowUsers/ShowUsers";
 import DatabaseCleaner from "components/DatabaseCleaner";
 import APIdoc from "components/APIdoc/APIdoc";
+import ShowProductsSeller from "components/ShowProductsSeller/ShowProductsSeller";
+import ShowClientsSeller from "components/ShowClientsSeller/ShowClientsSeller";
 
 export function AppRoutes() {
   return (
@@ -28,10 +30,13 @@ export function AppRoutes() {
           <Route path='/' element={<Login />}></Route>
           <Route path='/login' element={<Login />}></Route>
 
+          {/* Redirecionamento para o login se a rota não existir */}
+          <Route path='*' element={<Navigate to="/login" />} />
+
           {/* Rotas Privadas */}
           <Route path="/dashboardSeller" element={
             <ProtectedLayout sellerOnly>
-              <DashboardSeller/>
+              <DashboardSeller />
             </ProtectedLayout>}>
           </Route>
 
@@ -43,7 +48,7 @@ export function AppRoutes() {
 
           <Route path='/users/register' element={
             <ProtectedLayout adminOnly>
-              <RegisterUser/>
+              <RegisterUser />
             </ProtectedLayout>} >
           </Route>
 
@@ -66,8 +71,14 @@ export function AppRoutes() {
           </Route>
 
           <Route path='/products' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <ShowProduct />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/productsSeller' element={
+            <ProtectedLayout>
+              <ShowProductsSeller />
             </ProtectedLayout>} >
           </Route>
 
@@ -78,14 +89,20 @@ export function AppRoutes() {
           </Route>
 
           <Route path='/clients' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <ShowClient />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/salesManager' element={
+          <Route path='/clientsSeller' element={
             <ProtectedLayout>
-              <ShowSales />
+              <ShowClientsSeller />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/salesManager' element={
+            <ProtectedLayout adminOnly>
+              <ShowSalesAdmin />
             </ProtectedLayout>} >
           </Route>
 
@@ -96,26 +113,26 @@ export function AppRoutes() {
           </Route>
 
           <Route path='/users' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <ShowUsers />
             </ProtectedLayout>} >
           </Route>
 
           <Route path='/users/update' element={
             <ProtectedLayout>
-              <UpdatePassword/>
-            </ProtectedLayout> }>
+              <UpdatePassword />
+            </ProtectedLayout>}>
           </Route>
-          
+
           <Route path='cleanDatabase' element={
-            <ProtectedLayout>
-              <DatabaseCleaner/>
-            </ProtectedLayout> }>
+            <ProtectedLayout adminOnly>
+              <DatabaseCleaner />
+            </ProtectedLayout>}>
           </Route>
 
           <Route path="/docs" element={
-            <ProtectedLayout>
-              <APIdoc/>
+            <ProtectedLayout adminOnly>
+              <APIdoc />
             </ProtectedLayout>}>
           </Route>
 
