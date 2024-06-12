@@ -59,7 +59,7 @@ function DashboardAdmin() {
                 <div className="box">
                     <ListSells />
                 </div>
-                <div className="divider"></div>
+
                 <div className="box">
                     <RankingSellers />
                 </div>
