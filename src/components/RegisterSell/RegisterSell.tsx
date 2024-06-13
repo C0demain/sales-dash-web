@@ -11,7 +11,6 @@ import { Button, DatePicker, message } from 'antd';
 import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
 import { useAuth } from 'context/AuthProvider/useAuth';
-import DownloadTemplateSheet from 'components/DownloadTemplateSheet/DownloadTemplateSheet';
 
 export default function RegisterSell() {
   const [seller, setSeller] = useState<any>();
@@ -22,13 +21,13 @@ export default function RegisterSell() {
   const [errors] = useState({ date: '', seller: '', client: '', product: '', value: '' })
   const role = useAuth().role
   const user = useAuth().cpf
-  const oculto = { display: 'none' }
-  const mostrar = { display: 'flex', flexDirection: 'column' }
+  const oculto = {display: 'none'}
+  const mostrar = {display: 'flex', flexDirection: 'column'}
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
     let isValid = true;
-
+    
     if (role === 'admin' && !seller) {
       message.error('Você deve preencher o vendedor.');
       isValid = false;
@@ -53,7 +52,7 @@ export default function RegisterSell() {
     if (validate()) {
       setLoading(true);
       try {
-        await sendData(date, role === 'admin' ? seller[0] : user, client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
+        await sendData(date,role === 'admin'? seller[0]: user, client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
         message.success('Venda Cadastrada com Sucesso!');
         setDate(null);
         setSeller('');
@@ -81,7 +80,6 @@ export default function RegisterSell() {
     <NavbarWrapper>
       <Navbar />
       <div className='containerGlobal'>
-        <DownloadTemplateSheet /> 
         <UploadExcelPage />
         <div className='containerRegisterSell'>
           <div className="caixaVenda">
@@ -100,7 +98,7 @@ export default function RegisterSell() {
                 {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
               </div>
 
-              <div className='insertTextVenda' style={role === 'user' ? oculto : mostrar}>
+              <div className='insertTextVenda'style={role === 'user'? oculto : mostrar}>
                 <label>Vendedor</label>
                 <SelectSeller
                   controlState={[seller, setSeller]}
