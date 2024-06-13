@@ -3,7 +3,6 @@ import * as XLSX from "xlsx";
 import './index.css';
 import { Button, message, Spin } from "antd";
 import { apiInstance } from "services/api";
-import { AiOutlineUpload } from 'react-icons/ai'; 
 
 const UploadExcelPage: React.FC = () => {
   const [fileName, setFileName] = useState<string>("");
@@ -120,6 +119,7 @@ const UploadExcelPage: React.FC = () => {
     <div className="containerUploadPage">
       <div className="caixa">
         <h1 className='titulo'>Upload de Arquivo Excel</h1>
+        <p>Clique no botão abaixo para realizar o upload da planilha (.xlsx ou .xls)</p>
         <form className="formulario">
           <div className='insertTextVenda'>
             <input
@@ -130,12 +130,9 @@ const UploadExcelPage: React.FC = () => {
               ref={fileInputRef}
               style={{ display: 'none' }}
             />
-
-            <p>Clique no botão abaixo para realizar o upload da planilha (.xlsx ou .xls).</p>
-            <Button type="primary" className="custom-button-excel" onClick={() => fileInputRef.current?.click()}>
-              <span style={{ marginRight: '8px' }}> Escolher Arquivo </span> <AiOutlineUpload/>
+            <Button type="primary" className="custom-button" onClick={() => fileInputRef.current?.click()}>
+              Escolher Arquivo
             </Button>
-            
           </div>
           {fileName && <p>Arquivo: {fileName}</p>}
         </form>
