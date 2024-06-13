@@ -21,9 +21,9 @@ function RegisterProduct() {
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        setLoading(true);
         event.preventDefault();
         if (validate()) {
-            setLoading(true);
             try {
                 await sendData(name);
                 message.success('Produto Cadastrado com Sucesso!');

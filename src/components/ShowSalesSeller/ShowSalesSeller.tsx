@@ -72,7 +72,7 @@ function ShowSalesSeller() {
 
   const getSells = useCallback(async () => {
     if (!userSelect) {
-      return;
+      return; 
     }
 
     setLoading(true);
@@ -160,110 +160,109 @@ function ShowSalesSeller() {
     <NavbarWrapper>
       <Navbar />
       <div className="containerSl">
-        {sales.length > 0 ?
-          <div>
-            <h2>Lista de Vendas do Vendedor</h2>
-            <Row gutter={16}>
-              <Col>
-                <SelectProduct
-                  controlState={[productSelect, setProductSelect]}
-                  dataKey="id"
-                  className="fixed-height-select"
-                />
-              </Col>
-              <Col>
-                <SelectClient
-                  controlState={[clientSelect, setClientSelect]}
-                  dataKey="id"
-                  className="fixed-height-select"
-                />
-              </Col>
-              <Col>
-                <DatePicker
-                  onChange={e => { setStartDate(handleDatePicker(e)) }}
-                  format="DD/MM/YYYY"
-                  placeholder="Data de início"
-                  className="fixed-height-select"
-                />
-              </Col>
-              <Col>
-                <DatePicker
-                  onChange={e => { setEndDate(handleDatePicker(e)) }}
-                  format="DD/MM/YYYY"
-                  placeholder="Data final"
-                  className="fixed-height-select"
-                />
-              </Col>
-              <Col style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
-                <Button className='button-filter' onClick={getSells}>Filtrar vendas</Button>
-              </Col>
-            </Row>
-            <Spin spinning={loading}>
-              {dataLoaded && sales.length === 0 ? (
-                <Empty description="Nenhuma venda encontrado" />
-              ) : (
+        <h2>Lista de Vendas</h2>
+        {sales.length > 0? <div>
+          <Row gutter={16}>
+          <Col>
+            <SelectProduct
+              controlState={[productSelect, setProductSelect]}
+              dataKey="id"
+              className="fixed-height-select"
+            />
+          </Col>
+          <Col>
+            <SelectClient
+              controlState={[clientSelect, setClientSelect]}
+              dataKey="id"
+              className="fixed-height-select"
+            />
+          </Col>
+          <Col>
+            <DatePicker
+              onChange={e => { setStartDate(handleDatePicker(e)) }}
+              format="DD/MM/YYYY"
+              placeholder="Data de início"
+              className="fixed-height-select"
+            />
+          </Col>
+          <Col>
+            <DatePicker
+              onChange={e => { setEndDate(handleDatePicker(e)) }}
+              format="DD/MM/YYYY"
+              placeholder="Data final"
+              className="fixed-height-select"
+            />
+          </Col>
+          <Col style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
+            <Button className='button-filter' onClick={getSells}>Filtrar vendas</Button>
+          </Col>
+        </Row>
+        <Spin spinning={loading}>
+          {dataLoaded && sales.length === 0 ? (
+            <Empty description="Nenhuma venda encontrado" />
+          ) : (
+            <>
+              {sales.length > 0 && (
                 <>
-                  {sales.length > 0 && (
-                    <>
-                      <Table
-                        columns={columns}
-                        dataSource={sales}
-                        rowKey={'id'}
-                        pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
-                        locale={customLocale}
-                      />
-                    </>
-                  )}
+                  <Table
+                    columns={columns}
+                    dataSource={sales}
+                    rowKey={'id'}
+                    pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                    locale={customLocale}
+                  />
                 </>
               )}
-            </Spin>
-            <Modal
-              title="Editar Venda"
-              open={visible}
-              onOk={handleOk}
-              onCancel={handleCancel}
+            </>
+          )}
+        </Spin>
+        <Modal
+          title="Editar Venda"
+          open={visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <Form form={form} layout="vertical">
+            <Form.Item
+              name="date"
+              label="Data"
+              rules={[{ required: true, message: 'Por favor, insira a data da venda!' }]}
             >
-              <Form form={form} layout="vertical">
-                <Form.Item
-                  name="date"
-                  label="Data"
-                  rules={[{ required: true, message: 'Por favor, insira a data da venda!' }]}
-                >
-                  <DatePicker format="DD/MM/YYYY" />
-                </Form.Item>
-                <Form.Item
-                  name="seller"
-                  label="Vendedor"
-                  rules={[{ required: true, message: 'Por favor, insira o vendedor!' }]}
-                >
-                  <Input disabled />
-                </Form.Item>
-                <Form.Item
-                  name="client"
-                  label="Cliente"
-                  rules={[{ required: true, message: 'Por favor, insira o cliente!' }]}
-                >
-                  <Input disabled />
-                </Form.Item>
-                <Form.Item
-                  name="product"
-                  label="Produto"
-                  rules={[{ required: true, message: 'Por favor, insira o produto!' }]}
-                >
-                  <Input disabled />
-                </Form.Item>
-                <Form.Item
-                  name="value"
-                  label="Valor"
-                  rules={[{ required: true, message: 'Por favor, insira o valor!' }]}
-                >
-                  <Input />
-                </Form.Item>
-              </Form>
-            </Modal>
-          </div> : <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}><Empty description='Não há vendas cadastradas' /></div>
+              <DatePicker format="DD/MM/YYYY" />
+            </Form.Item>
+            <Form.Item
+              name="seller"
+              label="Vendedor"
+              rules={[{ required: true, message: 'Por favor, insira o vendedor!' }]}
+            >
+              <Input disabled />
+            </Form.Item>
+            <Form.Item
+              name="client"
+              label="Cliente"
+              rules={[{ required: true, message: 'Por favor, insira o cliente!' }]}
+            >
+              <Input disabled />
+            </Form.Item>
+            <Form.Item
+              name="product"
+              label="Produto"
+              rules={[{ required: true, message: 'Por favor, insira o produto!' }]}
+            >
+              <Input disabled />
+            </Form.Item>
+            <Form.Item
+              name="value"
+              label="Valor"
+              rules={[{ required: true, message: 'Por favor, insira o valor!' }]}
+            >
+              <Input />
+            </Form.Item>
+          </Form>
+        </Modal>
+        </div> : <div style={{display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center'}}><Empty description='Não há vendas cadastradas'/></div>
         }
-
+        
       </div>
     </NavbarWrapper>
   );

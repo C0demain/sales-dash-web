@@ -67,9 +67,9 @@ function RegisterClient() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
     if (validate()) {
-      setLoading(true);
       try {
         await sendData(clientName, segment, cpfCnpj);
         message.success('Cliente cadastrado com sucesso!');
