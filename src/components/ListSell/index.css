@@ -35,7 +35,7 @@
 }
 
 .font {
-    font-size: 100px;
+    font-size: 16px;
 }
 
 .button-refresh {
@@ -43,10 +43,3 @@
     background-color: #001529;
     color: white;
 }
-
-@media only screen and (max-width: 600px) {
-    .ant-table table { font-size: 25px; }
-    .ant-button button{font-size: 25px; 
-} 
-}
-

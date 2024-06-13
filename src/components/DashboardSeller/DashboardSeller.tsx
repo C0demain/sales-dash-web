@@ -51,7 +51,7 @@ function DashboardSeller() {
                         totalComissionProp={totalCommission}/>
                     </div>
                 </div>
-                <div className="box" style={{overflow: 'scroll'}}>
+                <div className="box">
                     <ListSellsSeller
                         onStartDateChange={setStartDate}
                         onEndDateChange={setEndDate} />
