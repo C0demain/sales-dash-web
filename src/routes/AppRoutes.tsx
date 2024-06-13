@@ -17,6 +17,8 @@ import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import ShowUsers from "components/ShowUsers/ShowUsers";
 import DatabaseCleaner from "components/DatabaseCleaner";
 import APIdoc from "components/APIdoc/APIdoc";
+import ShowProductsSeller from "components/ShowProductsSeller/ShowProductsSeller";
+import ShowClientsSeller from "components/ShowClientsSeller/ShowClientsSeller";
 
 export function AppRoutes() {
   return (
@@ -66,8 +68,14 @@ export function AppRoutes() {
           </Route>
 
           <Route path='/products' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <ShowProduct />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/productsSeller' element={
+            <ProtectedLayout>
+              <ShowProductsSeller />
             </ProtectedLayout>} >
           </Route>
 
@@ -78,8 +86,14 @@ export function AppRoutes() {
           </Route>
 
           <Route path='/clients' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <ShowClient />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/clientsSeller' element={
+            <ProtectedLayout>
+              <ShowClientsSeller />
             </ProtectedLayout>} >
           </Route>
 
@@ -114,7 +128,7 @@ export function AppRoutes() {
           </Route>
 
           <Route path="/docs" element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <APIdoc/>
             </ProtectedLayout>}>
           </Route>
