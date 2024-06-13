@@ -1,9 +1,8 @@
 import { Autocomplete, Stack, TextField, Typography } from '@mui/material';
-import * as React from 'react';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
 import { useEffect, useState } from 'react';
 import { apiInstance } from 'services/api';
-import parse from 'autosuggest-highlight/parse';
-import match from 'autosuggest-highlight/match';
 
 interface Client {
   id: string;
