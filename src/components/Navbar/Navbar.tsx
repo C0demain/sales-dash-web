@@ -74,6 +74,7 @@ const Navbar: React.FC = () => {
     getItem(isAdmin() ? 'Exibe Vendas' : 'Suas Vendas', '8', <FileTextOutlined />, () => navigate(isAdmin() ? '/salesManager' : '/salesSeller')),
     getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
     getItem('Sair da conta', '10', <LogoutOutlined />, handleLogout),
+    getItem('Documentação', '11', <DollarOutlined />, () => navigate('/docs')),
   ];
 
   const adminItems: MenuItem[] = [
@@ -95,7 +96,8 @@ const Navbar: React.FC = () => {
     getItem('Exibe Produtos', '7', <ShoppingOutlined />, () => navigate('/products')),
     getItem('Exibe Vendas', '8', <FileTextOutlined />, () => navigate('/salesManager')),
     getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
-    getItem('Sair da conta', '10', <LogoutOutlined />, handleLogout)
+    getItem('Sair da conta', '10', <LogoutOutlined />, handleLogout),
+    getItem('Documentação', '11', <DollarOutlined />, () => navigate('/docs')),
   ] : commonItems;
 
   const getSelectedKey = (pathname: string): string => {
@@ -128,6 +130,8 @@ const Navbar: React.FC = () => {
         return '8';
       case '/commissions':
         return '9';
+      case '/docs':
+        return '11';
       default:
         return '1';
     }
