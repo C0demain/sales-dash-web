@@ -1,0 +1,30 @@
+.charts{
+    display: flex;
+    flex-direction: column;
+    margin: 0%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.titleChart{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.titleChart > *:last-child{
+    margin-left: 50px;
+}
+
+.chartContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.chartWrapper {
+    width: 100%;
+    max-width: 1000px;
+    height: 400px;
+}

@@ -22,6 +22,9 @@
 .linha{
     display: 'flex';
     flex-direction: 'row';
+    width: 90%;
+    justify-content: space-evenly;
+    padding-top: 1vh;
 }
 
 .chartsBox{

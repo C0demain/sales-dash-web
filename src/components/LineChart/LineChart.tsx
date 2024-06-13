@@ -128,7 +128,7 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
     if (dataSells.length > 0) {
       let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
       dataSells.forEach(stat => {
-        totalQtde =+ stat.totalValue
+        totalQtde = + stat.totalValue
         chartData.push([stat.month, stat.totalValue, stat.totalValue])
       })
       setData(chartData)
@@ -169,7 +169,7 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
               />
             </>
           ) : (
-             <Empty description="Não há vendas registradas" />
+            <Empty description="Não há vendas registradas" />
           )}
         </Spin>
       </div>
