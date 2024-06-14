@@ -71,7 +71,7 @@ const Navbar: React.FC = () => {
     getItem('Atualização de Senha', '3', <KeyOutlined />, () => navigate('/users/update')),
     getItem(isAdmin() ? 'Exibe Clientes' : 'Seus Clientes', '6', <UnorderedListOutlined />, () => navigate(isAdmin() ? '/clients' : '/clientsSeller')),
     getItem(isAdmin() ? 'Exibe Produtos' : 'Seus Produtos', '7', <ShoppingOutlined />, () => navigate(isAdmin() ? '/products' : '/productsSeller')),
-    getItem(isAdmin() ? 'Exibe Vendas' : 'Suas Vendas', '8', <FileTextOutlined />, () => navigate(isAdmin() ? '/salesManager' : '/salesSeller')),
+    getItem(isAdmin() ? 'Exibe Vendas' : 'Suas Vendas', '8', <FileTextOutlined />, () => navigate(isAdmin() ? '/salesAdmin' : '/salesSeller')),
     getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
     getItem('Sair da conta', '10', <LogoutOutlined />, handleLogout),
   ];
@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
     getItem('Exibe Usuários', '5', <TeamOutlined />, () => navigate('/users')),
     getItem('Exibe Clientes', '6', <UnorderedListOutlined />, () => navigate('/clients')),
     getItem('Exibe Produtos', '7', <ShoppingOutlined />, () => navigate('/products')),
-    getItem('Exibe Vendas', '8', <FileTextOutlined />, () => navigate('/salesManager')),
+    getItem('Exibe Vendas', '8', <FileTextOutlined />, () => navigate('/salesAdmin')),
     getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
     getItem('Documentação', '10', <DollarOutlined />, () => navigate('/docs')),
     getItem('Sair da conta', '11', <LogoutOutlined />, handleLogout),
@@ -121,7 +121,7 @@ const Navbar: React.FC = () => {
       case '/products':
       case '/productsSeller':
         return '7';
-      case '/salesManager':
+      case '/salesAdmin':
       case '/salesSeller':
         return '8';
       case '/commissions':
@@ -146,7 +146,7 @@ const Navbar: React.FC = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         width={230}
-        style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}
+        style={{ overflow: 'auto', height: 'auto', position: 'fixed', left: 0, top: 0, bottom: 0 }}
       >
         <div style={{ padding: '10px', color: 'white', textAlign: 'center' }}>
           <UserOutlined />

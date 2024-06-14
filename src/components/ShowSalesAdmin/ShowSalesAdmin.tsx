@@ -22,7 +22,7 @@ interface Sale {
   value: number;
 }
 
-function ShowSales() {
+function ShowSalesAdmin() {
   const [sales, setSells] = useState<Sale[]>([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -165,7 +165,6 @@ function ShowSales() {
     <NavbarWrapper>
       <Navbar />
       <div className="containerSl">
-      {sales.length > 0 ?(
         <div>
           <h2>Lista de Vendas</h2>
           <Row gutter={16}>
@@ -192,7 +191,7 @@ function ShowSales() {
             </Col>
             <Col>
               <DatePicker
-                onChange={e => { setStartDate(handleDatePicker(e)) }}
+                onChange={e => setStartDate(handleDatePicker(e))}
                 format="DD/MM/YYYY"
                 placeholder="Data de início"
                 className="fixed-height-select"
@@ -200,31 +199,37 @@ function ShowSales() {
             </Col>
             <Col>
               <DatePicker
-                onChange={e => { setEndDate(handleDatePicker(e)) }}
+                onChange={e => setEndDate(handleDatePicker(e))}
                 format="DD/MM/YYYY"
                 placeholder="Data final"
                 className="fixed-height-select"
               />
             </Col>
             <Col style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
-              <Button className='button-filter' onClick={getSells}>Filtrar vendas</Button>
+              <Button className="button-filter" onClick={getSells}>Filtrar vendas</Button>
             </Col>
           </Row>
-          <Spin spinning={loading}>
-            <Table
-              columns={columns}
-              dataSource={sales}
-              rowKey={'id'}
-              pagination={{
-                current: currentPage,
-                pageSize: pageSize,
-                total: totalSales,
-                defaultPageSize: 10,
-                pageSizeOptions: [10, 20, 30]
-              }}
-              onChange={handleTableChange}
-              locale={customLocale}
-            />
+          <Spin spinning={loading} >
+            {sales.length === 0 && !loading && dataLoaded ? (
+              <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+                <Empty description="Nenhuma venda cadastrada" />
+              </div>
+            ) : (
+              <Table
+                columns={columns}
+                dataSource={sales}
+                rowKey="id"
+                pagination={{
+                  current: currentPage,
+                  pageSize: pageSize,
+                  total: totalSales,
+                  defaultPageSize: 10,
+                  pageSizeOptions: [10, 20, 30]
+                }}
+                onChange={handleTableChange}
+                locale={customLocale}
+              />
+            )}
           </Spin>
           <Modal
             title="Editar Venda"
@@ -274,11 +279,9 @@ function ShowSales() {
             </Form>
           </Modal>
         </div>
-      ): <div style={{display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center'}}><Empty description='Não há vendas cadastradas'/></div>
-      }
       </div>
     </NavbarWrapper>
   );
 }
 
-export default ShowSales;
+export default ShowSalesAdmin;

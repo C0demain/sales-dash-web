@@ -9,7 +9,7 @@ import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
-import ShowSales from "components/ShowSales/ShowSales";
+import ShowSalesAdmin from "components/ShowSalesAdmin/ShowSalesAdmin";
 import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 import RegisterProduct from "components/RegisterProduct/RegisterProduct";
@@ -96,9 +96,9 @@ export function AppRoutes() {
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/salesManager' element={
+          <Route path='/salesAdmin' element={
             <ProtectedLayout>
-              <ShowSales />
+              <ShowSalesAdmin />
             </ProtectedLayout>} >
           </Route>
 

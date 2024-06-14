@@ -160,8 +160,8 @@ function ShowSalesSeller() {
     <NavbarWrapper>
       <Navbar />
       <div className="containerSl">
+        <div>
         <h2>Lista de Vendas</h2>
-        {sales.length > 0? <div>
           <Row gutter={16}>
           <Col>
             <SelectProduct
@@ -198,9 +198,11 @@ function ShowSalesSeller() {
           </Col>
         </Row>
         <Spin spinning={loading}>
-          {dataLoaded && sales.length === 0 ? (
-            <Empty description="Nenhuma venda encontrado" />
-          ) : (
+        {sales.length === 0 && !loading && dataLoaded ? (
+              <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+                <Empty description="Nenhuma venda cadastrada" />
+              </div>
+            ) : (
             <>
               {sales.length > 0 && (
                 <>
@@ -260,9 +262,7 @@ function ShowSalesSeller() {
             </Form.Item>
           </Form>
         </Modal>
-        </div> : <div style={{display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center'}}><Empty description='Não há vendas cadastradas'/></div>
-        }
-        
+        </div>  
       </div>
     </NavbarWrapper>
   );

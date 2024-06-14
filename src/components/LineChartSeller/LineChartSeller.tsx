@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
 import Switch from '@mui/material/Switch';
-import { Empty, Select } from 'antd';
+import { Empty, Select, Spin } from 'antd';
 import { apiInstance } from 'services/api';
 import { useAuth } from 'context/AuthProvider/useAuth';
 
@@ -21,7 +21,9 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
   const user = useAuth().id
   const [monthDiff, setMonthDiff] = useState<any>(5)
   const today = new Date()
-  //const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+  const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
+  const customIndicator = <div style={{ display: 'none' }} />;
 
   const periodOptions = [
     { label: 'Últimos 12 meses', value: 11 },
@@ -84,6 +86,8 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
         withCredentials: false,
       });
       setDataSells(response.data.stats);
+      setLoading(false);
+      setDataLoaded(true);
     } catch (error) {
       console.error('Erro ao buscar os dados de vendas:', error);
     }
@@ -125,25 +129,34 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
 
   return (
     <div>
-      <div className='titleChart'>
-        <Switch checked={checked} onChange={setDataStats} />
-        <h3>{title}</h3>
-        <Select
-          options={periodOptions}
-          onSelect={(value) => setMonthDiff(value)}
-          defaultValue={5}
-        />
-      </div>
-      {dataSells.length > 0 ?
-        <Chart
-          chartType="ComboChart"
-          data={data}
-          options={options}
-          width="80vh"
-          height="35vh"
-          loader={<div>Carregando Gráfico</div>}
-        /> : <Empty description="Você não possui nenhum venda nesse período" />
-      }
+      <Spin spinning={loading} indicator={customIndicator}>
+        {dataLoaded ? (
+          dataSells.length === 0 ? (
+            <Empty description="Nenhuma comissão encontrada" />
+          ) : (
+            <>
+              <div className='titleChart'>
+                <Switch checked={checked} onChange={setDataStats} />
+                <h3>{title}</h3>
+                <Select
+                  options={periodOptions}
+                  onSelect={(value) => setMonthDiff(value)}
+                  defaultValue={5}
+                />
+              </div>
+              <Chart
+                chartType="ComboChart"
+                data={data}
+                options={options}
+                width="80vh"
+                height="35vh"
+              />
+            </>
+          )
+        ) : (
+          <Spin spinning={!dataLoaded} />
+        )}
+      </Spin>
     </div>
-  )
-}
+  );
+};
