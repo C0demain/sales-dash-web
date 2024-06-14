@@ -8,6 +8,7 @@ import ClientSalesChart from 'components/ClientSalesChart/ClientSalesChart';
 import { apiInstance } from 'services/api';
 import BarChart from 'components/Barchart/BarChart';
 import RankingSellers from 'components/RankingSellers/rankingSellers';
+import { Empty } from 'antd';
 
 const DashboardAdmin: React.FC = () => {
   const [startDate, setStartDate] = useState<any>();
@@ -32,7 +33,8 @@ const DashboardAdmin: React.FC = () => {
   return (
     <NavbarWrapper>
       <Navbar />
-      <div className="dashboard-container">
+      {totalQtde >0? (
+        <div className="dashboard-container">
         <h1 className="dashboard-title">Dashboard Gestor</h1>
         <div className="charts-grid">
           <div className="chart-box">
@@ -45,13 +47,14 @@ const DashboardAdmin: React.FC = () => {
             <ProductChart startDateProp={startDate} endDateProp={endDate} />
           </div>
           <div className="chart-box">
-            <ClientSalesChart />
+            <ClientSalesChart startDateProp={startDate} endDateProp={endDate}/>
           </div>
         </div>
         <div className="ranking-sellers">
           <RankingSellers />
         </div>
-      </div>
+      </div>):(<div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}><Empty description='Não há vendas cadastradas'/></div>)}
+      
     </NavbarWrapper>
   );
 };

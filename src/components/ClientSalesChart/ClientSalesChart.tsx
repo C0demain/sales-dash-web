@@ -4,7 +4,6 @@ import ClientSelector from 'components/ClientSelector/ClientSelector';
 import { useCallback, useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 import { apiInstance } from 'services/api';
-import { formatDateToBack } from 'util/formatters';
 import './index.css';
 import { Stack } from '@mui/material';
 
@@ -23,25 +22,17 @@ interface MonthData {
     totalSales: number;
 }
 
-export default function ClientSalesChart() {
+export default function ClientSalesChart({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) {
     const [dataSells, setDataSells] = useState<{ [clientId: string]: MonthData[] }>({});
     const [data, setData] = useState<any[][]>([["Mês"]]);
     const [selectedClients, setSelectedClients] = useState<Client[]>([]);
-    const [startDate, setStartDate] = useState<string>('');
-    const [endDate, setEndDate] = useState<string>('');
+    const startDate = startDateProp;
+    const endDate = endDateProp;
     const [checked, setChecked] = useState<boolean>(true);
     const [title, setTitle] = useState<string>('Valor vendido por clientes');
-    const [monthDiff, setMonthDiff] = useState<number>(5);
     const [loading, setLoading] = useState<boolean>(true);
-    const today = new Date();
     const customIndicator = <div style={{ display: 'none' }} />;
     const isClientSelected = selectedClients.length !== 0;
-
-    const periodOptions = [
-        { label: 'Últimos 12 meses', value: 11 },
-        { label: 'Últimos 6 meses', value: 5 },
-        { label: 'Últimos 3 meses', value: 2 },
-    ];
 
     const chartOptions = {
         colors: ["#1976d2", "#7CB9E8", "#00308F", "#b0b8ce", "#022954"],
@@ -59,18 +50,6 @@ export default function ClientSalesChart() {
         ] : [],
         legend: { position: "bottom" },
     };
-
-    const setDates = useCallback(() => {
-        const year = today.getFullYear();
-        const month = today.getMonth();
-        const targetMonth = month - monthDiff;
-        const targetYear = targetMonth < 0 ? year - 1 : year;
-        const adjustedMonth = (targetMonth + 12) % 12;
-        const startDate = new Date(targetYear, adjustedMonth, 1);
-
-        setStartDate(formatDateToBack(startDate));
-        setEndDate(formatDateToBack(today));
-    }, [monthDiff, today]);
 
     const getSellsPeriod = useCallback(async () => {
         setLoading(true);
@@ -155,12 +134,8 @@ export default function ClientSalesChart() {
 
     const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        setTitle(event.target.checked ? 'Valor vendido mensalmente' : 'Comissão de venda mensal');
+        setTitle(event.target.checked ? 'Valor vendido \npor clientes' : 'Comissão \npor cliente');
     };
-
-    useEffect(() => {
-        setDates();
-    }, [setDates]);
 
     useEffect(() => {
         if (startDate && endDate) {
@@ -188,22 +163,17 @@ export default function ClientSalesChart() {
                                 <h3>{title}</h3>
                             </Stack>
                             <ClientSelector sendDataToParent={handleDataFromChild} />
-                            <Select
-                                options={periodOptions}
-                                onChange={value => setMonthDiff(value)}
-                                defaultValue={5}
-                                style={{ marginLeft: 10, minWidth: 150, minHeight: 40 }}
-                            />
                         </Stack>
-                        <div className='chartWrapper'>
+                        {selectedClients.length>0 ? (<div className='chartWrapper'>
                             <Chart
                                 chartType="ComboChart"
                                 data={data}
                                 options={chartOptions}
                                 width="75vh"
-                                height="35vh"
+                                height="50vh"
                             />
-                        </div>
+                        </div>):(<Empty description='Selecione um ou mais clientes.'/>)}
+                        
                     </>
                 ) : (
                     !loading && <Empty description="Não há comissões registradas." />
