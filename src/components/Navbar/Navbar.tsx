@@ -74,13 +74,12 @@ const Navbar: React.FC = () => {
     getItem(isAdmin() ? 'Exibe Vendas' : 'Suas Vendas', '8', <FileTextOutlined />, () => navigate(isAdmin() ? '/salesManager' : '/salesSeller')),
     getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
     getItem('Sair da conta', '10', <LogoutOutlined />, handleLogout),
-    getItem('Documentação', '11', <DollarOutlined />, () => navigate('/docs')),
   ];
 
   const adminItems: MenuItem[] = [
     getItem('Cadastro de Usuários', '2-2', <TeamOutlined />, () => navigate('/users/register')),
-    getItem('Apagar Dados', '4', <DeleteOutlined />, () => navigate('/cleanDatabase')),
     getItem('Exibe Usuários', '5', <TeamOutlined />, () => navigate('/users')),
+    getItem('Documentação', '10', <DollarOutlined />, () => navigate('/docs')),
   ];
 
   const items: MenuItem[] = isAdmin() ? [
@@ -90,14 +89,13 @@ const Navbar: React.FC = () => {
     getItem('Cadastro de Clientes', '2-3', <UserAddOutlined />, () => navigate('/clients/register')),
     getItem('Cadastro de Produtos', '2-4', <ShoppingOutlined />, () => navigate('/products/register')),
     getItem('Atualização de Senha', '3', <KeyOutlined />, () => navigate('/users/update')),
-    getItem('Apagar Dados', '4', <DeleteOutlined />, () => navigate('/cleanDatabase')),
     getItem('Exibe Usuários', '5', <TeamOutlined />, () => navigate('/users')),
     getItem('Exibe Clientes', '6', <UnorderedListOutlined />, () => navigate('/clients')),
     getItem('Exibe Produtos', '7', <ShoppingOutlined />, () => navigate('/products')),
     getItem('Exibe Vendas', '8', <FileTextOutlined />, () => navigate('/salesManager')),
     getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
-    getItem('Sair da conta', '10', <LogoutOutlined />, handleLogout),
-    getItem('Documentação', '11', <DollarOutlined />, () => navigate('/docs')),
+    getItem('Documentação', '10', <DollarOutlined />, () => navigate('/docs')),
+    getItem('Sair da conta', '11', <LogoutOutlined />, handleLogout),
   ] : commonItems;
 
   const getSelectedKey = (pathname: string): string => {
@@ -115,8 +113,6 @@ const Navbar: React.FC = () => {
         return '2-4';
       case '/users/update':
         return '3';
-      case '/cleanDatabase':
-        return '4';
       case '/users':
         return '5';
       case '/clients':
@@ -131,7 +127,7 @@ const Navbar: React.FC = () => {
       case '/commissions':
         return '9';
       case '/docs':
-        return '11';
+        return '10';
       default:
         return '1';
     }
@@ -152,7 +148,7 @@ const Navbar: React.FC = () => {
         width={230}
         style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}
       >
-        <div style={{ padding: '16px', color: 'white', textAlign: 'center', background: '#001529' }}>
+        <div style={{ padding: '10px', color: 'white', textAlign: 'center' }}>
           <UserOutlined />
           {!collapsed && <span> Olá, {firstName} </span>}
           {!collapsed && <div style={{ fontSize: '12px', color: '#ddd' }}> {role} </div>}
@@ -164,24 +160,13 @@ const Navbar: React.FC = () => {
           items={items}
         />
       </Sider>
-      <Layout style={{ marginLeft: 200 }}>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: '0 16px' }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          {/* Sales Dash ©{new Date().getFullYear()} Created by Code Main */}
-        </Footer>
+      <Layout style={{ marginLeft: collapsed ? 100 : 250, transition: 'margin-left 0.2s' }}>
+
+        <Header style={{ padding: 0, background: colorBgContainer }} /> 
+        
       </Layout>
     </Layout>
+
   );
 };
 

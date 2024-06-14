@@ -1,11 +1,10 @@
 import ShowCommissions from "components/CommissionList/CommissionsList";
-import { Login } from "components/Login";
+import { Login } from "components/Login/Login";
 import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";
 import RegisterSell from "components/RegisterSell/RegisterSell";
 import RegisterUser from "components/RegisterUser/RegisterUser";
 import ShowClient from "components/ShowClient/ShowClient";
-import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
 import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -15,10 +14,10 @@ import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import ShowUsers from "components/ShowUsers/ShowUsers";
-import DatabaseCleaner from "components/DatabaseCleaner";
 import APIdoc from "components/APIdoc/APIdoc";
 import ShowProductsSeller from "components/ShowProductsSeller/ShowProductsSeller";
 import ShowClientsSeller from "components/ShowClientsSeller/ShowClientsSeller";
+import DashboardAdmin from "components/DashboardAdmin/DashboardAdmin";
 
 export function AppRoutes() {
   return (
@@ -118,12 +117,6 @@ export function AppRoutes() {
           <Route path='/users/update' element={
             <ProtectedLayout>
               <UpdatePassword/>
-            </ProtectedLayout> }>
-          </Route>
-          
-          <Route path='cleanDatabase' element={
-            <ProtectedLayout>
-              <DatabaseCleaner/>
             </ProtectedLayout> }>
           </Route>
 

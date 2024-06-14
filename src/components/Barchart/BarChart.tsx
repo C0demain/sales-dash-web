@@ -1,18 +1,22 @@
-import { Empty, InputNumber, Select, Spin } from 'antd';
+import { Empty, InputNumber, Select, Spin, Typography } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 import { apiInstance } from 'services/api';
+
+const { Text } = Typography;
 
 export default function BarChart() {
   const [commissions, setCommissions] = useState<any[]>([]);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(0);
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [loading, setLoading] = useState<boolean>(true);
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   const customIndicator = <div style={{ display: 'none' }} />;
 
   const getStats = async () => {
     setLoading(true);
+    setDataLoaded(false);
     try {
       const url = 'http://localhost:8000/api/v1/dashboard/date/commission';
       const startDate = `${selectedYear}-01-01`;
@@ -32,6 +36,7 @@ export default function BarChart() {
         chartData.push(["Cliente velho\n Produto velho", 0, getRandomColor(selectedMonthIndex)]);
       }
       setCommissions(chartData);
+      setDataLoaded(true);
     } catch (error) {
       console.error('Erro ao buscar os dados das comissões:', error);
     } finally {
@@ -49,46 +54,51 @@ export default function BarChart() {
   };
 
   return (
-      <div>
-          {commissions.length > 1 ? (
-            <>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '5vh', marginTop: '1.5vh', minWidth: '100%' }}>
-                <Select
-                  style={{ minWidth: '30%' }}
-                  placeholder="Escolha um mês"
-                  defaultValue={selectedMonthIndex}
-                  onChange={(value: number) => { setSelectedMonthIndex(value); }}
-                  options={months.map((month: string, index: number) => ({ label: month, value: index }))}
+    <div>
+      <Spin spinning={loading} indicator={customIndicator}>
+        {dataLoaded && commissions.length === 1 ? (
+          <Empty description="Nenhuma comissão encontrada" />
+        ) : (
+          <>
+            {commissions.length > 1 && (
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '5vh', marginTop: '1.5vh', minWidth: '100%' }}>
+                  <Select
+                    style={{ minWidth: '30%' }}
+                    placeholder="Escolha um mês"
+                    defaultValue={selectedMonthIndex}
+                    onChange={(value: number) => { setSelectedMonthIndex(value); }}
+                    options={months.map((month: string, index: number) => ({ label: month, value: index }))} />
+
+                  <InputNumber
+                    min={1970}
+                    max={new Date().getFullYear()}
+                    defaultValue={selectedYear}
+                    onChange={(value: number | null) => { setSelectedYear(value || new Date().getFullYear()); }}
+                    style={{ height: 'min-content', width: 'fit-content' }} />
+                </div>
+                <Chart
+                  width="50vh"
+                  height="35vh"
+                  chartType="Bar"
+                  data={commissions}
+                  options={{
+                    chart: {
+                      title: `Comissões Mensais - ${months[selectedMonthIndex]}`,
+                    },
+                    legend: { position: 'none' },
+                    animation: {
+                      duration: 3000,
+                      easing: "linear",
+                      startup: true,
+                    }
+                  }}
                 />
-                <InputNumber
-                  min={1970}
-                  max={new Date().getFullYear()}
-                  defaultValue={selectedYear}
-                  onChange={(value: number | null) => { setSelectedYear(value || new Date().getFullYear()); }}
-                  style={{ height: 'min-content', width: 'fit-content' }}
-                />
-              </div>
-              <Chart
-                width="50vh"
-                height="35vh"
-                chartType="Bar"
-                data={commissions}
-                options={{
-                  chart: {
-                    title: `Comissões Mensais - ${months[selectedMonthIndex]}`,
-                  },
-                  legend: { position: 'none' },
-                  animation: {
-                    duration: 3000,
-                    easing: "linear",
-                    startup: true,
-                  } 
-                }}
-              />
-            </>
-          ) : (
-            <Empty description="Não há comissões registradas." />
-          )}
-      </div>
+              </>
+            )}
+          </>
+        )}
+      </Spin>
+    </div>
   );
 }

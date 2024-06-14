@@ -23,7 +23,7 @@ function RankingSellers() {
             render: (name: string) => getFirstAndLastName(name)
         },
         {
-            title: 'Vendido',
+            title: 'Valor Vendido',
             dataIndex: 'value',
             key: 'value',
             render: (value: number) => formatCurrency(value)
@@ -51,7 +51,7 @@ function RankingSellers() {
             <Spin spinning={loading} indicator={customIndicator}>
                 {sellers.length > 0 ? (
                     <>
-                        <h3>Ranking</h3>
+                        <h3 style={{color: '#001529'}}>Ranking Dos Vendedores</h3>
                         <Table 
                             columns={columns} 
                             dataSource={sellers} 

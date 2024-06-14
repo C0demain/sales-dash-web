@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
-import { Empty } from 'antd';
+import { Empty, Spin } from 'antd';
 import { apiInstance } from 'services/api';
 import SelectProduct from 'components/SelectProduct/SelectProduct';
 
-export default function LineChartSeller({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) {
+export default function ProductChartSeller({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) {
   const [dataSells, setDataSells] = useState<any[]>([])
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
   const startDate = startDateProp
   const endDate = endDateProp
   const [product, setProduct] = useState<number>()
   const [monthDiff, setMonthDiff] = useState<any>(5)
-
+  const [loading, setLoading] = useState(true);
+  const customIndicator = <div style={{ display: 'none' }} />;
+  
   const [options] = useState<any>({
     colors: ["#8e0152", "#276419"],
     pointSize: 10,
@@ -45,6 +47,8 @@ export default function LineChartSeller({ startDateProp, endDateProp }: { startD
       setDataSells(response.data.stats);
     } catch (error) {
       console.error('Erro ao buscar os dados de vendas:', error);
+    } finally {
+      setLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate, product, monthDiff]);
@@ -66,21 +70,25 @@ export default function LineChartSeller({ startDateProp, endDateProp }: { startD
   return (
     <div>
       <div className='titleChart'>
-          <h3>Vendas do produto:</h3>
-        <div style={{width: '30%'}}>
-        <SelectProduct controlState={[product, setProduct]} dataKey='id'/>
+        <h3>Vendas do produto:</h3>
+        <div style={{ width: '50%'}}>
+          <SelectProduct controlState={[product, setProduct]} dataKey='id' />
         </div>
       </div>
-      {product!==undefined ?
-        <Chart
-          chartType="ComboChart"
-          data={data}
-          options={options}
-          width="75vh"
-          height="35vh"
-          loader={<div>Carregando Gráfico</div>}
-        /> : dataSells.length > 0 ? <Empty description='Selecione um produto'/> : <Empty description="Você não possui nenhum venda nesse período" />
-      }
+      <Spin spinning={loading} indicator={customIndicator}>
+        {product !== undefined ? (
+          <Chart
+            chartType="ComboChart"
+            data={data}
+            options={options}
+            width="75vh"
+            height="50vh"
+            loader={<div>Carregando Gráfico</div>}
+          />
+        ) : (
+          dataSells.length > 0 ? <Empty description='Selecione um produto' /> : <Empty description="Você não possui nenhum venda nesse período" />
+        )}
+      </Spin>
     </div>
-  )
+  );
 }

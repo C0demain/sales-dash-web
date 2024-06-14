@@ -1,7 +1,6 @@
 import Navbar from 'components/Navbar/Navbar';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import React, {Component} from 'react';
-
 import SwaggerUi from 'swagger-ui';
 import 'swagger-ui/dist/swagger-ui.css';
 

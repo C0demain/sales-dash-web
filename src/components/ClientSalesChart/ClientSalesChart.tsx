@@ -192,7 +192,7 @@ export default function ClientSalesChart() {
                                 options={periodOptions}
                                 onChange={value => setMonthDiff(value)}
                                 defaultValue={5}
-                                style={{ minWidth: 150 }}
+                                style={{ marginLeft: 10, minWidth: 150, minHeight: 40 }}
                             />
                         </Stack>
                         <div className='chartWrapper'>

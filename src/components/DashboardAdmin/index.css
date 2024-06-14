@@ -1,51 +1,40 @@
-.containerDash{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.tituloDashboard{
-    font-family:Arial, Helvetica, sans-serif;
-    margin: 2vh;
+.dashboard-title {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px 0;
+  font-size: 24px;
 }
 
-.box{
-    margin: 3vh;
-    width: 130vh;
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+  width: 100%; /* Adicionado para fazer o grid ocupar a largura total */
+  max-width: 1200px; /* Adicionado para limitar a largura máxima */
 }
 
-.divider{
-    height: 0.2vh;
-    background-color: black;
-    margin: 3vh 3vh;
-}
-.linha{
-    display: 'flex';
-    flex-direction: 'row';
-    width: 90%;
-    justify-content: space-evenly;
-    padding-top: 1vh;
+.chart-box {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  min-height: 300px; /* Define uma altura mínima para os gráficos */
 }
 
-.chartsBox{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: start;
-}
-@media screen and (max-width: 600px) {
-    .chartsBox{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .linha{
-        display:flex;
-        flex-direction: column;
-    }
-    .ant-table table { font-size: 25px; }
-    .ant-barchart{
-        font-size: 25px;
-    }
+.ranking-sellers {
+  margin-top: 20px;
+  width: 100%; /* Adicionado para fazer o ranking ocupar a largura total */
+  max-width: 1200px; /* Adicionado para limitar a largura máxima */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
 }

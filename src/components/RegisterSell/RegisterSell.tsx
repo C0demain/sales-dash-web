@@ -12,6 +12,8 @@ import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
 import { useAuth } from 'context/AuthProvider/useAuth';
 import DownloadTemplateSheet from 'components/DownloadTemplateSheet/DownloadTemplateSheet';
+import DatabaseCleaner from 'components/DatabaseCleaner/DatabaseCleaner';
+import { ProtectedLayout } from 'components/ProtectedLayout';
 
 export default function RegisterSell() {
   const [seller, setSeller] = useState<any>();
@@ -50,7 +52,7 @@ export default function RegisterSell() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
-    console.log(user)
+    //console.log(user)
     if (validate()) {
       try {
         await sendData(date, role === 'admin' ? seller[0] : user, client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
@@ -81,8 +83,11 @@ export default function RegisterSell() {
     <NavbarWrapper>
       <Navbar />
       <div className='containerGlobal'>
-        <DownloadTemplateSheet /> 
+        
+        <DownloadTemplateSheet />
         <UploadExcelPage />
+        <DatabaseCleaner adminOnly />
+
         <div className='containerRegisterSell'>
           <div className="caixaVenda">
             <h1 className='titulo'>Cadastro de Venda</h1>

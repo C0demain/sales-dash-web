@@ -1,63 +1,59 @@
+import React, { useCallback, useEffect, useState } from 'react';
 import './index.css'
-import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import RankingSellers from "components/RankingSellers/rankingSellers";
-import BasicLineChart from "components/LineChart/LineChart";
-import BarChart from "components/Barchart/BarChart";
-import Navbar from "components/Navbar/Navbar";
-import ProductChart from "components/ProductChart/ProductChart";
-import { useCallback, useEffect, useState } from "react";
-import { Empty } from 'antd';
-import { apiInstance } from 'services/api';
+import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
+import BasicLineChart from 'components/LineChart/LineChart';
+import Navbar from 'components/Navbar/Navbar';
+import ProductChart from 'components/ProductChart/ProductChart';
 import ClientSalesChart from 'components/ClientSalesChart/ClientSalesChart';
+import { apiInstance } from 'services/api';
+import BarChart from 'components/Barchart/BarChart';
+import RankingSellers from 'components/RankingSellers/RankingSellers';
 
-function DashboardAdmin() {
-    const [startDate, setStartDate] = useState<any>()
-    const [endDate, setEndDate] = useState<any>()
-    const [totalQtde, setTotalQtde] = useState<any>()
+const DashboardAdmin: React.FC = () => {
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
+  const [totalQtde, setTotalQtde] = useState<any>();
 
-    const getSells = useCallback(async () => {
-        let url = 'http://localhost:8000/api/v1/sells/getall'
+  const fetchSells = useCallback(async () => {
+    try {
+      const response = await apiInstance.get('http://localhost:8000/api/v1/sells/getall', {
+        withCredentials: false,
+      });
+      setTotalQtde(response.data.sell.length);
+    } catch (error) {
+      console.error('Error fetching sells:', error);
+    }
+  }, []);
 
-        const response = await apiInstance.get(url, {
-            withCredentials: false,
-        });
-        setTotalQtde(response.data.sell.length)
-    }, [])
-    useEffect(() => {
-        getSells()
-    }, [])
+  useEffect(() => {
+    fetchSells();
+  }, []);
 
-    return (
-        <NavbarWrapper>
-            <Navbar />
-            <div className="containerDash">
-                <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
-                <div className='linha'>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginRight: '2vh' }}>
-                        <div className="chartsBox">
-                            <BasicLineChart
-                                onEndDateChange={setEndDate}
-                                onStartDateChange={setStartDate}
-                            />
-                            <BarChart />
-                        </div>
-                    </div>
-                </div>
-                <div className='linha'>
-                    <div className="chartsBox">
-                        <ProductChart
-                            startDateProp={startDate}
-                            endDateProp={endDate} />
-                        <ClientSalesChart />
-                    </div>
-                </div>
-                <div className='linha'>
-                    <RankingSellers />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}><Empty description='Não há vendas cadastradas' /></div>
-            </div>
-        </NavbarWrapper>
-    )
-}
+  return (
+    <NavbarWrapper>
+      <Navbar />
+      <div className="dashboard-container">
+        <h1 className="dashboard-title">Dashboard Gestor</h1>
+        <div className="charts-grid">
+          <div className="chart-box">
+            <BasicLineChart onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
+          </div>
+          <div className="chart-box">
+            <BarChart />
+          </div>
+          <div className="chart-box">
+            <ProductChart startDateProp={startDate} endDateProp={endDate} />
+          </div>
+          <div className="chart-box">
+            <ClientSalesChart />
+          </div>
+        </div>
+        <div className="ranking-sellers">
+          <RankingSellers />
+        </div>
+      </div>
+    </NavbarWrapper>
+  );
+};
 
 export default DashboardAdmin;

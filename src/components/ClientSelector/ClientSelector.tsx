@@ -48,7 +48,7 @@ export default function ClientSelector({ sendDataToParent }: ClientSelectorProps
   }
 
   return (
-    <Stack sx={{ width: 250 }}>
+    <Stack sx={{ width: 260 }}>
       <Autocomplete
         multiple
         size='small'

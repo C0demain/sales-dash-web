@@ -21,6 +21,7 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
   const [monthDiff, setMonthDiff] = useState<any>(5)
   const today = new Date()
   const [loading, setLoading] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const customIndicator = <div style={{ display: 'none' }} />;
   let totalQtde = 0
 
@@ -93,9 +94,9 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
     const response = await apiInstance.get(url, {
       withCredentials: false,
     });
-    //console.log(url)
     setDataSells(response.data.stats)
     setLoading(false);
+    setDataLoaded(true);  // Set dataLoaded to true once the data is successfully loaded
   }, [startDate, endDate, monthDiff])
 
   const setDataStats = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,30 +150,32 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
     <div>
       <div className='titleChart'>
         <Spin spinning={loading} indicator={customIndicator}>
-          {dataSells.length > 0 ? (
-            <>
-              <div className='titleChart'>
-                <Switch checked={checked} onChange={setDataStats} />
-                <h3>{title}</h3>
-                <Select
-                  options={periodOptions}
-                  onSelect={setMonthDiff}
-                  defaultValue={5}
+          {dataLoaded ? (
+            dataSells.length === 0 ? (
+              <Empty description="Nenhuma comissão encontrada" />
+            ) : (
+              <>
+                <div className='titleChart'>
+                  <Switch checked={checked} onChange={setDataStats} />
+                  <h3>{title}</h3>
+                  <Select
+                    options={periodOptions}
+                    onSelect={(value) => setMonthDiff(value)}
+                    defaultValue={5}
+                  />
+                </div>
+                <Chart
+                  chartType="ComboChart"
+                  data={data}
+                  options={options}
+                  width="75vh"
+                  height="35vh"
                 />
-              </div>
-              <Chart
-                chartType="ComboChart"
-                data={data}
-                options={options}
-                width="75vh"
-                height="35vh"
-              />
-            </>
-          ) : (
-            <Empty description="Não há vendas registradas" />
-          )}
+              </>
+            )
+          ) : null}
         </Spin>
       </div>
     </div>
-  );
+  );  
 }
