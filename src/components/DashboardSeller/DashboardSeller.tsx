@@ -9,6 +9,7 @@ import CommissionChartSeller from "components/CommissionChartSeller/CommissionCh
 import { UserStatsCommission } from "components/UserStats/UserStatsCommission";
 import { apiInstance } from "services/api";
 import { Empty } from "antd";
+import ProductChart from "components/ProductChart/ProductChart";
 
 function DashboardSeller() {
     const [startDate, setStartDate] = useState<string>("");
@@ -33,25 +34,26 @@ function DashboardSeller() {
     return (
         <NavbarWrapper>
             <Navbar />
-            {totalQtde>0?(<div className="containerDash">
-                <div><h1 className="tituloDashboard">Dashboard Vendedor</h1></div>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <div className="chartsBoxSeller">
-                        <LineChartSeller 
-                        onStartDateChange={setStartDateStats}
-                        onEndDateChange={setEndDateStats}/>
+            {totalQtde>0?(<div className="dashboard-container">
+                <div><h1 className="dashboard-title">Dashboard Vendedor</h1></div>
+                <div className="charts-gridd">
+                    <div className="chart-box">
+                        <LineChartSeller onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
                         <UserStatsSales
-                        startDateProp={startDateStats}
-                        endDateProp={endDateStats}/>
-                    </div>
-                    <div className="chartsBoxSeller">
+                            startDateProp={startDateStats}
+                            endDateProp={endDateStats}/>
+                    </div>            
+                    <div className="chart-box">
                         <CommissionChartSeller
                         onTotalCommissionChange={setTotalCommission} />
                         <UserStatsCommission
                         totalComissionProp={totalCommission}/>
                     </div>
+                    <div className="chart-box">
+                        <ProductChart startDateProp={startDate} endDateProp={endDate} />
+                    </div>
                 </div>
-                <div className="box">
+                <div className="ranking-sellers">
                     <ListSellsSeller
                         onStartDateChange={setStartDate}
                         onEndDateChange={setEndDate} />
