@@ -28,3 +28,23 @@
     justify-content: center;
     align-items: center;
 }
+
+/* index.css */
+
+@media screen and (max-width: 800px) {
+    .dashboard-container {
+        padding: 10px; /* Reduz o padding para telas menores */
+        overflow-y: auto; /* Adiciona scroll vertical se necessário */
+    }
+
+    .chart-box {
+        width: 100%; /* Ocupa toda a largura disponível */
+        max-width: 100%; /* Remove a largura máxima para telas menores */
+    }
+
+    .ranking-sellers {
+        width: 100%; /* Ocupa toda a largura disponível */
+        max-width: 20%; /* Remove a largura máxima para telas menores */
+        margin-top: 10px; /* Reduz o espaçamento entre os elementos */
+    }
+}

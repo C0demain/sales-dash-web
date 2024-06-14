@@ -5,6 +5,7 @@ import Navbar from "components/Navbar/Navbar";
 import { customLocale } from "util/formatters";
 import { apiInstance } from "services/api";
 import { useAuth } from "context/AuthProvider/useAuth";
+import './index.css'
 
 interface Client {
   id: string;

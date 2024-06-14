@@ -8,6 +8,7 @@ import SelectClient from "components/SelectClient/SelectClient";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { apiInstance } from "services/api";
+import './index.css';
 
 dayjs.extend(customParseFormat);
 
@@ -160,7 +161,7 @@ function ShowSalesSeller() {
     <NavbarWrapper>
       <Navbar />
       <div className="containerSl">
-        <div>
+        
         <h2>Lista de Vendas</h2>
           <Row gutter={16}>
           <Col>
@@ -262,8 +263,8 @@ function ShowSalesSeller() {
             </Form.Item>
           </Form>
         </Modal>
-        </div>  
-      </div>
+      </div>  
+      
     </NavbarWrapper>
   );
 }
