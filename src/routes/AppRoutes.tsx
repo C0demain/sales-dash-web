@@ -17,7 +17,7 @@ import ShowUsers from "components/ShowUsers/ShowUsers";
 import APIdoc from "components/APIdoc/APIdoc";
 import ShowProductsSeller from "components/ShowProductsSeller/ShowProductsSeller";
 import ShowClientsSeller from "components/ShowClientsSeller/ShowClientsSeller";
-import DashboardAdmin from "components/DashboardAdmin/DashboardAdmin";
+import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
 
 export function AppRoutes() {
   return (

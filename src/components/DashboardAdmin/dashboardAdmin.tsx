@@ -7,7 +7,7 @@ import ProductChart from 'components/ProductChart/ProductChart';
 import ClientSalesChart from 'components/ClientSalesChart/ClientSalesChart';
 import { apiInstance } from 'services/api';
 import BarChart from 'components/Barchart/BarChart';
-import RankingSellers from 'components/RankingSellers/RankingSellers';
+import RankingSellers from 'components/RankingSellers/rankingSellers';
 
 const DashboardAdmin: React.FC = () => {
   const [startDate, setStartDate] = useState<any>();
