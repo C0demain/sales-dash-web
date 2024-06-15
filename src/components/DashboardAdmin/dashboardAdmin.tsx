@@ -33,28 +33,28 @@ const DashboardAdmin: React.FC = () => {
   return (
     <NavbarWrapper>
       <Navbar />
-      {totalQtde >0? (
+      {totalQtde > 0 ? (
         <div className="dashboard-container">
-        <h1 className="dashboard-title">Dashboard Gestor</h1>
-        <div className="charts-grid">
-          <div className="chart-box">
-            <BasicLineChart onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
+          <h1 className="dashboard-title">Dashboard Gestor</h1>
+          <div className="charts-grid">
+            <div className="chart-box">
+              <BasicLineChart onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
+            </div>
+            <div className="chart-box">
+              <BarChart />
+            </div>
+            <div className="chart-box">
+              <ProductChart startDateProp={startDate} endDateProp={endDate} />
+            </div>
+            <div className="chart-box">
+              <ClientSalesChart startDateProp={startDate} endDateProp={endDate} />
+            </div>
           </div>
-          <div className="chart-box">
-            <BarChart />
+          <div className="ranking-sellers">
+            <RankingSellers />
           </div>
-          <div className="chart-box">
-            <ProductChart startDateProp={startDate} endDateProp={endDate} />
-          </div>
-          <div className="chart-box">
-            <ClientSalesChart startDateProp={startDate} endDateProp={endDate}/>
-          </div>
-        </div>
-        <div className="ranking-sellers">
-          <RankingSellers />
-        </div>
-      </div>):(<div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}><Empty description='Não há vendas cadastradas'/></div>)}
-      
+        </div>) : (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Empty description='Não há vendas cadastradas' /></div>)}
+
     </NavbarWrapper>
   );
 };

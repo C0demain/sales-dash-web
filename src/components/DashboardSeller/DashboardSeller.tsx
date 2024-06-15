@@ -48,21 +48,37 @@ function DashboardSeller() {
             ) : totalQtde > 0 ? (
                 <div className="dashboard-container">
                     <h1 className="dashboard-title">Dashboard Vendedor</h1>
-                    <div className="charts-gridd">
+                    <div className="charts-grid">
                         <div className="chart-box">
-                            <LineChartSeller onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
-                            <UserStatsSales startDateProp={startDateStats} endDateProp={endDateStats} />
+                            <LineChartSeller
+                                onStartDateChange={setStartDateStats}
+                                onEndDateChange={setEndDateStats}
+                            />
+                            <UserStatsSales
+                                startDateProp={startDateStats}
+                                endDateProp={endDateStats}
+                            />
                         </div>
                         <div className="chart-box">
-                            <CommissionChartSeller onTotalCommissionChange={setTotalCommission} />
-                            <UserStatsCommission totalComissionProp={totalCommission} />
+                            <CommissionChartSeller
+                                onTotalCommissionChange={setTotalCommission}
+                            />
+                            <UserStatsCommission
+                                totalComissionProp={totalCommission}
+                            />
                         </div>
                         <div className="chart-box">
-                            <ProductChart startDateProp={startDate} endDateProp={endDate} />
+                            <ListSellsSeller
+                                onStartDateChange={setStartDate}
+                                onEndDateChange={setEndDate}
+                            />
                         </div>
-                    </div>
-                    <div className="ranking-sellers">
-                        <ListSellsSeller onStartDateChange={setStartDate} onEndDateChange={setEndDate} />
+                        <div className="chart-box">
+                            <ProductChart
+                                startDateProp={startDateStats}
+                                endDateProp={endDateStats}
+                            />
+                        </div>
                     </div>
                 </div>
             ) : (

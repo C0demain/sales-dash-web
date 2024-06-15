@@ -31,6 +31,7 @@ export default function CommissionChartSeller({ onTotalCommissionChange }: Commi
       const chartData: any[] = [];
       chartData.push(['', 'Valor', { role: 'style' }]);
       const currentMonth = response.data.stats.find((e: any) => e.month === months[selectedMonthIndex]);
+
       if (currentMonth) {
         let soma = 0;
         currentMonth.commissionValues.forEach((value: any) => {
@@ -39,6 +40,7 @@ export default function CommissionChartSeller({ onTotalCommissionChange }: Commi
         });
         onTotalCommissionChange(soma);
       } else {
+        onTotalCommissionChange(0); // Reset the total commission to zero if no data is found for the selected month
         chartData.push(["Cliente novo\n Produto novo", 0, getRandomColor(selectedMonthIndex)]);
         chartData.push(["Cliente novo\n Produto velho", 0, getRandomColor(selectedMonthIndex)]);
         chartData.push(["Cliente velho\n Produto novo", 0, getRandomColor(selectedMonthIndex)]);

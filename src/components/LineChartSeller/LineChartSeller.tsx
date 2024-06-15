@@ -49,6 +49,10 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
     chart: {
       title: `Vendas por mês`,
     },
+    chartArea: {
+      width: '95%', 
+      height: '70%' 
+    }
   });
 
   const setDates = useCallback(() => {
@@ -148,7 +152,7 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
                 chartType="ComboChart"
                 data={data}
                 options={options}
-                width="80vh"
+                width="70vh"
                 height="35vh"
               />
             </>

@@ -160,7 +160,7 @@ const Navbar: React.FC = () => {
           items={items}
         />
       </Sider>
-      <Layout style={{ marginLeft: collapsed ? 100 : 250, transition: 'margin-left 0.2s' }}>
+      <Layout style={{ marginLeft: collapsed ? 90 : 220, transition: 'margin-left 0.2s' }}>
 
         <Header style={{ padding: 0, background: colorBgContainer }} /> 
         
