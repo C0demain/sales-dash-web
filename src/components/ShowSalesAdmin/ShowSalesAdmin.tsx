@@ -167,29 +167,29 @@ function ShowSalesAdmin() {
       <div className="containerSl">
         <div>
           <h2>Lista de Vendas</h2>
-          <Row gutter={16}>
-            <Col>
+          <Row gutter={16} className="filter-row">
+            <Col xs={24} sm={6} className="filter-col">
               <SelectSeller
                 controlState={[userSelect, setUserSelect]}
                 dataKey="id"
                 className="fixed-height-select"
               />
             </Col>
-            <Col>
+            <Col xs={24} sm={6} className="filter-col">
               <SelectProduct
                 controlState={[productSelect, setProductSelect]}
                 dataKey="id"
                 className="fixed-height-select"
               />
             </Col>
-            <Col>
+            <Col xs={24} sm={6} className="filter-col">
               <SelectClient
                 controlState={[clientSelect, setClientSelect]}
                 dataKey="id"
                 className="fixed-height-select"
               />
             </Col>
-            <Col>
+            <Col xs={24} sm={3} className="filter-col">
               <DatePicker
                 onChange={e => setStartDate(handleDatePicker(e))}
                 format="DD/MM/YYYY"
@@ -197,7 +197,7 @@ function ShowSalesAdmin() {
                 className="fixed-height-select"
               />
             </Col>
-            <Col>
+            <Col xs={24} sm={3} className="filter-col">
               <DatePicker
                 onChange={e => setEndDate(handleDatePicker(e))}
                 format="DD/MM/YYYY"
@@ -205,10 +205,13 @@ function ShowSalesAdmin() {
                 className="fixed-height-select"
               />
             </Col>
-            <Col style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}>
-              <Button className="button-filter" onClick={getSells}>Filtrar vendas</Button>
+            <Col xs={24} sm={24} className="filter-col">
+              <Button className="button-filter" onClick={getSells}>
+                Filtrar vendas
+              </Button>
             </Col>
           </Row>
+
           <Spin spinning={loading} >
             {sales.length === 0 && !loading && dataLoaded ? (
               <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}>

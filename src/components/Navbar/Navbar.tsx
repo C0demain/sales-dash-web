@@ -6,7 +6,6 @@ import {
   UserAddOutlined,
   ShoppingOutlined,
   KeyOutlined,
-  DeleteOutlined,
   UnorderedListOutlined,
   DollarOutlined,
   LogoutOutlined,
@@ -45,6 +44,7 @@ const Navbar: React.FC = () => {
     const savedState = localStorage.getItem('siderCollapsed');
     return savedState ? JSON.parse(savedState) : false;
   });
+  const [isResponsive, setIsResponsive] = useState(false);
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const role = isAdmin() ? 'Gestor' : 'Vendedor';
   const firstName = user.name ? user.name.split(' ')[0] : '';
@@ -52,6 +52,24 @@ const Navbar: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 800) {
+        setCollapsed(true);
+        setIsResponsive(true);
+      } else {
+        setIsResponsive(false);
+      }
+    };
+
+    handleResize(); // Check initial width
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('siderCollapsed', JSON.stringify(collapsed));
@@ -144,7 +162,7 @@ const Navbar: React.FC = () => {
       <Sider
         collapsible
         collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
+        onCollapse={(value) => !isResponsive && setCollapsed(value)}
         width={230}
         style={{ overflow: 'auto', height: 'auto', position: 'fixed', left: 0, top: 0, bottom: 0 }}
       >
@@ -161,12 +179,10 @@ const Navbar: React.FC = () => {
         />
       </Sider>
       <Layout style={{ marginLeft: collapsed ? 90 : 220, transition: 'margin-left 0.2s' }}>
-
-        <Header style={{ padding: 0, background: colorBgContainer }} /> 
-        
+        <Header style={{ padding: 0, background: colorBgContainer }} />
+        {/* Add Content and Footer here */}
       </Layout>
     </Layout>
-
   );
 };
 

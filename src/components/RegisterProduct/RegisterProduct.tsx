@@ -40,10 +40,8 @@ function RegisterProduct() {
     return (
         <NavbarWrapper>
             <Navbar />
-            <div className='Página'>
                 <div className="containerGlobal">
                     <div className='containerRegisterProduct'>
-                        <div className='caixa'>
                             <h1 className='titulo'>Cadastro de Produto</h1>
                             <form className="formulario" onSubmit={handleSubmit}>
                                 <div className='insertText'>
@@ -60,8 +58,6 @@ function RegisterProduct() {
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
         </NavbarWrapper>
     );
 }

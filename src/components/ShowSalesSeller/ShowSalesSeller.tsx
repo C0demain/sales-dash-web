@@ -164,21 +164,21 @@ function ShowSalesSeller() {
         
         <h2>Lista de Vendas</h2>
           <Row gutter={16}>
-          <Col>
+          <Col className="filter-col">
             <SelectProduct
               controlState={[productSelect, setProductSelect]}
               dataKey="id"
               className="fixed-height-select"
             />
           </Col>
-          <Col>
+          <Col className="filter-col">
             <SelectClient
               controlState={[clientSelect, setClientSelect]}
               dataKey="id"
               className="fixed-height-select"
             />
           </Col>
-          <Col>
+          <Col className="filter-col">
             <DatePicker
               onChange={e => { setStartDate(handleDatePicker(e)) }}
               format="DD/MM/YYYY"
@@ -186,7 +186,7 @@ function ShowSalesSeller() {
               className="fixed-height-select"
             />
           </Col>
-          <Col>
+          <Col className="filter-col">
             <DatePicker
               onChange={e => { setEndDate(handleDatePicker(e)) }}
               format="DD/MM/YYYY"

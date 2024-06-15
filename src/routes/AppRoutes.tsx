@@ -14,10 +14,10 @@ import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import ShowUsers from "components/ShowUsers/ShowUsers";
-import APIdoc from "components/APIdoc/APIdoc";
 import ShowProductsSeller from "components/ShowProductsSeller/ShowProductsSeller";
 import ShowClientsSeller from "components/ShowClientsSeller/ShowClientsSeller";
 import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
+import SwaggerUI from "components/APIdoc/SwaggerUI";
 
 export function AppRoutes() {
   return (
@@ -122,7 +122,7 @@ export function AppRoutes() {
 
           <Route path="/docs" element={
             <ProtectedLayout adminOnly>
-              <APIdoc/>
+              <SwaggerUI/>
             </ProtectedLayout>}>
           </Route>
 

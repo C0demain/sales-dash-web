@@ -5,3 +5,21 @@
         padding: 10px;
     }
 }
+
+@media (min-width: 800px) {
+    .filter-col {
+      flex: 1;
+      margin-right: 10px;
+    }
+  
+    .filter-col:last-child {
+      margin-right: 0;
+    }
+  }
+  
+  @media (max-width: 800px) {
+    .filter-col {
+      flex: 100%;
+      margin-right: 0;
+    }
+  }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from 'antd';
-import { SiMicrosoftexcel } from 'react-icons/si';
 import './index.css'
 
 const DownloadTemplateSheet: React.FC = () => {
@@ -10,7 +9,7 @@ const DownloadTemplateSheet: React.FC = () => {
             <p>Clique no botão abaixo para baixar o modelo da planilha compatível com o upload.</p>
             <a href="/sheet/sales-dash.xlsx" download>
                 <Button type="primary" className="custom-button-excel">
-                     <span style={{ marginRight: '8px' }}>Baixar Planilha Modelo</span> <SiMicrosoftexcel/>
+                     <span style={{ marginRight: '8px' }}>Baixar Planilha Modelo</span> 
                 </Button>
             </a>
         </div>

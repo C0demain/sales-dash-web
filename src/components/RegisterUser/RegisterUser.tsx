@@ -10,7 +10,7 @@ import { isValidCPF } from "util/validation";
 function RegisterUser() {
   const regex = /^(?=.*[!@#$%^&*()_+{}\]:;<>,.?~])(?=.*[0-9])(?=.*[a-zA-Z]).*$/
 
-  //Vendedor
+  //User = Vendedor
   const [nameUser, setNameUser] = useState('');
   const [emailUser, setEmailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
@@ -18,7 +18,7 @@ function RegisterUser() {
   const [cpfUser, setCpfUser] = useState('');
   const [loadingSeller, setLoadingSeller] = useState(false);
 
-  //Gestor
+  //Admin = Gestor
   const [nameAdmin, setNameAdmin] = useState('');
   const [emailAdmin, setEmailAdmin] = useState('');
   const [cpfAdmin, setCpfAdmin] = useState('');

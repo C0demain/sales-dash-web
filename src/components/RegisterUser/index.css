@@ -2,23 +2,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
 }
 
 .containerVendedor {
   width: 100%;
-
 }
 
 .formContainer {
   display: flex;
+  flex-wrap: wrap; /* Permite que os elementos dentro de .formContainer se ajustem em várias linhas */
   justify-content: space-between;
-
 }
 
 .caixaVendedor {
-  width: 45%;
-  margin: 20px;
+  width: 100%; 
+  margin: 20px 0; 
   padding: 20px;
   border: 1px solid #ffffff;
   background-color: white;
@@ -27,15 +26,14 @@
 }
 
 .caixaAdmin {
-  width: 45%;
-  margin: 20px;
+  height: 50%;
+  width: 100%; 
+  margin: 20px 0; /* Espaçamento entre as caixas */
   padding: 20px;
   border: 1px solid #ffffff;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 45%;
-  height: 50%;
 }
 
 .titulo {
@@ -45,4 +43,11 @@
 .insertText,
 .inputSenha {
   margin-bottom: 15px;
+}
+
+@media (min-width: 800px) {
+  .caixaVendedor,
+  .caixaAdmin {
+    width: 45%; /* Retornar ao tamanho original de 45% para telas maiores */
+  }
 }

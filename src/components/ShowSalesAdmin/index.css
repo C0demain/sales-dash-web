@@ -1,4 +1,5 @@
 .containerSl {
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,30 +9,45 @@
   margin-right: 5%;
 }
 
-.button-filter {
-  width: 100%;
-  height: 35px;
-  margin-bottom: 5vh;
-  background-color: #001529;
-  color: aliceblue;
+.filter-row {
+  margin-bottom: 20px;
+}
+
+.filter-col {
+  margin-bottom: 10px;
 }
 
 .fixed-height-select {
-  height: 35px;
+  height: 40px; /* Altura padrão */
+  width: 100%; /* Largura total */
 }
 
-.custom-height-select {
+.fixed-height-date-picker {
+  height: 40px; /* Altura padrão para o DatePicker */
+  width: 100%; /* Largura total */
+}
+
+.button-filter {
+  width: 100%;
   height: 40px;
-  /* Ajuste a altura conforme necessário */
+  background-color: #001529;
+  color: white;
 }
 
-.custom-select.ant-select {
-  border-color: black;
-  /* Define a cor do contorno */
+@media (min-width: 800px) {
+  .filter-col {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .filter-col:last-child {
+    margin-right: 0;
+  }
 }
 
-.custom-select.ant-select-selection-placeholder {
-  color: black;
-  /* Define a cor do placeholder */
+@media (max-width: 800px) {
+  .filter-col {
+    flex: 100%;
+    margin-right: 0;
+  }
 }
-
