@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Empty, Table, Button, Modal, Form, Input, message, Spin } from "antd";
+import { Empty, Table, Button, message, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale } from "util/formatters";
 import { apiInstance } from "services/api";
 import { useAuth } from "context/AuthProvider/useAuth";
-import './index.css'
+import './index.css';
 
 interface Client {
   id: string;
@@ -27,9 +27,6 @@ interface User {
 
 function ShowClientsSeller() {
   const [clients, setClients] = useState<Client[]>([]);
-  const [open, setOpen] = useState(false);
-  const [currentClient, setCurrentClient] = useState<Client | null>(null);
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(true);
   const [dataLoaded, setDataLoaded] = useState(false);
   const userId = useAuth().id;
@@ -72,50 +69,8 @@ function ShowClientsSeller() {
       dataIndex: 'cpf_cnpj',
       key: 'cpf_cnpj',
       sorter: (a: Client, b: Client) => a.cpf_cnpj.localeCompare(b.cpf_cnpj)
-    },
-    {
-      title: 'Ações',
-      render: (_: any, record: Client) => (
-        <Button className="button-edit" onClick={() => handleEdit(record)}>Editar</Button>
-      )
     }
   ];
-
-  const handleEdit = (record: Client) => {
-    setCurrentClient(record);
-    setOpen(true);
-    form.setFieldsValue({
-      name: record.name,
-      segment: record.segment,
-    });
-  };
-
-  const handleOk = async () => {
-    try {
-      const values = await form.validateFields();
-
-      if (!currentClient) {
-        throw new Error('Nenhum cliente selecionado para atualização.');
-      }
-
-      const updatedClient = { ...currentClient, ...values };
-      const response = await apiInstance.put(`http://localhost:8000/api/v1/clients/update/${currentClient.id}`, updatedClient);
-
-      if (response.status === 200) {
-        setOpen(false);
-        message.success('Cliente atualizado com sucesso!');
-        getClients();
-      } else {
-        message.error('Falha ao atualizar o cliente. Por favor, tente novamente.');
-      }
-    } catch (error: any) {
-      message.error('Ocorreu um erro ao atualizar o cliente. Tente novamente.');
-    }
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
 
   return (
     <NavbarWrapper>
@@ -143,29 +98,6 @@ function ShowClientsSeller() {
             </>
           )}
         </Spin>
-        <Modal
-          title="Editar Cliente"
-          open={open}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Form form={form} layout="vertical">
-            <Form.Item
-              name="name"
-              label="Nome"
-              rules={[{ required: true, message: 'Por favor, insira o nome do cliente!' }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="segment"
-              label="Segmento"
-              rules={[{ required: true, message: 'Por favor, insira o segmento do cliente!' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Form>
-        </Modal>
       </div>
     </NavbarWrapper>
   );

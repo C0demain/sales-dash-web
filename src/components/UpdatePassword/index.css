@@ -5,12 +5,9 @@
 }
 
 .containerUpdatePassword {
-    max-width: 400px;
-    width: 100%;
-    margin: 0 auto;
-    color: #001529;
-    margin: 20px;
-    padding: 20px;
+    max-width: 600px;
+    margin: 40px 40px; 
+    padding: 30px;
     border: 1px solid #ffffff;
     background-color: white;
     border-radius: 10px;
@@ -44,3 +41,4 @@
     margin-bottom: 5px;
 }
 
+  
