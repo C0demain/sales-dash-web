@@ -152,7 +152,7 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
                 chartType="ComboChart"
                 data={data}
                 options={options}
-                width="70vh"
+                width="60vh"
                 height="35vh"
               />
             </>

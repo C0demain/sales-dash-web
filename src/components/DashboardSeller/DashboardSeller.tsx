@@ -67,7 +67,7 @@ function DashboardSeller() {
                                 totalComissionProp={totalCommission}
                             />
                         </div>
-                        <div className="chart-box">
+                        <div className="list-sells-box">
                             <ListSellsSeller
                                 onStartDateChange={setStartDate}
                                 onEndDateChange={setEndDate}
