@@ -9,7 +9,6 @@ import { useAuth } from 'context/AuthProvider/useAuth';
 export default function LineChartSeller({ startDateProp, endDateProp, checkedProp }: {startDateProp: string, endDateProp: string, checkedProp: boolean}) {
   const [dataSells, setDataSells] = useState<any[]>([])
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
-  const [title, setTitle] = useState<any>('Valor vendido')
   const startDate = startDateProp
   const endDate = endDateProp
   const checked = checkedProp
@@ -71,14 +70,12 @@ export default function LineChartSeller({ startDateProp, endDateProp, checkedPro
         chartData.push([stat.month, stat.totalCommissionValue, stat.totalCommissionValue]);
       });
       setData(chartData);
-      setTitle('Comissão de venda mensal');
     } else {
       let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]];
       dataSells.forEach(stat => {
         chartData.push([stat.month, stat.totalValue, stat.totalValue]);
       });
       setData(chartData);
-      setTitle('Valor vendido mensalmente');
     }
   }, [checked])
 
@@ -109,7 +106,7 @@ export default function LineChartSeller({ startDateProp, endDateProp, checkedPro
           ) : (
             <>
               <div className='titleChart'>
-                <h3>{title}</h3>
+                <h3>Vendas</h3>
               </div>
               <Chart
                 chartType="ComboChart"

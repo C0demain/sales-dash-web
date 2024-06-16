@@ -94,8 +94,9 @@ export default function FilterDash({ onStartDateChange, onEndDateChange, onCheck
                 onSelect={(value) => setDates(value)}
                 defaultValue={5}
             />
+            <h4 style={{marginLeft:'5vh'}}>Comissão</h4>
             <Switch checked={checked} onChange={handleSwitchChange} />
-            <h4 style={{marginRight:'5vh'}}>{title}</h4>
+            <h4 style={{marginRight:'5vh'}}>Valor</h4>
           </Stack>
         </Stack>
     )
