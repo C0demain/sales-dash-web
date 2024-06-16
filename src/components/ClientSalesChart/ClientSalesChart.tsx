@@ -22,14 +22,12 @@ interface MonthData {
     totalSales: number;
 }
 
-export default function ClientSalesChart({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) {
+export default function ClientSalesChart({ startDateProp, endDateProp, checkedProp }: { startDateProp: string, endDateProp: string, checkedProp: boolean }) {
     const [dataSells, setDataSells] = useState<{ [clientId: string]: MonthData[] }>({});
     const [data, setData] = useState<any[][]>([["Mês"]]);
     const [selectedClients, setSelectedClients] = useState<Client[]>([]);
     const startDate = startDateProp;
     const endDate = endDateProp;
-    const [checked, setChecked] = useState<boolean>(true);
-    const [title, setTitle] = useState<string>('Valor vendido por clientes');
     const [loading, setLoading] = useState<boolean>(true);
     const customIndicator = <div style={{ display: 'none' }} />;
     const isClientSelected = selectedClients.length !== 0;
@@ -91,7 +89,7 @@ export default function ClientSalesChart({ startDateProp, endDateProp }: { start
                 "Mês",
                 ...(isClientSelected
                     ? selectedClients.map(client => client.name)
-                    : (checked
+                    : (checkedProp
                         ? ['Valor vendido mensalmente', 'Crescimento']
                         : ['Comissão de venda mensal', 'Crescimento'])
                 )
@@ -114,27 +112,22 @@ export default function ClientSalesChart({ startDateProp, endDateProp }: { start
                 selectedClients.forEach(client => {
                     const clientSales = dataSells[client.id] || [];
                     const monthData = clientSales.find(data => data.month === month);
-                    const saleValue = monthData ? (checked ? monthData.totalValue : monthData.totalCommissionValue) : 0;
+                    const saleValue = monthData ? (checkedProp ? monthData.totalValue : monthData.totalCommissionValue) : 0;
                     rowData.push(saleValue);
                 });
             } else {
                 const monthData = Object.values(dataSells)[0].find(data => data.month === month);
-                const saleValue = monthData ? (checked ? monthData.totalValue : monthData.totalCommissionValue) : 0;
+                const saleValue = monthData ? (checkedProp ? monthData.totalValue : monthData.totalCommissionValue) : 0;
                 rowData.push(saleValue, saleValue);
             }
             chartData.push(rowData);
         });
 
         setData(chartData);
-    }, [selectedClients, dataSells, checked, isClientSelected]);
+    }, [selectedClients, dataSells, checkedProp, isClientSelected]);
 
     const handleDataFromChild = (data: Client[]) => {
         setSelectedClients(data);
-    };
-
-    const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
-        setTitle(event.target.checked ? 'Valor vendido \npor clientes' : 'Comissão \npor cliente');
     };
 
     useEffect(() => {
@@ -145,7 +138,7 @@ export default function ClientSalesChart({ startDateProp, endDateProp }: { start
 
     useEffect(() => {
         updateChartData();
-    }, [dataSells, checked, selectedClients, isClientSelected, updateChartData]);
+    }, [dataSells, checkedProp, selectedClients, isClientSelected, updateChartData]);
 
     console.warn = (...args: any[]) => {
         if (args[0] && args[0].includes('Attempting to load version \'51\' of Google Charts')) return;
@@ -159,8 +152,7 @@ export default function ClientSalesChart({ startDateProp, endDateProp }: { start
                     <>
                         <Stack direction={'row'} justifyContent={'space-evenly'} alignItems="center">
                             <Stack direction={'row'} alignItems="center">
-                                <Switch checked={checked} onChange={handleSwitchChange} />
-                                <h3>{title}</h3>
+                                <h3 style={{ marginRight: '5vh' }}>Clientes</h3>
                             </Stack>
                             <ClientSelector sendDataToParent={handleDataFromChild} />
                         </Stack>

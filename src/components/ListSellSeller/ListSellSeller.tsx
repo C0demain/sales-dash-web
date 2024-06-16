@@ -4,12 +4,7 @@ import { Button, Empty, Spin, Table, TableColumnsType } from "antd";
 import { customLocale, formatCurrency, formatDate } from "util/formatters";
 import { apiInstance } from "services/api";
 
-interface ListSellsSellerProps {
-    onStartDateChange: (date: string) => void;
-    onEndDateChange: (date: string) => void;
-}
-
-const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSellerProps) => {
+const ListSellsSeller = () => {
     const [sells, setSells] = useState<any[]>([]);
     const [userSelect, setUserSelect] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);

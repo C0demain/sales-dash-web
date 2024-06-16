@@ -8,12 +8,14 @@ import ClientSalesChart from 'components/ClientSalesChart/ClientSalesChart';
 import { apiInstance } from 'services/api';
 import BarChart from 'components/Barchart/BarChart';
 import RankingSellers from 'components/RankingSellers/rankingSellers';
+import FilterDash from 'components/FilterDash/filterDash';
 import { Empty, Spin } from 'antd';
 
 const DashboardAdmin: React.FC = () => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
   const [totalQtde, setTotalQtde] = useState<any>();
+  const [checked, setChecked] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(true); // Estado para controlar o carregamento
 
   const fetchSells = useCallback(async () => {
@@ -41,26 +43,36 @@ const DashboardAdmin: React.FC = () => {
           <Spin size="large" />
         </div>
       ) : totalQtde > 0 ? ( // Se houver vendas, mostra os componentes do dashboard
-        <div className="dashboard-container">
-          <h1 className="dashboard-title">Dashboard Gestor</h1>
-          <div className="charts-grid">
-            <div className="chart-box">
-              <BasicLineChart onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
-            </div>
-            <div className="chart-box">
-              <BarChart />
-            </div>
-            <div className="chart-box">
-              <ProductChart startDateProp={startDate} endDateProp={endDate} />
-            </div>
-            <div className="chart-box">
-              <ClientSalesChart startDateProp={startDate} endDateProp={endDate} />
-            </div>
+      <div className="dashboard-container">
+          <div>
+            <h1 className="dashboard-title">Dashboard Gestor</h1>
+            <FilterDash
+            onEndDateChange={setEndDate} 
+            onStartDateChange={setStartDate}
+            onCheckedChange ={setChecked}
+            />
           </div>
-          <div className="ranking-sellers">
-            <RankingSellers />
+        <div className="charts-grid">
+          <div className="chart-box">
+            <BasicLineChart
+            endDateProp={endDate}
+            startDateProp={startDate}
+            checkedProp={checked}  />
+          </div>
+          <div className="chart-box">
+            <BarChart />
+          </div>
+          <div className="chart-box">
+            <ProductChart checkedProp={checked} startDateProp={startDate} endDateProp={endDate} />
+          </div>
+          <div className="chart-box">
+            <ClientSalesChart checkedProp={checked} startDateProp={startDate} endDateProp={endDate}/>
           </div>
         </div>
+        <div className="ranking-sellers">
+          <RankingSellers />
+        </div>
+      </div>
       ) : null} {/* Não renderiza nada se não houver vendas, aguardando os dados */}
       
       {!isLoading && totalQtde === 0 && ( // Se o carregamento terminou e não há vendas, mostra o Empty

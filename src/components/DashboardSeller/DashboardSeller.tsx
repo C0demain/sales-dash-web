@@ -10,15 +10,16 @@ import ProductChart from 'components/ProductChart/ProductChart';
 import { UserStatsSales } from 'components/UserStats/UserStatsSales';
 import { UserStatsCommission } from 'components/UserStats/UserStatsCommission';
 import { apiInstance } from 'services/api';
+import FilterDash from 'components/FilterDash/filterDash';
 
 function DashboardSeller() {
-    const [startDate, setStartDate] = useState<string>('');
-    const [endDate, setEndDate] = useState<string>('');
     const [startDateStats, setStartDateStats] = useState<string>('');
     const [endDateStats, setEndDateStats] = useState<string>('');
     const [totalCommission, setTotalCommission] = useState<any>();
     const [totalQtde, setTotalQtde] = useState<any>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [checked, setChecked] = useState<boolean>(true)
+
 
     const getSells = useCallback(async () => {
         try {
@@ -47,11 +48,17 @@ function DashboardSeller() {
             ) : totalQtde > 0 ? (
                 <div className="dashboard-container">
                     <h1 className="dashboard-title">Dashboard Vendedor</h1>
+                    <FilterDash
+                    onEndDateChange={setEndDateStats} 
+                    onStartDateChange={setStartDateStats}
+                    onCheckedChange ={setChecked}
+                    />
                     <div className="charts-grid">
                         <div className="chart-box">
                             <LineChartSeller
-                                onStartDateChange={setStartDateStats}
-                                onEndDateChange={setEndDateStats}
+                                startDateProp={startDateStats}
+                                endDateProp={endDateStats}
+                                checkedProp={checked}
                             />
                             <UserStatsSales
                                 startDateProp={startDateStats}
@@ -66,14 +73,9 @@ function DashboardSeller() {
                                 totalComissionProp={totalCommission}
                             />
                         </div>
-                        <div className="list-sells-box">
-                            <ListSellsSeller
-                                onStartDateChange={setStartDate}
-                                onEndDateChange={setEndDate}
-                            />
-                        </div>
                         <div className="chart-box">
                             <ProductChart
+                                checkedProp={checked}
                                 startDateProp={startDateStats}
                                 endDateProp={endDateStats}
                             />

@@ -19,17 +19,15 @@ interface MonthData {
   totalSales: number;
 }
 
-export default function ProductChart({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) {
+export default function ProductChart({ startDateProp, endDateProp, checkedProp }: { startDateProp: string, endDateProp: string, checkedProp: boolean}) {
   const [dataSells, setDataSells] = useState<{ [productId: string]: MonthData[] }>({});
   const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
   const startDate = startDateProp
   const endDate = endDateProp
-  const [checked, setChecked] = useState<boolean>(true);
   const [loading, setLoading] = useState(true);
   const customIndicator = <div style={{ display: 'none' }} />;
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
   const isProductSelected = selectedProducts.length !== 0;
-  const [title, setTitle] = useState<string>('Valor vendido \npor produto')
   const chartOptions = {
     colors: ["#1976d2", "#7CB9E8", "#00308F", "#b0b8ce", "#022954"],
     pointSize: 10,
@@ -87,7 +85,7 @@ export default function ProductChart({ startDateProp, endDateProp }: { startDate
         "Mês",
         ...(isProductSelected
           ? selectedProducts.map(client => client.name)
-          : (checked
+          : (checkedProp
             ? ['Valor vendido mensalmente', 'Crescimento']
             : ['Comissão de venda mensal', 'Crescimento'])
         )
@@ -110,27 +108,22 @@ export default function ProductChart({ startDateProp, endDateProp }: { startDate
         selectedProducts.forEach(client => {
           const clientSales = dataSells[client.id] || [];
           const monthData = clientSales.find(data => data.month === month);
-          const saleValue = monthData ? (checked ? monthData.totalValue : monthData.totalCommissionValue) : 0;
+          const saleValue = monthData ? (checkedProp ? monthData.totalValue : monthData.totalCommissionValue) : 0;
           rowData.push(saleValue);
         });
       } else {
         const monthData = Object.values(dataSells)[0].find(data => data.month === month);
-        const saleValue = monthData ? (checked ? monthData.totalValue : monthData.totalCommissionValue) : 0;
+        const saleValue = monthData ? (checkedProp ? monthData.totalValue : monthData.totalCommissionValue) : 0;
         rowData.push(saleValue, saleValue);
       }
       chartData.push(rowData);
     });
 
     setData(chartData);
-  }, [selectedProducts, dataSells, isProductSelected, checked]);
+  }, [selectedProducts, dataSells, isProductSelected, checkedProp]);
 
   const handleDataFromChild = (data: Product[]) => {
     setSelectedProducts(data);
-  };
-
-  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-    setTitle(event.target.checked ? 'Valor vendido \npor produto' : 'Comissão \npor produto');
   };
 
   useEffect(() => {
@@ -148,8 +141,7 @@ export default function ProductChart({ startDateProp, endDateProp }: { startDate
       <Spin spinning={loading} indicator={customIndicator}>
         <Stack direction={'row'} justifyContent={'space-evenly'} alignItems="center">
           <Stack direction={'row'} alignItems="center">
-            <Switch checked={checked} onChange={handleSwitchChange} />
-            <h3 style={{ marginRight: '5vh' }}>{title}</h3>
+            <h3 style={{ marginRight: '5vh' }}>Produtos</h3>
           </Stack>
           <ProductSelector sendDataToParent={handleDataFromChild} />
         </Stack>
