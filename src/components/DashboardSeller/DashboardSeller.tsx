@@ -48,11 +48,13 @@ function DashboardSeller() {
             ) : totalQtde > 0 ? (
                 <div className="dashboard-container">
                     <h1 className="dashboard-title">Dashboard Vendedor</h1>
-                    <FilterDash
-                    onEndDateChange={setEndDateStats} 
-                    onStartDateChange={setStartDateStats}
-                    onCheckedChange ={setChecked}
-                    />
+                    <div className='filter-box'>
+                        <FilterDash
+                        onEndDateChange={setEndDateStats} 
+                        onStartDateChange={setStartDateStats}
+                        onCheckedChange ={setChecked}
+                        />
+                    </div>
                     <div className="charts-grid">
                         <div className="chart-box">
                             <LineChartSeller

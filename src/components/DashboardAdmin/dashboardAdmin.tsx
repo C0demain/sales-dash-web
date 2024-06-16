@@ -44,13 +44,13 @@ const DashboardAdmin: React.FC = () => {
         </div>
       ) : totalQtde > 0 ? ( // Se houver vendas, mostra os componentes do dashboard
       <div className="dashboard-container">
-          <div>
-            <h1 className="dashboard-title">Dashboard Gestor</h1>
-            <FilterDash
-            onEndDateChange={setEndDate} 
-            onStartDateChange={setStartDate}
-            onCheckedChange ={setChecked}
-            />
+          <h1 className="dashboard-title">Dashboard Gestor</h1>
+          <div className='filter-box'>
+              <FilterDash
+              onEndDateChange={setStartDate} 
+              onStartDateChange={setStartDate}
+              onCheckedChange ={setChecked}
+              />
           </div>
         <div className="charts-grid">
           <div className="chart-box">

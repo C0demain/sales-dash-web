@@ -88,13 +88,14 @@ export default function FilterDash({ onStartDateChange, onEndDateChange, onCheck
     return (
         <Stack direction={'row'} justifyContent={'space-evenly'} alignItems="center">
           <Stack direction={'row'} alignItems="center">
+            <h3 style={{marginRight: '1vh'}}>Filtros:</h3>
             <Select
                 options={periodOptions}
                 onSelect={(value) => setDates(value)}
                 defaultValue={5}
             />
             <Switch checked={checked} onChange={handleSwitchChange} />
-            <h3 style={{marginRight:'5vh'}}>{title}</h3>
+            <h4 style={{marginRight:'5vh'}}>{title}</h4>
           </Stack>
         </Stack>
     )
