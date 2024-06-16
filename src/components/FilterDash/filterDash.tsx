@@ -16,7 +16,20 @@ export default function FilterDash({ onStartDateChange, onEndDateChange, onCheck
     const role = useAuth().role
     const [checked, setChecked] = useState<boolean>(true)
     const [title, setTitle] = useState<string>("Valor")
-    const [periodOptions, setPeriodOptions] = useState<any>()
+    const [periodOptions, setPeriodOptions] = useState<any>([
+      {
+        label: 'Últimos 12 meses',
+        value: 11
+      },
+      {
+        label: 'Últimos 6 meses',
+        value: 5
+      },
+      {
+        label: 'Últimos 3 meses',
+        value: 2
+      },
+    ])
 
     const periodOptionsAdmin = [
         {

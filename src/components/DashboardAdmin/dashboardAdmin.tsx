@@ -47,7 +47,7 @@ const DashboardAdmin: React.FC = () => {
           <h1 className="dashboard-title">Dashboard Gestor</h1>
           <div className='filter-box'>
               <FilterDash
-              onEndDateChange={setStartDate} 
+              onEndDateChange={setEndDate} 
               onStartDateChange={setStartDate}
               onCheckedChange ={setChecked}
               />
