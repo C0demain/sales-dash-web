@@ -2,6 +2,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0vh 3vh;
     text-align: center;
-    width: 100%;
 }

@@ -1,30 +1,24 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin: 0 auto;
+.list-sells-box {
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
-.tituloDashboard{
-    font-family:Arial, Helvetica, sans-serif;
-    margin: 2vh;
-}
+@media screen and (max-width: 800px) {
+    .dashboard-container {
+        padding: 10px; /* Reduz o padding para telas menores */
+        overflow-y: auto; /* Adiciona scroll vertical se necessário */
+    }
 
-.box{
-    margin: 3vh;
-    width: 123vh;
-}
+    .chart-box {
+        width: 100%; /* Ocupa toda a largura disponível */
+        max-width: 100%; /* Remove a largura máxima para telas menores */
+    }
 
-.divider{
-    height: 0.2vh;
-    background-color: black;
-    margin: 3vh 3vh;
-}
-
-.chartsBoxSeller{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    .ranking-sellers {
+        width: 100%; /* Ocupa toda a largura disponível */
+        max-width: 20%; /* Remove a largura máxima para telas menores */
+        margin-top: 10px; /* Reduz o espaçamento entre os elementos */
+    }
 }

@@ -1,21 +1,23 @@
 import ShowCommissions from "components/CommissionList/CommissionsList";
-import { Login } from "components/Login";
+import { Login } from "components/Login/Login";
 import { ProtectedLayout } from "components/ProtectedLayout";
 import RegisterClient from "components/RegisterClient/RegisterClient";
 import RegisterSell from "components/RegisterSell/RegisterSell";
 import RegisterUser from "components/RegisterUser/RegisterUser";
 import ShowClient from "components/ShowClient/ShowClient";
-import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
 import DashboardSeller from "components/DashboardSeller/DashboardSeller";
 import { AuthProvider } from "context/AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ShowProduct from "components/ShowProduct/ShowProduct";
-import ShowSales from "components/ShowSales/ShowSales";
+import ShowSalesAdmin from "components/ShowSalesAdmin/ShowSalesAdmin";
 import ShowSalesSeller from "components/ShowSalesSeller/ShowSalesSeller";
 import UpdatePassword from "components/UpdatePassword/UpdatePassword";
 import RegisterProduct from "components/RegisterProduct/RegisterProduct";
 import ShowUsers from "components/ShowUsers/ShowUsers";
-import DatabaseCleaner from "components/DatabaseCleaner";
+import ShowProductsSeller from "components/ShowProductsSeller/ShowProductsSeller";
+import ShowClientsSeller from "components/ShowClientsSeller/ShowClientsSeller";
+import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
+import SwaggerUI from "components/APIdoc/SwaggerUI";
 
 export function AppRoutes() {
   return (
@@ -65,8 +67,14 @@ export function AppRoutes() {
           </Route>
 
           <Route path='/products' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <ShowProduct />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/productsSeller' element={
+            <ProtectedLayout>
+              <ShowProductsSeller />
             </ProtectedLayout>} >
           </Route>
 
@@ -77,14 +85,20 @@ export function AppRoutes() {
           </Route>
 
           <Route path='/clients' element={
-            <ProtectedLayout>
+            <ProtectedLayout adminOnly>
               <ShowClient />
             </ProtectedLayout>} >
           </Route>
 
-          <Route path='/salesManager' element={
+          <Route path='/clientsSeller' element={
             <ProtectedLayout>
-              <ShowSales />
+              <ShowClientsSeller />
+            </ProtectedLayout>} >
+          </Route>
+
+          <Route path='/salesAdmin' element={
+            <ProtectedLayout>
+              <ShowSalesAdmin />
             </ProtectedLayout>} >
           </Route>
 
@@ -105,11 +119,11 @@ export function AppRoutes() {
               <UpdatePassword/>
             </ProtectedLayout> }>
           </Route>
-          
-          <Route path='cleanDatabase' element={
-            <ProtectedLayout>
-              <DatabaseCleaner/>
-            </ProtectedLayout> }>
+
+          <Route path="/docs" element={
+            <ProtectedLayout adminOnly>
+              <SwaggerUI/>
+            </ProtectedLayout>}>
           </Route>
 
         </Routes>

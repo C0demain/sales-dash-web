@@ -1,35 +1,76 @@
-import ListSells from "components/ListSell/ListSells";
-import './index.css'
-import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
-import RankingSellers from "components/RankingSellers/rankingSellers";
-import BasicLineChart from "components/LineChart/LineChart";
-import BarChart from "components/Barchart/BarChart";
-import Navbar from "components/Navbar/Navbar";
+import React, { useCallback, useEffect, useState } from 'react';
+import './index.css';
+import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
+import BasicLineChart from 'components/LineChart/LineChart';
+import Navbar from 'components/Navbar/Navbar';
+import ProductChart from 'components/ProductChart/ProductChart';
+import ClientSalesChart from 'components/ClientSalesChart/ClientSalesChart';
+import { apiInstance } from 'services/api';
+import BarChart from 'components/Barchart/BarChart';
+import RankingSellers from 'components/RankingSellers/rankingSellers';
+import { Empty, Spin } from 'antd';
 
-function DashboardAdmin() {
-    return (
-        <NavbarWrapper>
-            <Navbar />
-            <div className="containerDash">
-                <div><h1 className="tituloDashboard">Dashboard Gestor</h1></div>
-                <div className="chartsBox">
-                    <div>
-                        <BasicLineChart />
-                    </div>
-                    <div>
-                        <BarChart />
-                    </div>
-                </div>
-                <div className="box">
-                    <ListSells />
-                </div>
-                <div className="divider"></div>
-                <div className="box">
-                    <RankingSellers />
-                </div>
+const DashboardAdmin: React.FC = () => {
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
+  const [totalQtde, setTotalQtde] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Estado para controlar o carregamento
+
+  const fetchSells = useCallback(async () => {
+    try {
+      const response = await apiInstance.get('http://localhost:8000/api/v1/sells/getall', {
+        withCredentials: false,
+      });
+      setTotalQtde(response.data.sell.length);
+      setIsLoading(false); // Marca o fim do carregamento apenas se os dados foram carregados com sucesso
+    } catch (error) {
+      console.error('Error fetching sells:', error);
+      setIsLoading(false); // Marca o fim do carregamento em caso de erro também
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSells();
+  }, []);
+
+  return (
+    <NavbarWrapper>
+      <Navbar />
+      {isLoading ? ( // Se estiver carregando, mostra o spinner centralizado na tela
+        <div className="spinner-container">
+          <Spin size="large" />
+        </div>
+      ) : totalQtde > 0 ? ( // Se houver vendas, mostra os componentes do dashboard
+        <div className="dashboard-container">
+          <h1 className="dashboard-title">Dashboard Gestor</h1>
+          <div className="charts-grid">
+            <div className="chart-box">
+              <BasicLineChart onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
             </div>
-        </NavbarWrapper>
-    )
-}
+            <div className="chart-box">
+              <BarChart />
+            </div>
+            <div className="chart-box">
+              <ProductChart startDateProp={startDate} endDateProp={endDate} />
+            </div>
+            <div className="chart-box">
+              <ClientSalesChart startDateProp={startDate} endDateProp={endDate} />
+            </div>
+          </div>
+          <div className="ranking-sellers">
+            <RankingSellers />
+          </div>
+        </div>
+      ) : null} {/* Não renderiza nada se não houver vendas, aguardando os dados */}
+      
+      {!isLoading && totalQtde === 0 && ( // Se o carregamento terminou e não há vendas, mostra o Empty
+        <div className="empty-container">
+          <Empty description='Não há vendas cadastradas' />
+        </div>
+      )}
+
+    </NavbarWrapper>
+  );
+};
 
 export default DashboardAdmin;

@@ -104,7 +104,6 @@ const CommissionsList: React.FC = () => {
         <NavbarWrapper>
             <Navbar />
             <div className="container">
-                <div className="commissions">
                     <Spin spinning={loading}>
                         {dataLoaded && commissions.length === 0 ? (
                             <Empty description="Nenhuma comissão encontrado" />
@@ -112,20 +111,21 @@ const CommissionsList: React.FC = () => {
                             <>
                                 {commissions.length > 0 && (
                                     <>
-                                        <h1 className="commissionTitle">Comissões</h1>
+                                        <h1 className="titulo">Comissões</h1>
                                         <Table
                                             columns={columns}
                                             dataSource={commissions}
                                             rowKey="id"
                                             pagination={{ defaultPageSize: 10, pageSizeOptions: [10, 20, 30] }}
+                                            scroll={{ x: true }}  // Adiciona rolagem horizontal quando necessário
+                                           className="custom-responsive-table"
                                         />
                                     </>
                                 )}
                             </>
                         )}
                     </Spin>
-                </div>
-            </div>
+            
             <Modal
                 title="Editar Comissão"
                 open={isModalOpen}
@@ -149,6 +149,7 @@ const CommissionsList: React.FC = () => {
                     </Form.Item>
                 </Form>
             </Modal>
+            </div>
         </NavbarWrapper>
     );
 };

@@ -1,8 +1,9 @@
 .containerStats {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     text-align: center;
+    gap: 1.2vh;
 }
 
 .boxStats {
@@ -10,10 +11,19 @@
     padding: 1vh;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 2px solid black; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid #001529; /* Adiciona uma borda de 2px com cor azul */
 }
 
 .boxStats .ant-statistic-title {
-    color: black; 
+    color: #001529; 
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+    width: 100%; /* Adicionado para fazer o grid ocupar a largura total */
+    max-width: 1200px; /* Adicionado para limitar a largura máxima */
 }

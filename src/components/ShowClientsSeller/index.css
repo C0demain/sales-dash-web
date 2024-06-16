@@ -1,0 +1,6 @@
+@media (max-width:800px) {
+    .containerCl{
+        max-width: 60%;
+        width: 100%;
+    }
+}

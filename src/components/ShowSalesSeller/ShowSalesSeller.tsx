@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Empty, Table, Button, Modal, Form, Input, message, TableColumnsType, Select, DatePicker, Row, Col, Spin } from "antd";
+import { Empty, Table, Button, message, TableColumnsType, Select, DatePicker, Row, Col, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale, formatCurrency } from "util/formatters";
@@ -8,6 +8,7 @@ import SelectClient from "components/SelectClient/SelectClient";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { apiInstance } from "services/api";
+import './index.css';
 
 dayjs.extend(customParseFormat);
 
@@ -22,10 +23,6 @@ interface Sale {
 
 function ShowSalesSeller() {
   const [sales, setSells] = useState<Sale[]>([]);
-  const [visible, setVisible] = useState(false);
-  const [form] = Form.useForm();
-  const [currentSale, setCurrentSale] = useState<Sale | null>(null);
-  const [seller, setSeller] = useState<any>(null);
   const [userSelect, setUserSelect] = useState<any>(null);
   const [productSelect, setProductSelect] = useState<any>(null);
   const [clientSelect, setClientSelect] = useState<any>(null);
@@ -61,12 +58,6 @@ function ShowSalesSeller() {
       key: 'value',
       render: value => formatCurrency(value),
       align: "end"
-    },
-    {
-      title: 'Ações',
-      render: (text: any, record: Sale) => (
-        <Button className='button-edit' onClick={() => handleEdit(record)}>Editar</Button>
-      )
     }
   ];
 
@@ -106,52 +97,6 @@ function ShowSalesSeller() {
     getSells();
   }, [getSells]);
 
-  const handleEdit = (record: any) => {
-    setSeller(record.user.cpf);
-    setCurrentSale(record);
-    form.setFieldsValue({
-      id: record.id,
-      date: dayjs(record.date, 'YYYY-MM-DD'),
-      seller: record.user.name,
-      client: record.clientname,
-      product: record.productName,
-      value: record.value,
-    });
-    setVisible(true);
-  };
-
-  const handleOk = async () => {
-    try {
-      const values = await form.validateFields();
-
-      if (!currentSale) {
-        throw new Error('Nenhuma venda selecionada para atualização.');
-      }
-
-      const updatedSale = {
-        date: dayjs(values.date).format('YYYY-MM-DD'),
-        seller_cpf: seller,
-        value: values.value
-      };
-
-      const response = await apiInstance.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
-      if (response.status === 200) {
-        setVisible(false);
-        message.success('Venda atualizada com sucesso!');
-        getSells(); // Atualiza a tabela após a atualização da venda
-      } else {
-        message.error('Falha ao atualizar a venda. Por favor, tente novamente.');
-      }
-    } catch (error) {
-      console.error('Erro ao validar campos do formulário ou ao enviar a requisição:', error);
-      message.error('Ocorreu um erro ao atualizar a venda. Por favor, tente novamente.');
-    }
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
   const handleDatePicker = (date: any) => {
     return date ? dayjs(date).format('DD/MM/YYYY') : "";
   };
@@ -160,23 +105,24 @@ function ShowSalesSeller() {
     <NavbarWrapper>
       <Navbar />
       <div className="containerSl">
+        
         <h2>Lista de Vendas</h2>
-        <Row gutter={16}>
-          <Col>
+          <Row gutter={16}>
+          <Col className="filter-col">
             <SelectProduct
               controlState={[productSelect, setProductSelect]}
               dataKey="id"
               className="fixed-height-select"
             />
           </Col>
-          <Col>
+          <Col className="filter-col">
             <SelectClient
               controlState={[clientSelect, setClientSelect]}
               dataKey="id"
               className="fixed-height-select"
             />
           </Col>
-          <Col>
+          <Col className="filter-col">
             <DatePicker
               onChange={e => { setStartDate(handleDatePicker(e)) }}
               format="DD/MM/YYYY"
@@ -184,7 +130,7 @@ function ShowSalesSeller() {
               className="fixed-height-select"
             />
           </Col>
-          <Col>
+          <Col className="filter-col">
             <DatePicker
               onChange={e => { setEndDate(handleDatePicker(e)) }}
               format="DD/MM/YYYY"
@@ -197,9 +143,11 @@ function ShowSalesSeller() {
           </Col>
         </Row>
         <Spin spinning={loading}>
-          {dataLoaded && sales.length === 0 ? (
-            <Empty description="Nenhuma venda encontrado" />
-          ) : (
+        {sales.length === 0 && !loading && dataLoaded ? (
+              <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+                <Empty description="Nenhuma venda cadastrada" />
+              </div>
+            ) : (
             <>
               {sales.length > 0 && (
                 <>
@@ -215,51 +163,7 @@ function ShowSalesSeller() {
             </>
           )}
         </Spin>
-        <Modal
-          title="Editar Venda"
-          open={visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Form form={form} layout="vertical">
-            <Form.Item
-              name="date"
-              label="Data"
-              rules={[{ required: true, message: 'Por favor, insira a data da venda!' }]}
-            >
-              <DatePicker format="DD/MM/YYYY" />
-            </Form.Item>
-            <Form.Item
-              name="seller"
-              label="Vendedor"
-              rules={[{ required: true, message: 'Por favor, insira o vendedor!' }]}
-            >
-              <Input disabled />
-            </Form.Item>
-            <Form.Item
-              name="client"
-              label="Cliente"
-              rules={[{ required: true, message: 'Por favor, insira o cliente!' }]}
-            >
-              <Input disabled />
-            </Form.Item>
-            <Form.Item
-              name="product"
-              label="Produto"
-              rules={[{ required: true, message: 'Por favor, insira o produto!' }]}
-            >
-              <Input disabled />
-            </Form.Item>
-            <Form.Item
-              name="value"
-              label="Valor"
-              rules={[{ required: true, message: 'Por favor, insira o valor!' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Form>
-        </Modal>
-      </div>
+      </div>  
     </NavbarWrapper>
   );
 }

@@ -8,9 +8,12 @@ import { sendData } from '.';
 import Navbar from "components/Navbar/Navbar";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import { Button, DatePicker, message } from 'antd';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
 import { useAuth } from 'context/AuthProvider/useAuth';
+import DownloadTemplateSheet from 'components/DownloadTemplateSheet/DownloadTemplateSheet';
+import DatabaseCleaner from 'components/DatabaseCleaner/DatabaseCleaner';
+import { ProtectedLayout } from 'components/ProtectedLayout';
 
 export default function RegisterSell() {
   const [seller, setSeller] = useState<any>();
@@ -21,12 +24,13 @@ export default function RegisterSell() {
   const [errors] = useState({ date: '', seller: '', client: '', product: '', value: '' })
   const role = useAuth().role
   const user = useAuth().cpf
-  const oculto = {display: 'none'}
-  const mostrar = {display: 'flex', flexDirection: 'column'}
+  const oculto = { display: 'none' }
+  const mostrar = { display: 'flex', flexDirection: 'column' }
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
     let isValid = true;
-    
+
     if (role === 'admin' && !seller) {
       message.error('Você deve preencher o vendedor.');
       isValid = false;
@@ -46,11 +50,12 @@ export default function RegisterSell() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
-    console.log(user)
+    //console.log(user)
     if (validate()) {
       try {
-        await sendData(date,role === 'admin'? seller[0]: user, client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
+        await sendData(date, role === 'admin' ? seller[0] : user, client[0], product[0], parseFloat(value.replace(/[^\d.]/g, '')));
         message.success('Venda Cadastrada com Sucesso!');
         setDate(null);
         setSeller('');
@@ -58,12 +63,14 @@ export default function RegisterSell() {
         setProduct('');
         setValue('');
       } catch (error: any) {
-        console.error(error);
+        //console.error(error);
         if (error.response && error.response.status === 400) {
           message.error('Erro ao Cadastrar a Venda: ' + error.response.data.message);
         } else {
           message.error('Ocorreu um erro ao cadastrar a venda. Tente novamente.');
         }
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -76,7 +83,11 @@ export default function RegisterSell() {
     <NavbarWrapper>
       <Navbar />
       <div className='containerGlobal'>
+        
+        <DownloadTemplateSheet />
         <UploadExcelPage />
+        <DatabaseCleaner adminOnly />
+
         <div className='containerRegisterSell'>
           <div className="caixaVenda">
             <h1 className='titulo'>Cadastro de Venda</h1>
@@ -94,7 +105,7 @@ export default function RegisterSell() {
                 {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
               </div>
 
-              <div className='insertTextVenda'style={role === 'user'? oculto : mostrar}>
+              <div className='insertTextVenda' style={role === 'user' ? oculto : mostrar}>
                 <label>Vendedor</label>
                 <SelectSeller
                   controlState={[seller, setSeller]}
@@ -137,7 +148,7 @@ export default function RegisterSell() {
                 {errors.value && <p style={{ color: 'red' }}>{errors.value}</p>}
               </div>
 
-              <Button type='primary' className='custom-button' htmlType='submit'>Cadastrar</Button>
+              <Button type='primary' className='custom-button' htmlType='submit' loading={loading}>Cadastrar</Button>
             </form>
           </div>
         </div>

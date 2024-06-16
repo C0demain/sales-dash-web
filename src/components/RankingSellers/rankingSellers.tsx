@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Empty, Table, Button, Spin } from "antd";
+import { Empty, Table, Spin } from "antd";
 import './index.css'
 import { formatCurrency } from "util/formatters";
 import { apiInstance } from "services/api";
+import { getFirstAndLastName } from "util/getFirstAndLastName";
 
 function RankingSellers() {
     const [sellers, setSellers] = useState<any[]>([]);
@@ -11,27 +12,22 @@ function RankingSellers() {
 
     const columns = [
         {
-            title: 'Posição',
+            title: 'Nº',
             dataIndex: 'rankPosition',
             key: 'rankPosition'
         },
         {
             title: 'Vendedor',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            render: (name: string) => getFirstAndLastName(name)
         },
         {
-            title: 'Valor total de vendas',
+            title: 'Valor Vendido',
             dataIndex: 'value',
             key: 'value',
             render: (value: number) => formatCurrency(value)
         },
-        {
-            title: 'Quantidade de vendas',
-            dataIndex: 'productsSold',
-            key: 'productsSold'
-        },
-
     ];
 
     const getSellers = async () => {
@@ -55,13 +51,12 @@ function RankingSellers() {
             <Spin spinning={loading} indicator={customIndicator}>
                 {sellers.length > 0 ? (
                     <>
-                        <h2>Ranking de vendedores por valor</h2>
-                        <Button type="primary" className="custom-button-refresh" onClick={getSellers}>Recarregar Ranking</Button>
+                        <h3 style={{color: '#001529'}}>Ranking Dos Vendedores</h3>
                         <Table 
                             columns={columns} 
                             dataSource={sellers} 
                             rowKey="id" 
-                            pagination={{ defaultPageSize: 10 }}
+                            pagination={{ defaultPageSize: 5 }}
                         />
                     </>
                    ) : (

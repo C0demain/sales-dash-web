@@ -1,0 +1,53 @@
+.containerSl {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.filter-row {
+  margin-bottom: 20px;
+}
+
+.filter-col {
+  margin-bottom: 10px;
+}
+
+.fixed-height-select {
+  height: 40px; /* Altura padrão */
+  width: 100%; /* Largura total */
+}
+
+.fixed-height-date-picker {
+  height: 40px; /* Altura padrão para o DatePicker */
+  width: 100%; /* Largura total */
+}
+
+.button-filter {
+  width: 100%;
+  height: 40px;
+  background-color: #001529;
+  color: white;
+}
+
+@media (min-width: 800px) {
+  .filter-col {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .filter-col:last-child {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .filter-col {
+    flex: 100%;
+    margin-right: 0;
+  }
+}

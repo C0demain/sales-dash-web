@@ -1,4 +1,4 @@
-import { Button, Input, Spin, message } from "antd";
+import { Button, Input, message } from "antd";
 import { useState } from 'react';
 import './index.css';
 import { sendDataAdmin, sendDataSeller } from '.';
@@ -10,7 +10,7 @@ import { isValidCPF } from "util/validation";
 function RegisterUser() {
   const regex = /^(?=.*[!@#$%^&*()_+{}\]:;<>,.?~])(?=.*[0-9])(?=.*[a-zA-Z]).*$/
 
-  //Vendedor
+  //User = Vendedor
   const [nameUser, setNameUser] = useState('');
   const [emailUser, setEmailUser] = useState('');
   const [passwordUser, setPasswordUser] = useState('');
@@ -18,7 +18,7 @@ function RegisterUser() {
   const [cpfUser, setCpfUser] = useState('');
   const [loadingSeller, setLoadingSeller] = useState(false);
 
-  //Gestor
+  //Admin = Gestor
   const [nameAdmin, setNameAdmin] = useState('');
   const [emailAdmin, setEmailAdmin] = useState('');
   const [cpfAdmin, setCpfAdmin] = useState('');
@@ -166,7 +166,7 @@ function RegisterUser() {
                   <Input.Password type="password" value={confirmPasswordUser} placeholder='Confirme sua senha' required onChange={(e) => setConfirmPasswordUser(e.target.value)} />
                 </div>
 
-                <Button htmlType='submit' type='primary' className="custom-button"> Cadastrar </Button>
+                <Button htmlType='submit' type='primary' className="custom-button" loading={loadingSeller}> Cadastrar </Button>
               </form>
             </div>
 
@@ -174,7 +174,6 @@ function RegisterUser() {
             <div className="caixaAdmin">
               <h1 className='titulo'>Cadastro de Gestor</h1>
               <form className="formularioCliente" onSubmit={handleSubmitAdmin}>
-                <Spin spinning={loadingAdmin}>
                   <div className='insertText'>
                     <label>Nome:</label>
                     <input type="text" placeholder='Nome completo' value={nameAdmin} onChange={(e) => setNameAdmin(e.target.value)} required />
@@ -195,8 +194,7 @@ function RegisterUser() {
                     <input type="email" placeholder='Email' value={emailAdmin} onChange={(e) => setEmailAdmin(e.target.value)} required />
                   </div>
 
-                  <Button htmlType="submit" type='primary' className="custom-button">Cadastrar</Button>
-                </Spin>
+                  <Button htmlType="submit" type='primary' className="custom-button" loading={loadingAdmin}>Cadastrar</Button>
               </form>
             </div>
 

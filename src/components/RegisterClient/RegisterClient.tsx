@@ -14,6 +14,7 @@ function RegisterClient() {
   const [cpfCnpj, setCpfCnpj] = useState('');
   const [response, setResponse] = useState('');
   const [isCpf, setIsCpf] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const toggleIsCpf = () => {
     setIsCpf(!isCpf);
@@ -66,6 +67,7 @@ function RegisterClient() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
     if (validate()) {
       try {
@@ -81,6 +83,8 @@ function RegisterClient() {
           message.error('Ocorreu um erro ao registrar o cliente. Tente novamente.');
           console.log(error);
         }
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -123,7 +127,7 @@ function RegisterClient() {
                 <span className='cor'>CPF</span>
               </div>
 
-              <Button type='primary' htmlType="submit" className='custom-button'>Cadastrar</Button>
+              <Button type='primary' htmlType="submit" className='custom-button' loading={loading}>Cadastrar</Button>
             </form>
           </div>
         </div>
