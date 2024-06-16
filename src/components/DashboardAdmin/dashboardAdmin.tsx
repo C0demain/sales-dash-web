@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import './index.css'
+import './index.css';
 import NavbarWrapper from 'components/NavbarWrapper/NavbarWrapper';
 import BasicLineChart from 'components/LineChart/LineChart';
 import Navbar from 'components/Navbar/Navbar';
@@ -8,12 +8,13 @@ import ClientSalesChart from 'components/ClientSalesChart/ClientSalesChart';
 import { apiInstance } from 'services/api';
 import BarChart from 'components/Barchart/BarChart';
 import RankingSellers from 'components/RankingSellers/rankingSellers';
-import { Empty } from 'antd';
+import { Empty, Spin } from 'antd';
 
 const DashboardAdmin: React.FC = () => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
   const [totalQtde, setTotalQtde] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Estado para controlar o carregamento
 
   const fetchSells = useCallback(async () => {
     try {
@@ -21,8 +22,10 @@ const DashboardAdmin: React.FC = () => {
         withCredentials: false,
       });
       setTotalQtde(response.data.sell.length);
+      setIsLoading(false); // Marca o fim do carregamento apenas se os dados foram carregados com sucesso
     } catch (error) {
       console.error('Error fetching sells:', error);
+      setIsLoading(false); // Marca o fim do carregamento em caso de erro também
     }
   }, []);
 
@@ -33,7 +36,11 @@ const DashboardAdmin: React.FC = () => {
   return (
     <NavbarWrapper>
       <Navbar />
-      {totalQtde > 0 ? (
+      {isLoading ? ( // Se estiver carregando, mostra o spinner centralizado na tela
+        <div className="spinner-container">
+          <Spin size="large" />
+        </div>
+      ) : totalQtde > 0 ? ( // Se houver vendas, mostra os componentes do dashboard
         <div className="dashboard-container">
           <h1 className="dashboard-title">Dashboard Gestor</h1>
           <div className="charts-grid">
@@ -53,7 +60,14 @@ const DashboardAdmin: React.FC = () => {
           <div className="ranking-sellers">
             <RankingSellers />
           </div>
-        </div>) : (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Empty description='Não há vendas cadastradas' /></div>)}
+        </div>
+      ) : null} {/* Não renderiza nada se não houver vendas, aguardando os dados */}
+      
+      {!isLoading && totalQtde === 0 && ( // Se o carregamento terminou e não há vendas, mostra o Empty
+        <div className="empty-container">
+          <Empty description='Não há vendas cadastradas' />
+        </div>
+      )}
 
     </NavbarWrapper>
   );

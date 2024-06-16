@@ -4,6 +4,13 @@
   align-items: center;
 }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Altura total da viewport */
+}
+
 .dashboard-title {
   font-family: Arial, Helvetica, sans-serif;
   margin: 20px 0;

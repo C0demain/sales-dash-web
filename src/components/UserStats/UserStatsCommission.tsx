@@ -1,12 +1,29 @@
-import { Statistic } from "antd";
+import React, { useEffect, useState } from "react";
+import { Statistic, Spin } from "antd";
 import { formatCurrency } from "util/formatters";
+import './index.css'; 
 
 const UserStatsCommission = ({ totalComissionProp }: { totalComissionProp: number }) => {
-    const totalComission = totalComissionProp
-    return(
+    const [loading, setLoading] = useState<boolean>(true);
+    const customIndicator = <div style={{ display: 'none' }} />;
+
+    useEffect(() => {
+        if (totalComissionProp !== undefined) {
+            setLoading(false);
+        }
+    }, [totalComissionProp]);
+
+    return (
         <div className="boxStats">
-                <Statistic title='Total de Comissões' value={totalComission} formatter={(value) => formatCurrency(parseFloat(value.toString()))} />
+            {loading ? (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                    <Spin indicator={customIndicator} />
+                </div>
+            ) : (
+                <Statistic title='Total de Comissões' value={totalComissionProp} formatter={(value) => formatCurrency(parseFloat(value.toString()))} />
+            )}
         </div>
-    )
+    );
 }
-export {UserStatsCommission}
+
+export { UserStatsCommission };

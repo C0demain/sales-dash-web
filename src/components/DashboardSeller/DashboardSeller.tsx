@@ -19,7 +19,6 @@ function DashboardSeller() {
     const [totalCommission, setTotalCommission] = useState<any>();
     const [totalQtde, setTotalQtde] = useState<any>();
     const [loading, setLoading] = useState<boolean>(true);
-    const customIndicator = <div style={{ display: 'none' }} />;
 
     const getSells = useCallback(async () => {
         try {
@@ -36,14 +35,14 @@ function DashboardSeller() {
 
     useEffect(() => {
         getSells();
-    }, []);
+    }, [getSells]);
 
     return (
         <NavbarWrapper>
             <Navbar />
             {loading ? (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-                    <Spin indicator={customIndicator} />
+                <div className="spinner-container">
+                    <Spin size="large" />
                 </div>
             ) : totalQtde > 0 ? (
                 <div className="dashboard-container">
@@ -82,7 +81,7 @@ function DashboardSeller() {
                     </div>
                 </div>
             ) : (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                <div className="spinner-container">
                     <Empty description="Não há vendas cadastradas" />
                 </div>
             )}
