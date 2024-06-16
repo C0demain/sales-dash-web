@@ -9,7 +9,7 @@ import CommissionChartSeller from 'components/CommissionChartSeller/CommissionCh
 import ProductChart from 'components/ProductChart/ProductChart';
 import { UserStatsSales } from 'components/UserStats/UserStatsSales';
 import { UserStatsCommission } from 'components/UserStats/UserStatsCommission';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 
 function DashboardSeller() {
     const [startDate, setStartDate] = useState<string>('');
@@ -22,7 +22,7 @@ function DashboardSeller() {
 
     const getSells = useCallback(async () => {
         try {
-            const response = await apiInstance.get('http://localhost:8000/api/v1/sells/getall', {
+            const response = await apiInstance.get(`${apiBackend}/api/v1/sells/getall`, {
                 withCredentials: false,
             });
             setTotalQtde(response.data.sell.length);

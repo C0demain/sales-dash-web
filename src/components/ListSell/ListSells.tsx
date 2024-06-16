@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react"
 import './index.css'
 import { Button, Empty, Spin, Table, TableColumnsType } from "antd";
 import { customLocale, formatCurrency, formatDate } from "util/formatters";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 const ListSells = () => {
     const [sells, setSells] = useState<any[]>([])
@@ -47,7 +47,7 @@ const ListSells = () => {
 
     const getSells = useCallback(async () => {
         setLoading(true);
-        let url = "http://localhost:8000/api/v1/sells/getfilter/"
+        let url = `${apiBackend}/api/v1/sells/getfilter/`
 
         const response = await apiInstance.get(url, {
             withCredentials: false,

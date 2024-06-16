@@ -17,7 +17,6 @@ import ShowUsers from "components/ShowUsers/ShowUsers";
 import ShowProductsSeller from "components/ShowProductsSeller/ShowProductsSeller";
 import ShowClientsSeller from "components/ShowClientsSeller/ShowClientsSeller";
 import DashboardAdmin from "components/DashboardAdmin/dashboardAdmin";
-import SwaggerUI from "components/APIdoc/SwaggerUI";
 
 export function AppRoutes() {
   return (
@@ -28,6 +27,7 @@ export function AppRoutes() {
           {/* Rotas Públicas */}
           <Route path='/' element={<Login />}></Route>
           <Route path='/login' element={<Login />}></Route>
+          <Route path='*' element={<Login />}></Route>
 
           {/* Rotas Privadas */}
           <Route path="/dashboardSeller" element={
@@ -118,12 +118,6 @@ export function AppRoutes() {
             <ProtectedLayout>
               <UpdatePassword/>
             </ProtectedLayout> }>
-          </Route>
-
-          <Route path="/docs" element={
-            <ProtectedLayout adminOnly>
-              <SwaggerUI/>
-            </ProtectedLayout>}>
           </Route>
 
         </Routes>

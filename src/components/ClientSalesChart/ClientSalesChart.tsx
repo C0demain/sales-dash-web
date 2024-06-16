@@ -3,7 +3,7 @@ import { Empty, Select, Spin } from 'antd';
 import ClientSelector from 'components/ClientSelector/ClientSelector';
 import { useCallback, useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 import './index.css';
 import { Stack } from '@mui/material';
 
@@ -55,7 +55,7 @@ export default function ClientSalesChart({ startDateProp, endDateProp }: { start
         setLoading(true);
         if (selectedClients.length > 0) {
             const allClientsSales = await Promise.all(selectedClients.map(async (client) => {
-                let url = "http://localhost:8000/api/v1/dashboard/date/client";
+                let url = `${apiBackend}/api/v1/dashboard/date/client`;
                 const clientFilter = `clientId=${client.id}`;
                 const startDateFilter = `startDate=${startDate}`;
                 const endDateFilter = `endDate=${endDate}`;
@@ -73,7 +73,7 @@ export default function ClientSalesChart({ startDateProp, endDateProp }: { start
 
             setDataSells(clientSalesMap);
         } else {
-            let url = "http://localhost:8000/api/v1/dashboard/date/client";
+            let url = `${apiBackend}/api/v1/dashboard/date/client`;
             const startDateFilter = `startDate=${startDate}`;
             const endDateFilter = `endDate=${endDate}`;
 

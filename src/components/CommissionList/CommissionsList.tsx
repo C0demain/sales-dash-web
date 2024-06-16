@@ -4,7 +4,7 @@ import Navbar from "components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import { useAuth } from "context/AuthProvider/useAuth";
 import './index.css';
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 interface Commission {
     id: number;
@@ -23,7 +23,7 @@ const CommissionsList: React.FC = () => {
 
     const getCommissions = async () => {
         try {
-            const response = await apiInstance.get<{ commissions: Commission[] }>('http://localhost:8000/api/v1/commissions/getAll');
+            const response = await apiInstance.get<{ commissions: Commission[] }>(`${apiBackend}/api/v1/commissions/getAll`);
             setCommissions(response.data.commissions);
             setLoading(false);
             setDataLoaded(true);
@@ -55,7 +55,7 @@ const CommissionsList: React.FC = () => {
             }
 
             const updatedCommission = { ...currentCommission, ...values, percentage: values.percentage / 100 };
-            const response = await apiInstance.put(`http://localhost:8000/api/v1/commissions/${currentCommission.id}`, updatedCommission);
+            const response = await apiInstance.put(`${apiBackend}/api/v1/commissions/${currentCommission.id}`, updatedCommission);
 
             if (response.status === 200) {
                 setIsModalOpen(false);

@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import SelectClient from "components/SelectClient/SelectClient";
 import SelectProduct from "components/SelectProduct/SelectProduct";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 dayjs.extend(customParseFormat);
 
@@ -83,7 +83,7 @@ function ShowSalesAdmin() {
 
   const getSells = useCallback(async () => {
     setLoading(true);
-    let url = "http://localhost:8000/api/v1/sells/getfilter/";
+    let url = `${apiBackend}/api/v1/sells/getfilter/`;
     const userFilter = userSelect ? `userId=${userSelect}` : "";
     const productFilter = productSelect ? `productId=${productSelect}` : "";
     const clientFilter = clientSelect ? `clientId=${clientSelect}` : "";
@@ -134,7 +134,7 @@ function ShowSalesAdmin() {
         value: values.value
       };
 
-      const response = await apiInstance.put(`http://localhost:8000/api/v1/sells/update/${currentSale.id}`, updatedSale);
+      const response = await apiInstance.put(`${apiBackend}/api/v1/sells/update/${currentSale.id}`, updatedSale);
       if (response.status === 200) {
         setVisible(false);
         message.success('Venda atualizada com sucesso!');

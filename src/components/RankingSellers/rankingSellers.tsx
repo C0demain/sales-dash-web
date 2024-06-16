@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Empty, Table, Spin } from "antd";
 import './index.css'
 import { formatCurrency } from "util/formatters";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 import { getFirstAndLastName } from "util/getFirstAndLastName";
 
 function RankingSellers() {
@@ -32,7 +32,7 @@ function RankingSellers() {
 
     const getSellers = async () => {
         setLoading(true);
-        const response = await apiInstance.get(`http://localhost:8000/api/v1/dashboard/ranking`, {
+        const response = await apiInstance.get(`${apiBackend}/api/v1/dashboard/ranking`, {
             withCredentials: false,
         });
 

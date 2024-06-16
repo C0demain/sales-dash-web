@@ -1,6 +1,6 @@
 import { Cascader } from "antd";
 import { useState, useEffect } from "react";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 type propsType = {
     controlState: any,
@@ -14,7 +14,7 @@ const SelectSeller = (props: propsType) =>{
     const { dataKey, className } = props
 
     const getSellers = async () => {
-        const response = await apiInstance.get("http://localhost:8000/api/v1/auth/users/sellers", {
+        const response = await apiInstance.get(`${apiBackend}/api/v1/auth/users/sellers`, {
             withCredentials: false,
         });
 

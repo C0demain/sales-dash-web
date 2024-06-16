@@ -1,7 +1,7 @@
 import { Empty, InputNumber, Select, Spin, Typography } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 
 const { Text } = Typography;
 
@@ -18,7 +18,7 @@ export default function BarChart() {
     setLoading(true);
     setDataLoaded(false);
     try {
-      const url = 'http://localhost:8000/api/v1/dashboard/date/commission';
+      const url = `${apiBackend}/api/v1/dashboard/date/commission`;
       const startDate = `${selectedYear}-01-01`;
       const endDate = `${selectedYear}-12-31`;
       const response = await apiInstance.get(url, { params: { startDate, endDate } });

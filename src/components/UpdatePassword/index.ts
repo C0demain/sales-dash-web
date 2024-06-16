@@ -1,4 +1,4 @@
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 export async function updatePassword(newPassword: string) {
     // Função para validar a senha
@@ -22,7 +22,7 @@ export async function updatePassword(newPassword: string) {
         return { success: false, message: "ID ou email do usuário não encontrado" };
     }
 
-    const urlUpdatePassword = `http://localhost:8000/api/v1/auth/user/${userId}`;
+    const urlUpdatePassword = `${apiBackend}/api/v1/auth/user/${userId}`;
 
     const passwordData = {
         'email': email,

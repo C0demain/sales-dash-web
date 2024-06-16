@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import './index.css';
 import { Button, Empty, Spin, Table, TableColumnsType } from "antd";
 import { customLocale, formatCurrency, formatDate } from "util/formatters";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 interface ListSellsSellerProps {
     onStartDateChange: (date: string) => void;
@@ -45,7 +45,7 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
     ];
 
     const getSells = useCallback(async () => {
-        let url = "http://localhost:8000/api/v1/sells/getfilter/";
+        let url = `${apiBackend}/api/v1/sells/getfilter/`;
         const userFilter = userSelect !== null ? 'userId=' + userSelect : "";
 
         let queryParams = [userFilter];

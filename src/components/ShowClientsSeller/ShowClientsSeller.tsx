@@ -3,7 +3,7 @@ import { Empty, Table, Button, message, Spin } from "antd";
 import NavbarWrapper from "components/NavbarWrapper/NavbarWrapper";
 import Navbar from "components/Navbar/Navbar";
 import { customLocale } from "util/formatters";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 import { useAuth } from "context/AuthProvider/useAuth";
 import './index.css';
 
@@ -38,7 +38,7 @@ function ShowClientsSeller() {
   const getClients = async () => {
     setLoading(true);
     try {
-      const response = await apiInstance.get<{ user: User }>(`http://localhost:8000/api/v1/auth/user/clients/${userId}`);
+      const response = await apiInstance.get<{ user: User }>(`${apiBackend}/api/v1/auth/user/clients/${userId}`);
       const clients = response.data.user.sells.map(sell => sell.client);
       setClients(clients || []);
     } catch (error) {

@@ -87,34 +87,14 @@ const Navbar: React.FC = () => {
     getItem('Cadastro de Clientes', '2-3', <UserAddOutlined />, () => navigate('/clients/register')),
     getItem('Cadastro de Produtos', '2-4', <ShoppingOutlined />, () => navigate('/products/register')),
     getItem('Atualização de Senha', '3', <KeyOutlined />, () => navigate('/users/update')),
-    getItem(isAdmin() ? 'Exibe Clientes' : 'Seus Clientes', '6', <UnorderedListOutlined />, () => navigate(isAdmin() ? '/clients' : '/clientsSeller')),
-    getItem(isAdmin() ? 'Exibe Produtos' : 'Seus Produtos', '7', <ShoppingOutlined />, () => navigate(isAdmin() ? '/products' : '/productsSeller')),
-    getItem(isAdmin() ? 'Exibe Vendas' : 'Suas Vendas', '8', <FileTextOutlined />, () => navigate(isAdmin() ? '/salesAdmin' : '/salesSeller')),
+    getItem(isAdmin() ? 'Cadastro de Usuários' : 'Seus Clientes', '2-2', <TeamOutlined />, () => navigate(isAdmin() ? '/users/register' : '/clientsSeller')),
+    getItem(isAdmin() ? 'Exibe Usuários' : 'Seus Produtos', '5', <TeamOutlined />, () => navigate(isAdmin() ? '/users' : '/productsSeller')),
+    getItem(isAdmin() ? 'Exibe Clientes' : 'Suas Vendas', '6', <UnorderedListOutlined />, () => navigate(isAdmin() ? '/clients' : '/salesSeller')),
+    getItem(isAdmin() ? 'Exibe Produtos' : 'Comissões', '7', <ShoppingOutlined />, () => navigate(isAdmin() ? '/products' : '/commissions')),
+    getItem(isAdmin() ? 'Exibe Vendas' : 'Sair da conta', '8', <FileTextOutlined />, () => navigate(isAdmin() ? '/salesAdmin' : '/login')),
     getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
     getItem('Sair da conta', '10', <LogoutOutlined />, handleLogout),
   ];
-
-  const adminItems: MenuItem[] = [
-    getItem('Cadastro de Usuários', '2-2', <TeamOutlined />, () => navigate('/users/register')),
-    getItem('Exibe Usuários', '5', <TeamOutlined />, () => navigate('/users')),
-    getItem('Documentação', '10', <DollarOutlined />, () => navigate('/docs')),
-  ];
-
-  const items: MenuItem[] = isAdmin() ? [
-    getItem('Dashboard', '1', <PieChartOutlined />, () => navigate('/dashboardAdmin')),
-    getItem('Cadastro de Vendas', '2-1', <FileTextOutlined />, () => navigate('/sells/register')),
-    getItem('Cadastro de Usuários', '2-2', <TeamOutlined />, () => navigate('/users/register')),
-    getItem('Cadastro de Clientes', '2-3', <UserAddOutlined />, () => navigate('/clients/register')),
-    getItem('Cadastro de Produtos', '2-4', <ShoppingOutlined />, () => navigate('/products/register')),
-    getItem('Atualização de Senha', '3', <KeyOutlined />, () => navigate('/users/update')),
-    getItem('Exibe Usuários', '5', <TeamOutlined />, () => navigate('/users')),
-    getItem('Exibe Clientes', '6', <UnorderedListOutlined />, () => navigate('/clients')),
-    getItem('Exibe Produtos', '7', <ShoppingOutlined />, () => navigate('/products')),
-    getItem('Exibe Vendas', '8', <FileTextOutlined />, () => navigate('/salesAdmin')),
-    getItem('Comissões', '9', <DollarOutlined />, () => navigate('/commissions')),
-    getItem('Documentação', '10', <DollarOutlined />, () => navigate('/docs')),
-    getItem('Sair da conta', '11', <LogoutOutlined />, handleLogout),
-  ] : commonItems;
 
   const getSelectedKey = (pathname: string): string => {
     switch (pathname) {
@@ -144,8 +124,6 @@ const Navbar: React.FC = () => {
         return '8';
       case '/commissions':
         return '9';
-      case '/docs':
-        return '10';
       default:
         return '1';
     }
@@ -175,7 +153,7 @@ const Navbar: React.FC = () => {
           theme="dark"
           selectedKeys={[selectedKey]}
           mode="inline"
-          items={items}
+          items={commonItems}
         />
       </Sider>
       <Layout style={{ marginLeft: collapsed ? 90 : 220, transition: 'margin-left 0.2s' }}>

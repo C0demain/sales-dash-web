@@ -3,7 +3,7 @@ import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
 import Switch from '@mui/material/Switch';
 import { Empty, Select, Spin } from 'antd';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 import { useAuth } from 'context/AuthProvider/useAuth';
 
 interface LineChartSellerProps {
@@ -76,7 +76,7 @@ export default function LineChartSeller({ onStartDateChange, onEndDateChange }: 
 
   const getSellsPeriod = useCallback(async () => {
     setDates();
-    let url = "http://localhost:8000/api/v1/dashboard/date";
+    let url = `${apiBackend}/api/v1/dashboard/date`;
     const startDateFilter = startDate ? `startDate=${startDate}` : "";
     const endDateFilter = endDate ? `endDate=${endDate}` : "";
     const userFilter = user ? `userId=${user}` : "";

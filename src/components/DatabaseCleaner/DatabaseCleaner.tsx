@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Modal, message } from 'antd';
 import './index.css';
-import { apiInstance } from 'services/api';
-import { useAuth } from 'context/AuthProvider/useAuth';
+import { apiBackend, apiInstance } from 'services/api';
+import { AuthContext } from 'context/AuthProvider';;
 
 interface DatabaseCleanerProps {
-  adminOnly?: boolean; 
+  adminOnly?: boolean;
 }
 
 const DatabaseCleaner: React.FC<DatabaseCleanerProps> = ({ adminOnly }) => {
-  const { isAdmin } = useAuth(); // Usar o hook useAuth para verificar se o usuário é admin
+  const { isAdmin, id, name } = useContext(AuthContext); // Adicionei id e name aqui
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false); 
+  const [open, setOpen] = useState(false);
 
   const handleCleanDatabase = async (e: any) => {
     e.preventDefault();
 
     setLoading(true);
-    setOpen(false); 
+    setOpen(false);
 
     try {
-      const response = await apiInstance.post('http://localhost:8000/api/v1/dashboard/clean-database');
+      const response = await apiInstance.post(`${apiBackend}/api/v1/dashboard/clean-database`);
       message.success(response.data.message);
     } catch (error) {
       message.error('Falha ao limpar o banco de dados.');
@@ -37,8 +37,8 @@ const DatabaseCleaner: React.FC<DatabaseCleanerProps> = ({ adminOnly }) => {
     setOpen(false);
   };
 
-  // Verificar se o usuário é admin antes de renderizar o componente
-  if (adminOnly && !isAdmin()) {
+  // Verificar se o usuário é admin e se o userId é 1 ou o userName é "gestor" antes de renderizar o componente
+  if ((adminOnly && !isAdmin()) || (id !== 1 && name !== 'gestor')) {
     return null;
   }
 
@@ -52,7 +52,7 @@ const DatabaseCleaner: React.FC<DatabaseCleanerProps> = ({ adminOnly }) => {
       </Button>
       <Modal
         title="Confirmação"
-        open={open} 
+        open={open}
         onOk={handleCleanDatabase}
         onCancel={handleCancel}
         confirmLoading={loading}

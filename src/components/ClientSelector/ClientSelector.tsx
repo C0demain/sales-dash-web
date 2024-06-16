@@ -2,7 +2,7 @@ import { Autocomplete, Stack, TextField, Typography } from '@mui/material';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { useEffect, useState } from 'react';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 
 interface Client {
   id: string;
@@ -21,7 +21,7 @@ export default function ClientSelector({ sendDataToParent }: ClientSelectorProps
 
   const getClients = async () => {
     try {
-      const response = await apiInstance.get<{ client: Client[] }>('http://localhost:8000/api/v1/clients/getclients');
+      const response = await apiInstance.get<{ client: Client[] }>(`${apiBackend}/api/v1/clients/getclients`);
       if (response.data && response.data.client) {
         setClients(response.data.client);
       } else {

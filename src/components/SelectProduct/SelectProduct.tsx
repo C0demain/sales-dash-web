@@ -1,6 +1,6 @@
 import { Cascader } from "antd";
 import { useState, useEffect, useCallback } from "react";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 type propsType = {
     controlState: any[],
@@ -14,7 +14,7 @@ const SelectProduct = (props: propsType) =>{
     const { dataKey } = props
 
     const getProducts = useCallback( async () => {
-        const response = await apiInstance.get("http://localhost:8000/api/v1/products/getAll", {
+        const response = await apiInstance.get(`${apiBackend}/api/v1/products/getAll`, {
             withCredentials: false,
         });
         const options = []

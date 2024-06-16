@@ -13,7 +13,6 @@ import InputMask from 'react-input-mask';
 import { useAuth } from 'context/AuthProvider/useAuth';
 import DownloadTemplateSheet from 'components/DownloadTemplateSheet/DownloadTemplateSheet';
 import DatabaseCleaner from 'components/DatabaseCleaner/DatabaseCleaner';
-import { ProtectedLayout } from 'components/ProtectedLayout';
 
 export default function RegisterSell() {
   const [seller, setSeller] = useState<any>();
@@ -84,7 +83,7 @@ export default function RegisterSell() {
       <Navbar />
       <div className='containerGlobal'>
         
-        <DownloadTemplateSheet />
+        <DownloadTemplateSheet /> 
         <UploadExcelPage />
         <DatabaseCleaner adminOnly />
 

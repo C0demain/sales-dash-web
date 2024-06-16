@@ -1,8 +1,10 @@
 import axios from "axios";
 import { getUserLocalStorage } from "context/util";
 
+export const apiBackend = "https://sales-dash-backend.onrender.com";
+
 export const apiLogin = axios.create({
-  baseURL: "http://localhost:8000/api/v1/auth",
+  baseURL: `${apiBackend}/api/v1/auth`,
 });
 
 apiLogin.interceptors.request.use(
@@ -23,7 +25,9 @@ apiLogin.interceptors.request.use(
   }
 );
 
-export const apiInstance = axios.create();
+export const apiInstance = axios.create({
+  baseURL: apiBackend,
+});
 
 apiInstance.interceptors.request.use(
   (config) => {
@@ -33,7 +37,7 @@ apiInstance.interceptors.request.use(
       if (!config.headers) {
         config.headers = {};
       }
-      config.headers.Authorization = `Bearer ${user.token}`; 
+      config.headers.Authorization = `Bearer ${user.token}`;
     }
 
     return config;

@@ -7,7 +7,7 @@ import SelectProduct from "components/SelectProduct/SelectProduct";
 import SelectClient from "components/SelectClient/SelectClient";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 import './index.css';
 
 dayjs.extend(customParseFormat);
@@ -67,7 +67,7 @@ function ShowSalesSeller() {
     }
 
     setLoading(true);
-    let url = "http://localhost:8000/api/v1/sells/getfilter/";
+    let url = `${apiBackend}/api/v1/sells/getfilter/`;
     const userFilter = userSelect ? `userId=${userSelect}` : "";
     const productFilter = productSelect ? `productId=${productSelect}` : "";
     const clientFilter = clientSelect ? `clientId=${clientSelect}` : "";

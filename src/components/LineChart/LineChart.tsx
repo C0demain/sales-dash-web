@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { formatDateToBack } from 'util/formatters';
 import { Chart } from "react-google-charts";
-import './index.css'
+import './index.css';
 import Switch from '@mui/material/Switch';
 import { Empty, Select, Spin } from 'antd';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 
 interface LineChartSellerProps {
   onStartDateChange: (date: string) => void;
@@ -12,35 +12,25 @@ interface LineChartSellerProps {
 }
 
 export default function BasicLineChart({ onStartDateChange, onEndDateChange }: LineChartSellerProps) {
-  const [dataSells, setDataSells] = useState<any[]>([])
-  const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
-  const [startDate, setStartDate] = useState<any>()
-  const [endDate, setEndDate] = useState<any>()
-  const [checked, setChecked] = useState(true)
-  const [title, setTitle] = useState<any>('Valor vendido')
-  const [monthDiff, setMonthDiff] = useState<any>(5)
-  const today = new Date()
+  const [dataSells, setDataSells] = useState<any[]>([]);
+  const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]]);
+  const [startDate, setStartDate] = useState<string>();
+  const [endDate, setEndDate] = useState<string>();
+  const [checked, setChecked] = useState(true);
+  const [title, setTitle] = useState<string>('Valor vendido');
+  const [monthDiff, setMonthDiff] = useState<number>(5);
+  const today = new Date();
   const [loading, setLoading] = useState(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const customIndicator = <div style={{ display: 'none' }} />;
-  let totalQtde = 0
 
   const periodOptions = [
-    {
-      label: 'Últimos 12 meses',
-      value: 11
-    },
-    {
-      label: 'Últimos 6 meses',
-      value: 5
-    },
-    {
-      label: 'Últimos 3 meses',
-      value: 2
-    },
-  ]
+    { label: 'Últimos 12 meses', value: 11 },
+    { label: 'Últimos 6 meses', value: 5 },
+    { label: 'Últimos 3 meses', value: 2 },
+  ];
 
-  const [options] = useState<any>({
+  const options = {
     colors: ["#8e0152", "#276419"],
     pointSize: 10,
     animation: {
@@ -54,96 +44,97 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
       { type: 'line', color: '#001529' },
     ],
     legend: { position: "none" },
-  })
+  };
 
-  const setDates = useCallback(async () => {
+  const setDates = useCallback(() => {
     const year = today.getFullYear();
     const month = today.getMonth();
-
-    // Calcular o mês do 5º mês passado
     const targetMonth = month - monthDiff;
-
-    // Verificar se precisa ajustar o ano
     let targetYear = year;
+
     if (targetMonth < 0) {
       targetYear -= 1;
     }
 
-    // Obter o mês ajustado dentro do intervalo [0, 11]
     const adjustedMonth = (targetMonth + 12) % 12;
+    const startDate = new Date(targetYear, adjustedMonth, 1);
 
-    // Retornar o primeiro dia do mês desejado
-    let startDate = new Date(targetYear, adjustedMonth, 1);
+    const formattedStartDate = formatDateToBack(startDate);
+    const formattedEndDate = formatDateToBack(today);
 
-    setStartDate(formatDateToBack(startDate))
-    onStartDateChange(formatDateToBack(startDate))
-    setEndDate(formatDateToBack(today))
-    onEndDateChange(formatDateToBack(today))
-  }, [today])
+    setStartDate(formattedStartDate);
+    setEndDate(formattedEndDate);
+    onStartDateChange(formattedStartDate);
+    onEndDateChange(formattedEndDate);
+  }, [today, monthDiff, onStartDateChange, onEndDateChange]);
 
   const getSellsPeriod = useCallback(async () => {
-    setDates()
-    let url = "http://localhost:8000/api/v1/dashboard/date"
-    const startDateFilter = startDate ? 'startDate=' + startDate : ""
-    const endDateFilter = endDate ? 'endDate=' + endDate : ""
+    if (!startDate || !endDate) return;
 
-    let queryParams = [startDateFilter, endDateFilter]
-    const query = queryParams.filter(e => e !== '').join('&')
-    url += query !== "&" ? "?" + query : ""
+    setLoading(true);
 
-    const response = await apiInstance.get(url, {
-      withCredentials: false,
-    });
-    setDataSells(response.data.stats)
-    setLoading(false);
-    setDataLoaded(true);  // Set dataLoaded to true once the data is successfully loaded
-  }, [startDate, endDate, monthDiff])
+    let url = `${apiBackend}/api/v1/dashboard/date`;
+    const startDateFilter = startDate ? `startDate=${startDate}` : "";
+    const endDateFilter = endDate ? `endDate=${endDate}` : "";
 
-  const setDataStats = async (event: React.ChangeEvent<HTMLInputElement>) => {
-
-    // Completa com os meses restantes
-
-    if (data[0][1] === "Valor vendido") {
-      let chartData: Array<any> = [["Mês", "Comissão de venda", "Comissão de venda"]]
-      dataSells.forEach(stat => {
-        chartData.push([stat.month, stat.totalCommissionValue, stat.totalCommissionValue])
-      })
-      setData(chartData)
-      setTitle('Comissão de venda mensal')
-    } else {
-      let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
-      dataSells.forEach(stat => {
-        chartData.push([stat.month, stat.totalValue, stat.totalValue])
-      })
-      setData(chartData)
-      setTitle('Valor vendido mensalmente')
+    const queryParams = [startDateFilter, endDateFilter].filter(Boolean).join('&');
+    if (queryParams) {
+      url += `?${queryParams}`;
     }
-    setChecked(event.target.checked);
-  }
 
-  useEffect(() => {
-    getSellsPeriod()
-  }, [getSellsPeriod])
+    try {
+      const response = await apiInstance.get(url, { withCredentials: false });
+      setDataSells(response.data.stats);
+      setDataLoaded(true);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [startDate, endDate]);
 
-  useEffect(() => {
+  const updateChartData = useCallback(() => {
     if (dataSells.length > 0) {
-      let chartData: Array<any> = [["Mês", "Valor vendido", "Valor vendido"]]
-      dataSells.forEach(stat => {
-        totalQtde = + stat.totalValue
-        chartData.push([stat.month, stat.totalValue, stat.totalValue])
-      })
-      setData(chartData)
-    }
-  }, [getSellsPeriod, dataSells])
+      const chartData = checked
+        ? [["Mês", "Valor vendido", "Valor vendido"]]
+        : [["Mês", "Comissão de venda", "Comissão de venda"]];
 
-  const originalWarn = console.warn;
+      dataSells.forEach(stat => {
+        if (checked) {
+          chartData.push([stat.month, stat.totalValue, stat.totalValue]);
+        } else {
+          chartData.push([stat.month, stat.totalCommissionValue, stat.totalCommissionValue]);
+        }
+      });
+
+      setData(chartData);
+    }
+  }, [dataSells, checked]);
+
+  useEffect(() => {
+    setDates();
+  }, [monthDiff, setDates]);
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      getSellsPeriod();
+    }
+  }, [startDate, endDate, getSellsPeriod]);
+
+  useEffect(() => {
+    updateChartData();
+  }, [dataSells, checked, updateChartData]);
+
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+    updateChartData();
+    setTitle(event.target.checked ? 'Valor vendido mensalmente' : 'Comissão de venda mensal');
+  };
 
   console.warn = function (...args) {
     const arg = args && args[0];
-
     if (arg && arg.includes('Attempting to load version \'51\' of Google Charts')) return;
-
-    originalWarn(...args);
+    console.warn(...args);
   };
 
   return (
@@ -156,11 +147,11 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
             ) : (
               <>
                 <div className='titleChart'>
-                  <Switch checked={checked} onChange={setDataStats} />
+                  <Switch checked={checked} onChange={handleSwitchChange} />
                   <h3>{title}</h3>
                   <Select
                     options={periodOptions}
-                    onSelect={(value) => setMonthDiff(value)}
+                    onChange={(value) => setMonthDiff(value)}
                     defaultValue={5}
                   />
                 </div>
@@ -177,5 +168,5 @@ export default function BasicLineChart({ onStartDateChange, onEndDateChange }: L
         </Spin>
       </div>
     </div>
-  );  
+  );
 }

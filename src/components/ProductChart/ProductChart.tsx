@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 import { Empty, Spin } from 'antd';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 import Switch from '@mui/material/Switch';
 import ProductSelector from 'components/ProductSelector/ProductSelector';
 import { Stack } from '@mui/material';
@@ -51,7 +51,7 @@ export default function ProductChart({ startDateProp, endDateProp }: { startDate
     setLoading(true);
     if (selectedProducts.length > 0) {
       const allProductSales = await Promise.all(selectedProducts.map(async (product) => {
-        let url = "http://localhost:8000/api/v1/dashboard/date/product";
+        let url = `${apiBackend}/api/v1/dashboard/date/product`;
         const productFilter = `productId=${product.id}`;
         const startDateFilter = `startDate=${startDate}`;
         const endDateFilter = `endDate=${endDate}`;
@@ -69,7 +69,7 @@ export default function ProductChart({ startDateProp, endDateProp }: { startDate
 
       setDataSells(productSalesMap);
     } else {
-      let url = "http://localhost:8000/api/v1/dashboard/date/client";
+      let url = `${apiBackend}/api/v1/dashboard/date/client`;
       const startDateFilter = `startDate=${startDate}`;
       const endDateFilter = `endDate=${endDate}`;
 

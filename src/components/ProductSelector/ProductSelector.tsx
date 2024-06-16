@@ -2,7 +2,7 @@ import { Autocomplete, Stack, TextField, Typography } from '@mui/material';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { useEffect, useState } from 'react';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 
 interface Product {
   id: string;
@@ -19,7 +19,7 @@ export default function ProductSelector({ sendDataToParent }: ProductSelectorPro
 
   const getProduct = async () => {
     try {
-      const response = await apiInstance.get<{ products: Product[] }>('http://localhost:8000/api/v1/products/getAll');
+      const response = await apiInstance.get<{ products: Product[] }>(`${apiBackend}/api/v1/products/getAll`);
       if (response.data && response.data.products) {
         setProducts(response.data.products);
       } else {

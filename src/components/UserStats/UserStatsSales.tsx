@@ -3,7 +3,7 @@ import { Statistic, Spin } from "antd";
 import { useAuth } from "context/AuthProvider/useAuth";
 import { formatCurrency } from "util/formatters";
 import './index.css';
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 const UserStatsSales = ({ startDateProp, endDateProp }: { startDateProp: string, endDateProp: string }) => {
     const [totalSells, setTotalSells] = useState<number | undefined>(undefined);
@@ -17,7 +17,7 @@ const UserStatsSales = ({ startDateProp, endDateProp }: { startDateProp: string,
 
     const getUserStats = useCallback(async () => {
         setLoading(true); // Start loading
-        const url = `http://localhost:8000/api/v1/dashboard/user/`;
+        const url = `${apiBackend}/api/v1/dashboard/user/`;
         const userFilter = sellerId ? `id=${sellerId}` : '';
         const startDateFilter = startDate ? `startDate=${startDate}` : '';
         const endDateFilter = endDate ? `endDate=${endDate}` : '';

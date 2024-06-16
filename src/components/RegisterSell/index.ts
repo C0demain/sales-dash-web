@@ -1,8 +1,8 @@
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 
 export async function sendData(date: string, seller: string, client: string, product: number, value: number) {
 
-  const url = 'http://localhost:8000/api/v1/sells/register';
+  const url = `${apiBackend}/api/v1/sells/register`;
 
   const userData = {
     'date': date,

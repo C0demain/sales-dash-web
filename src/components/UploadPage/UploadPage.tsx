@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import * as XLSX from "xlsx";
 import './index.css';
 import { Button, message, Spin } from "antd";
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 import { AiOutlineUpload } from 'react-icons/ai'; 
 
 const UploadExcelPage: React.FC = () => {
@@ -87,7 +87,7 @@ const UploadExcelPage: React.FC = () => {
 
   const sendDataToBackend = async (data: Record<string, any>[]) => {
     try {
-      const response = await apiInstance.post('http://localhost:8000/api/v1/sells/table', { data });
+      const response = await apiInstance.post(`${apiBackend}/api/v1/sells/table`, { data });
 
       if (response.status !== 200) {
         throw new Error('Erro ao enviar os dados para o backend');

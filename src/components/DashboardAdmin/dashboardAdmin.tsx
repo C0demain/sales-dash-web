@@ -5,7 +5,7 @@ import BasicLineChart from 'components/LineChart/LineChart';
 import Navbar from 'components/Navbar/Navbar';
 import ProductChart from 'components/ProductChart/ProductChart';
 import ClientSalesChart from 'components/ClientSalesChart/ClientSalesChart';
-import { apiInstance } from 'services/api';
+import { apiBackend, apiInstance } from 'services/api';
 import BarChart from 'components/Barchart/BarChart';
 import RankingSellers from 'components/RankingSellers/rankingSellers';
 import { Empty, Spin } from 'antd';
@@ -18,7 +18,7 @@ const DashboardAdmin: React.FC = () => {
 
   const fetchSells = useCallback(async () => {
     try {
-      const response = await apiInstance.get('http://localhost:8000/api/v1/sells/getall', {
+      const response = await apiInstance.get(`${apiBackend}/api/v1/sells/getall`, {
         withCredentials: false,
       });
       setTotalQtde(response.data.sell.length);

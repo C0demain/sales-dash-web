@@ -2,7 +2,7 @@ import { InputNumber, Select, Spin, Empty } from "antd";
 import { useAuth } from "context/AuthProvider/useAuth";
 import { useState, useEffect } from "react";
 import { Chart } from 'react-google-charts';
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 interface CommissionChartSellerProps {
   onTotalCommissionChange: (date: number) => void;
@@ -22,7 +22,7 @@ export default function CommissionChartSeller({ onTotalCommissionChange }: Commi
     setLoading(true);
     setDataLoaded(false);
     try {
-      const url = 'http://localhost:8000/api/v1/dashboard/date/commission';
+      const url = `${apiBackend}/api/v1/dashboard/date/commission`;
       const userId = user ? `${user}` : '';
       const startDate = `${selectedYear}-01-01`;
       const endDate = `${selectedYear}-12-31`;

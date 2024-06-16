@@ -1,7 +1,7 @@
-import { apiInstance } from "services/api";
+import { apiBackend, apiInstance } from "services/api";
 
 export async function sendDataSeller(userName: string, email: string, cpf: string, senha: string) {
-  const urlSeller = 'http://localhost:8000/api/v1/auth/registerUser';
+  const urlSeller = `${apiBackend}/api/v1/auth/registerUser`;
 
   const userData = {
     'name': userName,
@@ -17,7 +17,7 @@ export async function sendDataSeller(userName: string, email: string, cpf: strin
 }
 
 export async function sendDataAdmin(name: string, email: string, cpf: string) {
-  const urlAdmin = 'http://localhost:8000/api/v1/auth/registerAdmin';
+  const urlAdmin = `${apiBackend}/api/v1/auth/registerAdmin`;
 
   const userData = {
     'name': name,
