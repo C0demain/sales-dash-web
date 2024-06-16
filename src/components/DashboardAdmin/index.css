@@ -38,3 +38,13 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: white;
 }
+@media (max-width: 600px) {
+  .charts-grid {
+    grid-template-columns: 1fr; /* Muda para uma coluna em telas menores */
+  }
+
+  .chart-box {
+    min-height: 50px;
+ /* Reduz a altura mínima dos gráficos em telas menores */
+  }
+}
