@@ -37,6 +37,19 @@
   min-height: 300px; /* Define uma altura mínima para os gráficos */
 }
 
+.filter-box{
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  width: 100%; /* Adicionado para fazer o ranking ocupar a largura total */
+  max-width: 1200px; /* Adicionado para limitar a largura máxima */
+  margin: 3vh;
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
+
 .ranking-sellers {
   margin-top: 20px;
   width: 100%; /* Adicionado para fazer o ranking ocupar a largura total */

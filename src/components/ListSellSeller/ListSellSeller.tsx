@@ -13,6 +13,7 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
     const [sells, setSells] = useState<any[]>([]);
     const [userSelect, setUserSelect] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const customIndicator = <div style={{ display: 'none' }} />;
 
     const columns: TableColumnsType = [
         {
@@ -74,7 +75,7 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
 
     return (
         <div className="listSells">
-            <Spin spinning={loading}>
+            <Spin spinning={loading} indicator={customIndicator}>
                 {sells.length > 0 ?
                     <>
                         <h2>Últimas vendas</h2>
@@ -88,7 +89,9 @@ const ListSellsSeller = ({ onStartDateChange, onEndDateChange }: ListSellsSeller
                             locale={customLocale}
                         />
                     </>
-                    : <Empty description={"Nenhuma venda encontrada"} />}
+                   : (
+                    !loading && <Empty description="Nenhuma venda encontrada" />
+                )}
             </Spin>
         </div>
     )

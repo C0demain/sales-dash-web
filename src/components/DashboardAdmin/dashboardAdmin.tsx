@@ -9,12 +9,15 @@ import { apiBackend, apiInstance } from 'services/api';
 import BarChart from 'components/Barchart/BarChart';
 import RankingSellers from 'components/RankingSellers/rankingSellers';
 import { Empty, Spin } from 'antd';
+import FilterDash from 'components/FilterDash/FilterDash';
 
 const DashboardAdmin: React.FC = () => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
   const [totalQtde, setTotalQtde] = useState<any>();
+  const [checked, setChecked] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(true); // Estado para controlar o carregamento
+
 
   const fetchSells = useCallback(async () => {
     try {
@@ -43,18 +46,36 @@ const DashboardAdmin: React.FC = () => {
       ) : totalQtde > 0 ? ( // Se houver vendas, mostra os componentes do dashboard
         <div className="dashboard-container">
           <h1 className="dashboard-title">Dashboard Gestor</h1>
+          <div className='filter-box'>
+            <FilterDash
+              onEndDateChange={setEndDate}
+              onStartDateChange={setStartDate}
+              onCheckedChange={setChecked}
+            />
+          </div>
           <div className="charts-grid">
             <div className="chart-box">
-              <BasicLineChart onEndDateChange={setEndDate} onStartDateChange={setStartDate} />
+            <BasicLineChart
+              endDateProp={endDate}
+              startDateProp={startDate}
+              checkedProp={checked}  
+            />
             </div>
             <div className="chart-box">
               <BarChart />
             </div>
             <div className="chart-box">
-              <ProductChart startDateProp={startDate} endDateProp={endDate} />
+              <ProductChart 
+                checkedProp={checked} 
+                startDateProp={startDate} 
+                endDateProp={endDate} 
+              />
             </div>
             <div className="chart-box">
-              <ClientSalesChart startDateProp={startDate} endDateProp={endDate} />
+              <ClientSalesChart 
+                startDateProp={startDate} 
+                endDateProp={endDate} 
+              />
             </div>
           </div>
           <div className="ranking-sellers">
@@ -62,7 +83,7 @@ const DashboardAdmin: React.FC = () => {
           </div>
         </div>
       ) : null} {/* Não renderiza nada se não houver vendas, aguardando os dados */}
-      
+
       {!isLoading && totalQtde === 0 && ( // Se o carregamento terminou e não há vendas, mostra o Empty
         <div className="empty-container">
           <Empty description='Não há vendas cadastradas' />
