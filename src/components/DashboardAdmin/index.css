@@ -37,11 +37,12 @@
 
 .filter-box{
   background-color: white;
-  padding: 1vh;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 86%;
-  margin: 1vh;
+  margin-top: 10px;
+  width: 100%; /* Adicionado para fazer o ranking ocupar a largura total */
+  max-width: 1200px; /* Adicionado para limitar a largura máxima */
+  margin: 3vh;
   display: flex;
   justify-content: center; /* Centraliza horizontalmente */
   align-items: center; /* Centraliza verticalmente */
@@ -54,6 +55,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: white;
+  margin-bottom: 20px;
 }
 @media (max-width: 600px) {
   .charts-grid {
