@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthProvider/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 
 interface Props {
     children: JSX.Element;
@@ -39,8 +37,7 @@ export const ProtectedLayout = ({ children, adminOnly, sellerOnly }: Props) => {
     }, [authLoading, auth, navigate, adminOnly, sellerOnly]);
 
     if (authLoading) {
-        const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-        return <Spin indicator={antIcon} />;
+        return null; // Return nothing while loading
     }
 
     // Ensure that the children are only rendered if the auth checks pass

@@ -15,9 +15,10 @@ const DashboardAdmin: React.FC = () => {
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
   const [totalQtde, setTotalQtde] = useState<any>();
-  const [checked, setChecked] = useState<boolean>(true)
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Estado para controlar o carregamento
-
+  const [checked, setChecked] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [chartsLoaded, setChartsLoaded] = useState<boolean>(false); // Novo estado para controlar a renderização dos gráficos
+  const customIndicator = <div style={{ display: 'none' }} />;
 
   const fetchSells = useCallback(async () => {
     try {
@@ -25,25 +26,42 @@ const DashboardAdmin: React.FC = () => {
         withCredentials: false,
       });
       setTotalQtde(response.data.sell.length);
-      setIsLoading(false); // Marca o fim do carregamento apenas se os dados foram carregados com sucesso
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching sells:', error);
-      setIsLoading(false); // Marca o fim do carregamento em caso de erro também
+      setIsLoading(false);
+    }
+  }, []);
+
+  const loadCharts = useCallback(async () => {
+    try {
+      // Simulando carregamento dos gráficos
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simule o tempo de carregamento dos gráficos
+      setChartsLoaded(true); // Marca os gráficos como carregados
+    } catch (error) {
+      console.error('Error loading charts:', error);
+      setChartsLoaded(true); // Marca os gráficos como carregados mesmo em caso de erro
     }
   }, []);
 
   useEffect(() => {
     fetchSells();
-  }, []);
+  }, [fetchSells]);
+
+  useEffect(() => {
+    if (!isLoading && totalQtde > 0) {
+      loadCharts();
+    }
+  }, [isLoading, totalQtde, loadCharts]);
 
   return (
     <NavbarWrapper>
       <Navbar />
-      {isLoading ? ( // Se estiver carregando, mostra o spinner centralizado na tela
+      {isLoading ? (
         <div className="spinner-container">
           <Spin size="large" />
         </div>
-      ) : totalQtde > 0 ? ( // Se houver vendas, mostra os componentes do dashboard
+      ) : totalQtde > 0 ? (
         <div className="dashboard-container">
           <h1 className="dashboard-title">Dashboard Gestor</h1>
           <div className='filter-box'>
@@ -54,42 +72,49 @@ const DashboardAdmin: React.FC = () => {
             />
           </div>
           <div className="charts-grid">
-            <div className="chart-box">
-            <BasicLineChart
-              endDateProp={endDate}
-              startDateProp={startDate}
-              checkedProp={checked}  
-            />
-            </div>
-            <div className="chart-box">
-              <BarChart />
-            </div>
-            <div className="chart-box">
-              <ProductChart 
-                checkedProp={checked} 
-                startDateProp={startDate} 
-                endDateProp={endDate} 
-              />
-            </div>
-            <div className="chart-box">
-              <ClientSalesChart 
-                startDateProp={startDate} 
-                endDateProp={endDate} 
-              />
-            </div>
+            {chartsLoaded ? (
+              <>
+                <div className="chart-box">
+                  <BasicLineChart
+                    endDateProp={endDate}
+                    startDateProp={startDate}
+                    checkedProp={checked}  
+                  />
+                </div>
+                <div className="chart-box">
+                  <BarChart />
+                </div>
+                <div className="chart-box">
+                  <ProductChart 
+                    checkedProp={checked} 
+                    startDateProp={startDate} 
+                    endDateProp={endDate} 
+                  />
+                </div>
+                <div className="chart-box">
+                  <ClientSalesChart 
+                    startDateProp={startDate} 
+                    endDateProp={endDate} 
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="spinner-container">
+                <Spin indicator={customIndicator} />
+              </div>
+            )}
           </div>
           <div className="ranking-sellers">
             <RankingSellers />
           </div>
         </div>
-      ) : null} {/* Não renderiza nada se não houver vendas, aguardando os dados */}
+      ) : null}
 
-      {!isLoading && totalQtde === 0 && ( // Se o carregamento terminou e não há vendas, mostra o Empty
+      {!isLoading && totalQtde === 0 && (
         <div className="empty-container">
           <Empty description='Não há vendas cadastradas' />
         </div>
       )}
-
     </NavbarWrapper>
   );
 };

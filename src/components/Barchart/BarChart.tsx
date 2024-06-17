@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 import { apiBackend, apiInstance } from 'services/api';
 
-const { Text } = Typography;
-
 export default function BarChart() {
   const [commissions, setCommissions] = useState<any[]>([]);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(0);
@@ -12,7 +10,6 @@ export default function BarChart() {
   const [loading, setLoading] = useState<boolean>(true);
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  const customIndicator = <div style={{ display: 'none' }} />;
 
   const getStats = async () => {
     setLoading(true);
@@ -55,7 +52,7 @@ export default function BarChart() {
 
   return (
     <div>
-      <Spin spinning={loading} indicator={customIndicator}>
+      <Spin spinning={loading}>
         {dataLoaded && commissions.length === 1 ? (
           <Empty description="Nenhuma comissão encontrada" />
         ) : (

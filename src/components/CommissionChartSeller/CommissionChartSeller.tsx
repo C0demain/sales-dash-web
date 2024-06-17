@@ -16,8 +16,7 @@ export default function CommissionChartSeller({ onTotalCommissionChange }: Commi
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const user = useAuth().id;
   const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  const customIndicator = <div style={{ display: 'none' }} />;
-
+  
   const getStats = async () => {
     setLoading(true);
     setDataLoaded(false);
@@ -66,7 +65,7 @@ export default function CommissionChartSeller({ onTotalCommissionChange }: Commi
 
   return (
     <div>
-      <Spin spinning={loading} indicator={customIndicator}>
+      <Spin spinning={loading}>
         {dataLoaded && commissions.length > 1 ? (
           <>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '3vh', minWidth: '100%' }}>

@@ -21,13 +21,14 @@ interface MonthData {
 
 export default function ProductChart({ startDateProp, endDateProp, checkedProp }: { startDateProp: string, endDateProp: string, checkedProp: boolean}) {
   const [dataSells, setDataSells] = useState<{ [productId: string]: MonthData[] }>({});
-  const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]])
-  const startDate = startDateProp
-  const endDate = endDateProp
+  const [data, setData] = useState<any[]>([["Mês", "Valor vendido"]]);
+  const startDate = startDateProp;
+  const endDate = endDateProp;
   const [loading, setLoading] = useState(true);
   const customIndicator = <div style={{ display: 'none' }} />;
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const isProductSelected = selectedProducts.length !== 0;
+
   const chartOptions = {
     colors: ["#1976d2", "#7CB9E8", "#00308F", "#b0b8ce", "#022954"],
     pointSize: 10,
@@ -138,7 +139,9 @@ export default function ProductChart({ startDateProp, endDateProp, checkedProp }
 
   return (
     <div className='chartContainer'>
-      <Spin spinning={loading} indicator={customIndicator}>
+      <Spin spinning={loading}>
+      {Object.keys(dataSells).length > 0 ? (
+        <>
         <Stack direction={'row'} justifyContent={'space-evenly'} alignItems="center">
           <Stack direction={'row'} alignItems="center">
             <h3 style={{ marginRight: '5vh' }}>Produtos</h3>
@@ -152,10 +155,13 @@ export default function ProductChart({ startDateProp, endDateProp, checkedProp }
             options={chartOptions}
             width="75vh"
             height="50vh"
-            loader={<div>Carregando Gráfico</div>}
           />
         ) : (
           <Empty description='Selecione um produto' />
+        )}
+         </>
+         ) : (
+          !loading && <Empty description="Não há produtos cadastrados." />
         )}
       </Spin>
     </div>

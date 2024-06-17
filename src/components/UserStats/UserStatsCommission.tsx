@@ -14,15 +14,17 @@ const UserStatsCommission = ({ totalComissionProp }: { totalComissionProp: numbe
     }, [totalComissionProp]);
 
     return (
-        <div className="boxStats">
+        <>
             {loading ? (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                     <Spin indicator={customIndicator} />
                 </div>
             ) : (
-                <Statistic title='Total de Comissões' value={totalComissionProp} formatter={(value) => formatCurrency(parseFloat(value.toString()))} />
+                <div className="boxStats">
+                    <Statistic title='Total de Comissões' value={totalComissionProp} formatter={(value) => formatCurrency(parseFloat(value.toString()))} />
+                </div>
             )}
-        </div>
+        </>
     );
 }
 
