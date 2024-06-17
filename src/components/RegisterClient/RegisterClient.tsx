@@ -7,6 +7,7 @@ import message from 'antd/es/message';
 import InputMask from 'react-input-mask';
 import { isValidCNPJ, isValidCPF } from 'util/validation';
 import { Button } from 'antd';
+import Switch from '@mui/material/Switch';
 
 function RegisterClient() {
   const [clientName, setClientName] = useState('');
@@ -120,10 +121,7 @@ function RegisterClient() {
 
               <div className="toggle">
                 <span className='cor'>CNPJ</span>
-                <label className="switch">
-                  <input type="checkbox" checked={isCpf} onChange={toggleIsCpf} />
-                  <span className="slider round"></span>
-                </label>
+                <Switch checked={isCpf} onChange={toggleIsCpf}/>
                 <span className='cor'>CPF</span>
               </div>
 
